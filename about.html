@@ -64,6 +64,10 @@
 <section class="story">
   <div class="wrap grid">
     <div>
+      <figure class="founder-photo">
+        <img src="https://placehold.co/680x440/0B3954/C7CDD0?text=Photo%3A+Dave+%26+Grace+White%2C+Founders" alt="Dave and Grace White, founders of B.B. Engineering">
+        <figcaption>Dave &amp; Grace White &mdash; Founders, B.B. Engineering &middot; Albuquerque, NM</figcaption>
+      </figure>
       <h2>How we got here</h2>
       <p>B.B. Engineering started with Dave and Grace White, working out of New Mexico. Dave spent decades in sales and traditional marketing before deciding to build something himself — a vehicle that didn't ask wheelchair users to settle for less capability than anyone else on the job site or the trail.</p>
       <p>The result is the Enabler 2.0: an all-electric, off-road utility vehicle with a self-loading wheelchair lift, designed and produced in the U.S.A. It's a small company right now. That's by design — we'd rather build something that works and grow with the people who buy it than rush a product we haven't proven out.</p>
@@ -84,6 +88,48 @@
         <h4>Growing with our customers</h4>
         <p>As volume picks up, so does our capacity — more units, more support, and a closer relationship with the people and organizations putting these vehicles to work.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SHOP FLOOR ============ -->
+<section class="shop-floor">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Built by Hand</p>
+        <h2>Made in Albuquerque, New Mexico.</h2>
+      </div>
+    </div>
+    <div class="story-grid">
+      <figure class="story-img story-img--large">
+        <img src="https://placehold.co/800x560/0E1112/FF5400?text=Photo%3A+Fabrication+%26+Welding+in+the+Shop" alt="Craftsman welding Enabler 2.0 frame components in the B.B. Engineering shop">
+        <figcaption>Steel fabrication — Albuquerque shop floor</figcaption>
+      </figure>
+      <div class="story-stack">
+        <figure class="story-img">
+          <img src="https://placehold.co/600x260/181C1E/C7E000?text=Photo%3A+Assembly+%26+Wiring" alt="Workers assembling and wiring an Enabler 2.0">
+          <figcaption>Assembly and electrical integration</figcaption>
+        </figure>
+        <figure class="story-img">
+          <img src="https://placehold.co/600x260/3E6E89/FFFFFF?text=Photo%3A+Quality+Check+Before+Delivery" alt="Final inspection of a completed Enabler 2.0">
+          <figcaption>Every unit inspected before it ships</figcaption>
+        </figure>
+      </div>
+    </div>
+    <div class="shop-portraits">
+      <figure class="shop-portrait">
+        <img src="https://placehold.co/400x480/0B3954/C7CDD0?text=Photo%3A+Welder+Portrait" alt="Portrait of a B.B. Engineering welder">
+        <figcaption><strong>Shop Craftsman</strong><br>Steel Fabrication</figcaption>
+      </figure>
+      <figure class="shop-portrait">
+        <img src="https://placehold.co/400x480/FF5400/FFFFFF?text=Photo%3A+Assembly+Tech+Portrait" alt="Portrait of an assembly technician">
+        <figcaption><strong>Assembly Technician</strong><br>Electrical &amp; Drivetrain</figcaption>
+      </figure>
+      <figure class="shop-portrait">
+        <img src="https://placehold.co/400x480/181C1E/C7E000?text=Photo%3A+QC+Inspector+Portrait" alt="Portrait of a quality control inspector">
+        <figcaption><strong>Quality Inspector</strong><br>Final Sign-Off</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -147,6 +193,13 @@
   </div>
 </footer>
 
-<script src="script.js"></script>
+<script>
+document.querySelector('.nav-toggle')?.addEventListener('click', function(){
+  const nav = document.querySelector('nav.primary');
+  const open = nav.classList.toggle('open');
+  this.setAttribute('aria-expanded', open);
+  this.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+});
+</script>
 </body>
 </html>
