@@ -118,6 +118,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 @media (max-width:760px){
   .util-right .util-email{display:none;}
 }
+@media (max-width:560px){
+  /* Hide social icons on very small screens — phone is enough in the util-bar */
+  .util-social{display:none;}
+  .util-bar .wrap{padding:7px 16px;}
+  .util-left{font-size:11px;}
+}
 
 header.site{position:sticky;top:0;z-index:50;}
 .nav-bar{background:var(--white);border-bottom:1px solid var(--line);}
@@ -174,6 +180,11 @@ nav.primary a.mobile-cta{display:none;}
   .nav-toggle{display:block;}
   .header-ctas .btn-sm-text{display:none;}
 }
+@media (max-width:560px){
+  .nav-row{padding:10px 0;}
+  /* Hide the Schedule Consultation header button on very small screens — accessible via hamburger menu */
+  .header-ctas .btn-orange{display:none;}
+}
 
 /* ============================================================
    HERO — diagonal split (signature device, introduced here)
@@ -219,6 +230,17 @@ nav.primary a.mobile-cta{display:none;}
   .hero-art{margin-left:0;padding:36px 24px 64px;}
   .hero-art figcaption{left:24px;right:24px;}
 }
+@media (max-width:640px){
+  .hero-copy{padding:32px 20px 24px;}
+  .hero h1{font-size:28px;}
+  .hero p.lead{font-size:15px;margin-top:12px;}
+  .hero .cta-row{flex-direction:column;gap:10px;margin-top:20px;}
+  .hero .cta-row .btn{width:100%;justify-content:center;}
+  .hero .micro{font-size:11px;line-height:1.5;}
+  /* Cap the hero photo so it doesn't dominate the screen */
+  .hero-art.hero-photo{max-height:220px;}
+  .hero-art.hero-photo img{height:220px;}
+}
 
 /* ============================================================
    FEATURE GRID — icon + label (Deere/Cat pattern), white bg
@@ -239,6 +261,11 @@ nav.primary a.mobile-cta{display:none;}
 .feature-item p{font-size:13.5px;color:#5C645F;margin-top:6px;}
 @media (max-width:900px){
   .feature-row{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:480px){
+  .feature-row{grid-template-columns:1fr 1fr;}
+  .feature-grid{padding:44px 0 36px;}
+  .feature-grid .head{margin-bottom:28px;}
 }
 
 /* ============================================================
@@ -489,6 +516,15 @@ footer.site{background:var(--black);color:#9AA4A8;padding:56px 0 28px;}
 .footer-logo{color:var(--white);font-family:var(--font-display);font-weight:800;font-size:18px;}
 .footer-bottom{border-top:1px solid #26292B;padding-top:20px;display:flex;justify-content:space-between;font-size:12px;color:#6B7478;flex-wrap:wrap;gap:10px;}
 @media (max-width:900px){.footer-grid{grid-template-columns:1fr 1fr;}}
+@media (max-width:560px){
+  .footer-grid{grid-template-columns:1fr;}
+  footer.site{padding:40px 0 20px;}
+  .cta-band{padding:36px 0;}
+  .cta-band .wrap{flex-direction:column;align-items:flex-start;}
+  .cta-band .btn-row{flex-direction:column;width:100%;}
+  .cta-band .btn-row .btn{width:100%;justify-content:center;}
+  .wrap{padding:0 18px;}
+}
 
 /* ============================================================
    VEHICLE PHOTO CAROUSEL (vehicles.html)
