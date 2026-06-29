@@ -408,6 +408,13 @@
   </div>
 </footer>
 
-<script src="script.js"></script>
+<script>
+document.querySelector('.nav-toggle')?.addEventListener('click', function(){
+  const nav = document.querySelector('nav.primary');
+  const open = nav.classList.toggle('open');
+  this.setAttribute('aria-expanded', open);
+  this.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+});
+</script>
 </body>
 </html>

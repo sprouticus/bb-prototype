@@ -119,8 +119,6 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
   .util-right .util-email{display:none;}
 }
 @media (max-width:560px){
-  /* Hide social icons on very small screens — phone is enough in the util-bar */
-  .util-social{display:none;}
   .util-bar .wrap{padding:7px 16px;}
   .util-left{font-size:11px;}
 }
