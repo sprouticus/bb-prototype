@@ -399,14 +399,43 @@ input:focus,select:focus,textarea:focus{border-color:var(--steel);}
 }
 
 .story{padding:76px 0;}
-.story .grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
 .story h2{font-size:clamp(24px,3vw,32px);margin-bottom:18px;}
 .story p{font-size:16px;color:#33393B;margin-bottom:14px;}
-.timeline{border-left:4px solid var(--orange);padding-left:24px;display:flex;flex-direction:column;gap:28px;}
-.timeline .item .tag{font-family:var(--font-mono);font-size:12px;color:var(--orange-dark);font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
-.timeline .item h4{font-size:18px;margin-top:6px;}
-.timeline .item p{font-size:14px;color:#56605F;margin-top:6px;}
-@media (max-width:900px){.story .grid{grid-template-columns:1fr;}}
+
+/* Top row: photo + text */
+.story-top{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
+.story-copy{display:flex;flex-direction:column;justify-content:center;}
+
+/* Horizontal timeline */
+.story-timeline{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  margin-top:52px;padding-top:36px;
+  position:relative;
+}
+.story-timeline::before{
+  content:'';position:absolute;top:0;left:8px;right:8px;
+  height:4px;background:var(--orange);
+}
+.st-item{
+  padding:0 28px 0 0;position:relative;
+}
+.st-item::before{
+  content:'';position:absolute;
+  top:-43px;left:0;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--white);border:4px solid var(--orange);
+}
+.st-item .tag{font-family:var(--font-mono);font-size:12px;color:var(--orange-dark);font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.st-item h4{font-size:18px;margin-top:6px;}
+.st-item p{font-size:14px;color:#56605F;margin-top:6px;}
+
+@media(max-width:900px){
+  .story-top{grid-template-columns:1fr;}
+  .story-timeline{grid-template-columns:1fr;padding-top:0;}
+  .story-timeline::before{display:none;}
+  .st-item{padding:0 0 28px 24px;border-left:4px solid var(--orange);}
+  .st-item::before{top:2px;left:-10px;}
+}
 
 .mission-band{background:var(--paper);padding:68px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
 .mission-band .grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:center;}
