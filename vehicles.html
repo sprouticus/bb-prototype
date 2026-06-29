@@ -61,6 +61,45 @@
   </div>
 </section>
 
+<!-- ============ VEHICLE PHOTO CAROUSEL ============ -->
+<section class="vehicle-photos">
+  <div class="wrap">
+
+    <div class="vp-main-wrap">
+      <img src="https://placehold.co/1200x675/0B3954/C7CDD0?text=Photo%3A+Enabler+2.0+Front+Three-Quarter+View" alt="Enabler 2.0 front three-quarter view" id="vp-main-img">
+      <div class="vp-caption" id="vp-caption">Front Three-Quarter View</div>
+      <button class="vp-arrow vp-prev" aria-label="Previous photo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="vp-arrow vp-next" aria-label="Next photo">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+    </div>
+
+    <div class="vp-thumbs" role="list" aria-label="Vehicle photos">
+      <button class="vp-thumb active" aria-label="Front three-quarter view" data-src="https://placehold.co/1200x675/0B3954/C7CDD0?text=Photo%3A+Enabler+2.0+Front+Three-Quarter+View" data-caption="Front Three-Quarter View">
+        <img src="https://placehold.co/200x130/0B3954/C7CDD0?text=Front" alt="Front three-quarter view thumbnail">
+      </button>
+      <button class="vp-thumb" aria-label="Side profile" data-src="https://placehold.co/1200x675/0E1112/C7CDD0?text=Photo%3A+Enabler+2.0+Side+Profile" data-caption="Side Profile">
+        <img src="https://placehold.co/200x130/0E1112/C7CDD0?text=Side" alt="Side profile thumbnail">
+      </button>
+      <button class="vp-thumb" aria-label="Self-loading rear lift" data-src="https://placehold.co/1200x675/FF5400/FFFFFF?text=Photo%3A+Self-Loading+Rear+Lift" data-caption="Self-Loading Rear Lift">
+        <img src="https://placehold.co/200x130/FF5400/FFFFFF?text=Lift" alt="Rear lift thumbnail">
+      </button>
+      <button class="vp-thumb" aria-label="Wheels and suspension" data-src="https://placehold.co/1200x675/181C1E/C7E000?text=Photo%3A+14%22+Off-Road+Wheels+%26+Suspension" data-caption="14&quot; Off-Road Wheels &amp; Suspension">
+        <img src="https://placehold.co/200x130/181C1E/C7E000?text=Wheels" alt="Wheels and suspension thumbnail">
+      </button>
+      <button class="vp-thumb" aria-label="Seating and controls" data-src="https://placehold.co/1200x675/3E6E89/FFFFFF?text=Photo%3A+Wheelchair+Seating+%26+Controls" data-caption="Wheelchair Seating &amp; Controls">
+        <img src="https://placehold.co/200x130/3E6E89/FFFFFF?text=Cockpit" alt="Seating and controls thumbnail">
+      </button>
+      <button class="vp-thumb" aria-label="Battery and power system" data-src="https://placehold.co/1200x675/C7E000/0E1112?text=Photo%3A+51.2V+Battery+%26+Power+System" data-caption="51.2V Battery &amp; Power System">
+        <img src="https://placehold.co/200x130/C7E000/0E1112?text=Battery" alt="Battery system thumbnail">
+      </button>
+    </div>
+
+  </div>
+</section>
+
 <section class="full-specs">
   <div class="wrap">
 
@@ -186,6 +225,41 @@
   </div>
 </footer>
 
-<script src="script.js"></script>
+<script>
+// ---- Mobile nav toggle ----
+document.querySelector('.nav-toggle')?.addEventListener('click', function(){
+  const nav = document.querySelector('nav.primary');
+  const open = nav.classList.toggle('open');
+  this.setAttribute('aria-expanded', open);
+  this.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+});
+
+// ---- Vehicle photo carousel ----
+(function(){
+  const mainImg = document.getElementById('vp-main-img');
+  const caption = document.getElementById('vp-caption');
+  const thumbs = Array.from(document.querySelectorAll('.vp-thumb'));
+  if (!mainImg || !thumbs.length) return;
+
+  let current = 0;
+
+  function goTo(i) {
+    current = (i + thumbs.length) % thumbs.length;
+    const t = thumbs[current];
+    mainImg.style.opacity = '0';
+    setTimeout(function(){
+      mainImg.src = t.dataset.src;
+      mainImg.alt = t.querySelector('img').alt.replace(' thumbnail','');
+      caption.innerHTML = t.dataset.caption;
+      mainImg.style.opacity = '1';
+    }, 150);
+    thumbs.forEach(function(th, idx){ th.classList.toggle('active', idx === current); });
+  }
+
+  thumbs.forEach(function(t, i){ t.addEventListener('click', function(){ goTo(i); }); });
+  document.querySelector('.vp-prev')?.addEventListener('click', function(){ goTo(current - 1); });
+  document.querySelector('.vp-next')?.addEventListener('click', function(){ goTo(current + 1); });
+})();
+</script>
 </body>
 </html>
