@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact — Seedling</title>
+  <meta name="description" content="Get in touch with Seedling for a free consultation about your small business technology and marketing needs.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    #contact-main {
+      min-height: calc(100vh - 68px);
+      padding: calc(var(--nav-h) + 52px) 24px 72px;
+      background:
+        radial-gradient(ellipse 60% 40% at 100% 0%, rgba(82,166,117,0.1) 0%, transparent 55%),
+        var(--cream);
+    }
+    .contact-inner { max-width: var(--max-w); margin: 0 auto; display: grid; grid-template-columns: 1fr 1.3fr; gap: 72px; align-items: start; }
+
+    .contact-left {}
+    .contact-left .section-title { margin-bottom: 14px; }
+    .contact-left .section-sub { margin-bottom: 36px; }
+
+    .contact-info-item { display: flex; align-items: flex-start; gap: 14px; margin-bottom: 20px; }
+    .ci-icon { width: 40px; height: 40px; border-radius: 10px; background: var(--green-pale); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .ci-label { font-size: 0.75rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 2px; }
+    .ci-value { font-size: 0.93rem; color: var(--text-mid); }
+    .ci-value a { color: var(--green-mid); text-decoration: none; font-weight: 600; }
+    .ci-value a:hover { text-decoration: underline; }
+
+    .response-note { background: var(--green-pale); border-radius: var(--radius-sm); padding: 14px 16px; font-size: 0.85rem; color: var(--green-deep); font-weight: 500; margin-top: 8px; }
+
+    .contact-form { background: var(--white); border-radius: var(--radius); padding: 36px; box-shadow: var(--shadow-md); border: 1px solid rgba(42,92,63,0.07); }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { margin-bottom: 14px; }
+    .form-group label { display: block; font-size: 0.8rem; font-weight: 600; color: var(--text-mid); margin-bottom: 5px; letter-spacing: 0.02em; }
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%; background: var(--cream); border: 1.5px solid rgba(42,92,63,0.12);
+      border-radius: var(--radius-sm); padding: 11px 13px;
+      color: var(--text-dark); font-family: 'DM Sans', sans-serif; font-size: 0.92rem;
+      outline: none; transition: border-color 0.2s, background 0.2s;
+      -webkit-appearance: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--green-mid); background: var(--white); }
+    .form-group textarea { resize: vertical; min-height: 100px; }
+    .form-note { font-size: 0.78rem; color: var(--text-muted); margin-top: 10px; }
+    .form-submit { width: 100%; background: var(--green-deep); color: white; font-family: 'DM Sans', sans-serif; font-size: 1rem; font-weight: 700; padding: 14px; border-radius: 100px; border: none; cursor: pointer; transition: background 0.2s, transform 0.15s; margin-top: 6px; }
+    .form-submit:hover { background: var(--green-mid); transform: translateY(-1px); }
+    .form-submit:disabled { background: var(--green-bright); cursor: default; transform: none; }
+
+    @media (max-width: 860px) {
+      .contact-inner { grid-template-columns: 1fr; gap: 40px; }
+      .form-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <svg width="26" height="26" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="8" fill="#2A5C3F"/><path d="M14 22V13M14 13C14 13 10 11 8 7C11 7 14 10 14 13ZM14 13C14 13 18 11 20 7C17 7 14 10 14 13Z" stroke="#95D5B2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 22H18" stroke="#95D5B2" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Seedling
+    </a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="services.html">Services</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-cta active">Get a Quote</a></li>
+    </ul>
+  </div>
+</nav>
+
+<section id="contact-main">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <div class="section-label">Contact</div>
+      <h1 class="section-title">Let's talk about your business.</h1>
+      <p class="section-sub">No pressure, no pitch. Just an honest conversation about where you are and what you need. Fill out the form and I'll be in touch within one business day.</p>
+
+      <div class="contact-info-item">
+        <div class="ci-icon">📍</div>
+        <div>
+          <div class="ci-label">Location</div>
+          <div class="ci-value">Albuquerque, New Mexico<br>Serving ABQ and surrounding area</div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="ci-icon">✉️</div>
+        <div>
+          <div class="ci-label">Email</div>
+          <div class="ci-value"><a href="mailto:hello@growseedling.com">hello@growseedling.com</a></div>
+        </div>
+      </div>
+      <div class="contact-info-item">
+        <div class="ci-icon">🕐</div>
+        <div>
+          <div class="ci-label">Response time</div>
+          <div class="ci-value">Within 1 business day</div>
+        </div>
+      </div>
+
+      <div class="response-note">🌱 First consultation is always free. No commitment required.</div>
+    </div>
+
+    <div>
+      <form class="contact-form" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label for="name">Your name *</label>
+            <input type="text" id="name" name="name" placeholder="Jane Smith" required>
+          </div>
+          <div class="form-group">
+            <label for="business">Business name *</label>
+            <input type="text" id="business" name="business" placeholder="Smith HVAC" required>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label for="email">Email *</label>
+            <input type="email" id="email" name="email" placeholder="jane@smithhvac.com" required>
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" id="phone" name="phone" placeholder="(505) 555-0100">
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="industry">What kind of business?</label>
+          <select id="industry" name="industry">
+            <option value="">Select your industry</option>
+            <option>HVAC / Plumbing / Electrical</option>
+            <option>Roofing / Construction</option>
+            <option>Landscaping / Lawn Care</option>
+            <option>Auto Repair / Detailing</option>
+            <option>Healthcare / Medical Practice</option>
+            <option>Legal / Professional Services</option>
+            <option>Restaurant / Food Service</option>
+            <option>Retail</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="package">Package interest</label>
+          <select id="package" name="package">
+            <option value="">I'm not sure yet — help me decide</option>
+            <option value="seed">🌱 Seed — $750/month (IT foundations)</option>
+            <option value="sprout">🌿 Sprout — $1,500/month (IT + website + social)</option>
+            <option value="grove">🌳 Grove — $2,500/month (full service)</option>
+            <option value="custom">✏️ Custom quote</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="message">What's going on with your business online?</label>
+          <textarea id="message" name="message" placeholder="Tell me what's not working, what you're trying to fix, or just describe your situation. The more detail the better."></textarea>
+        </div>
+        <button type="submit" class="form-submit" id="submit-btn">Send message →</button>
+        <div class="form-note">By submitting this form you agree to be contacted by Seedling regarding your inquiry. We don't sell or share your information.</div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo">
+      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="8" fill="#3D7A56"/><path d="M14 22V13M14 13C14 13 10 11 8 7C11 7 14 10 14 13ZM14 13C14 13 18 11 20 7C17 7 14 10 14 13Z" stroke="#95D5B2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 22H18" stroke="#95D5B2" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Seedling
+    </a>
+    <div class="footer-copy">© 2026 Seedling. Albuquerque, NM.</div>
+    <div class="footer-links">
+      <a href="services.html">Services</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    btn.textContent = 'Message sent ✓';
+    btn.disabled = true;
+    // Wire to Netlify Forms, Formspree, etc. before going live
+  }
+</script>
+</body>
+</html>

@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About — Seedling</title>
+  <meta name="description" content="Seedling is a one-person technology and marketing service for small businesses in Albuquerque, NM.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .page-hero { padding: calc(var(--nav-h) + 52px) 24px 52px; background: linear-gradient(135deg, var(--green-ghost) 0%, var(--cream) 60%); border-bottom: 1px solid rgba(42,92,63,0.08); }
+    .page-hero-inner { max-width: var(--max-w); margin: 0 auto; }
+
+    .about-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 72px; align-items: start; }
+    .about-photo { background: var(--green-pale); border-radius: 20px; aspect-ratio: 4/5; display: flex; align-items: center; justify-content: center; font-size: 5rem; box-shadow: var(--shadow-md); }
+    .about-body p { font-size: 1rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 16px; }
+    .about-body p:last-of-type { margin-bottom: 0; }
+    .about-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 28px; }
+    .about-tag { font-size: 0.82rem; font-weight: 600; padding: 5px 13px; border-radius: 100px; background: var(--white); border: 1px solid rgba(42,92,63,0.12); color: var(--text-mid); }
+
+    .values-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-top: 64px; }
+    .val-card { background: var(--white); border-radius: var(--radius); padding: 26px; border: 1px solid rgba(42,92,63,0.07); }
+    .val-icon { font-size: 1.4rem; margin-bottom: 12px; }
+    .val-card h3 { font-size: 0.97rem; font-weight: 700; color: var(--text-dark); margin-bottom: 8px; }
+    .val-card p { font-size: 0.87rem; color: var(--text-mid); line-height: 1.6; }
+
+    .cta-strip { background: var(--green-deep); border-radius: var(--radius); padding: 36px 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 48px; }
+    .cta-strip h3 { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: white; letter-spacing: -0.02em; }
+    .cta-strip p { font-size: 0.9rem; color: rgba(255,255,255,0.65); margin-top: 4px; }
+
+    @media (max-width: 860px) {
+      .about-grid { grid-template-columns: 1fr; gap: 36px; }
+      .about-photo { display: none; }
+      .values-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <svg width="26" height="26" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="8" fill="#2A5C3F"/><path d="M14 22V13M14 13C14 13 10 11 8 7C11 7 14 10 14 13ZM14 13C14 13 18 11 20 7C17 7 14 10 14 13Z" stroke="#95D5B2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 22H18" stroke="#95D5B2" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Seedling
+    </a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="services.html">Services</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="about.html" class="active">About</a></li>
+      <li><a href="contact.html" class="nav-cta">Get a Quote</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="section-label">About</div>
+    <h1 class="section-title">One person. Real experience.<br>No runaround.</h1>
+  </div>
+</div>
+
+<section>
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-photo">🌱</div>
+      <div class="about-body">
+        <p>Hi — I started Seedling because I kept meeting small business owners who were either paying too much for fragmented services, or going without entirely. The website was outdated. The email was still @gmail.com. Nobody was managing the social accounts. Sound familiar?</p>
+        <p>After years working across tech startups, fintech, and marketing teams — handling everything from product strategy to IT infrastructure — I decided to bring that experience directly to the businesses that need it most: owner-operators building something real, on their own terms, right here in Albuquerque.</p>
+        <p>When you work with Seedling, you get my personal attention. Not a team that changes every quarter. Not a ticket queue. Me — someone who knows your business, answers your calls, and makes sure things get done.</p>
+        <div class="about-tags">
+          <span class="about-tag">Google Workspace</span>
+          <span class="about-tag">Web Development</span>
+          <span class="about-tag">SEO</span>
+          <span class="about-tag">Content Strategy</span>
+          <span class="about-tag">Social Media</span>
+          <span class="about-tag">Email Marketing</span>
+          <span class="about-tag">Marketing Automation</span>
+          <span class="about-tag">Cybersecurity</span>
+          <span class="about-tag">Domain & DNS</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="values-grid">
+      <div class="val-card">
+        <div class="val-icon">🤝</div>
+        <h3>You talk to the person doing the work</h3>
+        <p>No account managers. No hand-offs. The person you hire is the person who handles your website, your email, and your marketing.</p>
+      </div>
+      <div class="val-card">
+        <div class="val-icon">📍</div>
+        <h3>Local to Albuquerque</h3>
+        <p>Seedling serves Albuquerque and the surrounding area. I understand the local market, the local business community, and what works here.</p>
+      </div>
+      <div class="val-card">
+        <div class="val-icon">📅</div>
+        <h3>Month-to-month, always</h3>
+        <p>No contracts, no lock-in. If Seedling isn't working for you, you can walk away. That keeps us accountable to results, not paperwork.</p>
+      </div>
+    </div>
+
+    <div class="cta-strip">
+      <div>
+        <h3>Want to work together?</h3>
+        <p>Start with a free 30-minute call. No pitch — just a conversation about your business.</p>
+      </div>
+      <a href="contact.html" class="btn btn-yellow">Let's talk</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo">
+      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="8" fill="#3D7A56"/><path d="M14 22V13M14 13C14 13 10 11 8 7C11 7 14 10 14 13ZM14 13C14 13 18 11 20 7C17 7 14 10 14 13Z" stroke="#95D5B2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 22H18" stroke="#95D5B2" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Seedling
+    </a>
+    <div class="footer-copy">© 2026 Seedling. Albuquerque, NM.</div>
+    <div class="footer-links">
+      <a href="services.html">Services</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+</script>
+</body>
+</html>

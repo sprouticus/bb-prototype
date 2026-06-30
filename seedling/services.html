@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Services & Packages — Seedling</title>
+  <meta name="description" content="Seedling's flat monthly packages for small business website, IT, and marketing management. Seed, Sprout, Grove, or custom.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    .page-hero {
+      padding: calc(var(--nav-h) + 52px) 24px 52px;
+      background: linear-gradient(135deg, var(--green-ghost) 0%, var(--cream) 60%);
+      border-bottom: 1px solid rgba(42,92,63,0.08);
+    }
+    .page-hero-inner { max-width: var(--max-w); margin: 0 auto; }
+
+    /* Service areas */
+    .service-areas { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; margin-bottom: 64px; }
+    .sa-card { background: var(--white); border-radius: var(--radius); padding: 26px; border: 1px solid rgba(42,92,63,0.07); }
+    .sa-head { display: flex; align-items: center; gap: 11px; margin-bottom: 16px; }
+    .sa-icon { width: 38px; height: 38px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+    .sa-head h3 { font-size: 0.97rem; font-weight: 700; color: var(--text-dark); }
+    .sa-list { list-style: none; }
+    .sa-list li { font-size: 0.85rem; color: var(--text-mid); padding: 5px 0; border-bottom: 1px solid rgba(42,92,63,0.05); display: flex; align-items: center; gap: 7px; }
+    .sa-list li:last-child { border-bottom: none; }
+    .sa-list li::before { content: ''; width: 5px; height: 5px; border-radius: 50%; background: var(--green-bright); flex-shrink: 0; }
+
+    /* Packages */
+    .packages-header { margin-bottom: 28px; }
+    .packages-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 14px; align-items: start; }
+    .pkg {
+      background: var(--white); border-radius: var(--radius);
+      padding: 26px 22px; border: 2px solid rgba(42,92,63,0.08);
+      position: relative; transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .pkg:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+    .pkg.popular { border-color: var(--green-mid); box-shadow: 0 0 0 4px rgba(61,122,86,0.07), var(--shadow-md); }
+    .pkg-badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--green-mid); color: white; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 13px; border-radius: 100px; white-space: nowrap; }
+    .pkg-name { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.07em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .pkg-price { font-family: 'DM Serif Display', serif; font-size: 2rem; color: var(--text-dark); line-height: 1; }
+    .pkg-price sup { font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 600; vertical-align: top; margin-top: 5px; display: inline-block; }
+    .pkg-mo { font-size: 0.78rem; color: var(--text-light); margin-bottom: 14px; }
+    .pkg-desc { font-size: 0.83rem; color: var(--text-mid); line-height: 1.5; margin-bottom: 16px; padding-bottom: 16px; border-bottom: 1px solid rgba(42,92,63,0.07); }
+    .pkg-features { list-style: none; margin-bottom: 22px; }
+    .pkg-features li { font-size: 0.83rem; color: var(--text-mid); padding: 5px 0; display: flex; align-items: flex-start; gap: 7px; line-height: 1.4; }
+    .pkg-features li::before { content: '✓'; color: var(--green-mid); font-weight: 700; font-size: 0.82rem; flex-shrink: 0; margin-top: 1px; }
+    .pkg-cta { display: block; width: 100%; text-align: center; font-family: 'DM Sans', sans-serif; font-size: 0.9rem; font-weight: 600; padding: 11px 14px; border-radius: 100px; text-decoration: none; border: none; cursor: pointer; transition: background 0.2s, transform 0.15s; }
+    .pkg-cta-p { background: var(--green-deep); color: white; }
+    .pkg-cta-p:hover { background: var(--green-mid); transform: translateY(-1px); }
+    .pkg-cta-o { background: transparent; color: var(--green-deep); border: 2px solid rgba(42,92,63,0.15); }
+    .pkg-cta-o:hover { background: var(--green-pale); }
+    .pkg-custom { background: var(--green-ghost); min-height: 280px; display: flex; flex-direction: column; justify-content: center; }
+    .pkg-custom .pkg-desc { border-bottom: none; margin-bottom: 20px; padding-bottom: 0; }
+
+    /* CTA strip */
+    .cta-strip { background: var(--green-deep); border-radius: var(--radius); padding: 36px 40px; display: flex; align-items: center; justify-content: space-between; gap: 20px; flex-wrap: wrap; margin-top: 48px; }
+    .cta-strip h3 { font-family: 'DM Serif Display', serif; font-size: 1.5rem; color: white; letter-spacing: -0.02em; }
+    .cta-strip p { font-size: 0.9rem; color: rgba(255,255,255,0.65); margin-top: 4px; }
+
+    @media (max-width: 900px) {
+      .service-areas { grid-template-columns: 1fr; }
+      .packages-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 560px) {
+      .packages-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav id="main-nav">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <svg width="26" height="26" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="8" fill="#2A5C3F"/><path d="M14 22V13M14 13C14 13 10 11 8 7C11 7 14 10 14 13ZM14 13C14 13 18 11 20 7C17 7 14 10 14 13Z" stroke="#95D5B2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 22H18" stroke="#95D5B2" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Seedling
+    </a>
+    <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')">
+      <svg width="22" height="22" viewBox="0 0 22 22" fill="none"><path d="M3 6h16M3 11h16M3 16h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+    </button>
+    <ul class="nav-links">
+      <li><a href="services.html" class="active">Services</a></li>
+      <li><a href="portfolio.html">Portfolio</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html" class="nav-cta">Get a Quote</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="page-hero-inner">
+    <div class="section-label">Services</div>
+    <h1 class="section-title">Everything included. Nothing hidden.</h1>
+    <p class="section-sub">All packages are month-to-month. No contracts, no surprise fees. Pick what fits your business now and change it as you grow.</p>
+  </div>
+</div>
+
+<section>
+  <div class="section-inner">
+
+    <!-- Service areas -->
+    <div class="section-label" style="margin-bottom:16px">What we cover</div>
+    <div class="service-areas">
+      <div class="sa-card">
+        <div class="sa-head">
+          <div class="sa-icon" style="background:#E6F2EB">🖥️</div>
+          <h3>IT & Operations</h3>
+        </div>
+        <ul class="sa-list">
+          <li>Google Workspace setup & admin</li>
+          <li>Domain & DNS management</li>
+          <li>Cybersecurity & access controls</li>
+          <li>ACH payment processing setup</li>
+          <li>Technology vendor management</li>
+          <li>SSL certificate management</li>
+        </ul>
+      </div>
+      <div class="sa-card">
+        <div class="sa-head">
+          <div class="sa-icon" style="background:#E8F4FB">🌐</div>
+          <h3>Website</h3>
+        </div>
+        <ul class="sa-list">
+          <li>Website design & development</li>
+          <li>CMS setup & content management</li>
+          <li>Hosting & maintenance</li>
+          <li>SEO implementation</li>
+          <li>Google Business Profile</li>
+          <li>Performance & uptime monitoring</li>
+        </ul>
+      </div>
+      <div class="sa-card">
+        <div class="sa-head">
+          <div class="sa-icon" style="background:#FEF7E8">📣</div>
+          <h3>Marketing</h3>
+        </div>
+        <ul class="sa-list">
+          <li>Digital marketing strategy</li>
+          <li>Content creation & management</li>
+          <li>Social media management</li>
+          <li>Email marketing campaigns</li>
+          <li>Marketing automation</li>
+          <li>Monthly analytics reporting</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Packages -->
+    <div class="packages-header">
+      <div class="section-label">Packages</div>
+      <h2 class="section-title" style="margin-bottom:6px">Choose your plan.</h2>
+      <p style="font-size:0.93rem;color:var(--text-mid)">All plans are month-to-month. Cancel or change anytime.</p>
+    </div>
+
+    <div class="packages-grid">
+      <div class="pkg">
+        <div class="pkg-name">🌱 Seed</div>
+        <div class="pkg-price"><sup>$</sup>750</div>
+        <div class="pkg-mo">per month</div>
+        <div class="pkg-desc">Get your digital foundations solid. Best for businesses that just need IT and email managed professionally.</div>
+        <ul class="pkg-features">
+          <li>Domain & DNS management</li>
+          <li>Google Workspace admin (up to 5 users)</li>
+          <li>SSL certificate management</li>
+          <li>Website hosting oversight</li>
+          <li>Monthly security review</li>
+          <li>Monthly check-in call</li>
+        </ul>
+        <a href="contact.html" class="pkg-cta pkg-cta-o">Get started</a>
+      </div>
+
+      <div class="pkg popular">
+        <div class="pkg-badge">Most Popular</div>
+        <div class="pkg-name">🌿 Sprout</div>
+        <div class="pkg-price"><sup>$</sup>1,500</div>
+        <div class="pkg-mo">per month</div>
+        <div class="pkg-desc">Foundations plus a professional online presence. Best for businesses ready to be found and look sharp online.</div>
+        <ul class="pkg-features">
+          <li>Everything in Seed</li>
+          <li>Website design & development</li>
+          <li>On-page SEO</li>
+          <li>Google Business Profile management</li>
+          <li>Social media (2 platforms)</li>
+          <li>Monthly analytics report</li>
+        </ul>
+        <a href="contact.html" class="pkg-cta pkg-cta-p">Get started</a>
+      </div>
+
+      <div class="pkg">
+        <div class="pkg-name">🌳 Grove</div>
+        <div class="pkg-price"><sup>$</sup>2,500</div>
+        <div class="pkg-mo">per month</div>
+        <div class="pkg-desc">Full service — technology and marketing both handled. Best for businesses that want to actively grow their customer base.</div>
+        <ul class="pkg-features">
+          <li>Everything in Sprout</li>
+          <li>Content creation (blog + social)</li>
+          <li>Email marketing campaigns</li>
+          <li>Marketing automation setup</li>
+          <li>ACH payment processing support</li>
+          <li>Google Workspace (unlimited users)</li>
+          <li>Priority response</li>
+        </ul>
+        <a href="contact.html" class="pkg-cta pkg-cta-o">Get started</a>
+      </div>
+
+      <div class="pkg pkg-custom">
+        <div class="pkg-name">✏️ Custom</div>
+        <div class="pkg-price" style="font-size:1.4rem;color:var(--green-deep);line-height:1.3">Built<br>for you</div>
+        <div class="pkg-mo"> </div>
+        <div class="pkg-desc">Have a specific project, a larger team, or needs that don't fit a package? Let's figure out what makes sense.</div>
+        <a href="contact.html" class="pkg-cta pkg-cta-p" style="background:var(--green-deep)">Request a quote</a>
+      </div>
+    </div>
+
+    <div class="cta-strip">
+      <div>
+        <h3>Not sure which package is right?</h3>
+        <p>A free 30-minute call is all it takes. No sales pitch — just an honest conversation about your business.</p>
+      </div>
+      <a href="contact.html" class="btn btn-yellow">Schedule a free call</a>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <a href="index.html" class="footer-logo">
+      <svg width="20" height="20" viewBox="0 0 28 28" fill="none"><rect width="28" height="28" rx="8" fill="#3D7A56"/><path d="M14 22V13M14 13C14 13 10 11 8 7C11 7 14 10 14 13ZM14 13C14 13 18 11 20 7C17 7 14 10 14 13Z" stroke="#95D5B2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 22H18" stroke="#95D5B2" stroke-width="1.8" stroke-linecap="round"/></svg>
+      Seedling
+    </a>
+    <div class="footer-copy">© 2026 Seedling. Albuquerque, NM.</div>
+    <div class="footer-links">
+      <a href="services.html">Services</a>
+      <a href="portfolio.html">Portfolio</a>
+      <a href="about.html">About</a>
+      <a href="contact.html">Contact</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('main-nav');
+  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 20));
+</script>
+</body>
+</html>
