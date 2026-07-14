@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Schedule a Conversation | B.B. Engineering — Enabler 2.0</title>
-<meta name="description" content="Talk through the Enabler 2.0 with B.B. Engineering — for parks departments, municipalities, campuses, and facilities teams.">
+<title>Schedule a Conversation | B.B. Engineering — Enabler 2.1</title>
+<meta name="description" content="Talk through the Enabler 2.1 with B.B. Engineering — for parks departments, municipalities, campuses, and facilities teams.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -30,12 +30,22 @@
     <div class="wrap">
       <div class="nav-row">
         <a href="index.html" class="logo">
-          <span class="mark">BBE</span>
-          <span class="word">B.B. ENGINEERING<small>Enabler 2.0</small></span>
+          <img src="images/bb-logo-mark.png" alt="" class="logo-mark-img">
+          <span class="word">B.B. ENGINEERING<small>Enabler</small></span>
         </a>
         <nav class="primary">
           <a href="index.html">Home</a>
-          <a href="vehicles.html">Vehicle &amp; Specs</a>
+          <div class="nav-item has-dropdown">
+            <a href="enabler-2-0.html" class="nav-dropdown-trigger">Vehicle
+              <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
+            </a>
+            <div class="nav-dropdown">
+      <a href="enabler-2-0.html">Enabler</a>
+      <a href="specs.html">Specs</a>
+      <a href="accessories.html">Accessories</a>
+      <a href="implements.html">Implements</a>
+            </div>
+          </div>
           <a href="gallery.html">Gallery</a>
           <a href="about.html">About</a>
           <a href="pre-order.html" class="mobile-cta">Pre-Order</a>
@@ -58,7 +68,7 @@
     <p class="eyebrow">Talk It Through First</p>
     <h1>Schedule a Conversation.</h1>
     <div class="rule"></div>
-    <p>For parks departments, municipalities, campuses, and facilities teams exploring the Enabler 2.0 for their grounds or workforce.</p>
+    <p>For parks departments, municipalities, campuses, and facilities teams exploring the Enabler 2.1 for their grounds or workforce.</p>
   </div>
 </section>
 
@@ -75,7 +85,7 @@
     <div class="form-card org" id="conversation-form">
       <span class="tag">Organizations &amp; Institutions</span>
       <h3>Schedule a Conversation</h3>
-      <p class="sub">For parks departments, municipalities, campuses, and facilities teams exploring the Enabler 2.0 for their grounds or workforce.</p>
+      <p class="sub">For parks departments, municipalities, campuses, and facilities teams exploring the Enabler 2.1 for their grounds or workforce.</p>
 
       <form data-prototype-form data-success-target="conversation-success">
         <div class="field">
@@ -119,7 +129,7 @@
   <div class="wrap">
     <h3>Ready to reserve one instead? No payment required.</h3>
     <div class="btn-row">
-      <a href="pre-order.html" class="btn btn-outline on-dark">Pre-Order Now</a>
+      <a href="pre-order.html" class="btn btn-outline on-dark">Reserve the Enabler 2.1</a>
     </div>
   </div>
 </section>
@@ -134,7 +144,10 @@
       <div>
         <h5>Explore</h5>
         <a href="index.html">Home</a>
-        <a href="vehicles.html">Vehicle &amp; Specs</a>
+        <a href="enabler-2-0.html">Enabler</a>
+        <a href="specs.html">Specs</a>
+        <a href="accessories.html">Accessories</a>
+        <a href="implements.html">Implements</a>
         <a href="gallery.html">Gallery</a>
         <a href="about.html">About</a>
       </div>
@@ -149,8 +162,8 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 B.B. Engineering. All rights reserved.</span>
-      <span>Prototype site — for review purposes.</span>
+      <span>&copy; 2026 B.B. Engineering. All rights reserved.</span>
+      <span>Prototype site &mdash; for review purposes.</span>
     </div>
   </div>
 </footer>
@@ -162,6 +175,5 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   this.setAttribute('aria-expanded', open);
   this.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
 });
-</script>
-</body>
+</script></body>
 </html>

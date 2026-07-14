@@ -30,12 +30,22 @@
     <div class="wrap">
       <div class="nav-row">
         <a href="index.html" class="logo">
-          <span class="mark">BBE</span>
-          <span class="word">B.B. ENGINEERING<small>Enabler 2.0</small></span>
+          <img src="images/bb-logo-mark.png" alt="" class="logo-mark-img">
+          <span class="word">B.B. ENGINEERING<small>Enabler</small></span>
         </a>
         <nav class="primary">
           <a href="index.html">Home</a>
-          <a href="vehicles.html">Vehicle &amp; Specs</a>
+          <div class="nav-item has-dropdown">
+            <a href="enabler-2-0.html" class="nav-dropdown-trigger">Vehicle
+              <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
+            </a>
+            <div class="nav-dropdown">
+      <a href="enabler-2-0.html">Enabler</a>
+      <a href="specs.html">Specs</a>
+      <a href="accessories.html">Accessories</a>
+      <a href="implements.html">Implements</a>
+            </div>
+          </div>
           <a href="gallery.html">Gallery</a>
           <a href="about.html" aria-current="page">About</a>
           <a href="pre-order.html" class="mobile-cta">Pre-Order</a>
@@ -88,7 +98,7 @@
       <div class="st-item">
         <p class="tag">Today</p>
         <h4>Early production, real interest</h4>
-        <p>We're taking pre-orders from individuals and early conversations with organizations who want the Enabler 2.0 on their grounds and campuses.</p>
+        <p>We're taking reservations for the Enabler 2.1 from individuals, and having early conversations with organizations who want it on their grounds and campuses.</p>
       </div>
       <div class="st-item">
         <p class="tag">Ahead</p>
@@ -165,7 +175,7 @@
   <div class="wrap">
     <h3>Want to be part of this from the start?</h3>
     <div class="btn-row">
-      <a href="pre-order.html" class="btn btn-outline on-dark">Pre-Order Now</a>
+      <a href="pre-order.html" class="btn btn-outline on-dark">Reserve the Enabler 2.1</a>
       <a href="schedule-conversation.html" class="btn btn-black">Schedule a Conversation</a>
     </div>
   </div>
@@ -181,7 +191,10 @@
       <div>
         <h5>Explore</h5>
         <a href="index.html">Home</a>
-        <a href="vehicles.html">Vehicle &amp; Specs</a>
+        <a href="enabler-2-0.html">Enabler</a>
+        <a href="specs.html">Specs</a>
+        <a href="accessories.html">Accessories</a>
+        <a href="implements.html">Implements</a>
         <a href="gallery.html">Gallery</a>
         <a href="about.html">About</a>
       </div>
@@ -196,8 +209,8 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 B.B. Engineering. All rights reserved.</span>
-      <span>Prototype site — for review purposes.</span>
+      <span>&copy; 2026 B.B. Engineering. All rights reserved.</span>
+      <span>Prototype site &mdash; for review purposes.</span>
     </div>
   </div>
 </footer>
@@ -209,6 +222,5 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   this.setAttribute('aria-expanded', open);
   this.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
 });
-</script>
-</body>
+</script></body>
 </html>

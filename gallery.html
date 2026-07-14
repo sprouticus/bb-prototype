@@ -30,12 +30,22 @@
     <div class="wrap">
       <div class="nav-row">
         <a href="index.html" class="logo">
-          <span class="mark">BBE</span>
-          <span class="word">B.B. ENGINEERING<small>Enabler 2.0</small></span>
+          <img src="images/bb-logo-mark.png" alt="" class="logo-mark-img">
+          <span class="word">B.B. ENGINEERING<small>Enabler</small></span>
         </a>
         <nav class="primary">
           <a href="index.html">Home</a>
-          <a href="vehicles.html">Vehicle &amp; Specs</a>
+          <div class="nav-item has-dropdown">
+            <a href="enabler-2-0.html" class="nav-dropdown-trigger">Vehicle
+              <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
+            </a>
+            <div class="nav-dropdown">
+      <a href="enabler-2-0.html">Enabler</a>
+      <a href="specs.html">Specs</a>
+      <a href="accessories.html">Accessories</a>
+      <a href="implements.html">Implements</a>
+            </div>
+          </div>
           <a href="gallery.html" aria-current="page">Gallery</a>
           <a href="about.html">About</a>
           <a href="pre-order.html" class="mobile-cta">Pre-Order</a>
@@ -200,9 +210,9 @@
 <!-- ============ CTA BAND ============ -->
 <section class="cta-band">
   <div class="wrap">
-    <h3>Ready to get your own Enabler 2.0?</h3>
+    <h3>Ready to reserve your own Enabler 2.1?</h3>
     <div class="btn-row">
-      <a href="pre-order.html" class="btn btn-outline on-dark">Pre-Order Now</a>
+      <a href="pre-order.html" class="btn btn-outline on-dark">Reserve the Enabler 2.1</a>
       <a href="schedule-conversation.html" class="btn btn-black">Schedule a Conversation</a>
     </div>
   </div>
@@ -218,7 +228,10 @@
       <div>
         <h5>Explore</h5>
         <a href="index.html">Home</a>
-        <a href="vehicles.html">Vehicle &amp; Specs</a>
+        <a href="enabler-2-0.html">Enabler</a>
+        <a href="specs.html">Specs</a>
+        <a href="accessories.html">Accessories</a>
+        <a href="implements.html">Implements</a>
         <a href="gallery.html">Gallery</a>
         <a href="about.html">About</a>
       </div>
@@ -233,65 +246,18 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 B.B. Engineering. All rights reserved.</span>
-      <span>Prototype site — for review purposes.</span>
+      <span>&copy; 2026 B.B. Engineering. All rights reserved.</span>
+      <span>Prototype site &mdash; for review purposes.</span>
     </div>
   </div>
 </footer>
 
 <script>
-// ---- Mobile nav toggle (shared across pages) ----
 document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   const nav = document.querySelector('nav.primary');
   const open = nav.classList.toggle('open');
   this.setAttribute('aria-expanded', open);
   this.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
 });
-
-// ---- Carousel ----
-(function(){
-  const track = document.getElementById('carousel-track');
-  if (!track) return;
-  const slides = track.querySelectorAll('.carousel-slide');
-  const dots = document.querySelectorAll('.carousel-dot');
-  let current = 0;
-  let autoplayTimer;
-
-  function goTo(i) {
-    current = (i + slides.length) % slides.length;
-    track.style.transform = 'translateX(-' + (current * 100) + '%)';
-    dots.forEach(function(d, idx){
-      d.classList.toggle('active', idx === current);
-      d.setAttribute('aria-selected', idx === current);
-    });
-  }
-
-  function startAutoplay() {
-    autoplayTimer = setInterval(function(){ goTo(current + 1); }, 5000);
-  }
-
-  function stopAutoplay() {
-    clearInterval(autoplayTimer);
-  }
-
-  document.querySelector('.carousel-prev')?.addEventListener('click', function(){ stopAutoplay(); goTo(current - 1); startAutoplay(); });
-  document.querySelector('.carousel-next')?.addEventListener('click', function(){ stopAutoplay(); goTo(current + 1); startAutoplay(); });
-  dots.forEach(function(d, i){ d.addEventListener('click', function(){ stopAutoplay(); goTo(i); startAutoplay(); }); });
-
-  track.closest('.carousel').addEventListener('mouseenter', stopAutoplay);
-  track.closest('.carousel').addEventListener('mouseleave', startAutoplay);
-
-  // Touch swipe support
-  let touchStartX = 0;
-  track.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; }, {passive:true});
-  track.addEventListener('touchend', function(e){
-    const dx = e.changedTouches[0].clientX - touchStartX;
-    if (Math.abs(dx) > 50) { stopAutoplay(); goTo(current + (dx < 0 ? 1 : -1)); startAutoplay(); }
-  }, {passive:true});
-
-  startAutoplay();
-})();
-</script>
-
-</body>
+</script></body>
 </html>

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pre-Order | B.B. Engineering — Enabler 2.0</title>
-<meta name="description" content="Reserve your Enabler 2.0. No payment required — for individuals and organizations alike.">
+<title>Reserve | B.B. Engineering — Enabler 2.1</title>
+<meta name="description" content="Reserve your Enabler 2.1, the next generation utility vehicle built on our proven Enabler 2.0. No payment required — for individuals and organizations alike.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -30,12 +30,22 @@
     <div class="wrap">
       <div class="nav-row">
         <a href="index.html" class="logo">
-          <span class="mark">BBE</span>
-          <span class="word">B.B. ENGINEERING<small>Enabler 2.0</small></span>
+          <img src="images/bb-logo-mark.png" alt="" class="logo-mark-img">
+          <span class="word">B.B. ENGINEERING<small>Enabler</small></span>
         </a>
         <nav class="primary">
           <a href="index.html">Home</a>
-          <a href="vehicles.html">Vehicle &amp; Specs</a>
+          <div class="nav-item has-dropdown">
+            <a href="enabler-2-0.html" class="nav-dropdown-trigger">Vehicle
+              <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
+            </a>
+            <div class="nav-dropdown">
+      <a href="enabler-2-0.html">Enabler</a>
+      <a href="specs.html">Specs</a>
+      <a href="accessories.html">Accessories</a>
+      <a href="implements.html">Implements</a>
+            </div>
+          </div>
           <a href="gallery.html">Gallery</a>
           <a href="about.html">About</a>
           <a href="pre-order.html" class="mobile-cta">Pre-Order</a>
@@ -56,30 +66,40 @@
 <section class="page-hero">
   <div class="wrap">
     <p class="eyebrow">Reserve Your Spot</p>
-    <h1>Pre-Order the Enabler 2.0.</h1>
+    <h1>Reserve the Enabler 2.1.</h1>
     <div class="rule"></div>
-    <p>Two minutes to reserve. No payment required — for individuals, families, and organizations alike.</p>
+    <p>Built on the proven Enabler 2.0 shown throughout this site. No payment required — for individuals, families, and organizations alike. The first 100 reservations come at no cost. Walk through four quick sections below: your information, then customize with accessories and implements, then review before you submit.</p>
   </div>
 </section>
 
-<!-- ============ PRE-ORDER FORM ============
-     One form, used by both individual and institutional buyers. The
-     "Who is this for?" radio at the top decides whether the
-     organization-specific fields (name, role, estimated quantity)
-     are shown — see the inline script at the bottom of this page.
-     No EIN field and no payment/deposit fields by design (see Website
-     Requirements PRD — EIN collection deferred to a later phase, and
-     "no payment required to pre-order" is a confirmed product decision).
+<!-- ============ PRE-ORDER FLOW ============
+     Single form, four progressively-revealed sections. Nothing here
+     is real e-commerce — accessories/implements are being *selected*
+     for the order, not purchased individually, and no payment info is
+     ever collected. See Website Requirements PRD.
 ============ -->
-<section class="lead-forms">
-  <div class="wrap lead-grid single">
+<section style="padding:56px 0 96px;">
+  <div class="wrap">
 
-    <div class="form-card you" id="pre-order-form-card">
-      <span class="tag">Pre-Order</span>
-      <h3>Reserve an Enabler 2.0</h3>
-      <p class="sub">No payment required. We'll follow up with next steps and timing based on production capacity.</p>
+    <div class="flow-reminder">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="14" rx="2"/><path d="M2 10h20"/><path d="M6 15h.01"/><line x1="6" y1="6" x2="6" y2="2" stroke-dasharray="2 2"/><line x1="18" y1="6" x2="18" y2="2" stroke-dasharray="2 2"/><path d="M4 4l16 16" stroke="var(--orange-dark)"/></svg>
+      <p>No payment information is required at any point in this flow.<span>You're reserving your spot, not checking out. We'll follow up on next steps and timing.</span></p>
+    </div>
 
-      <form data-prototype-form data-success-target="pre-order-success">
+    <div class="flow-progress" id="flow-progress">
+      <div class="flow-progress-step is-current" data-step="1"><span class="num">1</span><span class="label">Your Info</span></div>
+      <div class="flow-progress-step" data-step="2"><span class="num">2</span><span class="label">Accessories</span></div>
+      <div class="flow-progress-step" data-step="3"><span class="num">3</span><span class="label">Implements</span></div>
+      <div class="flow-progress-step" data-step="4"><span class="num">4</span><span class="label">Review</span></div>
+    </div>
+
+    <form data-prototype-form data-success-target="pre-order-success" id="preorder-flow-form" novalidate>
+
+      <!-- STEP 1 — Personal information -->
+      <section class="flow-step" id="flow-step-1" data-step="1">
+        <p class="flow-step-eyebrow">Step 1 of 4</p>
+        <h2>Your information</h2>
+        <p class="flow-step-sub">No payment required — the first 100 reservations are free. We just need to know who you are and how to reach you.</p>
 
         <div class="field">
           <label for="p-for">Who is this for?</label>
@@ -110,9 +130,9 @@
           <input type="text" id="p-location" name="location" placeholder="Albuquerque, NM" required>
         </div>
 
-        <!-- Organization-only fields — hidden unless "My organization or
-             institution" is selected above. -->
-        <div id="org-fields" style="display:none;">
+        <!-- Organization-only fields — shown only if "My organization or
+             institution" is selected above; see the flow script below. -->
+        <div id="org-fields" hidden>
           <div class="field">
             <label for="p-org">Organization name</label>
             <input type="text" id="p-org" name="organization">
@@ -163,11 +183,360 @@
           <input type="text" id="p-source" name="source">
         </div>
 
-        <button type="submit" class="btn btn-orange btn-block">Reserve My Spot</button>
-        <p style="margin-top:12px;font-size:13.5px;color:#454C49;text-align:center;">No payment required to pre-order.</p>
-      </form>
-      <div class="form-success" id="pre-order-success">Thanks — your spot is reserved. No payment required. Someone from B.B. Engineering will follow up with next steps and timing.</div>
-    </div>
+        <div class="flow-nav" style="justify-content:flex-end;">
+          <button type="button" class="btn btn-orange" data-flow-next="2">Next: Accessories &darr;</button>
+        </div>
+        <p class="flow-step-micro">No payment information required to continue.</p>
+      </section>
+
+      <!-- STEP 2 — Accessories -->
+      <section class="flow-step" id="flow-step-2" data-step="2" hidden>
+        <p class="flow-step-eyebrow">Step 2 of 4</p>
+        <h2>Customize with accessories</h2>
+        <p class="flow-step-sub">Browsing only turns into picking here. Select anything you'd like included — you can change your mind later, and none of this is charged now. Skip this step entirely if you're not sure yet.</p>
+
+        <div class="pick-grid">
+        <label class="pick-card">
+          <input type="checkbox" class="pick-input" name="accessories" value="Traditional Driver&#x27;s Seat" data-price="175.00">
+          <span class="pick-card-visual">
+            <div class="pick-card-img"><img src="https://static.wixstatic.com/media/7bf9b2_a8f76f4defe44e4ab061946107c86203~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="Traditional Driver&#x27;s Seat" loading="lazy"></div>
+            <span class="pick-card-body">
+              <span class="pick-card-name">Traditional Driver&#x27;s Seat</span>
+              <span class="pick-card-price">$175.00</span>
+            </span>
+            <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          </span>
+        </label>
+        <label class="pick-card">
+          <input type="checkbox" class="pick-input" name="accessories" value="2-In-1 Split Flip Windshield" data-price="260.00">
+          <span class="pick-card-visual">
+            <div class="pick-card-img"><img src="https://static.wixstatic.com/media/7bf9b2_8adecc3887044fe58aa2f2c51a223c93~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="2-In-1 Split Flip Windshield" loading="lazy"></div>
+            <span class="pick-card-body">
+              <span class="pick-card-name">2-In-1 Split Flip Windshield</span>
+              <span class="pick-card-price">$260.00</span>
+            </span>
+            <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          </span>
+        </label>
+        <label class="pick-card">
+          <input type="checkbox" class="pick-input" name="accessories" value="2&quot; Trailer Hitch Receiver" data-price="60.00">
+          <span class="pick-card-visual">
+            <div class="pick-card-img"><img src="https://static.wixstatic.com/media/7bf9b2_ca48946546194a338b69f1986f7a224f~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="2&quot; Trailer Hitch Receiver" loading="lazy"></div>
+            <span class="pick-card-body">
+              <span class="pick-card-name">2&quot; Trailer Hitch Receiver</span>
+              <span class="pick-card-price">$60.00</span>
+            </span>
+            <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          </span>
+        </label>
+        <label class="pick-card">
+          <input type="checkbox" class="pick-input" name="accessories" value="5-Panel Panoramic Wide Mirror" data-price="32.00">
+          <span class="pick-card-visual">
+            <div class="pick-card-img"><img src="https://static.wixstatic.com/media/7bf9b2_74877a3ad8104ffe95d72cddd1ad9ebc~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="5-Panel Panoramic Wide Mirror" loading="lazy"></div>
+            <span class="pick-card-body">
+              <span class="pick-card-name">5-Panel Panoramic Wide Mirror</span>
+              <span class="pick-card-price">$32.00</span>
+            </span>
+            <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          </span>
+        </label>
+        <label class="pick-card">
+          <input type="checkbox" class="pick-input" name="accessories" value="21&quot; Overhead Light Bar" data-price="65.00">
+          <span class="pick-card-visual">
+            <div class="pick-card-img no-image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>Photo Unavailable</span></div>
+            <span class="pick-card-body">
+              <span class="pick-card-name">21&quot; Overhead Light Bar</span>
+              <span class="pick-card-price">$65.00</span>
+            </span>
+            <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          </span>
+        </label>
+        <label class="pick-card">
+          <input type="checkbox" class="pick-input" name="accessories" value="Cargo Lights" data-price="41.00">
+          <span class="pick-card-visual">
+            <div class="pick-card-img"><img src="https://static.wixstatic.com/media/7bf9b2_f4b807e9f9c547428c05caf53a35ac97~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="Cargo Lights" loading="lazy"></div>
+            <span class="pick-card-body">
+              <span class="pick-card-name">Cargo Lights</span>
+              <span class="pick-card-price">$41.00</span>
+            </span>
+            <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          </span>
+        </label>
+        <label class="pick-card">
+          <input type="checkbox" class="pick-input" name="accessories" value="High Lift Jack / Farm Jack" data-price="115.00">
+          <span class="pick-card-visual">
+            <div class="pick-card-img"><img src="https://static.wixstatic.com/media/7bf9b2_6af4a2111fb94c869e3d6060b36d40e9~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="High Lift Jack / Farm Jack" loading="lazy"></div>
+            <span class="pick-card-body">
+              <span class="pick-card-name">High Lift Jack / Farm Jack</span>
+              <span class="pick-card-price">$115.00</span>
+            </span>
+            <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          </span>
+        </label>
+        <label class="pick-card">
+          <input type="checkbox" class="pick-input" name="accessories" value="45&quot; Front Cargo Basket" data-price="165.00">
+          <span class="pick-card-visual">
+            <div class="pick-card-img"><img src="https://static.wixstatic.com/media/7bf9b2_2243c5c1b6dd4f7d8457ff0b52c27de5~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="45&quot; Front Cargo Basket" loading="lazy"></div>
+            <span class="pick-card-body">
+              <span class="pick-card-name">45&quot; Front Cargo Basket</span>
+              <span class="pick-card-price">$165.00</span>
+            </span>
+            <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          </span>
+        </label>
+        <label class="pick-card">
+          <input type="checkbox" class="pick-input" name="accessories" value="39&quot; Front Cargo Basket" data-price="155.00">
+          <span class="pick-card-visual">
+            <div class="pick-card-img"><img src="https://static.wixstatic.com/media/7bf9b2_2243c5c1b6dd4f7d8457ff0b52c27de5~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="39&quot; Front Cargo Basket" loading="lazy"></div>
+            <span class="pick-card-body">
+              <span class="pick-card-name">39&quot; Front Cargo Basket</span>
+              <span class="pick-card-price">$155.00</span>
+            </span>
+            <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          </span>
+        </label>
+        <label class="pick-card">
+          <input type="checkbox" class="pick-input" name="accessories" value="12-Volt DC 2,000 lb. Utility Vehicle Winch" data-price="209.00">
+          <span class="pick-card-visual">
+            <div class="pick-card-img"><img src="https://static.wixstatic.com/media/7bf9b2_750a55989b694a6b8fd15c74366f0d4d~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="12-Volt DC 2,000 lb. Utility Vehicle Winch" loading="lazy"></div>
+            <span class="pick-card-body">
+              <span class="pick-card-name">12-Volt DC 2,000 lb. Utility Vehicle Winch</span>
+              <span class="pick-card-price">$209.00</span>
+            </span>
+            <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+          </span>
+        </label>
+        </div>
+
+        <div class="flow-nav">
+          <button type="button" class="flow-back" data-flow-back="1">Go Back</button>
+          <button type="button" class="btn btn-orange" data-flow-next="3">Next: Implements &darr;</button>
+        </div>
+        <p class="flow-step-micro">Optional — no payment information required to continue.</p>
+      </section>
+
+      <!-- STEP 3 — Implements -->
+      <section class="flow-step" id="flow-step-3" data-step="3" hidden>
+        <p class="flow-step-eyebrow">Step 3 of 4</p>
+        <h2>Add implements</h2>
+        <p class="flow-step-sub">Placeholders for now — final implement details and pricing are coming from each partner brand soon. Select any you'd like flagged on your reservation.</p>
+
+      <div class="pick-brand-group">
+        <div class="pick-brand-head">
+          <div class="pick-brand-logo">D</div>
+          <h3>Demco</h3>
+        </div>
+        <div class="pick-grid">
+          <label class="pick-card">
+            <input type="checkbox" class="pick-input" name="implements" value="Demco — Implement Name 1" data-price="TBD">
+            <span class="pick-card-visual">
+              <div class="pick-card-img no-image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>Photo Unavailable</span></div>
+              <span class="pick-card-body">
+                <span class="pick-card-name">Implement Name 1</span>
+                <span class="pick-card-price">Price TBD</span>
+              </span>
+              <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+            </span>
+          </label>
+          <label class="pick-card">
+            <input type="checkbox" class="pick-input" name="implements" value="Demco — Implement Name 2" data-price="TBD">
+            <span class="pick-card-visual">
+              <div class="pick-card-img no-image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>Photo Unavailable</span></div>
+              <span class="pick-card-body">
+                <span class="pick-card-name">Implement Name 2</span>
+                <span class="pick-card-price">Price TBD</span>
+              </span>
+              <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+            </span>
+          </label>
+          <label class="pick-card">
+            <input type="checkbox" class="pick-input" name="implements" value="Demco — Implement Name 3" data-price="TBD">
+            <span class="pick-card-visual">
+              <div class="pick-card-img no-image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>Photo Unavailable</span></div>
+              <span class="pick-card-body">
+                <span class="pick-card-name">Implement Name 3</span>
+                <span class="pick-card-price">Price TBD</span>
+              </span>
+              <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+            </span>
+          </label>
+          <label class="pick-card">
+            <input type="checkbox" class="pick-input" name="implements" value="Demco — Implement Name 4" data-price="TBD">
+            <span class="pick-card-visual">
+              <div class="pick-card-img no-image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>Photo Unavailable</span></div>
+              <span class="pick-card-body">
+                <span class="pick-card-name">Implement Name 4</span>
+                <span class="pick-card-price">Price TBD</span>
+              </span>
+              <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+            </span>
+          </label>
+        </div>
+      </div>
+      <div class="pick-brand-group">
+        <div class="pick-brand-head">
+          <div class="pick-brand-logo">WC</div>
+          <h3>Wolf Creek</h3>
+        </div>
+        <div class="pick-grid">
+          <label class="pick-card">
+            <input type="checkbox" class="pick-input" name="implements" value="Wolf Creek — Implement Name 1" data-price="TBD">
+            <span class="pick-card-visual">
+              <div class="pick-card-img no-image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>Photo Unavailable</span></div>
+              <span class="pick-card-body">
+                <span class="pick-card-name">Implement Name 1</span>
+                <span class="pick-card-price">Price TBD</span>
+              </span>
+              <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+            </span>
+          </label>
+          <label class="pick-card">
+            <input type="checkbox" class="pick-input" name="implements" value="Wolf Creek — Implement Name 2" data-price="TBD">
+            <span class="pick-card-visual">
+              <div class="pick-card-img no-image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>Photo Unavailable</span></div>
+              <span class="pick-card-body">
+                <span class="pick-card-name">Implement Name 2</span>
+                <span class="pick-card-price">Price TBD</span>
+              </span>
+              <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+            </span>
+          </label>
+          <label class="pick-card">
+            <input type="checkbox" class="pick-input" name="implements" value="Wolf Creek — Implement Name 3" data-price="TBD">
+            <span class="pick-card-visual">
+              <div class="pick-card-img no-image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>Photo Unavailable</span></div>
+              <span class="pick-card-body">
+                <span class="pick-card-name">Implement Name 3</span>
+                <span class="pick-card-price">Price TBD</span>
+              </span>
+              <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+            </span>
+          </label>
+        </div>
+      </div>
+      <div class="pick-brand-group">
+        <div class="pick-brand-head">
+          <div class="pick-brand-logo">KE</div>
+          <h3>Kurtz Engineering</h3>
+        </div>
+        <div class="pick-grid">
+          <label class="pick-card">
+            <input type="checkbox" class="pick-input" name="implements" value="Kurtz Engineering — Implement Name 1" data-price="TBD">
+            <span class="pick-card-visual">
+              <div class="pick-card-img no-image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>Photo Unavailable</span></div>
+              <span class="pick-card-body">
+                <span class="pick-card-name">Implement Name 1</span>
+                <span class="pick-card-price">Price TBD</span>
+              </span>
+              <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+            </span>
+          </label>
+          <label class="pick-card">
+            <input type="checkbox" class="pick-input" name="implements" value="Kurtz Engineering — Implement Name 2" data-price="TBD">
+            <span class="pick-card-visual">
+              <div class="pick-card-img no-image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>Photo Unavailable</span></div>
+              <span class="pick-card-body">
+                <span class="pick-card-name">Implement Name 2</span>
+                <span class="pick-card-price">Price TBD</span>
+              </span>
+              <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+            </span>
+          </label>
+          <label class="pick-card">
+            <input type="checkbox" class="pick-input" name="implements" value="Kurtz Engineering — Implement Name 3" data-price="TBD">
+            <span class="pick-card-visual">
+              <div class="pick-card-img no-image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>Photo Unavailable</span></div>
+              <span class="pick-card-body">
+                <span class="pick-card-name">Implement Name 3</span>
+                <span class="pick-card-price">Price TBD</span>
+              </span>
+              <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+            </span>
+          </label>
+        </div>
+      </div>
+      <div class="pick-brand-group">
+        <div class="pick-brand-head">
+          <div class="pick-brand-logo">PB</div>
+          <h3>Partner Brand 4</h3>
+        </div>
+        <div class="pick-grid">
+          <label class="pick-card">
+            <input type="checkbox" class="pick-input" name="implements" value="Partner Brand 4 — Implement Name 1" data-price="TBD">
+            <span class="pick-card-visual">
+              <div class="pick-card-img no-image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>Photo Unavailable</span></div>
+              <span class="pick-card-body">
+                <span class="pick-card-name">Implement Name 1</span>
+                <span class="pick-card-price">Price TBD</span>
+              </span>
+              <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+            </span>
+          </label>
+          <label class="pick-card">
+            <input type="checkbox" class="pick-input" name="implements" value="Partner Brand 4 — Implement Name 2" data-price="TBD">
+            <span class="pick-card-visual">
+              <div class="pick-card-img no-image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>Photo Unavailable</span></div>
+              <span class="pick-card-body">
+                <span class="pick-card-name">Implement Name 2</span>
+                <span class="pick-card-price">Price TBD</span>
+              </span>
+              <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+            </span>
+          </label>
+          <label class="pick-card">
+            <input type="checkbox" class="pick-input" name="implements" value="Partner Brand 4 — Implement Name 3" data-price="TBD">
+            <span class="pick-card-visual">
+              <div class="pick-card-img no-image"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="1"/><path d="M3 16l5-5 4 4 3-3 6 6"/><circle cx="8" cy="9" r="1.4"/></svg><span>Photo Unavailable</span></div>
+              <span class="pick-card-body">
+                <span class="pick-card-name">Implement Name 3</span>
+                <span class="pick-card-price">Price TBD</span>
+              </span>
+              <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
+            </span>
+          </label>
+        </div>
+      </div>
+
+        <div class="flow-nav">
+          <button type="button" class="flow-back" data-flow-back="2">Go Back</button>
+          <button type="button" class="btn btn-orange" data-flow-next="4">Next: Review &darr;</button>
+        </div>
+        <p class="flow-step-micro">Optional — no payment information required to continue.</p>
+      </section>
+
+      <!-- STEP 4 — Review & submit -->
+      <section class="flow-step" id="flow-step-4" data-step="4" hidden>
+        <p class="flow-step-eyebrow">Step 4 of 4</p>
+        <h2>Review &amp; submit</h2>
+        <p class="flow-step-sub">Take a look before you send it — nothing has been submitted yet, and no payment information has been collected.</p>
+
+        <div class="review-block">
+          <h3>Your Information</h3>
+          <div class="review-grid" id="review-info"></div>
+        </div>
+
+        <div class="review-block">
+          <h3>Selected Accessories</h3>
+          <ul class="review-list" id="review-accessories"></ul>
+          <p class="review-note">Shown for your reference only — no payment required. Final pricing is confirmed when B.B. Engineering follows up.</p>
+        </div>
+
+        <div class="review-block">
+          <h3>Selected Implements</h3>
+          <ul class="review-list" id="review-implements"></ul>
+          <p class="review-note">Implement pricing is still being finalized with each partner brand.</p>
+        </div>
+
+        <div class="flow-nav">
+          <button type="button" class="flow-back" data-flow-back="3">Go Back</button>
+          <button type="submit" class="btn btn-orange">Submit Reservation</button>
+        </div>
+        <p class="flow-step-micro">No payment required to submit this reservation.</p>
+      </section>
+
+    </form>
+
+    <div class="form-success" id="pre-order-success" style="max-width:760px;margin:0 auto;">Thanks — your spot is reserved. No payment required. Someone from B.B. Engineering will follow up with next steps and timing.</div>
 
   </div>
 </section>
@@ -191,7 +560,10 @@
       <div>
         <h5>Explore</h5>
         <a href="index.html">Home</a>
-        <a href="vehicles.html">Vehicle &amp; Specs</a>
+        <a href="enabler-2-0.html">Enabler 2.0</a>
+        <a href="specs.html">Specs</a>
+        <a href="accessories.html">Accessories</a>
+        <a href="implements.html">Implements</a>
         <a href="gallery.html">Gallery</a>
         <a href="about.html">About</a>
       </div>
@@ -206,8 +578,8 @@
       </div>
     </div>
     <div class="footer-bottom">
-      <span>© 2026 B.B. Engineering. All rights reserved.</span>
-      <span>Prototype site — for review purposes.</span>
+      <span>&copy; 2026 B.B. Engineering. All rights reserved.</span>
+      <span>Prototype site &mdash; for review purposes.</span>
     </div>
   </div>
 </footer>
@@ -219,15 +591,152 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   this.setAttribute('aria-expanded', open);
   this.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
 });
-
-// Show organization-only fields only when "My organization or
-// institution" is selected in the "Who is this for?" radio group.
-const orgFields = document.getElementById('org-fields');
-document.querySelectorAll('input[name="pre-order-for"]').forEach(function(radio){
-  radio.addEventListener('change', function(){
-    orgFields.style.display = (this.value === 'organization' && this.checked) ? 'block' : 'none';
-  });
-});
 </script>
+
+<script>
+(function(){
+  var form = document.getElementById('preorder-flow-form');
+  var success = document.getElementById('pre-order-success');
+  var progressSteps = document.querySelectorAll('#flow-progress .flow-progress-step');
+  var currentStep = 1;
+
+  // Org-fields conditional toggle
+  var orgFields = document.getElementById('org-fields');
+  var forRadios = document.querySelectorAll('input[name="pre-order-for"]');
+  function syncOrgFields(){
+    var checked = document.querySelector('input[name="pre-order-for"]:checked');
+    orgFields.hidden = !(checked && checked.value === 'organization');
+  }
+  forRadios.forEach(function(r){ r.addEventListener('change', syncOrgFields); });
+  syncOrgFields();
+
+  function setProgress(step){
+    progressSteps.forEach(function(el){
+      var n = parseInt(el.getAttribute('data-step'), 10);
+      el.classList.remove('is-current', 'is-done');
+      if (n === step) el.classList.add('is-current');
+      else if (n < step) el.classList.add('is-done');
+    });
+  }
+
+  function goToStep(step){
+    var target = document.getElementById('flow-step-' + step);
+    if (!target) return;
+    target.hidden = false;
+    currentStep = step;
+    setProgress(step);
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    if (step === 4) buildReview();
+  }
+
+  document.querySelectorAll('[data-flow-next]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var stepEl = btn.closest('.flow-step');
+      if (stepEl && stepEl.getAttribute('data-step') === '1'){
+        var invalid = stepEl.querySelector(':invalid');
+        if (invalid){
+          if (stepEl.reportValidity) stepEl.reportValidity();
+          invalid.focus();
+          return;
+        }
+      }
+      goToStep(parseInt(btn.getAttribute('data-flow-next'), 10));
+    });
+  });
+
+  document.querySelectorAll('[data-flow-back]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      goToStep(parseInt(btn.getAttribute('data-flow-back'), 10));
+    });
+  });
+
+  function fieldVal(id){
+    var el = document.getElementById(id);
+    if (!el) return '';
+    return el.value ? el.value.trim() : '';
+  }
+
+  function radioVal(name){
+    var el = document.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : '';
+  }
+
+  var forLabels = { myself: 'Myself', family: 'A family member', organization: 'My organization or institution' };
+
+  function buildReview(){
+    var info = [
+      ['Reserving for', forLabels[radioVal('pre-order-for')] || '—'],
+      ['Name', fieldVal('p-name') || '—'],
+      ['Email', fieldVal('p-email') || '—'],
+      ['Phone', fieldVal('p-phone') || 'Not provided'],
+      ['Location', fieldVal('p-location') || '—'],
+      ['Primary use', fieldVal('p-use') || '—'],
+      ['Timeline', fieldVal('p-timeline') || '—']
+    ];
+    if (!orgFields.hidden){
+      info.push(['Organization', fieldVal('p-org') || 'Not provided']);
+      info.push(['Role', fieldVal('p-role') || 'Not provided']);
+      info.push(['Estimated quantity', fieldVal('p-qty') || '—']);
+    }
+    var notes = fieldVal('p-notes');
+    if (notes) info.push(['Notes', notes]);
+    var source = fieldVal('p-source');
+    if (source) info.push(['Heard about us via', source]);
+
+    var infoHtml = info.map(function(pair){
+      return '<div class="review-item"><span class="k">' + pair[0] + '</span><span class="v">' + escapeHtml(pair[1]) + '</span></div>';
+    }).join('');
+    document.getElementById('review-info').innerHTML = infoHtml;
+
+    renderList('review-accessories', 'accessories', true);
+    renderList('review-implements', 'implements', false);
+  }
+
+  function renderList(targetId, name, showSubtotal){
+    var target = document.getElementById(targetId);
+    // Clear any subtotal markup injected by a previous render (user may
+    // step back and forth between sections before landing on Review again).
+    var sib = target.nextElementSibling;
+    while (sib && sib.classList.contains('review-injected')){
+      var next = sib.nextElementSibling;
+      sib.remove();
+      sib = next;
+    }
+    var checked = document.querySelectorAll('input[name="' + name + '"]:checked');
+    if (!checked.length){
+      target.innerHTML = '<li class="review-empty">None selected</li>';
+      return;
+    }
+    var total = 0;
+    var html = '';
+    checked.forEach(function(cb){
+      var price = cb.getAttribute('data-price');
+      var priceLabel = price === 'TBD' ? 'Price TBD' : '$' + price;
+      if (price !== 'TBD') total += parseFloat(price);
+      html += '<li>' + escapeHtml(cb.value) + '<span class="review-price">' + priceLabel + '</span></li>';
+    });
+    target.innerHTML = html;
+    if (showSubtotal && total > 0){
+      target.insertAdjacentHTML('afterend', '<div class="review-subtotal review-injected"><span>Reference subtotal</span><span>$' + total.toFixed(2) + '</span></div><p class="review-note review-injected" style="margin-top:2px;">Informational only — no payment required to reserve.</p>');
+    }
+  }
+
+  function escapeHtml(str){
+    var div = document.createElement('div');
+    div.textContent = str;
+    return div.innerHTML;
+  }
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    form.style.display = 'none';
+    document.getElementById('flow-progress').style.display = 'none';
+    success.classList.add('show');
+    success.style.display = 'block';
+    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  });
+})();
+</script>
+
 </body>
 </html>
