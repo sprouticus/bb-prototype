@@ -36,9 +36,12 @@
         <nav class="primary">
           <a href="index.html">Home</a>
           <div class="nav-item has-dropdown">
-            <a href="enabler-2-0.html" class="nav-dropdown-trigger">Vehicle
-              <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
-            </a>
+            <div class="nav-dropdown-trigger-row">
+              <a href="enabler-2-0.html" class="nav-dropdown-trigger">Vehicle</a>
+              <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-label="Toggle Vehicle menu">
+                <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </div>
             <div class="nav-dropdown">
       <a href="enabler-2-0.html">The Enabler</a>
       <a href="specs.html">Specs</a>
@@ -47,18 +50,24 @@
             </div>
           </div>
           <div class="nav-item has-dropdown">
-            <a href="videos.html" class="nav-dropdown-trigger">Gallery
-              <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
-            </a>
+            <div class="nav-dropdown-trigger-row">
+              <a href="videos.html" class="nav-dropdown-trigger">Gallery</a>
+              <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-label="Toggle Gallery menu">
+                <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </div>
             <div class="nav-dropdown">
       <a href="videos.html">Videos</a>
       <a href="photos.html">Photos</a>
             </div>
           </div>
           <div class="nav-item has-dropdown">
-            <a href="company-purpose.html" class="nav-dropdown-trigger">Company
-              <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
-            </a>
+            <div class="nav-dropdown-trigger-row">
+              <a href="company-purpose.html" class="nav-dropdown-trigger">Company</a>
+              <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-label="Toggle Company menu">
+                <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
+              </button>
+            </div>
             <div class="nav-dropdown">
       <a href="company-purpose.html">Our Purpose</a>
       <a href="history.html">History</a>
@@ -153,5 +162,38 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   this.setAttribute('aria-expanded', open);
   this.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
 });
+
+/* ============ MOBILE DROPDOWN ACCORDION — Vehicle/Gallery/Company
+   dropdowns start collapsed on mobile; tapping the caret button
+   toggles them open/closed (added 2026-07-18, replaces the old
+   "always open" mobile behavior). Also resets all dropdowns closed
+   when the hamburger menu itself is closed, so reopening the menu
+   later starts fresh. ============ */
+(function(){
+  const toggles = document.querySelectorAll('.nav-dropdown-toggle');
+  toggles.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      const item = btn.closest('.nav-item.has-dropdown');
+      if(!item) return;
+      const willOpen = !item.classList.contains('open');
+      document.querySelectorAll('.nav-item.has-dropdown.open').forEach(function(openItem){
+        if(openItem !== item){
+          openItem.classList.remove('open');
+          openItem.querySelector('.nav-dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+        }
+      });
+      item.classList.toggle('open', willOpen);
+      btn.setAttribute('aria-expanded', String(willOpen));
+    });
+  });
+  document.querySelector('.nav-toggle')?.addEventListener('click', function(){
+    if(!document.querySelector('nav.primary')?.classList.contains('open')){
+      document.querySelectorAll('.nav-item.has-dropdown.open').forEach(function(item){
+        item.classList.remove('open');
+        item.querySelector('.nav-dropdown-toggle')?.setAttribute('aria-expanded', 'false');
+      });
+    }
+  });
+})();
 </script></body>
 </html>

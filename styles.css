@@ -191,17 +191,23 @@ nav.primary a{
 }
 nav.primary a:hover, nav.primary a[aria-current="page"]{border-bottom-color:var(--orange);}
 
-/* -------- VEHICLE DROPDOWN (added 2026-07-14) — desktop shows the
-   4 vehicle-group pages on hover/focus; on mobile the dropdown just
-   renders as an always-open indented list under "Vehicle" inside the
-   hamburger menu, since hover doesn't exist on touch and this avoids
-   needing extra JS for a second toggle. -------- */
+/* -------- VEHICLE / GALLERY / COMPANY DROPDOWNS (added 2026-07-14,
+   restructured 2026-07-18) — desktop shows the sub-pages on hover/
+   focus. Mobile used to force the dropdown permanently open (hover
+   doesn't exist on touch, so there was no way to collapse it). Fixed
+   by splitting the trigger into two independent controls: the label
+   is still a plain link to its own page, and a separate caret
+   <button class="nav-dropdown-toggle"> now toggles an .open class via
+   JS (see the toggle script at the bottom of the page) so each
+   dropdown starts collapsed on mobile and expands on tap. -------- */
 .nav-item.has-dropdown{position:relative;}
 .nav-item.has-dropdown:has(.nav-dropdown a[aria-current="page"]) .nav-dropdown-trigger{border-bottom-color:var(--orange);}
-.nav-dropdown-trigger{display:inline-flex;align-items:center;gap:6px;}
-.nav-dropdown-trigger .caret{width:9px;height:9px;flex:none;transition:transform .15s ease;}
+.nav-dropdown-trigger-row{display:flex;align-items:center;gap:2px;}
+.nav-dropdown-toggle{background:none;border:none;padding:4px;margin:0;cursor:pointer;display:inline-flex;align-items:center;color:inherit;}
+.nav-dropdown-toggle .caret{width:9px;height:9px;flex:none;transition:transform .15s ease;}
 .nav-item.has-dropdown:hover .caret,
-.nav-item.has-dropdown:focus-within .caret{transform:rotate(180deg);}
+.nav-item.has-dropdown:focus-within .caret,
+.nav-item.has-dropdown.open .caret{transform:rotate(180deg);}
 .nav-dropdown{
   position:absolute;top:100%;left:0;margin-top:16px;
   background:var(--white);border:1px solid var(--line);
@@ -229,12 +235,24 @@ nav.primary a:hover, nav.primary a[aria-current="page"]{border-bottom-color:var(
    a:hover" / "nav.primary a[aria-current]" at the top of this file. */
 nav.primary .nav-dropdown a:hover,
 nav.primary .nav-dropdown a[aria-current="page"]{border-bottom-color:transparent;}
+
+/* Mobile: collapsed accordion by default. :focus-within isn't relied
+   on here since iOS Safari doesn't reliably focus a tapped <button> —
+   the .open class (added/removed by JS on toggle click) is the source
+   of truth for mobile visibility instead. */
 @media (max-width:980px){
   .nav-item.has-dropdown{width:100%;}
+  .nav-dropdown-trigger-row{width:100%;justify-content:space-between;}
+  .nav-dropdown-toggle{padding:10px;margin:-10px -6px -10px 0;}
   .nav-dropdown{
-    position:static;opacity:1;visibility:visible;transform:none;
-    border:none;box-shadow:none;padding:2px 0 0 18px;margin-top:10px;
+    position:static;opacity:0;visibility:hidden;transform:none;
+    border:none;box-shadow:none;padding:0 0 0 18px;margin-top:0;
+    max-height:0;overflow:hidden;
     display:flex;flex-direction:column;gap:2px;
+    transition:max-height .2s ease, opacity .15s ease;
+  }
+  .nav-item.has-dropdown.open .nav-dropdown{
+    opacity:1;visibility:visible;max-height:280px;margin-top:10px;padding-top:2px;
   }
   .nav-dropdown a{padding:8px 0;font-size:15px;}
 }
@@ -319,9 +337,15 @@ nav.primary a.mobile-cta{display:none;}
   .hero .cta-row{flex-direction:column;gap:10px;margin-top:20px;}
   .hero .cta-row .btn{width:100%;justify-content:center;}
   .hero .micro{font-size:12.5px;line-height:1.5;}
-  /* Cap the hero photo so it doesn't dominate the screen */
-  .hero-art.hero-photo{max-height:220px;}
-  .hero-art.hero-photo img{height:220px;}
+  /* Cap the hero photo so it doesn't dominate the screen. Needs an
+     explicit height (not just max-height) — the img's height:100% rule
+     further down the stylesheet (.hero-art.hero-photo img, unconditional)
+     has equal specificity and comes later in source order, so it was
+     winning here and resolving to auto (no definite parent height to
+     read a percentage from), letting the image render at its full
+     natural aspect ratio instead of the intended cropped strip. Fixed
+     2026-07-18. */
+  .hero-art.hero-photo{height:220px;max-height:220px;}
 }
 
 /* ============================================================
