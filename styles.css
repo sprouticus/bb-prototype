@@ -147,9 +147,12 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .util-right svg{width:14px;height:14px;color:var(--orange);}
 .util-social{display:flex;gap:10px;}
 .util-social a svg{width:16px;height:16px;color:var(--ink);}
-@media (max-width:560px){
-  .util-bar .wrap{padding:7px 16px;}
-  .util-left{font-size:12.5px;}
+/* Utility strip (location/USA line, email, social icons) hidden on
+   mobile — it was eating a big chunk of the viewport above the actual
+   nav on phones, added 2026-07-18. Same breakpoint as the nav's
+   hamburger collapse, so "mobile" means the same thing everywhere. */
+@media (max-width:980px){
+  .util-bar{display:none;}
 }
 
 header.site{position:sticky;top:0;z-index:50;}
@@ -219,6 +222,13 @@ nav.primary a:hover, nav.primary a[aria-current="page"]{border-bottom-color:var(
 }
 .nav-dropdown a:hover,
 .nav-dropdown a[aria-current="page"]{background:var(--paper);color:var(--orange-dark);}
+/* Override the generic nav.primary a underline (border-bottom) for
+   dropdown items specifically — red text on hover/current is enough,
+   the underline bar was cluttering the menu (fixed 2026-07-18). Needs
+   the extra nav.primary prefix for specificity over "nav.primary
+   a:hover" / "nav.primary a[aria-current]" at the top of this file. */
+nav.primary .nav-dropdown a:hover,
+nav.primary .nav-dropdown a[aria-current="page"]{border-bottom-color:transparent;}
 @media (max-width:980px){
   .nav-item.has-dropdown{width:100%;}
   .nav-dropdown{
@@ -791,15 +801,14 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
 .product-note{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--steel-pale);}
 
 /* -------- BRAND SECTIONS (Implements page) -------- */
-.brand-jumpnav{background:var(--paper);border-bottom:1px solid var(--line);}
+.brand-jumpnav{background:var(--white);border-bottom:1px solid var(--line);}
 .brand-jumpnav .wrap{display:flex;gap:6px;flex-wrap:wrap;padding:14px 28px;}
 .brand-jumpnav a{
   font-family:var(--font-mono);font-size:13px;font-weight:700;letter-spacing:.04em;
-  text-transform:uppercase;color:var(--ink);padding:8px 14px;border:1px solid var(--line);border-radius:2px;
+  text-transform:uppercase;color:var(--ink);padding:8px 14px;border:2px solid var(--steel);border-radius:2px;
 }
 .brand-jumpnav a:hover{color:var(--orange-dark);border-color:var(--orange);background:var(--white);}
-.brand-section{padding:56px 0;scroll-margin-top:70px;}
-.brand-section:nth-child(even){background:var(--paper);}
+.brand-section{padding:56px 0;scroll-margin-top:70px;background:var(--white);}
 .brand-header{display:flex;align-items:center;gap:20px;margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--line);}
 .brand-logo-placeholder{
   width:88px;height:88px;flex:none;border:2px dashed var(--steel-pale);border-radius:2px;
@@ -847,6 +856,30 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
 /* ============================================================
    ABOUT PAGE
    ============================================================ */
+
+/* -------- MISSION STATEMENT (Our Purpose page, added 2026-07-18) —
+   David's own mission language ("to enable people with mobility
+   impairments to participate fully in the world"), given its own
+   full-width dark band above Our Story so it reads as a standalone
+   statement rather than another paragraph of body copy. Short line
+   count means the type can run large; the accent phrase is picked
+   out in red the same way .hero h1 .hl works. -------- */
+.mission-statement{background:var(--black);padding:68px 0;text-align:center;}
+.mission-statement .eyebrow{color:var(--steel-pale);}
+.mission-statement .rule{margin:0 auto;background:var(--orange);}
+.mission-statement blockquote{
+  font-family:var(--font-display);font-weight:800;
+  font-size:clamp(22px,3.6vw,41px);
+  line-height:1.16;letter-spacing:-0.015em;
+  color:var(--white);
+  max-width:612px;margin:18px auto 0;
+}
+.mission-statement blockquote .hl{color:var(--orange);}
+@media (max-width:640px){
+  .mission-statement{padding:44px 0;}
+  .mission-statement blockquote{margin-top:14px;}
+}
+
 .founder-photo{
   margin:0 0 28px;position:relative;overflow:hidden;
 }
@@ -881,6 +914,24 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
 /* Top row: photo + text */
 .story-top{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:start;}
 .story-copy{display:flex;flex-direction:column;justify-content:center;}
+
+/* -------- .story-top--wrap (Our Purpose page, added 2026-07-18) —
+   image stack floats left at a fixed width and the copy runs as
+   plain flow text (h2/p as direct children, not a flex column) so it
+   wraps around the images and returns to full width once it clears
+   past the bottom of the second photo. Only two placeholder photos
+   in the stack; a third was dropped per request. Width bumped from
+   320px to 480px (2026-07-18) so the images read closer to the
+   original ~50/50 image/text proportions instead of a narrow column. -------- */
+.story-top--wrap{display:block;}
+.story-top--wrap::after{content:'';display:table;clear:both;}
+.story-top--wrap .story-stack{float:left;width:480px;margin:4px 40px 20px 0;}
+@media(max-width:900px){
+  .story-top--wrap .story-stack{width:380px;}
+}
+@media(max-width:760px){
+  .story-top--wrap .story-stack{float:none;width:auto;margin:0 0 28px;}
+}
 
 /* Horizontal timeline */
 .story-timeline{
@@ -951,7 +1002,7 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
    FOOTER
    ============================================================ */
 footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top:1px solid var(--line);}
-.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:32px;margin-bottom:40px;}
+.footer-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr 1fr;gap:32px;margin-bottom:40px;}
 .footer-grid h5{font-family:var(--font-mono);font-size:15px;letter-spacing:.1em;text-transform:uppercase;color:var(--steel);margin-bottom:14px;}
 .footer-grid a,.footer-grid p{display:block;font-size:17px;font-weight:500;color:var(--ink);margin-bottom:8px;}
 .footer-logo{color:var(--ink);font-family:var(--font-display);font-weight:800;font-size:22px;}
@@ -1102,7 +1153,7 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
 /* ============================================================
    GALLERY PAGE — page hero, carousel, grid
    ============================================================ */
-.gallery-carousel-section{background:var(--paper);padding-bottom:60px;}
+.gallery-carousel-section{background:var(--white);padding-bottom:60px;}
 
 .carousel{position:relative;overflow:hidden;}
 .carousel-track{display:flex;transition:transform .45s ease;}
@@ -1139,7 +1190,7 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
   .carousel-caption{padding:24px 20px 16px;}
 }
 
-.gallery-grid-section{padding:68px 0 80px;background:var(--paper);}
+.gallery-grid-section{padding:68px 0 80px;background:var(--white);}
 .gallery-grid-full{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
 .gallery-item{position:relative;overflow:hidden;}
 .gallery-item-inner{aspect-ratio:4/3;overflow:hidden;}
@@ -1161,3 +1212,140 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
 .gallery-item:hover .gallery-item-label{background:rgba(14,17,18,.82);color:var(--white);}
 @media(max-width:760px){.gallery-grid-full{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:480px){.gallery-grid-full{grid-template-columns:1fr;}}
+
+/* ============================================================
+   VIDEO GALLERY (videos.html, added 2026-07-18) — new page created
+   when Gallery became a dropdown (Videos / Photos). Featured video
+   sits directly under the page hero (same rhythm as .vehicle-video on
+   the Enabler page), followed by a two-up grid for the rest of the
+   field footage. Real <video> elements with native controls, not an
+   iframe embed, since these are local files rather than YouTube.
+   ============================================================ */
+.video-featured{padding:60px 0 24px;background:var(--white);}
+.video-featured .head{max-width:680px;}
+.video-featured .head h2{font-size:clamp(27.5px,3.4vw,37px);margin-top:10px;}
+.video-featured .head p{font-size:18px;color:#454C49;margin-top:12px;line-height:1.55;}
+.video-embed-box{
+  max-width:900px;margin:32px auto 0;aspect-ratio:16/9;
+  border-radius:2px;overflow:hidden;background:var(--ink);
+  border:1px solid var(--line);
+}
+.video-embed-box video{width:100%;height:100%;display:block;object-fit:cover;background:var(--ink);}
+
+.video-grid-section{padding:24px 0 84px;background:var(--white);}
+.video-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px;}
+.video-card{background:var(--paper);border:1px solid var(--line);border-radius:2px;overflow:hidden;display:flex;flex-direction:column;}
+.video-card-embed{aspect-ratio:16/9;background:var(--ink);}
+.video-card-embed video{width:100%;height:100%;display:block;object-fit:cover;}
+.video-card-embed--placeholder{
+  border-bottom:2px dashed var(--steel-pale);background:var(--white);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--steel-pale);
+}
+.video-card-embed--placeholder svg{width:32px;height:32px;}
+.video-card-embed--placeholder span{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;}
+.video-card-body{padding:22px 24px;flex:1;}
+.video-card-body h3{font-size:20.5px;}
+.video-card-body p{font-size:15.5px;color:#454C49;margin-top:8px;line-height:1.55;}
+@media(max-width:760px){.video-grid{grid-template-columns:1fr;}}
+
+/* ============================================================
+   HISTORY TIMELINE (history.html) — top-down vertical timeline,
+   added 2026-07-18 for the new "Our Company" nav. A single vertical
+   line runs down the left edge with a dot per era; each item's photo
+   + copy sit to the right of the line.
+   ============================================================ */
+.history-timeline-section{padding:76px 0 88px;background:var(--white);}
+.history-timeline{
+  position:relative;max-width:900px;margin:0 auto;
+  padding-left:48px;
+}
+.history-timeline::before{
+  content:'';position:absolute;top:8px;bottom:8px;left:15px;
+  width:3px;background:var(--line);
+}
+.ht-item{position:relative;margin-bottom:64px;}
+.ht-item:last-child{margin-bottom:0;}
+.ht-marker{position:absolute;left:-48px;top:2px;display:flex;flex-direction:column;align-items:center;width:32px;}
+.ht-dot{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--white);border:4px solid var(--steel);
+  box-shadow:0 0 0 6px var(--white);
+}
+.ht-item--current .ht-dot{border-color:var(--orange);}
+.ht-year{
+  margin-top:8px;font-family:var(--font-mono);font-weight:700;font-size:12.5px;
+  letter-spacing:.04em;color:var(--ink);white-space:nowrap;
+  writing-mode:horizontal-tb;
+}
+.ht-content{
+  display:grid;grid-template-columns:180px 1fr;gap:28px;
+  background:var(--paper);border:1px solid var(--line);border-radius:2px;
+  padding:24px;align-items:center;
+}
+.ht-item--current .ht-content{background:var(--white);border-color:var(--orange);border-width:2px;}
+.ht-photo{aspect-ratio:3/4;overflow:hidden;border-radius:2px;background:var(--white);}
+.ht-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.ht-copy .tag{font-family:var(--font-mono);font-size:14px;color:var(--orange-dark);font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
+.ht-copy h3{font-size:26px;margin-top:6px;text-transform:none;}
+.ht-copy p{font-size:16.5px;color:#454C49;margin-top:10px;line-height:1.55;}
+.ht-copy p a{color:var(--orange-dark);text-decoration:underline;text-underline-offset:2px;font-weight:700;}
+.ht-copy .next-gen-flag{margin-bottom:10px;}
+.ht-copy .btn{margin-top:16px;}
+
+@media(max-width:700px){
+  .ht-content{grid-template-columns:1fr;}
+  .ht-photo{aspect-ratio:16/9;}
+}
+@media(max-width:560px){
+  .history-timeline{padding-left:36px;}
+  .history-timeline::before{left:11px;}
+  .ht-marker{left:-36px;width:24px;}
+  .ht-dot{width:16px;height:16px;border-width:3px;}
+}
+
+/* ============================================================
+   CAREERS PLACEHOLDER (careers.html) — added 2026-07-18. Deliberately
+   minimal until there are real openings to post.
+   ============================================================ */
+.careers-empty{padding:88px 0 100px;background:var(--paper);}
+.careers-empty-card{
+  max-width:480px;margin:0 auto;text-align:center;
+  background:var(--white);border:1px solid var(--line);border-radius:2px;
+  padding:48px 36px;
+}
+.careers-empty-card svg{width:40px;height:40px;color:var(--steel-pale);margin-bottom:18px;}
+.careers-empty-card h2{font-size:24px;margin-bottom:10px;}
+.careers-empty-card p{color:#454C49;font-size:16.5px;line-height:1.5;margin-bottom:24px;}
+
+/* ============================================================
+   CONTACT PAGE (contact.html) — added 2026-07-18. Info card reuses
+   the .form-card shell (border/padding/tag) so it sits flush with the
+   form card in the .lead-grid two-column layout.
+   ============================================================ */
+.contact-info-card{
+  background:var(--white);border:1px solid var(--line);border-radius:2px;padding:34px;
+}
+.contact-info-card h3{font-size:27.5px;text-transform:uppercase;margin-bottom:22px;}
+.contact-detail-list{list-style:none;padding:0;margin:0;}
+.contact-detail-list li{
+  display:flex;flex-direction:column;gap:2px;
+  padding:14px 0;border-bottom:1px solid var(--line);
+}
+.contact-detail-list li:last-child{border-bottom:none;}
+.cd-label{font-family:var(--font-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--steel-pale);}
+.cd-value{font-size:17px;font-weight:600;color:var(--ink);}
+a.cd-value{color:var(--orange-dark);text-decoration:none;}
+a.cd-value:hover{text-decoration:underline;}
+.cd-pending{color:var(--steel-pale);font-weight:500;font-style:italic;}
+
+.contact-social-head{font-size:14px;font-family:var(--font-mono);letter-spacing:.06em;text-transform:uppercase;color:var(--steel-pale);margin:28px 0 12px;}
+.contact-social{display:flex;flex-direction:column;gap:2px;}
+.contact-social-link{
+  display:flex;align-items:center;gap:10px;
+  padding:10px 0;font-weight:700;color:var(--ink);
+  border-bottom:1px solid var(--line);
+}
+.contact-social-link:last-child{border-bottom:none;}
+.contact-social-link svg{width:20px;height:20px;flex-shrink:0;color:var(--steel);}
+.contact-social-link:hover{color:var(--orange-dark);}
+.contact-social-link:hover svg{color:var(--orange-dark);}
