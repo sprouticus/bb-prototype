@@ -65,7 +65,7 @@
 
 <section class="page-hero">
   <div class="wrap">
-    <p class="eyebrow">The Current Vehicle</p>
+    <p class="eyebrow">The Vehicle</p>
     <h1>The Enabler</h1>
     <div class="rule"></div>
     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>Sed do eiusmod tempor incididunt ut labore et dolore.</p>
@@ -211,44 +211,56 @@
   </div>
 </section>
 
-<!-- ============ VEHICLE PHOTO CAROUSEL — moved to the bottom of the
-     page, just above the footer, 2026-07-19 (previously sat directly
-     under the page-hero banner; that spot is now the vehicle video). ============ -->
-<section class="vehicle-photos">
+<!-- ============ CUSTOMIZE YOUR ACCESSORIES — replaced the vehicle
+     photo carousel (vp-* markup) at the bottom of the page, 2026-07-18.
+     Thumbnails link through to the Accessories page rather than
+     opening individually here; images are the same hotlinked Wix CDN
+     photos used on accessories.html (per catalog-intro note there,
+     these should be re-hosted locally before real launch). ============ -->
+<section class="accessories-teaser">
   <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Make It Yours</p>
+        <h2>Customize Your Accessories</h2>
+      </div>
+      <a href="accessories.html" class="btn btn-outline btn-sm">View Accessories</a>
+    </div>
 
-    <div class="vp-main-wrap">
-      <img src="images/enabler-side-indoor.jpg" alt="Enabler 2.0 front three-quarter view" id="vp-main-img">
-      <div class="vp-caption" id="vp-caption">Enabler 2.0 — Front Three-Quarter View</div>
-      <button class="vp-arrow vp-prev" aria-label="Previous photo">
+    <div class="accessories-scroll-wrap">
+      <button type="button" class="accessories-arrow accessories-prev" aria-label="Scroll accessories left">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
-      <button class="vp-arrow vp-next" aria-label="Next photo">
+      <div class="accessories-scroll" role="list" aria-label="Available accessories">
+        <a class="accessories-scroll-item" href="accessories.html" role="listitem">
+          <img src="https://static.wixstatic.com/media/7bf9b2_a8f76f4defe44e4ab061946107c86203~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="Traditional Driver's Seat" loading="lazy">
+        </a>
+        <a class="accessories-scroll-item" href="accessories.html" role="listitem">
+          <img src="https://static.wixstatic.com/media/7bf9b2_8adecc3887044fe58aa2f2c51a223c93~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="2-In-1 Split Flip Windshield" loading="lazy">
+        </a>
+        <a class="accessories-scroll-item" href="accessories.html" role="listitem">
+          <img src="https://static.wixstatic.com/media/7bf9b2_ca48946546194a338b69f1986f7a224f~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="2&quot; Trailer Hitch Receiver" loading="lazy">
+        </a>
+        <a class="accessories-scroll-item" href="accessories.html" role="listitem">
+          <img src="https://static.wixstatic.com/media/7bf9b2_74877a3ad8104ffe95d72cddd1ad9ebc~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="5-Panel Panoramic Wide Mirror" loading="lazy">
+        </a>
+        <a class="accessories-scroll-item" href="accessories.html" role="listitem">
+          <img src="https://static.wixstatic.com/media/7bf9b2_f4b807e9f9c547428c05caf53a35ac97~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="Cargo Lights" loading="lazy">
+        </a>
+        <a class="accessories-scroll-item" href="accessories.html" role="listitem">
+          <img src="https://static.wixstatic.com/media/7bf9b2_6af4a2111fb94c869e3d6060b36d40e9~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="High Lift Jack / Farm Jack" loading="lazy">
+        </a>
+        <a class="accessories-scroll-item" href="accessories.html" role="listitem">
+          <img src="https://static.wixstatic.com/media/7bf9b2_2243c5c1b6dd4f7d8457ff0b52c27de5~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="45&quot; Front Cargo Basket" loading="lazy">
+        </a>
+        <a class="accessories-scroll-item" href="accessories.html" role="listitem">
+          <img src="https://static.wixstatic.com/media/7bf9b2_750a55989b694a6b8fd15c74366f0d4d~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="12-Volt DC 2,000 lb. Utility Vehicle Winch" loading="lazy">
+        </a>
+      </div>
+      <button type="button" class="accessories-arrow accessories-next" aria-label="Scroll accessories right">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
       </button>
     </div>
-
-    <div class="vp-thumbs" role="list" aria-label="Vehicle photos">
-      <button class="vp-thumb active" aria-label="Front three-quarter view" data-src="images/enabler-side-indoor.jpg" data-caption="Enabler 2.0 — Front Three-Quarter View">
-        <img src="images/thumbs/enabler-side-indoor-thumb.jpg" alt="Front three-quarter view thumbnail">
-      </button>
-      <button class="vp-thumb" aria-label="Side profile" data-src="images/enabler-side-outdoor-road.jpg" data-caption="Enabler 2.0 — Side Profile">
-        <img src="images/thumbs/enabler-side-outdoor-road-thumb.jpg" alt="Side profile thumbnail">
-      </button>
-      <button class="vp-thumb" aria-label="Self-loading rear lift" data-src="images/enabler-rear-lift-ramp-down.jpg" data-caption="Enabler 2.0 — Self-Loading Rear Lift">
-        <img src="images/thumbs/enabler-rear-lift-ramp-down-thumb.jpg" alt="Rear lift thumbnail">
-      </button>
-      <button class="vp-thumb" aria-label="Wheels and suspension" data-src="images/enabler-rear-suspension-detail.jpg" data-caption="Enabler 2.0 &mdash; 14&quot; Off-Road Wheels &amp; Suspension">
-        <img src="images/thumbs/enabler-rear-suspension-detail-thumb.jpg" alt="Wheels and suspension thumbnail">
-      </button>
-      <button class="vp-thumb" aria-label="Seating and controls" data-src="images/enabler-hero-driver.jpg" data-caption="Enabler 2.0 &mdash; Wheelchair Seating &amp; Controls">
-        <img src="images/thumbs/enabler-hero-driver-thumb.jpg" alt="Seating and controls thumbnail">
-      </button>
-      <button class="vp-thumb" aria-label="Battery and power system" data-src="images/enabler-cargo-bed-detail.jpg" data-caption="Enabler 2.0 &mdash; 51.2V Battery &amp; Power System">
-        <img src="images/thumbs/enabler-cargo-bed-detail-thumb.jpg" alt="Battery system thumbnail">
-      </button>
-    </div>
-
   </div>
 </section>
 
@@ -316,36 +328,6 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
     '</a>';
 })();
 
-/* ============ VEHICLE PHOTO CAROUSEL — wires up the main-image
-   swap, thumbnail strip, and prev/next arrows (markup existed but
-   had no listeners, so the carousel was inert; fixed 2026-07-18). ============ */
-(function(){
-  const mainImg = document.getElementById('vp-main-img');
-  const caption = document.getElementById('vp-caption');
-  const thumbs = Array.from(document.querySelectorAll('.vp-thumb'));
-  const prevBtn = document.querySelector('.vp-prev');
-  const nextBtn = document.querySelector('.vp-next');
-  if(!mainImg || !thumbs.length) return;
-
-  let index = thumbs.findIndex(function(t){ return t.classList.contains('active'); });
-  if(index < 0) index = 0;
-
-  function show(i){
-    index = (i + thumbs.length) % thumbs.length;
-    const thumb = thumbs[index];
-    mainImg.src = thumb.getAttribute('data-src');
-    mainImg.alt = thumb.getAttribute('aria-label') || '';
-    if(caption) caption.textContent = thumb.getAttribute('data-caption') || '';
-    thumbs.forEach(function(t, n){ t.classList.toggle('active', n === index); });
-  }
-
-  thumbs.forEach(function(thumb, i){
-    thumb.addEventListener('click', function(){ show(i); });
-  });
-  prevBtn?.addEventListener('click', function(){ show(index - 1); });
-  nextBtn?.addEventListener('click', function(){ show(index + 1); });
-})();
-
 /* ============ IMPLEMENTS VIDEO — starts playing only once the
    section scrolls into view, pauses once it scrolls out, and always
    respects a manual pause/play from the toggle button (added
@@ -395,6 +377,26 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   } else if(!reduceMotion){
     video.play().catch(function(){});
   }
+})();
+
+/* ============ ACCESSORIES SCROLL ARROWS — left/right buttons step
+   the thumbnail row by roughly one viewport width per click, replacing
+   the native scrollbar (added 2026-07-18). ============ */
+(function(){
+  const row = document.querySelector('.accessories-scroll');
+  const prevBtn = document.querySelector('.accessories-prev');
+  const nextBtn = document.querySelector('.accessories-next');
+  if(!row || !prevBtn || !nextBtn) return;
+
+  function step(){
+    return row.clientWidth * 0.8;
+  }
+  prevBtn.addEventListener('click', function(){
+    row.scrollBy({ left: -step(), behavior: 'smooth' });
+  });
+  nextBtn.addEventListener('click', function(){
+    row.scrollBy({ left: step(), behavior: 'smooth' });
+  });
 })();
 </script>
 </body>
