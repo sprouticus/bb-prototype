@@ -314,6 +314,12 @@ nav.primary a.mobile-cta{display:none;}
 
 .hero-art{
   background:var(--paper);
+  /* margin:0 reset is load-bearing — <figure> carries a browser default
+     margin (roughly 1em 40px). Only margin-left was ever overridden
+     below, so margin-right kept its ~40px UA default at every
+     breakpoint, pulling the whole image visibly left/off-center
+     instead of flush and centered. Fixed 2026-07-18. */
+  margin:0;
   margin-left:-12%;
   padding:48px 36px 48px 130px;
   display:flex;align-items:center;justify-content:center;
