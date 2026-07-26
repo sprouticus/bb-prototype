@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>History | B.B. Engineering</title>
-<meta name="description" content="From the original Buddy Buggy to the Enabler 2.0 to the Enabler 2.1 in development now — the story of B.B. Engineering's wheelchair-adaptive vehicles.">
+<meta name="description" content="From the original Buddy Buggy to the Enabler 2.0 and the Enabler 2.1 in development now: the story of B.B. Engineering's wheelchair-adaptive vehicles.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -47,6 +47,7 @@
       <a href="specs.html">Specs</a>
       <a href="accessories.html">Accessories</a>
       <a href="implements.html">Implements</a>
+      <a href="catch-and-release.html">Catch-and-Release</a>
             </div>
           </div>
           <div class="nav-item has-dropdown">
@@ -93,77 +94,131 @@
 <section class="page-hero">
   <div class="wrap">
     <p class="eyebrow">Then to Now</p>
-    <h1>Three Vehicles, One Idea.</h1>
+    <h1>History</h1>
     <div class="rule"></div>
-    <p>Off-road, work-capable, and built around the rider — from the first Buddy Buggy to what's coming next.</p>
+    <p>Off-road and work-capable, built around the rider, from the first Buddy Buggy to what's coming next.</p>
   </div>
 </section>
 
-<!-- ============ HISTORY TIMELINE — top-down vertical timeline, added
-     2026-07-18 for the new "Company" nav. Buddy Buggy content
-     sourced from buddybuggyutv.com/home (the founders' original
-     company); photo hotlinked from that site's Wix CDN the same way
-     accessories.html hotlinks its catalog photos — worth re-hosting
-     locally before real launch. Dates are approximate per David's
-     direction ("roughly 10 years ago" / "started around 2020"). ============ -->
-<section class="history-timeline-section">
+<!-- ============ HISTORY SNAKE TIMELINE — rebuilt 2026-07-26 from a
+     client-supplied reference layout, replacing the left-rail vertical
+     timeline. Serpentine path switchbacks down the page; each milestone
+     carries a year badge and the BB vehicle mark, which flips to face
+     the direction of travel. Geometry is documented in the
+     .snake-* block in styles.css.
+
+     PLACEHOLDER CONTENT: years and headings are placeholders and the
+     body copy is lorem ipsum, per direction 2026-07-26 — the layout is
+     what's under review here, real copy comes later. The previous real
+     content is preserved in the comment at the end of this section so
+     it can be dropped back in.
+
+     The vehicle mark is bb-logo-mark.png standing in for proper
+     per-milestone artwork. ============ -->
+<section class="snake-section">
   <div class="wrap">
-    <div class="history-timeline">
+    <div class="snake">
 
-      <div class="ht-item">
-        <div class="ht-marker">
-          <span class="ht-dot"></span>
-          <span class="ht-year">~2016</span>
+      <div class="snake-row snake-row--right">
+        <span class="snake-cap snake-cap--start" aria-hidden="true"></span>
+        <div class="snake-cell">
+          <span class="snake-badge">2016</span>
+          <h2>Milestone 01</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper.</p>
         </div>
-        <div class="ht-content">
-          <figure class="ht-photo">
-            <img src="https://static.wixstatic.com/media/7bf9b2_3edf88b438a74d97abba27009c8420fe~mv2.png/v1/fill/w_323,h_648,al_c,lg_1,q_85,enc_avif,quality_auto/gator.png" alt="The original Buddy Buggy wheelchair-adaptive UTV" loading="lazy">
-          </figure>
-          <div class="ht-copy">
-            <p class="tag">Where It Started</p>
-            <h3>The Buddy Buggy</h3>
-            <p>About a decade ago, Dave White built the Buddy Buggy — the first wheelchair-adaptive off-road vehicle out of the shop. Board through a rear wheelchair lift, dock straight into the driver's seat, and steer with a joystick. No transfers, no compromises, all-electric. Built and based in Albuquerque, NM, the Buddy Buggy went wherever people needed it: hunting trips, farms and ranches, and just getting back outside. It proved the idea and set up everything that came after it.</p>
-          </div>
-        </div>
+        <span class="snake-vehicle" aria-hidden="true"><img src="images/bb-logo-mark.png" alt=""></span>
       </div>
 
-      <div class="ht-item">
-        <div class="ht-marker">
-          <span class="ht-dot"></span>
-          <span class="ht-year">~2020</span>
+
+      <div class="snake-row snake-row--left snake-row--turn-right">
+        <div class="snake-cell">
+          <span class="snake-badge">2018</span>
+          <h2>Milestone 02</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper.</p>
         </div>
-        <div class="ht-content">
-          <figure class="ht-photo">
-            <img src="images/enabler-side-indoor.jpg" alt="The Enabler 2.0, the current B.B. Engineering vehicle">
-          </figure>
-          <div class="ht-copy">
-            <p class="tag">The Next Generation</p>
-            <h3>The Enabler 2.0</h3>
-            <p>Everything learned building the Buddy Buggy went into its successor. Starting around 2020, the vehicle was rebuilt from the frame up: all-wheel drive, an all-electric powertrain, a self-loading rear wheelchair lift the driver operates alone, and all-steel construction rated for real work, not just recreation. It's the vehicle you see across this site today, and it's still in production — see the <a href="enabler-2-0.html">full walkthrough</a> or the <a href="specs.html">complete specs</a>.</p>
-          </div>
-        </div>
+        <span class="snake-vehicle" aria-hidden="true"><img src="images/bb-logo-mark.png" alt=""></span>
       </div>
 
-      <div class="ht-item ht-item--current">
-        <div class="ht-marker">
-          <span class="ht-dot"></span>
-          <span class="ht-year">Now</span>
+
+      <div class="snake-row snake-row--right snake-row--turn-left">
+        <div class="snake-cell">
+          <span class="snake-badge">2023</span>
+          <h2>Milestone 03</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper.</p>
         </div>
-        <div class="ht-content">
-          <figure class="ht-photo">
-            <img src="images/bb-teaser-placeholder.jpg" alt="Placeholder graphic representing the upcoming Enabler 2.1 — final artwork coming soon">
-          </figure>
-          <div class="ht-copy">
-            <span class="next-gen-flag">In Active Development</span>
-            <h3>The Enabler 2.1</h3>
-            <p>The Enabler 2.1 is our next generation, in active production right now and built directly on everything the 2.0 has proven in the field. We're not ready to show every detail yet — more information is coming soon. In the meantime, reserving today gets you the 2.1 as soon as it's ready.</p>
-            <a href="pre-order.html" class="btn btn-orange btn-sm">Pre-Order the Enabler 2.1
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
-            </a>
-          </div>
-        </div>
+        <span class="snake-vehicle" aria-hidden="true"><img src="images/bb-logo-mark.png" alt=""></span>
       </div>
 
+
+      <div class="snake-row snake-row--left snake-row--turn-right">
+        <div class="snake-cell">
+          <span class="snake-badge">2025</span>
+          <h2>Milestone 04</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper.</p>
+        </div>
+        <span class="snake-vehicle" aria-hidden="true"><img src="images/bb-logo-mark.png" alt=""></span>
+      </div>
+
+
+      <div class="snake-row snake-row--right snake-row--turn-left">
+        <div class="snake-cell">
+          <span class="snake-badge">2027</span>
+          <h2>Milestone 05</h2>
+          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper.</p>
+        </div>
+        <span class="snake-vehicle" aria-hidden="true"><img src="images/bb-logo-mark.png" alt=""></span>
+        <span class="snake-cap snake-cap--end" aria-hidden="true"></span>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ PREVIOUS REAL CONTENT — parked here 2026-07-26 when the
+     layout went to placeholders. Three milestones, ready to reinstate:
+
+     ~2016 · Where It Started · "The Buddy Buggy"
+       About a decade ago, Dave White built the Buddy Buggy, the first
+       wheelchair-adaptive off-road vehicle out of the shop. Board through a
+       rear wheelchair lift, dock straight into the driver's seat, and steer
+       with a joystick. No transfers, no compromises, all-electric. Built and
+       based in Albuquerque, NM, the Buddy Buggy went wherever people needed
+       it: hunting trips, farms and ranches, and just getting back outside. It
+       proved the idea and set up everything that came after it.
+       (photo was hotlinked from static.wixstatic.com — needs re-hosting)
+
+     ~2020 · The Next Generation · "The Enabler 2.0"
+       Everything learned building the Buddy Buggy went into its successor.
+       Starting around 2020, the vehicle was rebuilt from the frame up:
+       all-wheel drive, an all-electric powertrain, a self-loading rear
+       wheelchair lift the driver operates alone, and all-steel construction
+       rated for real work, not just recreation. It's the vehicle in
+       production today. Links: enabler-2-0.html, specs.html
+       (photo: images/enabler-side-indoor.jpg)
+
+     Now · In Active Development · "The Enabler 2.1"
+       The Enabler 2.1 is our next generation, in active production right now
+       and built directly on everything the 2.0 has proven in the field. We're
+       not ready to show every detail yet. More information is coming soon.
+       Reserving today gets you the 2.1 as soon as it's ready.
+       (photo: images/bb-teaser-placeholder.jpg, plus a Pre-Order CTA)
+     ============ -->
+
+<!-- ============ CTA — the pre-order button used to live inside the third
+     milestone; with the milestones on placeholder copy it moved here so the
+     page still has a path forward. Reuses the .next-step pattern from the
+     home page. ============ -->
+<section class="next-step">
+  <div class="wrap">
+    <p class="eyebrow">What's Next</p>
+    <h2>The next Enabler is in production now.</h2>
+    <div class="rule"></div>
+    <p class="sub">Reserving today secures an Enabler 2.1 as soon as it is ready. Pre-order takes a couple of minutes and requires no payment.</p>
+    <div class="cta-row">
+      <a href="pre-order.html" class="btn btn-orange">Pre-Order the Enabler 2.1
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a href="schedule-conversation.html" class="btn btn-outline">Schedule a Conversation</a>
     </div>
   </div>
 </section>
@@ -173,7 +228,7 @@
     <div class="footer-grid">
       <div>
         <p class="footer-logo">B.B. ENGINEERING</p>
-        <p style="margin-top:10px;">Off-road utility vehicles for wheelchair users — on their own terms.</p>
+        <p style="margin-top:10px;">Off-road utility vehicles for wheelchair users. Built for independence.</p>
       </div>
       <div>
         <h5>Vehicle</h5>
@@ -181,6 +236,7 @@
         <a href="specs.html">Specs</a>
         <a href="accessories.html">Accessories</a>
         <a href="implements.html">Implements</a>
+        <a href="catch-and-release.html">Catch-and-Release</a>
         <a href="videos.html">Videos</a>
         <a href="photos.html">Photos</a>
       </div>
@@ -205,7 +261,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 B.B. Engineering. All rights reserved.</span>
-      <span>Prototype site &mdash; for review purposes.</span>
+      <span>Prototype site, for review purposes.</span>
     </div>
   </div>
 </footer>

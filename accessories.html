@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Accessories | B.B. Engineering</title>
-<meta name="description" content="Accessories available for the Enabler — seating, windshields, lighting, cargo baskets, hitch receivers, and more. Informational listings; select accessories when you customize your order.">
+<meta name="description" content="Seating, windshields, lighting, and cargo upgrades for the Enabler, including the standard seat that adapts it for any driver.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -47,6 +47,7 @@
       <a href="specs.html">Specs</a>
       <a href="accessories.html" aria-current="page">Accessories</a>
       <a href="implements.html">Implements</a>
+      <a href="catch-and-release.html">Catch-and-Release</a>
             </div>
           </div>
           <div class="nav-item has-dropdown">
@@ -95,7 +96,99 @@
     <p class="eyebrow">Add-Ons &amp; Upgrades</p>
     <h1>Accessories</h1>
     <div class="rule"></div>
-    <p>Bolt-on upgrades for seating, visibility, lighting, cargo, and recovery. Click a photo for a larger look. Details and pricing below are informational — accessories aren't sold individually from this page.</p>
+    <p>Bolt-on upgrades for seating, visibility, lighting, cargo, and recovery.</p>
+  </div>
+</section>
+
+<!-- ============ INTRO — copy left, carousel right (2026-07-26).
+     Replaces the plain-text "Multifunctional by design" callout that
+     used to sit here; same message, but it now earns the horizontal
+     space and carries imagery. Shares the .intro-split pattern and the
+     carousel JS with the Implements page — see styles.css.
+
+     Copy uses approved language only ("multifunctional," "adaptable,"
+     "reconfigured") with no loss/incapacitation framing, per the 06-30
+     client rules, and stays third-person.
+
+     Deliberately NOT written as a two-part contrast ("One vehicle.
+     More than one driver." was rejected 2026-07-26) — plain declarative
+     statements only on this project. The headline states the claim
+     directly: customizable, adaptable to any driver, now and later.
+
+     PLACEHOLDER IMAGERY: build-stage photos standing in until better
+     shots exist. Sources were 8-10MB phone originals with EXIF
+     rotation; these are 1600x900 derivatives with the rotation baked
+     in and EXIF stripped (originals untouched in images/).
+
+     !! CHECK BEFORE PUBLISHING: the frame/chassis shots are dated
+     Feb and Jul 2026, which overlaps the fabrication window for the
+     larger next-gen Enabler that the 06-30 meeting said must NOT be
+     shown on the v1 site. If either frame is that vehicle rather than
+     a 2.0, swap it out. ============ -->
+<section class="intro-split">
+  <div class="wrap">
+    <div class="intro-split-grid">
+
+      <div class="intro-split-copy">
+        <p class="eyebrow">Multifunctional by Design</p>
+        <h2>Adaptable to any driver, now and in the future.</h2>
+        <div class="rule"></div>
+        <p class="sub">Seating, visibility, lighting, and cargo are all specified when the vehicle is built, and every one of them can be changed later. An Enabler set up for one driver can be reconfigured for another as an organization's crew changes, so it keeps working for whoever is driving it.</p>
+      </div>
+
+      <div class="intro-split-media">
+        <div class="carousel-frame">
+        <div class="carousel" aria-label="The Enabler being built">
+          <div class="carousel-track" id="carousel-track">
+
+            <div class="carousel-slide">
+              <img src="images/enabler-build-frame.jpg" alt="Welded tube frame of the Enabler on the shop floor, suspension fitted">
+              <div class="carousel-caption">
+                <p class="carousel-caption-title">Frame Up</p>
+                <p>Every vehicle starts as bare tube and plate in the shop.</p>
+              </div>
+            </div>
+
+            <div class="carousel-slide">
+              <img src="images/enabler-build-rolling.jpg" alt="The Enabler as a rolling chassis on wheels outside the shop, before bodywork">
+              <div class="carousel-caption">
+                <p class="carousel-caption-title">Rolling Chassis</p>
+                <p>Suspension, steering, and wheels go on before any bodywork.</p>
+              </div>
+            </div>
+
+            <div class="carousel-slide">
+              <img src="images/enabler-build-complete.jpg" alt="A finished Enabler indoors with the rear lift deployed">
+              <div class="carousel-caption">
+                <p class="carousel-caption-title">Built to Spec</p>
+                <p>Final assembly, with the rear lift fitted.</p>
+              </div>
+            </div>
+
+          </div><!-- end .carousel-track -->
+        </div><!-- end .carousel -->
+
+        <!-- Arrows are siblings of .carousel, not children: .carousel
+             needs overflow:hidden to hide inactive slides and would
+             clip them. See styles.css. -->
+        <button class="carousel-arrow carousel-prev" aria-label="Previous photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="carousel-arrow carousel-next" aria-label="Next photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        </div><!-- end .carousel-frame -->
+
+        <div class="carousel-controls">
+          <div class="carousel-dots" role="tablist" aria-label="Select photo">
+            <button class="carousel-dot active" role="tab" aria-label="Photo 1" aria-selected="true"></button>
+            <button class="carousel-dot" role="tab" aria-label="Photo 2" aria-selected="false"></button>
+            <button class="carousel-dot" role="tab" aria-label="Photo 3" aria-selected="false"></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
@@ -103,46 +196,77 @@
      "Browsing only" banner was taking up space right under the hero.
      Photo/pricing sourcing note retained here since it still applies
      to the product grid below: names, prices, and descriptions are
-     pulled from the current bbengineering.us product catalog (Wix),
-     including hotlinked photos from that site's CDN — worth
-     re-hosting locally before a real launch. Lightbox added
-     2026-07-14: click a thumb to view a larger version of the same
-     hosted image (Wix CDN resize params bumped from w_500 to
-     w_1400). ============ -->
+     pulled from the current bbengineering.us product catalog (Wix).
+
+     PHOTOS, 2026-07-26: the four products with new photography — the
+     driver's seat, split windshield, West Coast Mirrors and Utility
+     Trailer — use local files in images/Accessories/ and are ordered
+     FIRST ON PURPOSE so they fill the top row of the 4-column grid for
+     David's review. Keep them in the first four positions if cards get
+     added. The remaining eight are STILL hotlinked from
+     static.wixstatic.com and will break when the Wix site goes away —
+     they need re-hosting locally before launch.
+
+     Utility Trailer has no confirmed price yet; it shows "Price TBD"
+     rather than a guessed figure. West Coast Mirrors' $260.00 is
+     inferred from its source filename and also wants confirming.
+
+     CARD FORMAT, 2026-07-26: matched to the Implements page. Photo,
+     name and price on the card; the description moved into the
+     lightbox (data-specs). Price deliberately stays visible here,
+     unlike Implements, because this page reads as a price list.
+     The light bar has no photo, so it gets no "Details" cue — there
+     is nothing to click. ============ -->
 
 <section class="catalog-section">
   <div class="wrap">
     <div class="product-grid">
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_a8f76f4defe44e4ab061946107c86203~mv2.png/v1/fit/w_1400,h_1400,q_90/file.png" data-caption="Traditional Driver&#x27;s Seat — $175.00" aria-label="View larger photo of Traditional Driver&#x27;s Seat"><img src="https://static.wixstatic.com/media/7bf9b2_a8f76f4defe44e4ab061946107c86203~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="Traditional Driver&#x27;s Seat" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Accessories/driver-seat.png" data-caption="Traditional Driver&#x27;s Seat" data-specs="Standard, traditional style driver&#x27;s seat." data-price="$175.00" aria-label="View photo and details for the Traditional Driver&#x27;s Seat"><img src="images/Accessories/driver-seat.png" alt="Traditional Driver&#x27;s Seat" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
-          <h3>Traditional Driver&#x27;s Seat</h3>
+          <h3>Traditional Driver's Seat</h3>
           <p class="product-price">$175.00</p>
-          <p class="product-desc">Standard, traditional style driver's seat.</p>
+          <p class="product-note">Details</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_8adecc3887044fe58aa2f2c51a223c93~mv2.png/v1/fit/w_1400,h_1400,q_90/file.png" data-caption="2-In-1 Split Flip Windshield — $260.00" aria-label="View larger photo of 2-In-1 Split Flip Windshield"><img src="https://static.wixstatic.com/media/7bf9b2_8adecc3887044fe58aa2f2c51a223c93~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="2-In-1 Split Flip Windshield" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Accessories/split-windshield.png" data-caption="2-In-1 Split Flip Windshield" data-specs="Industrial grade 2-in-1 split flip windshield." data-price="$260.00" aria-label="View photo and details for the 2-In-1 Split Flip Windshield"><img src="images/Accessories/split-windshield.png" alt="2-In-1 Split Flip Windshield" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>2-In-1 Split Flip Windshield</h3>
           <p class="product-price">$260.00</p>
-          <p class="product-desc">Industrial grade 2-in-1 split flip windshield.</p>
+          <p class="product-note">Details</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_ca48946546194a338b69f1986f7a224f~mv2.png/v1/fit/w_1400,h_1400,q_90/file.png" data-caption="2&quot; Trailer Hitch Receiver — $60.00" aria-label="View larger photo of 2&quot; Trailer Hitch Receiver"><img src="https://static.wixstatic.com/media/7bf9b2_ca48946546194a338b69f1986f7a224f~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="2&quot; Trailer Hitch Receiver" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Accessories/west-coast-mirrors.png" data-caption="West Coast Mirrors" data-specs="Stainless west coast style side mirrors with convex spot mirrors. Sold as a pair." data-price="$260.00" aria-label="View photo and details for the West Coast Mirrors"><img src="images/Accessories/west-coast-mirrors.png" alt="West Coast Mirrors" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
-          <h3>2&quot; Trailer Hitch Receiver</h3>
-          <p class="product-price">$60.00</p>
-          <p class="product-desc">Industrial grade 2" trailer hitch receiver.</p>
+          <h3>West Coast Mirrors</h3>
+          <p class="product-price">$260.00</p>
+          <p class="product-note">Details</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_74877a3ad8104ffe95d72cddd1ad9ebc~mv2.jpg/v1/fit/w_1400,h_1400,q_90/file.jpg" data-caption="5-Panel Panoramic Wide Mirror — $32.00" aria-label="View larger photo of 5-Panel Panoramic Wide Mirror"><img src="https://static.wixstatic.com/media/7bf9b2_74877a3ad8104ffe95d72cddd1ad9ebc~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="5-Panel Panoramic Wide Mirror" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Accessories/utility-trailer.png" data-caption="Utility Trailer" data-specs="Single-axle utility trailer with fold-down side panels and a drop-down rear gate." data-price="Price TBD" aria-label="View photo and details for the Utility Trailer"><img src="images/Accessories/utility-trailer.png" alt="Utility Trailer" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <div class="product-card-body">
+          <h3>Utility Trailer</h3>
+          <p class="product-price">Price TBD</p>
+          <p class="product-note">Details</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_ca48946546194a338b69f1986f7a224f~mv2.png/v1/fit/w_1400,h_1400,q_90/file.png" data-caption="2&quot; Trailer Hitch Receiver" data-specs="Industrial grade 2&quot; trailer hitch receiver." data-price="$60.00" aria-label="View photo and details for the 2&quot; Trailer Hitch Receiver"><img src="https://static.wixstatic.com/media/7bf9b2_ca48946546194a338b69f1986f7a224f~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="2&quot; Trailer Hitch Receiver" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <div class="product-card-body">
+          <h3>2" Trailer Hitch Receiver</h3>
+          <p class="product-price">$60.00</p>
+          <p class="product-note">Details</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_74877a3ad8104ffe95d72cddd1ad9ebc~mv2.jpg/v1/fit/w_1400,h_1400,q_90/file.jpg" data-caption="5-Panel Panoramic Wide Mirror" data-specs="Industrial grade 5-panel panoramic wide mirror, 34½&quot; wide." data-price="$32.00" aria-label="View photo and details for the 5-Panel Panoramic Wide Mirror"><img src="https://static.wixstatic.com/media/7bf9b2_74877a3ad8104ffe95d72cddd1ad9ebc~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="5-Panel Panoramic Wide Mirror" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>5-Panel Panoramic Wide Mirror</h3>
           <p class="product-price">$32.00</p>
-          <p class="product-desc">Industrial grade 5-panel panoramic wide mirror, 34½" wide.</p>
+          <p class="product-note">Details</p>
         </div>
       </div>
       <div class="product-card">
@@ -151,49 +275,48 @@
           <span>Photo Unavailable</span>
         </div>
         <div class="product-card-body">
-          <h3>21&quot; Overhead Light Bar</h3>
+          <h3>21" Overhead Light Bar</h3>
           <p class="product-price">$65.00</p>
-          <p class="product-desc">Industrial grade 21" overhead light bar for low-light working conditions.</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_f4b807e9f9c547428c05caf53a35ac97~mv2.png/v1/fit/w_1400,h_1400,q_90/file.png" data-caption="Cargo Lights — $41.00" aria-label="View larger photo of Cargo Lights"><img src="https://static.wixstatic.com/media/7bf9b2_f4b807e9f9c547428c05caf53a35ac97~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="Cargo Lights" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_f4b807e9f9c547428c05caf53a35ac97~mv2.png/v1/fit/w_1400,h_1400,q_90/file.png" data-caption="Cargo Lights" data-specs="Extra-bright industrial grade rear cargo lights." data-price="$41.00" aria-label="View photo and details for the Cargo Lights"><img src="https://static.wixstatic.com/media/7bf9b2_f4b807e9f9c547428c05caf53a35ac97~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="Cargo Lights" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>Cargo Lights</h3>
           <p class="product-price">$41.00</p>
-          <p class="product-desc">Industrial grade rear cargo lights — extra bright.</p>
+          <p class="product-note">Details</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_6af4a2111fb94c869e3d6060b36d40e9~mv2.jpg/v1/fit/w_1400,h_1400,q_90/file.jpg" data-caption="High Lift Jack / Farm Jack — $115.00" aria-label="View larger photo of High Lift Jack / Farm Jack"><img src="https://static.wixstatic.com/media/7bf9b2_6af4a2111fb94c869e3d6060b36d40e9~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="High Lift Jack / Farm Jack" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_6af4a2111fb94c869e3d6060b36d40e9~mv2.jpg/v1/fit/w_1400,h_1400,q_90/file.jpg" data-caption="High Lift Jack / Farm Jack" data-specs="Industrial grade high lift / farm jack." data-price="$115.00" aria-label="View photo and details for the High Lift Jack / Farm Jack"><img src="https://static.wixstatic.com/media/7bf9b2_6af4a2111fb94c869e3d6060b36d40e9~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="High Lift Jack / Farm Jack" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>High Lift Jack / Farm Jack</h3>
           <p class="product-price">$115.00</p>
-          <p class="product-desc">Industrial grade high lift / farm jack.</p>
+          <p class="product-note">Details</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_2243c5c1b6dd4f7d8457ff0b52c27de5~mv2.jpg/v1/fit/w_1400,h_1400,q_90/file.jpg" data-caption="45&quot; Front Cargo Basket — $165.00" aria-label="View larger photo of 45&quot; Front Cargo Basket"><img src="https://static.wixstatic.com/media/7bf9b2_2243c5c1b6dd4f7d8457ff0b52c27de5~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="45&quot; Front Cargo Basket" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_2243c5c1b6dd4f7d8457ff0b52c27de5~mv2.jpg/v1/fit/w_1400,h_1400,q_90/file.jpg" data-caption="45&quot; Front Cargo Basket" data-specs="Industrial grade front cargo basket for extra carrying room up front. 45&quot; x 16&quot; x 6&quot;." data-price="$165.00" aria-label="View photo and details for the 45&quot; Front Cargo Basket"><img src="https://static.wixstatic.com/media/7bf9b2_2243c5c1b6dd4f7d8457ff0b52c27de5~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="45&quot; Front Cargo Basket" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
-          <h3>45&quot; Front Cargo Basket</h3>
+          <h3>45" Front Cargo Basket</h3>
           <p class="product-price">$165.00</p>
-          <p class="product-desc">Industrial grade front cargo basket — provides extra carrying room up front. 45" x 16" x 6".</p>
+          <p class="product-note">Details</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_2243c5c1b6dd4f7d8457ff0b52c27de5~mv2.jpg/v1/fit/w_1400,h_1400,q_90/file.jpg" data-caption="39&quot; Front Cargo Basket — $155.00" aria-label="View larger photo of 39&quot; Front Cargo Basket"><img src="https://static.wixstatic.com/media/7bf9b2_2243c5c1b6dd4f7d8457ff0b52c27de5~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="39&quot; Front Cargo Basket" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_2243c5c1b6dd4f7d8457ff0b52c27de5~mv2.jpg/v1/fit/w_1400,h_1400,q_90/file.jpg" data-caption="39&quot; Front Cargo Basket" data-specs="Industrial grade front cargo basket for extra carrying room up front. 39&quot; x 16&quot; x 6&quot;." data-price="$155.00" aria-label="View photo and details for the 39&quot; Front Cargo Basket"><img src="https://static.wixstatic.com/media/7bf9b2_2243c5c1b6dd4f7d8457ff0b52c27de5~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="39&quot; Front Cargo Basket" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
-          <h3>39&quot; Front Cargo Basket</h3>
+          <h3>39" Front Cargo Basket</h3>
           <p class="product-price">$155.00</p>
-          <p class="product-desc">Industrial grade front cargo basket — provides extra carrying room up front. 39" x 16" x 6".</p>
+          <p class="product-note">Details</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_750a55989b694a6b8fd15c74366f0d4d~mv2.jpg/v1/fit/w_1400,h_1400,q_90/file.jpg" data-caption="12-Volt DC 2,000 lb. Utility Vehicle Winch — $209.00" aria-label="View larger photo of 12-Volt DC 2,000 lb. Utility Vehicle Winch"><img src="https://static.wixstatic.com/media/7bf9b2_750a55989b694a6b8fd15c74366f0d4d~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="12-Volt DC 2,000 lb. Utility Vehicle Winch" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_750a55989b694a6b8fd15c74366f0d4d~mv2.jpg/v1/fit/w_1400,h_1400,q_90/file.jpg" data-caption="12-Volt DC 2,000 lb. Utility Vehicle Winch" data-specs="2,000 lb. utility vehicle winch with included pendant switch for remote operation." data-price="$209.00" aria-label="View photo and details for the 12-Volt DC 2,000 lb. Utility Vehicle Winch"><img src="https://static.wixstatic.com/media/7bf9b2_750a55989b694a6b8fd15c74366f0d4d~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="12-Volt DC 2,000 lb. Utility Vehicle Winch" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>12-Volt DC 2,000 lb. Utility Vehicle Winch</h3>
           <p class="product-price">$209.00</p>
-          <p class="product-desc">2,000 lb. utility vehicle winch with included pendant switch for remote operation.</p>
+          <p class="product-note">Details</p>
         </div>
       </div>
     </div>
@@ -205,7 +328,7 @@
     <div class="footer-grid">
       <div>
         <p class="footer-logo">B.B. ENGINEERING</p>
-        <p style="margin-top:10px;">Off-road utility vehicles for wheelchair users — on their own terms.</p>
+        <p style="margin-top:10px;">Off-road utility vehicles for wheelchair users. Built for independence.</p>
       </div>
       <div>
         <h5>Vehicle</h5>
@@ -213,6 +336,7 @@
         <a href="specs.html">Specs</a>
         <a href="accessories.html">Accessories</a>
         <a href="implements.html">Implements</a>
+        <a href="catch-and-release.html">Catch-and-Release</a>
         <a href="videos.html">Videos</a>
         <a href="photos.html">Photos</a>
       </div>
@@ -237,7 +361,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 B.B. Engineering. All rights reserved.</span>
-      <span>Prototype site &mdash; for review purposes.</span>
+      <span>Prototype site, for review purposes.</span>
     </div>
   </div>
 </footer>
@@ -282,6 +406,37 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
     }
   });
 })();
+
+/* ============ INTRO CAROUSEL (added 2026-07-26) — identical to the
+   Implements and Photos page implementation. Arrows wrap around, dots
+   jump directly. Kept verbatim rather than refactored into a shared
+   file so the pages don't drift apart; adding or removing a slide
+   requires matching .carousel-dot buttons in the markup. ============ */
+(function(){
+  const track = document.getElementById('carousel-track');
+  const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+  const prevBtn = document.querySelector('.carousel-prev');
+  const nextBtn = document.querySelector('.carousel-next');
+  const dots = Array.from(document.querySelectorAll('.carousel-dot'));
+  if(!track || !slides.length) return;
+
+  let index = 0;
+
+  function show(i){
+    index = (i + slides.length) % slides.length;
+    track.style.transform = 'translateX(-' + (index * 100) + '%)';
+    dots.forEach(function(dot, n){
+      dot.classList.toggle('active', n === index);
+      dot.setAttribute('aria-selected', String(n === index));
+    });
+  }
+
+  prevBtn?.addEventListener('click', function(){ show(index - 1); });
+  nextBtn?.addEventListener('click', function(){ show(index + 1); });
+  dots.forEach(function(dot, i){
+    dot.addEventListener('click', function(){ show(i); });
+  });
+})();
 </script>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged accessory photo" hidden>
@@ -290,23 +445,39 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   </button>
   <figure class="lightbox-content">
     <img src="" alt="" id="lightbox-img">
-    <figcaption id="lightbox-caption"></figcaption>
+    <figcaption>
+      <span class="lightbox-title" id="lightbox-caption"></span>
+      <span class="lightbox-specs" id="lightbox-specs"></span>
+      <span class="lightbox-price" id="lightbox-price"></span>
+    </figcaption>
   </figure>
 </div>
 
 <script>
+/* ============ ACCESSORY LIGHTBOX — extended 2026-07-26 to match the
+   Implements page. Previously showed photo + a caption that crammed
+   the name and price into one string. Now the name, description and
+   price render as separate lines from data-caption / data-specs /
+   data-price on the triggering button. The product cards keep the
+   price visible (unlike Implements) because this page reads as a
+   price list; only the description moved into the lightbox. ============ */
 (function(){
   var lightbox = document.getElementById('lightbox');
   var lightboxImg = document.getElementById('lightbox-img');
   var lightboxCaption = document.getElementById('lightbox-caption');
+  var lightboxSpecs = document.getElementById('lightbox-specs');
+  var lightboxPrice = document.getElementById('lightbox-price');
   var closeBtn = document.getElementById('lightbox-close');
   var lastFocused = null;
 
-  function openLightbox(src, caption){
+  function openLightbox(btn){
+    var caption = btn.getAttribute('data-caption') || '';
     lastFocused = document.activeElement;
-    lightboxImg.src = src;
+    lightboxImg.src = btn.getAttribute('data-full');
     lightboxImg.alt = caption;
     lightboxCaption.textContent = caption;
+    lightboxSpecs.textContent = btn.getAttribute('data-specs') || '';
+    lightboxPrice.textContent = btn.getAttribute('data-price') || '';
     lightbox.hidden = false;
     document.body.style.overflow = 'hidden';
     closeBtn.focus();
@@ -319,7 +490,7 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   }
   document.querySelectorAll('.product-card-img[data-full]').forEach(function(btn){
     btn.addEventListener('click', function(){
-      openLightbox(btn.getAttribute('data-full'), btn.getAttribute('data-caption'));
+      openLightbox(btn);
     });
   });
   closeBtn.addEventListener('click', closeLightbox);

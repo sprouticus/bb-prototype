@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Implements | B.B. Engineering</title>
-<meta name="description" content="Implements supported by the Enabler, organized by partner brand. Informational listings; select implements when you customize your order.">
+<meta name="description" content="Mowers, brush cutters, sprayers, plows, and snowblowers from Demco, Kunz, and Rammy — supported implements for the Enabler, all connected through our quick-connect catch-and-release hitch. No transfer needed.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -47,6 +47,7 @@
       <a href="specs.html">Specs</a>
       <a href="accessories.html">Accessories</a>
       <a href="implements.html" aria-current="page">Implements</a>
+      <a href="catch-and-release.html">Catch-and-Release</a>
             </div>
           </div>
           <div class="nav-item has-dropdown">
@@ -95,61 +96,168 @@
     <p class="eyebrow">Tow-Behind Tools</p>
     <h1>Implements</h1>
     <div class="rule"></div>
-    <p>Sprayers, blades, and other implements the Enabler is built to pull and support, organized by partner brand. Details and pricing below are informational — implements aren't sold individually from this page.</p>
+    <p>Supported implements for the Enabler 2.1, from Demco, Kunz, and Rammy.</p>
+  </div>
+</section>
+
+<!-- ============ INTRO — copy left, carousel right (added 2026-07-26,
+     restructured from a full-width hero carousel the same day; see the
+     .intro-split block in styles.css for why).
+
+     Carousel behavior reuses the .carousel pattern and JS from the
+     Photos page verbatim so the two stay consistent.
+
+     PLACEHOLDER IMAGERY: none of these show an implement. B.B. has no
+     photos yet of the Enabler pulling a Rammy/Kunz/Demco unit, so these
+     are the closest available — the Enabler towing and hitching to a
+     utility trailer. Captions describe what is actually in frame rather
+     than implying an implement is attached; keep that honest when the
+     real photography lands. Slide count is flexible, just keep the
+     .carousel-dot count in sync. ============ -->
+<section class="intro-split">
+  <div class="wrap">
+    <div class="intro-split-grid">
+
+      <div class="intro-split-copy">
+        <p class="eyebrow">Built to Connect</p>
+        <h2>One hitch. Every implement on this page.</h2>
+        <div class="rule"></div>
+        <p class="sub">Catch-and-Release couples on contact, so moving from a mower to a sprayer to a snowblower happens without leaving the driver's seat. No transfer, no spotter, no swapping hardware between brands &mdash; every implement listed below runs off the same connection.</p>
+      </div>
+
+      <div class="intro-split-media">
+        <div class="carousel-frame">
+        <div class="carousel" aria-label="The Enabler towing">
+          <div class="carousel-track" id="carousel-track">
+
+            <div class="carousel-slide">
+              <img src="images/video-towing-poster.jpg" alt="The Enabler towing a loaded utility trailer across an open field">
+              <div class="carousel-caption">
+                <p class="carousel-caption-title">Towing to the Job Site</p>
+                <p>Moving a loaded utility trailer over open ground.</p>
+              </div>
+            </div>
+
+            <div class="carousel-slide">
+              <img src="images/video-catch-release-poster.jpg" alt="Aerial view of the Enabler driving out to a trailer parked in a field">
+              <div class="carousel-caption">
+                <p class="carousel-caption-title">Out to the Load</p>
+                <p>Approaching a trailer left at the far end of the property.</p>
+              </div>
+            </div>
+
+            <div class="carousel-slide">
+              <img src="images/catch-release-approach.jpg" alt="Aerial view of the Enabler backing into position alongside a trailer">
+              <div class="carousel-caption">
+                <p class="carousel-caption-title">Catch-and-Release</p>
+                <p>Backing to the hitch without a spotter.</p>
+              </div>
+            </div>
+
+          </div><!-- end .carousel-track -->
+        </div><!-- end .carousel -->
+
+        <!-- Arrows are siblings of .carousel, not children of it:
+             .carousel needs overflow:hidden to hide the inactive
+             slides, which would clip anything hanging past its edge.
+             .carousel-frame is an unclipped positioning context of the
+             same size, so the arrows can straddle the photo edge the
+             way they do on the Enabler page. -->
+        <button class="carousel-arrow carousel-prev" aria-label="Previous photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+        </button>
+        <button class="carousel-arrow carousel-next" aria-label="Next photo">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        </button>
+        </div><!-- end .carousel-frame -->
+
+        <div class="carousel-controls">
+          <div class="carousel-dots" role="tablist" aria-label="Select photo">
+            <button class="carousel-dot active" role="tab" aria-label="Photo 1" aria-selected="true"></button>
+            <button class="carousel-dot" role="tab" aria-label="Photo 2" aria-selected="false"></button>
+            <button class="carousel-dot" role="tab" aria-label="Photo 3" aria-selected="false"></button>
+          </div>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
 <nav class="brand-jumpnav" aria-label="Jump to brand">
   <div class="wrap">
       <a href="#demco">Demco</a>
+      <a href="#kunz">Kunz</a>
       <a href="#rammy">Rammy</a>
   </div>
 </nav>
 
+<!-- ============ BRAND SECTIONS — populated 2026-07-26 from the
+     supported-implements spreadsheet for the Enabler 2.1 pre-order.
+     Brands run alphabetically (Demco / Kunz / Rammy); the jump nav
+     above mirrors that order. Kunz is new as of this pass.
+
+     THUMBNAIL/LIGHTBOX SPLIT: cards intentionally carry the photo and
+     the name only — no specs, no price. Size, power and price live in
+     the lightbox (see data-specs / data-price on each button) so the
+     grid stays scannable. Where a US price isn't settled (Demco 80 gal,
+     Rammy Lawn Mower, Rammy Plow W165 — the plow is sold only as a
+     W165/ST30 package by Wolfe Ridge), the lightbox routes to
+     schedule-conversation.html instead of publishing a soft number.
+
+     Rammy publishes metric; figures below are converted to imperial.
+     HP is shown only where the manufacturer publishes it — otherwise
+     engine displacement in cc, rather than inventing a conversion.
+     ============ -->
+
 <section class="brand-section" id="demco">
   <div class="wrap">
     <div class="brand-header">
-      <div class="brand-logo-placeholder">Logo<br>Pending</div>
+      <h2 class="brand-logo"><img src="images/Implements/demco-logo.png" alt="Demco" loading="lazy"></h2>
       <div>
-        <h2>Demco</h2>
-        <p>Iowa-based manufacturer of ag and utility implements — sprayers, spreaders, and more. Confirmed partner per the 2026-07-07 review.</p>
+        <p>Iowa-based manufacturer of ag and utility implements, including sprayers and spreaders.</p>
       </div>
     </div>
     <div class="product-grid">
       <div class="product-card">
-        <div class="product-card-img no-image">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Photo Pending</span>
-        </div>
+        <button type="button" class="product-card-img" data-full="images/Implements/demco-pro-series-40-gallon-sprayer.png" data-caption="Demco Pro Series 40 Gallon Sprayer" data-specs="40 gal tank &middot; 5 GPM electric pump &middot; 80&quot; boom" data-price="$2,162" aria-label="View photo, specs and price for the Demco Pro Series 40 Gallon Sprayer"><img src="images/Implements/demco-pro-series-40-gallon-sprayer.png" alt="Demco Pro Series 40 Gallon Sprayer" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
-          <h3>Implement Name 1</h3>
-          <p class="product-price">$—</p>
-          <p class="product-desc">Details pending — to be added once David shares product specs and pricing for this implement.</p>
-          <p class="product-note">Placeholder</p>
+          <h3>Pro Series 40 Gallon Sprayer</h3>
+          <p class="product-note">Specs &amp; price</p>
         </div>
       </div>
       <div class="product-card">
-        <div class="product-card-img no-image">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Photo Pending</span>
-        </div>
+        <button type="button" class="product-card-img" data-full="images/Implements/demco-pro-series-60-gallon-sprayer.png" data-caption="Demco Pro Series 60 Gallon Sprayer" data-specs="60 gal tank &middot; 5 GPM electric pump &middot; 80&quot; boom" data-price="$2,262" aria-label="View photo, specs and price for the Demco Pro Series 60 Gallon Sprayer"><img src="images/Implements/demco-pro-series-60-gallon-sprayer.png" alt="Demco Pro Series 60 Gallon Sprayer" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
-          <h3>Implement Name 2</h3>
-          <p class="product-price">$—</p>
-          <p class="product-desc">Details pending — to be added once David shares product specs and pricing for this implement.</p>
-          <p class="product-note">Placeholder</p>
+          <h3>Pro Series 60 Gallon Sprayer</h3>
+          <p class="product-note">Specs &amp; price</p>
         </div>
       </div>
       <div class="product-card">
-        <div class="product-card-img no-image">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Photo Pending</span>
-        </div>
+        <button type="button" class="product-card-img" data-full="images/Implements/demco-pro-series-80-gallon-sprayer.png" data-caption="Demco Pro Series 80 Gallon Sprayer" data-specs="80 gal tank &middot; 5 GPM electric pump &middot; 80&quot; boom" data-price="Contact us" data-price-link="schedule-conversation.html" aria-label="View photo and specs for the Demco Pro Series 80 Gallon Sprayer"><img src="images/Implements/demco-pro-series-80-gallon-sprayer.png" alt="Demco Pro Series 80 Gallon Sprayer" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
-          <h3>Implement Name 3</h3>
-          <p class="product-price">$—</p>
-          <p class="product-desc">Details pending — to be added once David shares product specs and pricing for this implement.</p>
-          <p class="product-note">Placeholder</p>
+          <h3>Pro Series 80 Gallon Sprayer</h3>
+          <p class="product-note">Specs &amp; price</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="brand-section" id="kunz">
+  <div class="wrap">
+    <div class="brand-header">
+      <h2 class="brand-logo"><img src="images/Implements/kunz-logo.jpg" alt="Kunz Engineering" loading="lazy"></h2>
+      <div>
+        <p>Illinois manufacturer of AcrEase pull-behind mowers, built for rough-cut work behind ATVs, UTVs, and small tractors.</p>
+      </div>
+    </div>
+    <div class="product-grid">
+      <div class="product-card">
+        <button type="button" class="product-card-img" data-full="images/Implements/kunz-acrease-mr55be-rough-cut-mower.png" data-caption="Kunz AcrEase Rough Cut Mower MR55BE" data-specs="57&quot; cutting width &middot; 27 HP &middot; 580 lbs" data-price="$5,195" aria-label="View photo, specs and price for the Kunz AcrEase Rough Cut Mower MR55BE"><img src="images/Implements/kunz-acrease-mr55be-rough-cut-mower.png" alt="Kunz AcrEase Rough Cut Mower MR55BE" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <div class="product-card-body">
+          <h3>AcrEase Rough Cut Mower MR55BE</h3>
+          <p class="product-note">Specs &amp; price</p>
         </div>
       </div>
     </div>
@@ -159,49 +267,71 @@
 <section class="brand-section" id="rammy">
   <div class="wrap">
     <div class="brand-header">
-      <div class="brand-logo-placeholder">Logo<br>Pending</div>
+      <h2 class="brand-logo"><img src="images/Implements/rammy-logo.png" alt="Rammy" loading="lazy"></h2>
       <div>
-        <h2>Rammy</h2>
-        <p>Confirmed implement partner brand. Description pending — to be added once David shares details.</p>
+        <p>Finnish manufacturer of front-mounted mowers, cutters, plows, and snowblowers for ATVs and UTVs. Distributed in North America by Wolfe Ridge MFG.</p>
       </div>
     </div>
     <div class="product-grid">
       <div class="product-card">
-        <div class="product-card-img no-image">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Photo Pending</span>
-        </div>
+        <button type="button" class="product-card-img" data-full="images/Implements/rammy-brush-cutter-120-atv-pro.png" data-caption="Rammy Brush Cutter 120 ATV PRO" data-specs="45&quot; cutting width &middot; 344 cc &middot; 198 lbs" data-price="$5,599" aria-label="View photo, specs and price for the Rammy Brush Cutter 120 ATV PRO"><img src="images/Implements/rammy-brush-cutter-120-atv-pro.png" alt="Rammy Brush Cutter 120 ATV PRO" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
-          <h3>Implement Name 1</h3>
-          <p class="product-price">$—</p>
-          <p class="product-desc">Details pending — to be added once David shares product specs and pricing for this implement.</p>
-          <p class="product-note">Placeholder</p>
+          <h3>Brush Cutter 120 ATV PRO</h3>
+          <p class="product-note">Specs &amp; price</p>
         </div>
       </div>
       <div class="product-card">
-        <div class="product-card-img no-image">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Photo Pending</span>
-        </div>
+        <button type="button" class="product-card-img" data-full="images/Implements/rammy-flail-mower-120-atv.png" data-caption="Rammy Flail Mower 120 ATV" data-specs="39&quot; cutting width &middot; 9 HP &middot; 209 lbs" data-price="$4,399" aria-label="View photo, specs and price for the Rammy Flail Mower 120 ATV"><img src="images/Implements/rammy-flail-mower-120-atv.png" alt="Rammy Flail Mower 120 ATV" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
-          <h3>Implement Name 2</h3>
-          <p class="product-price">$—</p>
-          <p class="product-desc">Details pending — to be added once David shares product specs and pricing for this implement.</p>
-          <p class="product-note">Placeholder</p>
+          <h3>Flail Mower 120 ATV</h3>
+          <p class="product-note">Specs &amp; price</p>
         </div>
       </div>
       <div class="product-card">
-        <div class="product-card-img no-image">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Photo Pending</span>
-        </div>
+        <button type="button" class="product-card-img" data-full="images/Implements/rammy-lawn-mower-120-atv-pro.png" data-caption="Rammy Lawn Mower 120 ATV PRO" data-specs="45&quot; cutting width &middot; 344 cc &middot; 198 lbs" data-price="Contact us" data-price-link="schedule-conversation.html" aria-label="View photo and specs for the Rammy Lawn Mower 120 ATV PRO"><img src="images/Implements/rammy-lawn-mower-120-atv-pro.png" alt="Rammy Lawn Mower 120 ATV PRO" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
-          <h3>Implement Name 3</h3>
-          <p class="product-price">$—</p>
-          <p class="product-desc">Details pending — to be added once David shares product specs and pricing for this implement.</p>
-          <p class="product-note">Placeholder</p>
+          <h3>Lawn Mower 120 ATV PRO</h3>
+          <p class="product-note">Specs &amp; price</p>
         </div>
       </div>
+      <div class="product-card">
+        <button type="button" class="product-card-img" data-full="images/Implements/rammy-plow-w165-atv-pro.png" data-caption="Rammy Plow W165 ATV PRO" data-specs="46&quot;&ndash;65&quot; working width &middot; 110 lbs" data-price="Contact us" data-price-link="schedule-conversation.html" aria-label="View photo and specs for the Rammy Plow W165 ATV PRO"><img src="images/Implements/rammy-plow-w165-atv-pro.png" alt="Rammy Plow W165 ATV PRO" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <div class="product-card-body">
+          <h3>Plow W165 ATV PRO</h3>
+          <p class="product-note">Specs &amp; price</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <button type="button" class="product-card-img" data-full="images/Implements/rammy-snowblower-155-utv-pro.png" data-caption="Rammy Snowblower 155 UTV PRO" data-specs="61&quot; clearing width &middot; 420 cc &middot; 276 lbs" data-price="$6,398" aria-label="View photo, specs and price for the Rammy Snowblower 155 UTV PRO"><img src="images/Implements/rammy-snowblower-155-utv-pro.png" alt="Rammy Snowblower 155 UTV PRO" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <div class="product-card-body">
+          <h3>Snowblower 155 UTV PRO</h3>
+          <p class="product-note">Specs &amp; price</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CUSTOM IMPLEMENTS CTA (added 2026-07-26)
+     Reuses the .next-step pattern from the home page rather than a new
+     one-off band, so the CTA treatment stays consistent sitewide.
+
+     COPY NOTE: phrased in third person ("Don't see the right
+     implement?") rather than second ("Don't see what you need?") to
+     hold the locked copy rule from the 06-30 client meeting — keep the
+     page neutral so it reads the same to an individual buyer and to an
+     institutional one. "Conversation" not "consultation" per the same
+     rule. ============ -->
+<section class="next-step">
+  <div class="wrap">
+    <p class="eyebrow">Custom Work</p>
+    <h2>Don't see the right implement?</h2>
+    <div class="rule"></div>
+    <p class="sub">The list above covers what's supported for the 2.1 pre-order. Custom and one-off setups come up often, and a short conversation is the fastest way to sort out what will run behind the Enabler.</p>
+    <div class="cta-row">
+      <a href="schedule-conversation.html" class="btn btn-orange">Schedule a Conversation
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
     </div>
   </div>
 </section>
@@ -211,7 +341,7 @@
     <div class="footer-grid">
       <div>
         <p class="footer-logo">B.B. ENGINEERING</p>
-        <p style="margin-top:10px;">Off-road utility vehicles for wheelchair users — on their own terms.</p>
+        <p style="margin-top:10px;">Off-road utility vehicles for wheelchair users. Built for independence.</p>
       </div>
       <div>
         <h5>Vehicle</h5>
@@ -219,6 +349,7 @@
         <a href="specs.html">Specs</a>
         <a href="accessories.html">Accessories</a>
         <a href="implements.html">Implements</a>
+        <a href="catch-and-release.html">Catch-and-Release</a>
         <a href="videos.html">Videos</a>
         <a href="photos.html">Photos</a>
       </div>
@@ -243,7 +374,7 @@
     </div>
     <div class="footer-bottom">
       <span>&copy; 2026 B.B. Engineering. All rights reserved.</span>
-      <span>Prototype site &mdash; for review purposes.</span>
+      <span>Prototype site, for review purposes.</span>
     </div>
   </div>
 </footer>
@@ -286,6 +417,115 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
         item.querySelector('.nav-dropdown-toggle')?.setAttribute('aria-expanded', 'false');
       });
     }
+  });
+})();
+
+/* ============ HERO CAROUSEL — same implementation as the Photos page
+   (added 2026-07-26). Arrows wrap around; dots jump directly. Kept
+   verbatim rather than refactored so the two pages don't drift.
+   Adding or removing a slide requires matching .carousel-dot buttons
+   in the markup. ============ */
+(function(){
+  const track = document.getElementById('carousel-track');
+  const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+  const prevBtn = document.querySelector('.carousel-prev');
+  const nextBtn = document.querySelector('.carousel-next');
+  const dots = Array.from(document.querySelectorAll('.carousel-dot'));
+  if(!track || !slides.length) return;
+
+  let index = 0;
+
+  function show(i){
+    index = (i + slides.length) % slides.length;
+    track.style.transform = 'translateX(-' + (index * 100) + '%)';
+    dots.forEach(function(dot, n){
+      dot.classList.toggle('active', n === index);
+      dot.setAttribute('aria-selected', String(n === index));
+    });
+  }
+
+  prevBtn?.addEventListener('click', function(){ show(index - 1); });
+  nextBtn?.addEventListener('click', function(){ show(index + 1); });
+  dots.forEach(function(dot, i){
+    dot.addEventListener('click', function(){ show(i); });
+  });
+})();
+</script>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged implement photo" hidden>
+  <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close enlarged photo">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+  </button>
+  <figure class="lightbox-content">
+    <img src="" alt="" id="lightbox-img">
+    <figcaption>
+      <span class="lightbox-title" id="lightbox-caption"></span>
+      <span class="lightbox-specs" id="lightbox-specs"></span>
+      <span class="lightbox-price" id="lightbox-price"></span>
+    </figcaption>
+  </figure>
+</div>
+
+<script>
+/* ============ IMPLEMENT LIGHTBOX (extended 2026-07-26)
+   Previously showed photo + caption only. Now also renders the
+   high-level specs and price pulled from data-specs / data-price on
+   the triggering button, because the product cards deliberately carry
+   no numbers. If data-price-link is present the price renders as a
+   link (used for the items with no settled US price, which route to
+   schedule-conversation.html rather than showing a figure). ============ */
+(function(){
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightbox-img');
+  var lightboxCaption = document.getElementById('lightbox-caption');
+  var lightboxSpecs = document.getElementById('lightbox-specs');
+  var lightboxPrice = document.getElementById('lightbox-price');
+  var closeBtn = document.getElementById('lightbox-close');
+  var lastFocused = null;
+
+  function openLightbox(btn){
+    var caption = btn.getAttribute('data-caption') || '';
+    var specs = btn.getAttribute('data-specs') || '';
+    var price = btn.getAttribute('data-price') || '';
+    var priceLink = btn.getAttribute('data-price-link');
+
+    lastFocused = document.activeElement;
+    lightboxImg.src = btn.getAttribute('data-full');
+    lightboxImg.alt = caption;
+    lightboxCaption.textContent = caption;
+    lightboxSpecs.textContent = specs;
+
+    lightboxPrice.textContent = '';
+    if (price && priceLink){
+      var a = document.createElement('a');
+      a.href = priceLink;
+      a.textContent = price;
+      lightboxPrice.appendChild(a);
+    } else {
+      lightboxPrice.textContent = price;
+    }
+
+    lightbox.hidden = false;
+    document.body.style.overflow = 'hidden';
+    closeBtn.focus();
+  }
+  function closeLightbox(){
+    lightbox.hidden = true;
+    lightboxImg.src = '';
+    document.body.style.overflow = '';
+    if (lastFocused) lastFocused.focus();
+  }
+  document.querySelectorAll('.product-card-img[data-full]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      openLightbox(btn);
+    });
+  });
+  closeBtn.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e){
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape' && !lightbox.hidden) closeLightbox();
   });
 })();
 </script>

@@ -287,16 +287,16 @@ nav.primary a.mobile-cta{display:none;}
 }
 
 /* ============================================================
-   HERO — diagonal split (signature device, introduced here)
+   HERO — plain two-column layout. No overlap between the text panel
+   and the photo, no clip-path bleed, no forced cropping of the image.
    ============================================================ */
 .hero{background:var(--white);overflow:hidden;border-bottom:1px solid var(--line);}
-.hero-grid{display:grid;grid-template-columns:1.15fr 1fr;min-height:540px;}
+.hero-grid{display:grid;grid-template-columns:19fr 24fr;min-height:540px;}
 .hero-copy{
   background:var(--white);
-  clip-path:polygon(0 0,90% 0,72% 100%,0 100%);
-  padding:64px 90px 64px 28px;
+  padding:64px 60px 64px 28px;
   display:flex;flex-direction:column;justify-content:center;
-  position:relative;z-index:2;
+  position:relative;
 }
 .hero-copy .wrap{padding:0;max-width:none;margin:0;}
 .hero h1{
@@ -314,26 +314,42 @@ nav.primary a.mobile-cta{display:none;}
 
 .hero-art{
   background:var(--paper);
-  /* margin:0 reset is load-bearing — <figure> carries a browser default
-     margin (roughly 1em 40px). Only margin-left was ever overridden
-     below, so margin-right kept its ~40px UA default at every
-     breakpoint, pulling the whole image visibly left/off-center
-     instead of flush and centered. Fixed 2026-07-18. */
   margin:0;
-  margin-left:-12%;
-  padding:48px 36px 48px 130px;
+  padding:24px;
   display:flex;align-items:center;justify-content:center;
   position:relative;
 }
 .hero-art figcaption{
-  position:absolute;bottom:22px;left:130px;right:36px;
+  position:absolute;bottom:22px;left:24px;right:24px;
   font-family:var(--font-mono);font-size:12.5px;letter-spacing:.05em;
   text-transform:uppercase;color:var(--steel);
 }
+
+/* Photo variant: the box is pinned to the image's own aspect ratio and
+   taken out of the grid row's stretch sizing (align-self:center), so its
+   shape is never forced to whatever height the text column happens to
+   need. That row-height-vs-image-ratio mismatch is what was causing the
+   sides to get cropped/zoomed on wide columns and the top/bottom to get
+   cropped on tall ones. If the text is taller than the photo at a given
+   width, the extra space just becomes plain background above/below the
+   photo instead of cropping into the vehicle. */
+.hero-art.hero-photo{
+  padding:0;overflow:hidden;
+  align-self:center;
+  aspect-ratio:1800/1280;
+}
+.hero-art.hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.hero-art.hero-photo figcaption{
+  position:absolute;bottom:0;left:0;right:0;
+  padding:14px 20px;
+  background:rgba(11,57,84,0.75);
+  font-family:var(--font-mono);font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--steel-pale);
+}
+
 @media (max-width:980px){
   .hero-grid{grid-template-columns:1fr;min-height:auto;}
-  .hero-copy{clip-path:none;padding:48px 28px 36px;}
-  .hero-art{margin-left:0;padding:36px 24px 64px;}
+  .hero-copy{padding:48px 28px 36px;}
+  .hero-art{padding:24px;}
   .hero-art figcaption{left:24px;right:24px;}
 }
 @media (max-width:640px){
@@ -343,15 +359,6 @@ nav.primary a.mobile-cta{display:none;}
   .hero .cta-row{flex-direction:column;gap:10px;margin-top:20px;}
   .hero .cta-row .btn{width:100%;justify-content:center;}
   .hero .micro{font-size:12.5px;line-height:1.5;}
-  /* Cap the hero photo so it doesn't dominate the screen. Needs an
-     explicit height (not just max-height) — the img's height:100% rule
-     further down the stylesheet (.hero-art.hero-photo img, unconditional)
-     has equal specificity and comes later in source order, so it was
-     winning here and resolving to auto (no definite parent height to
-     read a percentage from), letting the image render at its full
-     natural aspect ratio instead of the intended cropped strip. Fixed
-     2026-07-18. */
-  .hero-art.hero-photo{height:220px;max-height:220px;}
 }
 
 /* ============================================================
@@ -752,6 +759,11 @@ input:focus,select:focus,textarea:focus{border-color:var(--steel);}
 }
 .implement-thumb svg{width:28px;height:28px;}
 .implement-thumb span{font-family:var(--font-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;text-align:center;padding:0 6px;}
+/* Real product photo in a thumb (2026-07-26 — these were "Photo
+   Pending" placeholders). contain, not cover: the implement shots are
+   catalogue cutouts on white and cropping them looks broken. The svg
+   and span rules above stay for any slot still waiting on a photo. */
+.implement-thumb img{width:100%;height:100%;object-fit:contain;padding:12px;display:block;}
 @media (max-width:860px){
   .implements-showcase{grid-template-columns:1fr;}
   .implements-video{aspect-ratio:16/9;min-height:0;}
@@ -811,7 +823,22 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
 .lightbox-content figcaption{
   color:var(--white);font-family:var(--font-mono);font-size:14px;
   letter-spacing:.03em;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:8px;
 }
+/* -------- Lightbox spec/price block (Implements page, added
+   2026-07-26). The product cards carry no numbers by design, so size,
+   power and price surface here instead. Empty spans collapse via
+   :empty so this stays safe on pages whose lightbox has caption only
+   (e.g. accessories). -------- */
+.lightbox-title{
+  font-family:var(--font-display);font-weight:800;font-size:20px;
+  letter-spacing:.01em;line-height:1.25;
+}
+.lightbox-specs{font-size:13px;color:#C9D4DA;line-height:1.5;max-width:44ch;}
+.lightbox-price{font-weight:700;font-size:17px;color:var(--white);}
+.lightbox-price a{color:var(--white);border-bottom:2px solid var(--orange);padding-bottom:2px;}
+.lightbox-price a:hover{color:var(--orange);}
+.lightbox-title:empty,.lightbox-specs:empty,.lightbox-price:empty{display:none;}
 .lightbox-close{
   position:absolute;top:24px;right:24px;
   width:44px;height:44px;border-radius:50%;
@@ -845,6 +872,36 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
   display:flex;align-items:center;justify-content:center;background:var(--white);
   font-family:var(--font-mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;
   color:var(--steel-pale);text-align:center;padding:6px;line-height:1.3;
+}
+/* -------- Real brand logos (Implements page, added 2026-07-26,
+   replaces .brand-logo-placeholder).
+
+   Every logo renders at the SAME WIDTH, height auto (revised
+   2026-07-26 — an earlier pass fit them to a shared box, which left
+   the wide wordmarks spanning 140px while the square Rammy mark only
+   reached 73px). Consistent width is the priority here, so the flat
+   wordmarks read short and small: Demco lands ~110x25, Kunz ~110x36.
+   Rammy's mark is a stacked icon-over-wordmark rather than a
+   horizontal lockup, so at a matched width it stays roughly square
+   (~110x115) and sets the height of its own brand row. Change the one
+   width value below to scale all three together.
+
+   .brand-logo is the <h2> itself (revised 2026-07-26). The visible
+   brand-name text was removed as duplication — the logo says the name
+   already — so the image's alt attribute now supplies the heading
+   text. Keeping it a real <h2> is the point: it preserves the document
+   outline for screen-reader heading navigation and gives each brand
+   <section> an accessible name, which a bare <img> in a <div> would
+   not. The h1-h4 rule above already zeroes the margin; the inherited
+   font-size only shows if the logo 404s, which is the fallback we
+   want. -------- */
+.brand-logo{
+  width:110px;flex:none;
+  display:flex;align-items:center;justify-content:center;
+}
+.brand-logo img{width:100%;height:auto;display:block;}
+@media (max-width:560px){
+  .brand-logo{width:84px;}
 }
 .brand-header h2{font-size:clamp(24px,3vw,32px);}
 .brand-header p{font-size:14.5px;color:#454C49;margin-top:6px;}
@@ -1118,18 +1175,6 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
 }
 
 /* ============================================================
-   HERO PHOTO VARIANT — full-bleed image in hero art panel
-   ============================================================ */
-.hero-art.hero-photo{padding:0;overflow:hidden;}
-.hero-art.hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
-.hero-art.hero-photo figcaption{
-  position:absolute;bottom:0;left:0;right:0;
-  padding:14px 20px;
-  background:rgba(11,57,84,0.75);
-  font-family:var(--font-mono);font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--steel-pale);
-}
-
-/* ============================================================
    IN THE FIELD — photo story section
    ============================================================ */
 .in-action{padding:76px 0;background:var(--paper);border-top:1px solid var(--line);}
@@ -1185,6 +1230,91 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
    ============================================================ */
 .gallery-carousel-section{background:var(--white);padding-bottom:60px;}
 
+/* -------- INTRO SPLIT — copy left, carousel right
+   (2026-07-26, third pass; generalized from .implements-intro to
+   .intro-split on 2026-07-26 when the Accessories page adopted the
+   same treatment. Used by implements.html and accessories.html — keep
+   it page-agnostic.)
+
+   HISTORY, so this doesn't get "simplified" back: this started as a
+   full-bleed 16/7 carousel copied from the Photos page. Because that
+   slide takes its height from its width, it rendered ~630px tall at
+   1440px wide and pushed the brand jump nav 250-330px below the fold.
+   The jump nav is the primary navigation on this page, so burying it
+   was backwards. A vh-capped full-width band fixed the fold but forced
+   a ~65% vertical crop on every 16:9 photo.
+
+   The two-column split solves both at once: the carousel only occupies
+   half the content width, so a natural 16/9 box is already a modest
+   height — photos run essentially uncropped, and the copy earns the
+   space that was empty letterbox before. max-height is a backstop for
+   short windows only; on a normal laptop it barely engages.
+
+   Left column is the value proposition, right is the carousel. Stacks
+   to one column at 900px with the copy first. -------- */
+.intro-split{background:var(--white);padding:12px 0 22px;}
+/* Even split. The copy column had been the wider of the two purely to
+   shrink the carousel's 16/9 height for the fold; once the arrows moved
+   onto the photo that headroom came back, so the media column gets it.
+   560px of measure is still comfortable for the paragraph. */
+.intro-split-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;
+}
+.intro-split-copy h2{font-size:clamp(24px,2.9vw,35px);margin-top:12px;}
+.intro-split-copy .rule{margin-top:14px;}
+.intro-split-copy p.sub{
+  color:#454C49;font-size:16.5px;line-height:1.6;margin-top:18px;max-width:46ch;
+}
+/* 16/9 matches the source photos, so cover() crops nothing at normal
+   widths. The cap only bites on short viewports. */
+.intro-split .carousel-slide{aspect-ratio:16/9;max-height:min(315px,44vh);}
+
+/* -------- Overlay arrows (2026-07-26, fourth pass). Prev/next used to
+   sit in a control bar under the photo alongside the dots; moving them
+   onto the image reclaims ~38px of vertical chrome, which is spent on
+   the slide instead. At 1440px and wider the slide now reaches its full
+   natural 16/9 height, so the photos render completely uncropped.
+
+   Treatment is lifted from .accessories-arrow on the Enabler page so
+   overlay controls look the same in both places, including the -8px
+   straddle of the photo edge.
+
+   NESTING IS LOAD-BEARING. The arrows are children of .carousel-frame,
+   a sibling wrapper, NOT of .carousel:
+     - .carousel needs overflow:hidden to hide the inactive slides, so
+       an arrow at left:-8px inside it would simply be clipped off.
+     - .carousel-track is transformed on every step, so an arrow inside
+       *that* would slide away with the photos.
+   .carousel-frame is unclipped and exactly the size of the photo, which
+   gives the arrows a correct vertical center to hang off. Class names
+   carousel-prev / carousel-next are retained because the shared
+   carousel JS selects on them. Only .carousel-dot sits in the bar
+   below. -------- */
+.intro-split .carousel-frame{position:relative;}
+.intro-split .carousel-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:2;
+  background:rgba(14,17,18,.55);border:2px solid rgba(255,255,255,.2);
+  color:var(--white);width:44px;height:44px;border-radius:2px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background .15s,border-color .15s;
+}
+.intro-split .carousel-arrow:hover{background:var(--orange);border-color:var(--orange);}
+.intro-split .carousel-arrow:focus-visible{outline:3px solid var(--orange);outline-offset:2px;}
+.intro-split .carousel-arrow svg{width:20px;height:20px;}
+.intro-split .carousel-prev{left:-8px;}
+.intro-split .carousel-next{right:-8px;}
+.intro-split .carousel-controls{padding:10px 0 0;}
+@media(max-width:560px){
+  .intro-split .carousel-arrow{width:36px;height:36px;}
+}
+@media(max-width:900px){
+  .intro-split-grid{grid-template-columns:1fr;gap:26px;}
+  .intro-split-copy p.sub{max-width:none;}
+  /* Beat the shared 4/3 mobile rule from the Photos carousel — 4/3 is
+     needlessly tall here and the sources are 16/9 anyway. */
+  .intro-split .carousel-slide{aspect-ratio:16/9;max-height:none;}
+}
+
 .carousel{position:relative;overflow:hidden;}
 .carousel-track{display:flex;transition:transform .45s ease;}
 .carousel-slide{min-width:100%;aspect-ratio:16/7;position:relative;overflow:hidden;}
@@ -1194,7 +1324,19 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
   background:linear-gradient(transparent,rgba(14,17,18,.88));
   padding:48px 40px 28px;color:var(--white);
 }
-.carousel-caption h3{font-size:clamp(20.5px,2.3vw,30px);color:var(--white);}
+/* Caption title accepts either an <h3> (Photos page, original markup)
+   or a <p class="carousel-caption-title"> (Implements page, 2026-07-26).
+   The <p> form exists because a carousel caption labels a photo rather
+   than opening a document section — on Implements the carousel sits
+   between the <h1> and the brand <h2>s, so an <h3> there produced an
+   h1 -> h3 skip in the heading outline. Same rendering either way.
+   NOTE: Photos page still uses <h3> and has that same skip if it's
+   ever worth cleaning up. */
+.carousel-caption h3,
+.carousel-caption .carousel-caption-title{
+  font-family:var(--font-display);font-weight:800;line-height:1.04;letter-spacing:-0.01em;
+  font-size:clamp(20.5px,2.3vw,30px);color:var(--white);margin-top:0;
+}
 .carousel-caption p{font-size:16px;color:#C7CDD0;margin-top:6px;}
 .carousel-controls{
   display:flex;align-items:center;justify-content:center;gap:16px;
@@ -1279,60 +1421,137 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
 @media(max-width:760px){.video-grid{grid-template-columns:1fr;}}
 
 /* ============================================================
-   HISTORY TIMELINE (history.html) — top-down vertical timeline,
-   added 2026-07-18 for the new "Our Company" nav. A single vertical
-   line runs down the left edge with a dot per era; each item's photo
-   + copy sit to the right of the line.
+   HISTORY SNAKE TIMELINE (history.html) — rebuilt 2026-07-26,
+   replacing the left-rail vertical timeline (.history-timeline /
+   .ht-*). Serpentine path switchbacking down the page, per the
+   client-supplied reference.
+
+   HOW THE PATH IS DRAWN — read this before changing any of it.
+
+   Each .snake-row draws TWO path pieces:
+     ::after  the horizontal run along its bottom edge, inset by
+              --turn-r at both ends.
+     ::before the side connector, spanning the row's FULL height on
+              whichever side the path entered from. Bordered on three
+              sides with the outer corners rounded by --turn-r, which
+              renders as: quarter-arc out, straight vertical run,
+              quarter-arc back in.
+
+   Why the connector belongs to the row and spans 100% of its height:
+   a row's ::after sits at its bottom, so consecutive rules are exactly
+   one row-height apart. The connector therefore has to bridge that
+   whole distance. An earlier attempt used separate fixed-height
+   .snake-turn elements holding a pure semicircle between rows — those
+   only reached the TOP of the following row, leaving a gap equal to
+   that row's height. Don't reintroduce that.
+
+   Because both the rules and the connector's arc endpoints sit exactly
+   --turn-r in from the same edge, every segment meets its neighbour at
+   any container width. Change --turn-r alone and the path stays
+   continuous. Rows need to stay at least 2*--turn-r tall or the corner
+   radii get scaled down and the joins drift; min-height enforces it.
+
+   Two independent alternations, easy to conflate:
+     --right / --left       which side the COPY sits on
+     --turn-right/-left     which side the CONNECTOR descends
+   They are always opposites, so the connector and the vehicle mark
+   share the empty half and never collide with the text.
+
+   Travel direction alternates too: rows 1/3/5 run left-to-right,
+   2/4 right-to-left. The vehicle mark flips on the leftward rows so it
+   always faces the way it is heading.
+
+   Below 820px the switchbacks stop making sense: connectors and rules
+   are dropped for a single left rail.
    ============================================================ */
-.history-timeline-section{padding:76px 0 88px;background:var(--white);}
-.history-timeline{
-  position:relative;max-width:900px;margin:0 auto;
-  padding-left:48px;
-}
-.history-timeline::before{
-  content:'';position:absolute;top:8px;bottom:8px;left:15px;
-  width:3px;background:var(--line);
-}
-.ht-item{position:relative;margin-bottom:64px;}
-.ht-item:last-child{margin-bottom:0;}
-.ht-marker{position:absolute;left:-48px;top:2px;display:flex;flex-direction:column;align-items:center;width:32px;}
-.ht-dot{
-  width:20px;height:20px;border-radius:50%;
-  background:var(--white);border:4px solid var(--steel);
-  box-shadow:0 0 0 6px var(--white);
-}
-.ht-item--current .ht-dot{border-color:var(--orange);}
-.ht-year{
-  margin-top:8px;font-family:var(--font-mono);font-weight:700;font-size:12.5px;
-  letter-spacing:.04em;color:var(--ink);white-space:nowrap;
-  writing-mode:horizontal-tb;
-}
-.ht-content{
-  display:grid;grid-template-columns:180px 1fr;gap:28px;
-  background:var(--paper);border:1px solid var(--line);border-radius:2px;
-  padding:24px;align-items:center;
-}
-.ht-item--current .ht-content{background:var(--white);border-color:var(--orange);border-width:2px;}
-.ht-photo{aspect-ratio:3/4;overflow:hidden;border-radius:2px;background:var(--white);}
-.ht-photo img{width:100%;height:100%;object-fit:cover;display:block;}
-.ht-copy .tag{font-family:var(--font-mono);font-size:14px;color:var(--orange-dark);font-weight:700;letter-spacing:.06em;text-transform:uppercase;}
-.ht-copy h3{font-size:26px;margin-top:6px;text-transform:none;}
-.ht-copy p{font-size:16.5px;color:#454C49;margin-top:10px;line-height:1.55;}
-.ht-copy p a{color:var(--orange-dark);text-decoration:underline;text-underline-offset:2px;font-weight:700;}
-.ht-copy .next-gen-flag{margin-bottom:10px;}
-.ht-copy .btn{margin-top:16px;}
+.snake-section{padding:64px 0 84px;background:var(--white);}
+.snake{--turn-r:70px;position:relative;max-width:1000px;margin:0 auto;}
 
-@media(max-width:700px){
-  .ht-content{grid-template-columns:1fr;}
-  .ht-photo{aspect-ratio:16/9;}
+/* ---- milestone row ---- */
+.snake-row{
+  position:relative;display:grid;grid-template-columns:1fr 1fr;
+  gap:44px;padding:38px 0 52px;
+  min-height:calc(var(--turn-r) * 2);
 }
-@media(max-width:560px){
-  .history-timeline{padding-left:36px;}
-  .history-timeline::before{left:11px;}
-  .ht-marker{left:-36px;width:24px;}
-  .ht-dot{width:16px;height:16px;border-width:3px;}
+/* horizontal run along the bottom */
+.snake-row::after{
+  content:'';position:absolute;bottom:0;
+  left:var(--turn-r);right:var(--turn-r);
+  border-top:3px solid var(--line);
+}
+.snake-row--right .snake-cell{grid-column:2;}
+.snake-row--left  .snake-cell{grid-column:1;text-align:right;}
+
+/* ---- side connector: previous row's rule (this row's top) down to
+       this row's own rule (its bottom) ---- */
+.snake-row--turn-right::before,
+.snake-row--turn-left::before{
+  content:'';position:absolute;top:0;height:100%;
+  width:var(--turn-r);
+  border:3px solid var(--line);
+}
+.snake-row--turn-right::before{
+  right:0;border-left:0;
+  border-radius:0 var(--turn-r) var(--turn-r) 0;
+}
+.snake-row--turn-left::before{
+  left:0;border-right:0;
+  border-radius:var(--turn-r) 0 0 var(--turn-r);
 }
 
+/* ---- end caps on the first and last rules ---- */
+.snake-cap{position:absolute;width:15px;height:15px;border-radius:50%;background:var(--orange);}
+.snake-cap--start{bottom:-7px;left:calc(var(--turn-r) - 7px);}
+.snake-cap--end{bottom:-7px;right:calc(var(--turn-r) - 7px);}
+
+/* ---- year badge ---- */
+.snake-badge{
+  display:inline-flex;align-items:center;justify-content:center;
+  width:66px;height:66px;border-radius:50%;
+  background:var(--white);border:3px solid var(--orange);
+  font-family:var(--font-mono);font-weight:800;font-size:15px;
+  letter-spacing:.02em;color:var(--orange-dark);
+}
+.snake-cell h2{font-size:clamp(21px,2.3vw,27px);margin-top:16px;text-transform:none;}
+.snake-cell p{font-size:16px;color:#454C49;line-height:1.6;margin-top:10px;max-width:46ch;}
+.snake-row--left .snake-cell p{margin-left:auto;}
+
+/* ---- the vehicle mark, riding the horizontal run ---- */
+.snake-vehicle{
+  position:absolute;bottom:3px;width:104px;
+  opacity:.9;pointer-events:none;
+}
+.snake-vehicle img{width:100%;height:auto;display:block;}
+/* sits in the empty half, opposite the copy — clear of both the text
+   and the connector, which shares that side. */
+.snake-row--right .snake-vehicle{left:calc(var(--turn-r) + 26px);}
+.snake-row--left  .snake-vehicle{right:calc(var(--turn-r) + 26px);transform:scaleX(-1);}
+
+@media(max-width:1000px){
+  .snake{--turn-r:52px;}
+  .snake-vehicle{width:84px;}
+}
+
+/* ---- collapse to a single left rail ---- */
+@media(max-width:820px){
+  .snake{--turn-r:0px;padding-left:34px;}
+  .snake::before{
+    content:'';position:absolute;top:6px;bottom:6px;left:9px;
+    width:3px;background:var(--line);
+  }
+  .snake-row{grid-template-columns:1fr;gap:0;padding:0 0 36px;min-height:0;}
+  .snake-row::after,
+  .snake-row--turn-right::before,
+  .snake-row--turn-left::before{display:none;}
+  .snake-row--right .snake-cell,
+  .snake-row--left .snake-cell{grid-column:1;text-align:left;}
+  .snake-row--left .snake-cell p{margin-left:0;}
+  .snake-cap{display:none;}
+  .snake-badge{width:54px;height:54px;font-size:13.5px;margin-left:-59px;}
+  .snake-cell p{max-width:none;}
+  .snake-vehicle{position:static;width:78px;margin-top:18px;opacity:.55;}
+  .snake-row--left .snake-vehicle{transform:none;}
+}
 /* ============================================================
    CAREERS PLACEHOLDER (careers.html) — added 2026-07-18. Deliberately
    minimal until there are real openings to post.

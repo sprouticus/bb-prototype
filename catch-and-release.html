@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Enabler 2.0 Photos | B.B. Engineering</title>
-<meta name="description" content="Photos of the Enabler 2.0 in the field: wheelchair users at work, off-road capability, self-loading lift, and fleet deployments.">
+<title>Catch-and-Release | Hands-Free Hitch for the Enabler</title>
+<meta name="description" content="Catch-and-Release is B.B. Engineering's custom hitch for the Enabler. A spring-loaded hook and a lever inside the cab let the driver hook up and drop trailers and implements without leaving the seat.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -47,7 +47,7 @@
       <a href="specs.html">Specs</a>
       <a href="accessories.html">Accessories</a>
       <a href="implements.html">Implements</a>
-      <a href="catch-and-release.html">Catch-and-Release</a>
+      <a href="catch-and-release.html" aria-current="page">Catch-and-Release</a>
             </div>
           </div>
           <div class="nav-item has-dropdown">
@@ -59,7 +59,7 @@
             </div>
             <div class="nav-dropdown">
       <a href="videos.html">Videos</a>
-      <a href="photos.html" aria-current="page">Photos</a>
+      <a href="photos.html">Photos</a>
             </div>
           </div>
           <div class="nav-item has-dropdown">
@@ -91,144 +91,157 @@
   </div>
 </header>
 
-<!-- ============ PAGE HERO ============ -->
+<!-- ============ CATCH-AND-RELEASE PAGE — added 2026-07-25 per the
+     July 22 client meeting with Grace and David, where the hitch was
+     confirmed as a must-have for launch and was given its own page
+     with photos and video. Nav placement is the last item in the
+     Vehicle dropdown for now.
+
+     MEDIA NOTE: the hero video is the existing catch-release.mp4
+     already used on the home page, the Enabler page, and videos.html.
+     The eight gallery stills were pulled directly from that footage
+     with ffmpeg (timestamps in the alt/label pairs below run from the
+     approach through the uncoupled trailer) so the gallery has real
+     frames of the actual mechanism instead of dashed placeholders.
+     They are 1280x720, the native resolution of the source video, so
+     they are soft next to the rest of the photo library. Swap them for
+     real detail photography once Grace and David send the shoot, or
+     once the Saturday visit to photograph the unit in person happens.
+
+     SCOPE NOTE: kept deliberately tight as a vehicle detail page.
+     Hero video, how it works, detail gallery, and nothing else. An
+     earlier draft also carried a "why it matters" essay, an at-a-glance
+     spec table, and its own CTA band; all three were cut 2026-07-25
+     because they made the page read like a second home page. Written
+     specs are still an open action item for Grace and David anyway.
+     ============ -->
 <section class="page-hero">
   <div class="wrap">
-    <p class="eyebrow">Photo Gallery</p>
-    <h1>The Enabler 2.0 in the Field</h1>
+    <p class="eyebrow">The Vehicle</p>
+    <h1>Catch-and-Release</h1>
     <div class="rule"></div>
-    <p>Real vehicles, real people, real work. Browse photos of the Enabler 2.0 at work sites, campuses, and parks across the country, or <a href="videos.html" style="color:var(--orange-dark);text-decoration:underline;text-underline-offset:2px;font-weight:700;">watch it in motion</a>.</p>
+    <p>Hooking up a trailer is a standing job. You lift the tongue, line it up over the ball, and drop the pin. Catch-and-Release is the hitch we built so none of that has to happen, and so the driver never has to get out to start working.</p>
   </div>
 </section>
 
-<!-- ============ FEATURED CAROUSEL ============ -->
-<section class="gallery-carousel-section">
-  <div class="carousel" id="featured-carousel" aria-label="Featured photos">
-    <div class="carousel-track" id="carousel-track">
-
-      <div class="carousel-slide">
-        <img src="images/enabler-hero-driver.jpg" alt="Wheelchair user operating the Enabler 2.0 outdoors">
-        <div class="carousel-caption">
-          <h3>Independence on the Job</h3>
-          <p>Full-time outdoor work, on your own terms.</p>
-        </div>
-      </div>
-
-      <div class="carousel-slide">
-        <img src="images/enabler-rear-lift-ramp-down.jpg" alt="The Enabler 2.0 self-loading rear lift, ramp deployed">
-        <div class="carousel-caption">
-          <h3>Self-Loading. Self-Sufficient.</h3>
-          <p>The rear lift is operated entirely by the driver. No assistance required.</p>
-        </div>
-      </div>
-
-      <div class="carousel-slide">
-        <img src="images/enabler-warehouse-wide.jpg" alt="Enabler 2.0 in the shop, ready to ship">
-        <div class="carousel-caption">
-          <h3>Ready for the Field</h3>
-          <p>Every Enabler 2.0 goes straight from the shop to the job site.</p>
-        </div>
-      </div>
-
-      <div class="carousel-slide">
-        <img src="images/enabler-outdoor-ruins.jpg" alt="Enabler 2.0 outdoors, off-road tires ready for the trail">
-        <div class="carousel-caption">
-          <h3>Wherever the Work Takes You</h3>
-          <p>14" off-road tires and all-wheel drive handle terrain that others can't.</p>
-        </div>
-      </div>
-
-    </div><!-- end .carousel-track -->
-  </div><!-- end .carousel -->
-
-  <div class="carousel-controls">
-    <button class="carousel-btn carousel-prev" aria-label="Previous photo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
-    </button>
-    <div class="carousel-dots" role="tablist" aria-label="Select photo">
-      <button class="carousel-dot active" role="tab" aria-label="Photo 1" aria-selected="true"></button>
-      <button class="carousel-dot" role="tab" aria-label="Photo 2" aria-selected="false"></button>
-      <button class="carousel-dot" role="tab" aria-label="Photo 3" aria-selected="false"></button>
-      <button class="carousel-dot" role="tab" aria-label="Photo 4" aria-selected="false"></button>
+<!-- ============ HERO VIDEO — local mp4 with native controls, same
+     pattern as the featured video on videos.html rather than a YouTube
+     iframe, so it also plays in the file:// preview. ============ -->
+<section class="video-featured">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">Watch It Work</p>
+      <h2>Back in, catch the pin, pull the lever.</h2>
+      <p>Filmed on the lot where every Enabler is built and tested. The trailer goes on, the vehicle drives off with it, and the trailer comes back off. Nobody gets out, and nobody else is standing there to help.</p>
     </div>
-    <button class="carousel-btn carousel-next" aria-label="Next photo">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
-    </button>
+    <div class="video-embed-box">
+      <video controls preload="metadata" poster="images/video-catch-release-poster.jpg">
+        <source src="video/catch-release.mp4" type="video/mp4">
+        Your browser doesn't support embedded video. <a href="video/catch-release.mp4">Download the video</a> instead.
+      </video>
+    </div>
   </div>
 </section>
 
-<!-- ============ IMAGE GRID ============ -->
+<!-- ============ HOW IT WORKS — three-step horizontal timeline, the
+     same .story-timeline module used on the Our Purpose page. ============ -->
+<section class="in-action">
+  <div class="wrap">
+    <div class="head">
+      <p class="eyebrow">How It Works</p>
+      <h2>Three moves, all of them from the driver's seat.</h2>
+      <p>The mechanism is deliberately simple. A spring-loaded hook on the vehicle, a pin on the implement tongue, and one lever inside the cab.</p>
+    </div>
+    <div class="story-timeline">
+      <div class="st-item">
+        <span class="tag">Step 01</span>
+        <h4>Line Up</h4>
+        <p>Back the vehicle toward the tongue. The catch takes the pin from a range of angles, so you don't have to hit it dead center on the first try.</p>
+      </div>
+      <div class="st-item">
+        <span class="tag">Step 02</span>
+        <h4>Catch</h4>
+        <p>The hook drops over the pin as the vehicle makes contact and holds it there. That is the entire hookup. Nothing to lift, nothing to thread, nothing to bolt.</p>
+      </div>
+      <div class="st-item">
+        <span class="tag">Step 03</span>
+        <h4>Release</h4>
+        <p>When the work is done, the lever in the cab lifts the hook off the pin. Pull forward and the implement stays exactly where you set it down.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DETAIL GALLERY — stills pulled from catch-release.mp4,
+     ordered as the sequence actually happens: approach, contact, the
+     in-cab lever, then the uncoupled tongue. Uses the same lightbox
+     pattern as photos.html, accessories.html, and implements.html. ============ -->
 <section class="gallery-grid-section">
   <div class="wrap">
     <div class="section-head">
       <div>
-        <p class="eyebrow">All Photos</p>
-        <h2>Browse the collection.</h2>
+        <p class="eyebrow">The Mechanism</p>
+        <h2>A closer look.</h2>
+        <p class="section-head-note">Detail frames from the footage above. A full photo shoot of the mechanism is planned once the next vehicle comes out of the shop.</p>
       </div>
+      <a href="photos.html" class="btn btn-outline btn-sm">Full Photo Gallery</a>
     </div>
     <div class="gallery-grid-full">
 
       <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/enabler-hero-driver.jpg" data-caption="On the Job" aria-label="View larger photo: On the Job">
-          <img src="images/enabler-hero-driver.jpg" alt="Portrait of a wheelchair user operating the Enabler 2.0">
+        <button type="button" class="gallery-item-inner" data-full="images/catch-release-approach.jpg" data-caption="Backing to the trailer" aria-label="View larger photo: Backing to the trailer">
+          <img src="images/catch-release-approach.jpg" alt="Overhead view of the Enabler backing across a dirt lot toward a parked utility trailer" loading="lazy">
         </button>
-        <div class="gallery-item-label">On the Job</div>
+        <div class="gallery-item-label">Backing to the trailer</div>
       </div>
 
       <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/enabler-front-lit.jpg" data-caption="Front View" aria-label="View larger photo: Front View">
-          <img src="images/enabler-front-lit.jpg" alt="Enabler 2.0 front view">
+        <button type="button" class="gallery-item-inner" data-full="images/catch-release-rear-hitch.jpg" data-caption="Rear hitch and receiver" aria-label="View larger photo: Rear hitch and receiver">
+          <img src="images/catch-release-rear-hitch.jpg" alt="Close view of the rear of the Enabler showing the hitch and receiver below the cargo bed" loading="lazy">
         </button>
-        <div class="gallery-item-label">Front View</div>
+        <div class="gallery-item-label">Rear hitch and receiver</div>
       </div>
 
       <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/enabler-rear-lift-detail.jpg" data-caption="Self-Loading Lift Detail" aria-label="View larger photo: Self-Loading Lift Detail">
-          <img src="images/enabler-rear-lift-detail.jpg" alt="Close-up of the self-loading lift mechanism">
+        <button type="button" class="gallery-item-inner" data-full="images/catch-release-tongue-approach.jpg" data-caption="Tongue lined up" aria-label="View larger photo: Tongue lined up">
+          <img src="images/catch-release-tongue-approach.jpg" alt="The trailer tongue coming into line with the rear of the Enabler" loading="lazy">
         </button>
-        <div class="gallery-item-label">Self-Loading Lift Detail</div>
+        <div class="gallery-item-label">Tongue lined up</div>
       </div>
 
       <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/enabler-side-outdoor-road.jpg" data-caption="Open Road" aria-label="View larger photo: Open Road">
-          <img src="images/enabler-side-outdoor-road.jpg" alt="Enabler 2.0 outdoors on an open road">
+        <button type="button" class="gallery-item-inner" data-full="images/catch-release-catch.jpg" data-caption="Making contact" aria-label="View larger photo: Making contact">
+          <img src="images/catch-release-catch.jpg" alt="The trailer tongue meeting the rear hitch of the Enabler as the vehicle backs into it" loading="lazy">
         </button>
-        <div class="gallery-item-label">Open Road</div>
+        <div class="gallery-item-label">Making contact</div>
       </div>
 
       <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/enabler-front-outdoor.jpg" data-caption="Outdoors, Ready to Work" aria-label="View larger photo: Outdoors, Ready to Work">
-          <img src="images/enabler-front-outdoor.jpg" alt="Enabler 2.0 outdoors, ready to work">
+        <button type="button" class="gallery-item-inner" data-full="images/catch-release-cab-lever.jpg" data-caption="The release lever, in reach from the seat" aria-label="View larger photo: The release lever, in reach from the seat">
+          <img src="images/catch-release-cab-lever.jpg" alt="A driver's hand on the release lever inside the cab, with open ground visible through the windshield" loading="lazy">
         </button>
-        <div class="gallery-item-label">Outdoors, Ready to Work</div>
+        <div class="gallery-item-label">The release lever, in reach</div>
       </div>
 
       <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/enabler-rear-suspension-detail.jpg" data-caption="Suspension Detail" aria-label="View larger photo: Suspension Detail">
-          <img src="images/enabler-rear-suspension-detail.jpg" alt="Enabler 2.0 coil-over suspension and off-road tire detail">
+        <button type="button" class="gallery-item-inner" data-full="images/catch-release-tongue-detail.jpg" data-caption="Tongue and pin" aria-label="View larger photo: Tongue and pin">
+          <img src="images/catch-release-tongue-detail.jpg" alt="Ground-level view of the trailer tongue and its pin, alongside the Enabler's off-road tire" loading="lazy">
         </button>
-        <div class="gallery-item-label">Suspension Detail</div>
+        <div class="gallery-item-label">Tongue and pin</div>
       </div>
 
       <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/enabler-side-indoor.jpg" data-caption="Side Profile" aria-label="View larger photo: Side Profile">
-          <img src="images/enabler-side-indoor.jpg" alt="Enabler 2.0 full side profile">
+        <button type="button" class="gallery-item-inner" data-full="images/catch-release-tongue-jack.jpg" data-caption="Uncoupled, jack down" aria-label="View larger photo: Uncoupled, jack down">
+          <img src="images/catch-release-tongue-jack.jpg" alt="The trailer standing on its own jack after being released, tongue clear of the vehicle" loading="lazy">
         </button>
-        <div class="gallery-item-label">Side Profile</div>
+        <div class="gallery-item-label">Uncoupled, jack down</div>
       </div>
 
       <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/enabler-rear-lift-ramp-down-alt.jpg" data-caption="In the Shop" aria-label="View larger photo: In the Shop">
-          <img src="images/enabler-rear-lift-ramp-down-alt.jpg" alt="Enabler 2.0 in the shop">
+        <button type="button" class="gallery-item-inner" data-full="images/catch-release-hooked.jpg" data-caption="Hooked and ready to tow" aria-label="View larger photo: Hooked and ready to tow">
+          <img src="images/catch-release-hooked.jpg" alt="The trailer coupled to the Enabler, both sitting ready to move out" loading="lazy">
         </button>
-        <div class="gallery-item-label">In the Shop</div>
-      </div>
-
-      <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/enabler-front-lit-alt.jpg" data-caption="Ready to Go" aria-label="View larger photo: Ready to Go">
-          <img src="images/enabler-front-lit-alt.jpg" alt="Enabler 2.0, front view">
-        </button>
-        <div class="gallery-item-label">Ready to Go</div>
+        <div class="gallery-item-label">Hooked and ready to tow</div>
       </div>
 
     </div><!-- end .gallery-grid-full -->
@@ -319,39 +332,8 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   });
 })();
 
-/* ============ FEATURED CAROUSEL — the track, prev/next arrows, and
-   dots all existed in the markup with no listeners at all, so the
-   carousel was completely inert; wired up 2026-07-18. ============ */
-(function(){
-  const track = document.getElementById('carousel-track');
-  const slides = Array.from(document.querySelectorAll('.carousel-slide'));
-  const prevBtn = document.querySelector('.carousel-prev');
-  const nextBtn = document.querySelector('.carousel-next');
-  const dots = Array.from(document.querySelectorAll('.carousel-dot'));
-  if(!track || !slides.length) return;
-
-  let index = 0;
-
-  function show(i){
-    index = (i + slides.length) % slides.length;
-    track.style.transform = 'translateX(-' + (index * 100) + '%)';
-    dots.forEach(function(dot, n){
-      dot.classList.toggle('active', n === index);
-      dot.setAttribute('aria-selected', String(n === index));
-    });
-  }
-
-  prevBtn?.addEventListener('click', function(){ show(index - 1); });
-  nextBtn?.addEventListener('click', function(){ show(index + 1); });
-  dots.forEach(function(dot, i){
-    dot.addEventListener('click', function(){ show(i); });
-  });
-})();
-
-/* ============ GALLERY GRID LIGHTBOX — same pattern used on the
-   Accessories page: click a grid photo to view it larger. Added
-   2026-07-18; the grid had a hover zoom affordance but nothing wired
-   up to actually enlarge a photo. ============ */
+/* ============ DETAIL GALLERY LIGHTBOX — identical to the pattern on
+   photos.html, accessories.html, and implements.html. ============ */
 (function(){
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightbox-img');
