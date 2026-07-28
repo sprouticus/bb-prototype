@@ -751,9 +751,12 @@ input:focus,select:focus,textarea:focus{border-color:var(--steel);}
 .video-toggle .icon-play{display:none;}
 .video-toggle.is-paused .icon-pause{display:none;}
 .video-toggle.is-paused .icon-play{display:block;}
-.implement-thumb-grid{display:flex;flex-wrap:wrap;align-content:flex-start;gap:16px;}
+/* 2x2 fixed grid (2026-07-27 — was a wrapping flex row that landed
+   3-and-1 with 4 thumbs; grid forces an even 2x2 and lets thumbs grow
+   to fill the available width instead of capping out small). */
+.implement-thumb-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
 .implement-thumb{
-  flex:1 1 120px;max-width:150px;
+  position:relative;overflow:hidden;
   aspect-ratio:1/1;background:var(--white);border:1px solid var(--line);border-radius:2px;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--steel-pale);
 }
@@ -764,12 +767,28 @@ input:focus,select:focus,textarea:focus{border-color:var(--steel);}
    catalogue cutouts on white and cropping them looks broken. The svg
    and span rules above stay for any slot still waiting on a photo. */
 .implement-thumb img{width:100%;height:100%;object-fit:contain;padding:12px;display:block;}
+/* Hover/focus name label (2026-07-27) — slides up over the photo so
+   the implement's name is visible on hover without cluttering the
+   thumb by default. focus-visible included so keyboard users get the
+   same info; thumbs need tabindex="0" in the markup for that to work. */
+.implement-thumb-label{
+  position:absolute;left:0;right:0;bottom:0;
+  background:rgba(20,24,22,.85);color:var(--white);
+  font-family:var(--font-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;
+  text-align:center;padding:8px 6px;
+  opacity:0;transform:translateY(100%);
+  transition:opacity .18s ease,transform .18s ease;
+  pointer-events:none;
+}
+.implement-thumb:hover .implement-thumb-label,
+.implement-thumb:focus-visible .implement-thumb-label{
+  opacity:1;transform:translateY(0);
+}
 @media (max-width:860px){
   .implements-showcase{grid-template-columns:1fr;}
   .implements-video{aspect-ratio:16/9;min-height:0;}
   .implements-cta{margin-top:24px;}
 }
-@media (max-width:560px){.implement-thumb{flex:1 1 80px;max-width:110px;}}
 
 /* -------- PRODUCT GRID (Accessories & Implements pages, added
    2026-07-14) — deliberately static, non-interactive cards: no add-
