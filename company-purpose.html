@@ -107,18 +107,39 @@
      photos (third one dropped) floated left in a fixed-width stack;
      the copy runs as normal flow text so it wraps around them and
      fills the full width again once it clears past the second image
-     — real photos to come later. ============ -->
+     — real photos to come later.
+
+     PLACEHOLDERS, 2026-07-29: these two and the three shop portraits
+     below were hotlinked placehold.co images labelled with the exact
+     shot intended for each slot — "Photo: Bud in the Field", "Photo:
+     Restored Mobility Jeeps", "Photo: Welder Portrait" and so on. They
+     read as a production to-do list to anyone reviewing the page, and
+     depended on a third-party service staying up. All five are now the
+     local, neutral .photo-pending box used elsewhere on the site.
+
+     The two "Placeholder — photo coming soon" figcaptions here were
+     dropped as well: the box now says it, and .story-img figcaption
+     hides until hover, so the note would have been invisible anyway.
+
+     To drop a real photo in, swap the .photo-pending div back to a
+     plain <img> with real alt text. The shop portraits below keep
+     their role figcaptions — those are page content and stay once the
+     photography lands. ============ -->
 <section class="story">
   <div class="wrap">
     <div class="story-top story-top--wrap">
       <div class="story-stack">
         <figure class="story-img">
-          <img src="https://placehold.co/560x400/0B3954/C7CDD0?text=Photo%3A+Bud+in+the+Field" alt="Placeholder — photo of Bud outdoors, to be added">
-          <figcaption>Placeholder &mdash; photo coming soon</figcaption>
+          <div class="photo-pending photo-pending--landscape">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span>Photo Pending</span>
+          </div>
         </figure>
         <figure class="story-img">
-          <img src="https://placehold.co/560x400/D42020/FFFFFF?text=Photo%3A+Restored+Mobility+Jeeps" alt="Placeholder — photo of the two restored, mobility-equipped Jeeps, to be added">
-          <figcaption>Placeholder &mdash; photo coming soon</figcaption>
+          <div class="photo-pending photo-pending--landscape">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+            <span>Photo Pending</span>
+          </div>
         </figure>
       </div>
       <h2>Our story</h2>
@@ -190,15 +211,24 @@
     </div>
     <div class="shop-portraits">
       <figure class="shop-portrait">
-        <img src="https://placehold.co/400x480/0B3954/C7CDD0?text=Photo%3A+Welder+Portrait" alt="Portrait of a B.B. Engineering welder">
+        <div class="photo-pending photo-pending--portrait">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Photo Pending</span>
+        </div>
         <figcaption><strong>Shop Craftsman</strong><br>Steel Fabrication</figcaption>
       </figure>
       <figure class="shop-portrait">
-        <img src="https://placehold.co/400x480/D42020/FFFFFF?text=Photo%3A+Assembly+Tech+Portrait" alt="Portrait of an assembly technician">
+        <div class="photo-pending photo-pending--portrait">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Photo Pending</span>
+        </div>
         <figcaption><strong>Assembly Technician</strong><br>Electrical &amp; Drivetrain</figcaption>
       </figure>
       <figure class="shop-portrait">
-        <img src="https://placehold.co/400x480/181C1E/FFFFFF?text=Photo%3A+QC+Inspector+Portrait" alt="Portrait of a quality control inspector">
+        <div class="photo-pending photo-pending--portrait">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          <span>Photo Pending</span>
+        </div>
         <figcaption><strong>Quality Inspector</strong><br>Final Sign-Off</figcaption>
       </figure>
     </div>
@@ -239,6 +269,7 @@
       <div>
         <h5>Contact</h5>
         <p>info@bbengineering.us</p>
+        <p>9415 Susan S.E.<br>Albuquerque, NM 87123</p>
       </div>
     </div>
     <div class="footer-bottom">

@@ -498,12 +498,22 @@ nav.primary a.mobile-cta{display:none;}
   background:var(--white);border:1px solid var(--line);border-radius:2px;padding:34px;
   scroll-margin-top:140px;
 }
-.form-card .tag{
+/* Selector widened 2026-07-29 to include .contact-info-card. This was
+   scoped to .form-card only, so the "Reach Us Directly" pill on the
+   contact page picked up none of it — it rendered as unstyled inline
+   text in mixed case, with a bare dark rectangle behind it from an
+   inline background and no padding, letter-spacing or white text. The
+   card was built to mirror .form-card (see the note further down) but
+   the tag rule never followed. Background colours stay per-variant
+   below. */
+.form-card .tag,
+.contact-info-card .tag{
   font-family:var(--font-mono);font-size:14px;letter-spacing:.1em;text-transform:uppercase;
   padding:5px 12px;display:inline-block;margin-bottom:16px;font-weight:700;color:var(--white);
 }
 .form-card.you .tag{background:var(--orange);}
 .form-card.org .tag{background:var(--steel);}
+.contact-info-card .tag{background:var(--steel);}
 .form-card h3{font-size:27.5px;text-transform:uppercase;margin-bottom:6px;}
 .form-card p.sub{color:#454C49;font-size:18px;margin-bottom:22px;line-height:1.55;}
 .field{margin-bottom:16px;}
@@ -649,6 +659,19 @@ input:focus,select:focus,textarea:focus{border-color:var(--steel);}
   font-family:var(--font-mono);font-size:8.5px;letter-spacing:.03em;text-transform:uppercase;
   color:var(--steel-pale);text-align:center;line-height:1.2;padding:4px;
 }
+/* Real brand mark instead of the dashed initials placeholder (pre-order
+   Step 3, added 2026-07-29). Same approach as .brand-logo on the
+   Implements page: one fixed width, height auto, so wordmarks and square
+   marks stay visually comparable. Narrower than the 110px used there
+   because these sit beside a 19px heading rather than a section title.
+   The base rule above still applies to any group without an image. */
+.pick-brand-logo.is-image{
+  width:88px;height:auto;border:none;background:none;padding:0;
+}
+.pick-brand-logo.is-image img{width:100%;height:auto;display:block;}
+@media (max-width:560px){
+  .pick-brand-logo.is-image{width:68px;}
+}
 .pick-brand-head h3{font-size:19px;}
 
 /* Review step */
@@ -684,6 +707,28 @@ input:focus,select:focus,textarea:focus{border-color:var(--steel);}
    a lightweight supporting section below them, reusing the same
    dashed placeholder-tile language used elsewhere on the site.
    ============================================================ */
+/* -------- Generic "photo pending" box (2026-07-29).
+   Replaces five hotlinked placehold.co images on company-purpose.html
+   that were captioned with the specific shot intended for each slot —
+   "Photo: Bud in the Field", "Photo: Welder Portrait" and so on. Those
+   read as a production to-do list to anyone reviewing the page, and
+   each one was an external request to a third-party service that would
+   render a broken box the moment placehold.co is unreachable. This is
+   local, neutral, and matches the .behind-build-photo / .no-image
+   placeholders already used on the Specs and Accessories pages.
+
+   Modifiers only set aspect ratio. Add another rather than hardcoding
+   a height, so the box keeps its shape as its container flexes. -------- */
+.photo-pending{
+  width:100%;background:var(--paper);border:1px solid var(--line);
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;
+  color:var(--steel-pale);text-align:center;padding:12px;
+}
+.photo-pending svg{width:32px;height:32px;}
+.photo-pending span{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;}
+.photo-pending--landscape{aspect-ratio:7/5;}   /* was 560x400 */
+.photo-pending--portrait{aspect-ratio:5/6;}    /* was 400x480, matches .shop-portrait img */
+
 .behind-build{padding:76px 0;background:var(--paper);border-top:1px solid var(--line);}
 .behind-build-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:32px;}
 .behind-build-photo{
@@ -840,21 +885,29 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
 .lightbox-content{max-width:min(900px,90vw);display:flex;flex-direction:column;align-items:center;gap:16px;}
 .lightbox-content img{max-width:100%;max-height:72vh;object-fit:contain;background:var(--white);border-radius:2px;}
 .lightbox-content figcaption{
-  color:var(--white);font-family:var(--font-mono);font-size:14px;
+  color:var(--white);font-family:var(--font-mono);font-size:16.8px;
   letter-spacing:.03em;text-align:center;
-  display:flex;flex-direction:column;align-items:center;gap:8px;
+  display:flex;flex-direction:column;align-items:center;gap:10px;
 }
 /* -------- Lightbox spec/price block (Implements page, added
    2026-07-26). The product cards carry no numbers by design, so size,
    power and price surface here instead. Empty spans collapse via
    :empty so this stays safe on pages whose lightbox has caption only
    (e.g. accessories). -------- */
+/* TYPE SIZE, 2026-07-29: every value in this block was scaled 1.2x
+   (14->16.8, 20->24, 13->15.6, 17->20.4) because the spec copy read too
+   small against a full-bleed photo. These rules are shared by the
+   Accessories and Implements lightboxes, so both pages moved together.
+   figcaption gap went 8->10px so the block doesn't tighten up at the
+   larger size. .lightbox-specs keeps max-width:44ch — ch scales with
+   font-size, so the measure stays ~44 characters and only the text
+   grows. Keep the 1.2 ratio intact if these are retuned. */
 .lightbox-title{
-  font-family:var(--font-display);font-weight:800;font-size:20px;
+  font-family:var(--font-display);font-weight:800;font-size:24px;
   letter-spacing:.01em;line-height:1.25;
 }
-.lightbox-specs{font-size:13px;color:#C9D4DA;line-height:1.5;max-width:44ch;}
-.lightbox-price{font-weight:700;font-size:17px;color:var(--white);}
+.lightbox-specs{font-size:15.6px;color:#C9D4DA;line-height:1.5;max-width:44ch;}
+.lightbox-price{font-weight:700;font-size:20.4px;color:var(--white);}
 .lightbox-price a{color:var(--white);border-bottom:2px solid var(--orange);padding-bottom:2px;}
 .lightbox-price a:hover{color:var(--orange);}
 .lightbox-title:empty,.lightbox-specs:empty,.lightbox-price:empty{display:none;}
@@ -874,7 +927,10 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
 .product-card-body h3{font-size:16.5px;line-height:1.3;}
 .product-price{font-family:var(--font-mono);font-weight:800;color:var(--orange-dark);font-size:16px;}
 .product-desc{font-size:14px;color:#454C49;line-height:1.55;margin-top:auto;padding-top:6px;}
-.product-note{font-family:var(--font-mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--steel-pale);}
+/* .product-note removed 2026-07-29. It rendered the small uppercase
+   "DETAILS" / "SPECS & PRICE" caption under each product card. Both
+   Accessories and Implements dropped that caption and now show the
+   price on the card instead, so the rule had no remaining users. */
 
 /* -------- BRAND SECTIONS (Implements page) -------- */
 .brand-jumpnav{background:var(--white);border-bottom:1px solid var(--line);}
@@ -1169,12 +1225,46 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
 .accessories-scroll::-webkit-scrollbar{display:none;}
 .accessories-scroll-item{
   flex:0 0 auto;width:160px;aspect-ratio:1/1;
+  position:relative;
   border:1px solid var(--line);border-radius:2px;overflow:hidden;
   background:var(--paper);scroll-snap-align:start;
-  transition:border-color .15s;
 }
-.accessories-scroll-item:hover{border-color:var(--orange);}
-.accessories-scroll-item img{width:100%;height:100%;object-fit:cover;display:block;}
+/* Hover/focus name label, 2026-07-29. Replaces an orange border-colour
+   hover, which only said "this is interactive" — it never told you what
+   you were looking at. This is the same slide-up label used by
+   .implement-thumb further up the same page, so the two strips on the
+   Enabler page now behave identically.
+
+   No tabindex needed here, unlike .implement-thumb: these tiles are
+   real <a> elements and are focusable already.
+
+   The label is aria-hidden because the <img alt> already gives the link
+   its accessible name — without that, a screen reader would announce
+   every product twice. */
+.accessories-scroll-label{
+  position:absolute;left:0;right:0;bottom:0;
+  background:rgba(20,24,22,.85);color:var(--white);
+  font-family:var(--font-mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;
+  line-height:1.35;text-align:center;padding:7px 6px;
+  opacity:0;transform:translateY(100%);
+  transition:opacity .18s ease,transform .18s ease;
+  pointer-events:none;
+}
+.accessories-scroll-item:hover .accessories-scroll-label,
+.accessories-scroll-item:focus-visible .accessories-scroll-label{
+  opacity:1;transform:translateY(0);
+}
+@media (prefers-reduced-motion:reduce){
+  .accessories-scroll-label{transition:opacity .18s ease;transform:none;}
+}
+/* contain + padding since 2026-07-29. Was object-fit:cover with no
+   padding, which suited the edge-to-edge Wix crops this strip used to
+   pull. It now shows the same normalized thumbs as the Accessories
+   grid — square, transparent, product centred — so cover would push
+   them to the tile edge and crop anything not perfectly square.
+   Padding is 10px rather than the grid's 18px because these tiles are
+   160px, not ~270px. */
+.accessories-scroll-item img{width:100%;height:100%;object-fit:contain;padding:10px;display:block;}
 
 .accessories-arrow{
   position:absolute;top:50%;transform:translateY(-50%);z-index:2;
@@ -1209,6 +1299,36 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
   background:rgba(14,17,18,0.72);color:var(--white);
   font-family:var(--font-mono);font-size:14px;letter-spacing:.06em;text-transform:uppercase;
   padding:12px 16px;
+}
+/* Slide the caption up on hover instead of parking it on the photo
+   permanently (2026-07-29), matching .accessories-scroll-label and
+   .implement-thumb-label. Applies to the "In the Field" grid on the
+   home page and the shop grid on company-purpose.html, which share
+   this class.
+
+   GATED ON @media (hover:hover) AND (pointer:fine) — keep it that way.
+   Touch devices have no hover, so ungated this would hide every
+   caption permanently on phones and tablets. There they stay visible
+   exactly as before.
+
+   Unlike the accessory tiles there is no :focus-within partner rule
+   here, because a <figure> holds nothing focusable — these photos are
+   not links or buttons. The caption text stays in the DOM and in the
+   accessibility tree either way, and each <img> carries descriptive
+   alt text, so nothing is lost to screen readers. A sighted
+   keyboard-only visitor is the one case that loses the caption; if
+   that matters, the fix is to make these photos real controls that
+   open the lightbox, the way the gallery grid already does. */
+@media (hover:hover) and (pointer:fine){
+  .story-img figcaption{
+    opacity:0;transform:translateY(100%);
+    transition:opacity .18s ease,transform .18s ease;
+    pointer-events:none;
+  }
+  .story-img:hover figcaption{opacity:1;transform:translateY(0);}
+}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:reduce){
+  .story-img figcaption{transition:opacity .18s ease;transform:none;}
 }
 .story-img--large img{min-height:400px;}
 .gallery-link{margin-top:32px;display:flex;justify-content:center;}
@@ -1541,10 +1661,29 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
   opacity:.9;pointer-events:none;
 }
 .snake-vehicle img{width:100%;height:auto;display:block;}
-/* sits in the empty half, opposite the copy — clear of both the text
-   and the connector, which shares that side. */
-.snake-row--right .snake-vehicle{left:calc(var(--turn-r) + 26px);}
-.snake-row--left  .snake-vehicle{right:calc(var(--turn-r) + 26px);transform:scaleX(-1);}
+/* sits in the empty half, opposite the copy, a fixed 100px from the
+   text column's inner edge (2026-07-27 — was anchored to the row's
+   outer edge via turn-r, which put a lot of empty space between the
+   copy and the icon on wide screens). The row's grid gap is 44px, so
+   the text column's inner edge sits at 50% ± 22px (half the gap); the
+   vehicle's near edge sits 100px past that: 50% + (100px - 22px) =
+   50% + 78px. --left rows have text on the left, so the vehicle (on
+   the right) is positioned via `left`; --right rows are the mirror,
+   positioned via `right`. */
+.snake-row--right .snake-vehicle{right:calc(50% + 78px);left:auto;}
+.snake-row--left  .snake-vehicle{left:calc(50% + 78px);right:auto;transform:scaleX(-1);}
+
+/* ---- staggered cascade (2026-07-27) — shifts the text+vehicle pair
+   as one unit, left for --right rows and right for --left rows, so
+   consecutive rows visually zigzag down the page instead of every
+   row's content sitting symmetric about the same centerline. The
+   track/connector lines are NOT shifted — only the two content
+   pieces. Text and vehicle move by the same amount so the 100px gap
+   between them (above) is unaffected. ---- */
+.snake-row--right .snake-cell{transform:translateX(var(--cascade-shift, -150px));}
+.snake-row--right .snake-vehicle{transform:translateX(var(--cascade-shift, -150px));}
+.snake-row--left .snake-cell{transform:translateX(calc(var(--cascade-shift, -150px) * -1));}
+.snake-row--left .snake-vehicle{transform:translateX(calc(var(--cascade-shift, -150px) * -1)) scaleX(-1);}
 
 @media(max-width:1000px){
   .snake{--turn-r:52px;}
@@ -1563,7 +1702,8 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
   .snake-row--turn-right::before,
   .snake-row--turn-left::before{display:none;}
   .snake-row--right .snake-cell,
-  .snake-row--left .snake-cell{grid-column:1;text-align:left;}
+  .snake-row--left .snake-cell{grid-column:1;text-align:left;transform:none;}
+  .snake-row--right .snake-vehicle{transform:none;}
   .snake-row--left .snake-cell p{margin-left:0;}
   .snake-cap{display:none;}
   .snake-badge{width:54px;height:54px;font-size:13.5px;margin-left:-59px;}

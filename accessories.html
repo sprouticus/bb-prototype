@@ -195,125 +195,148 @@
      to the product grid below: names, prices, and descriptions are
      pulled from the current bbengineering.us product catalog (Wix).
 
-     PHOTOS, 2026-07-26: the four products with new photography — the
-     driver's seat, split windshield, West Coast Mirrors and Utility
-     Trailer — use local files in images/Accessories/ and are ordered
-     FIRST ON PURPOSE so they fill the top row of the 4-column grid for
-     David's review. Keep them in the first four positions if cards get
-     added. The remaining eight are STILL hotlinked from
-     static.wixstatic.com and will break when the Wix site goes away —
-     they need re-hosting locally before launch.
+     PHOTOS, 2026-07-29: every card on this page now uses a local file
+     in images/Accessories/. All static.wixstatic.com hotlinks have been
+     removed — nothing here breaks when the Wix site goes away.
 
-     Utility Trailer has no confirmed price yet; it shows "Price TBD"
-     rather than a guessed figure. West Coast Mirrors' $260.00 is
-     inferred from its source filename and also wants confirming.
+     What changed on 2026-07-29: the seven Wix-hotlinked cards were
+     pulled and replaced with five sourced products (tow hitch receiver,
+     Superwinch LT2000, 48" farm jack, 32" light bar, LED flood pods),
+     with names, prices and specs taken from the accessories sheet.
+     Product/vendor links were deliberately NOT added to the page.
+     Also retired: the 5-Panel Panoramic Wide Mirror (West Coast Mirrors
+     covers it), the 39" Front Cargo Basket (45" kept, now on
+     Basket.png), and the photo-less 21" Overhead Light Bar (superseded
+     by the 32" bar). The old "Cargo Lights" card is gone; the LED flood
+     pods fill that slot.
 
-     CARD FORMAT, 2026-07-26: matched to the Implements page. Photo,
+     Prices for the five new items are supplier/retail figures from the
+     sheet, NOT B.B. Engineering markup — confirm with David before
+     this page goes public.
+
+     THUMBNAILS, 2026-07-29: source photos ranged from 0.62 to 1.85 in
+     aspect ratio, so even inside the square .product-card-img tile the
+     products read at wildly different sizes. Each one is now normalized
+     into images/Accessories/thumbs/ — trimmed to its true subject
+     bounds, scaled so its LONGEST side is 644px, and centred on a
+     700x700 transparent canvas (92% fill). Every product therefore
+     occupies an identical square, and the 18px CSS padding on
+     .product-card-img img adds the breathing room on top. The
+     Implements grid was given identical treatment the same day.
+
+     The card <img src> points at the thumb; data-full still points at
+     the full-resolution original so the lightbox stays sharp.
+     Untouched originals are archived in images/Accessories/_originals/.
+
+     Regenerate with: python3 tools/make-product-thumbs.py accessories
+     Do not hand-crop — uniformity depends on the longest side being
+     exactly 644. "Tow Hitch.png" is only 391x211 and gets upscaled
+     ~1.66x, so its thumb is a touch soft; better source art would fix
+     it, nothing else needs doing.
+
+     The earlier tools/make-accessory-thumbs.py is SUPERSEDED and should
+     not be run — it used a naive alpha bounding box that a single stray
+     pixel could defeat. That bug made Light Bar.png measure its faint
+     halo as part of the product, shrinking the visible bar. The
+     replacement requires a minimum share of a row/column to clear the
+     alpha threshold before it counts as content.
+
+     ORDERING: the original photography cards — driver's seat, split
+     windshield, West Coast Mirrors — lead the grid on purpose. There
+     were four; the Utility Trailer moved to the Implements page on
+     2026-07-29 under the new B.B. Engineering section, since it tows
+     behind the vehicle rather than mounting to it. Its art moved too:
+     images/Implements/bb-utility-trailer.png. The old Accessories
+     copies (utility-trailer.png and its thumb) are now unreferenced and
+     can be deleted whenever someone is tidying up.
+
+     West Coast Mirrors' $260.00 is inferred from its source filename
+     and wants confirming.
+
+     CARD FORMAT, 2026-07-26: derived from the Implements page. Photo,
      name and price on the card; the description moved into the
      lightbox (data-specs). Price deliberately stays visible here,
      unlike Implements, because this page reads as a price list.
-     The light bar has no photo, so it gets no "Details" cue — there
-     is nothing to click. ============ -->
+
+     Updated 2026-07-29: the "DETAILS" caption under each card is gone —
+     the card is now photo, name, price, nothing else. Implements was
+     brought in line the same day (its "SPECS & PRICE" caption dropped,
+     price moved onto the card), so the two pages match again.
+
+     The .product-note rule was deleted from styles.css in that pass
+     since nothing referenced it any more.
+
+     Clickability is now signalled only by the hover zoom-hint icon and
+     the cursor, neither of which exists on touch. The per-button
+     aria-label ("View photo and details for the ...") is unchanged, so
+     screen readers are unaffected, but a tap-only visitor gets no cue
+     that the photos open. Worth watching if the lightbox turns out to
+     matter for conversion. ============ -->
 
 <section class="catalog-section">
   <div class="wrap">
     <div class="product-grid">
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="images/Accessories/driver-seat.png" data-caption="Traditional Driver&#x27;s Seat" data-specs="Standard, traditional style driver&#x27;s seat." data-price="$175.00" aria-label="View photo and details for the Traditional Driver&#x27;s Seat"><img src="images/Accessories/driver-seat.png" alt="Traditional Driver&#x27;s Seat" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Accessories/driver-seat.png" data-caption="Traditional Driver&#x27;s Seat" data-specs="Standard, traditional style driver&#x27;s seat." data-price="$175.00" aria-label="View photo and details for the Traditional Driver&#x27;s Seat"><img src="images/Accessories/thumbs/driver-seat-thumb.png" width="700" height="700" alt="Traditional Driver&#x27;s Seat" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>Traditional Driver's Seat</h3>
           <p class="product-price">$175.00</p>
-          <p class="product-note">Details</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="images/Accessories/split-windshield.png" data-caption="2-In-1 Split Flip Windshield" data-specs="Industrial grade 2-in-1 split flip windshield." data-price="$260.00" aria-label="View photo and details for the 2-In-1 Split Flip Windshield"><img src="images/Accessories/split-windshield.png" alt="2-In-1 Split Flip Windshield" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Accessories/split-windshield.png" data-caption="2-In-1 Split Flip Windshield" data-specs="Industrial grade 2-in-1 split flip windshield." data-price="$260.00" aria-label="View photo and details for the 2-In-1 Split Flip Windshield"><img src="images/Accessories/thumbs/split-windshield-thumb.png" width="700" height="700" alt="2-In-1 Split Flip Windshield" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>2-In-1 Split Flip Windshield</h3>
           <p class="product-price">$260.00</p>
-          <p class="product-note">Details</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="images/Accessories/west-coast-mirrors.png" data-caption="West Coast Mirrors" data-specs="Stainless west coast style side mirrors with convex spot mirrors. Sold as a pair." data-price="$260.00" aria-label="View photo and details for the West Coast Mirrors"><img src="images/Accessories/west-coast-mirrors.png" alt="West Coast Mirrors" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Accessories/west-coast-mirrors.png" data-caption="West Coast Mirrors" data-specs="Stainless west coast style side mirrors with convex spot mirrors. Sold as a pair." data-price="$260.00" aria-label="View photo and details for the West Coast Mirrors"><img src="images/Accessories/thumbs/west-coast-mirrors-thumb.png" width="700" height="700" alt="West Coast Mirrors" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>West Coast Mirrors</h3>
           <p class="product-price">$260.00</p>
-          <p class="product-note">Details</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="images/Accessories/utility-trailer.png" data-caption="Utility Trailer" data-specs="Single-axle utility trailer with fold-down side panels and a drop-down rear gate." data-price="Price TBD" aria-label="View photo and details for the Utility Trailer"><img src="images/Accessories/utility-trailer.png" alt="Utility Trailer" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
-        <div class="product-card-body">
-          <h3>Utility Trailer</h3>
-          <p class="product-price">Price TBD</p>
-          <p class="product-note">Details</p>
-        </div>
-      </div>
-      <div class="product-card">
-        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_ca48946546194a338b69f1986f7a224f~mv2.png/v1/fit/w_1400,h_1400,q_90/file.png" data-caption="2&quot; Trailer Hitch Receiver" data-specs="Industrial grade 2&quot; trailer hitch receiver." data-price="$60.00" aria-label="View photo and details for the 2&quot; Trailer Hitch Receiver"><img src="https://static.wixstatic.com/media/7bf9b2_ca48946546194a338b69f1986f7a224f~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="2&quot; Trailer Hitch Receiver" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
-        <div class="product-card-body">
-          <h3>2" Trailer Hitch Receiver</h3>
-          <p class="product-price">$60.00</p>
-          <p class="product-note">Details</p>
-        </div>
-      </div>
-      <div class="product-card">
-        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_74877a3ad8104ffe95d72cddd1ad9ebc~mv2.jpg/v1/fit/w_1400,h_1400,q_90/file.jpg" data-caption="5-Panel Panoramic Wide Mirror" data-specs="Industrial grade 5-panel panoramic wide mirror, 34½&quot; wide." data-price="$32.00" aria-label="View photo and details for the 5-Panel Panoramic Wide Mirror"><img src="https://static.wixstatic.com/media/7bf9b2_74877a3ad8104ffe95d72cddd1ad9ebc~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="5-Panel Panoramic Wide Mirror" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
-        <div class="product-card-body">
-          <h3>5-Panel Panoramic Wide Mirror</h3>
-          <p class="product-price">$32.00</p>
-          <p class="product-note">Details</p>
-        </div>
-      </div>
-      <div class="product-card">
-        <div class="product-card-img no-image">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Photo Unavailable</span>
-        </div>
-        <div class="product-card-body">
-          <h3>21" Overhead Light Bar</h3>
-          <p class="product-price">$65.00</p>
-        </div>
-      </div>
-      <div class="product-card">
-        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_f4b807e9f9c547428c05caf53a35ac97~mv2.png/v1/fit/w_1400,h_1400,q_90/file.png" data-caption="Cargo Lights" data-specs="Extra-bright industrial grade rear cargo lights." data-price="$41.00" aria-label="View photo and details for the Cargo Lights"><img src="https://static.wixstatic.com/media/7bf9b2_f4b807e9f9c547428c05caf53a35ac97~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="Cargo Lights" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
-        <div class="product-card-body">
-          <h3>Cargo Lights</h3>
-          <p class="product-price">$41.00</p>
-          <p class="product-note">Details</p>
-        </div>
-      </div>
-      <div class="product-card">
-        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_6af4a2111fb94c869e3d6060b36d40e9~mv2.jpg/v1/fit/w_1400,h_1400,q_90/file.jpg" data-caption="High Lift Jack / Farm Jack" data-specs="Industrial grade high lift / farm jack." data-price="$115.00" aria-label="View photo and details for the High Lift Jack / Farm Jack"><img src="https://static.wixstatic.com/media/7bf9b2_6af4a2111fb94c869e3d6060b36d40e9~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="High Lift Jack / Farm Jack" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
-        <div class="product-card-body">
-          <h3>High Lift Jack / Farm Jack</h3>
-          <p class="product-price">$115.00</p>
-          <p class="product-note">Details</p>
-        </div>
-      </div>
-      <div class="product-card">
-        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_2243c5c1b6dd4f7d8457ff0b52c27de5~mv2.jpg/v1/fit/w_1400,h_1400,q_90/file.jpg" data-caption="45&quot; Front Cargo Basket" data-specs="Industrial grade front cargo basket for extra carrying room up front. 45&quot; x 16&quot; x 6&quot;." data-price="$165.00" aria-label="View photo and details for the 45&quot; Front Cargo Basket"><img src="https://static.wixstatic.com/media/7bf9b2_2243c5c1b6dd4f7d8457ff0b52c27de5~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="45&quot; Front Cargo Basket" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Accessories/Basket.png" data-caption="45&quot; Front Cargo Basket" data-specs="Industrial grade front cargo basket for extra carrying room up front. 45&quot; x 16&quot; x 6&quot;." data-price="$165.00" aria-label="View photo and details for the 45&quot; Front Cargo Basket"><img src="images/Accessories/thumbs/cargo-basket-thumb.png" width="700" height="700" alt="45&quot; Front Cargo Basket" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>45" Front Cargo Basket</h3>
           <p class="product-price">$165.00</p>
-          <p class="product-note">Details</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_2243c5c1b6dd4f7d8457ff0b52c27de5~mv2.jpg/v1/fit/w_1400,h_1400,q_90/file.jpg" data-caption="39&quot; Front Cargo Basket" data-specs="Industrial grade front cargo basket for extra carrying room up front. 39&quot; x 16&quot; x 6&quot;." data-price="$155.00" aria-label="View photo and details for the 39&quot; Front Cargo Basket"><img src="https://static.wixstatic.com/media/7bf9b2_2243c5c1b6dd4f7d8457ff0b52c27de5~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="39&quot; Front Cargo Basket" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Accessories/Tow Hitch.png" data-caption="Bumper-Mounted Tow Hitch Receiver" data-specs="Standard 2&quot; x 2&quot; square tube hitch receiver with reinforced tow hook holes, rated for 5,000 lb. Universal fit; bolts or welds on." data-price="$70.00" aria-label="View photo and details for the Bumper-Mounted Tow Hitch Receiver"><img src="images/Accessories/thumbs/tow-hitch-thumb.png" width="700" height="700" alt="Bumper-Mounted Tow Hitch Receiver" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
-          <h3>39" Front Cargo Basket</h3>
-          <p class="product-price">$155.00</p>
-          <p class="product-note">Details</p>
+          <h3>Bumper-Mounted Tow Hitch Receiver</h3>
+          <p class="product-price">$70.00</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="https://static.wixstatic.com/media/7bf9b2_750a55989b694a6b8fd15c74366f0d4d~mv2.jpg/v1/fit/w_1400,h_1400,q_90/file.jpg" data-caption="12-Volt DC 2,000 lb. Utility Vehicle Winch" data-specs="2,000 lb. utility vehicle winch with included pendant switch for remote operation." data-price="$209.00" aria-label="View photo and details for the 12-Volt DC 2,000 lb. Utility Vehicle Winch"><img src="https://static.wixstatic.com/media/7bf9b2_750a55989b694a6b8fd15c74366f0d4d~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="12-Volt DC 2,000 lb. Utility Vehicle Winch" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Accessories/Superwinch.png" data-caption="Superwinch LT2000 12-Volt Winch" data-specs="2,000 lb. working load limit with a full metal differential planetary gear train, dynamic braking and built-in circuit breaker protection. Low amp draw sealed permanent magnet motor. Includes handlebar-mounted rocker switch, latched hook with rope thimble, pull-and-turn freespooling clutch, pulley block and D shackle. Mounts permanently or runs portable with a quick-connect kit." data-price="$131.99" aria-label="View photo and details for the Superwinch LT2000 12-Volt Winch"><img src="images/Accessories/thumbs/superwinch-thumb.png" width="700" height="700" alt="Superwinch LT2000 12-Volt Winch" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
-          <h3>12-Volt DC 2,000 lb. Utility Vehicle Winch</h3>
-          <p class="product-price">$209.00</p>
-          <p class="product-note">Details</p>
+          <h3>Superwinch LT2000 12-Volt Winch</h3>
+          <p class="product-price">$131.99</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <button type="button" class="product-card-img" data-full="images/Accessories/Farm jack.png" data-caption="48&quot; High Lift Farm Jack" data-specs="3 ton / 6,600 lb. capacity high lift jack with a 5.5&quot; to 41.3&quot; lifting range and a 32&quot; handle. Cast steel with anti-corrosion surface treatment; ratcheting wrench mechanism locks the climbing height and lowers under control. 48&quot; overall height, 4.1&quot; x 6.8&quot; base." data-price="$80.00" aria-label="View photo and details for the 48&quot; High Lift Farm Jack"><img src="images/Accessories/thumbs/farm-jack-thumb.png" width="700" height="700" alt="48&quot; High Lift Farm Jack" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <div class="product-card-body">
+          <h3>48" High Lift Farm Jack</h3>
+          <p class="product-price">$80.00</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <button type="button" class="product-card-img" data-full="images/Accessories/Light Bar.png" data-caption="32&quot; LED Light Bar" data-specs="180W spot/flood combo beam in pure white 6000K, drawing 15A max. 6063 aluminum housing with a PC lens, rated 9&ndash;30V DC for 12V and 24V systems and over 30,000 hours of service. Ships with a 12 ft. wiring harness, relay, inline fuse and five-pin rocker switch." data-price="$63.00" aria-label="View photo and details for the 32&quot; LED Light Bar"><img src="images/Accessories/thumbs/light-bar-thumb.png" width="700" height="700" alt="32&quot; LED Light Bar" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <div class="product-card-body">
+          <h3>32" LED Light Bar</h3>
+          <p class="product-price">$63.00</p>
+        </div>
+      </div>
+      <div class="product-card">
+        <button type="button" class="product-card-img" data-full="images/Accessories/LED Light Pods.png" data-caption="LED Flood Light Pods (Set of 4)" data-specs="Four 18W flood pods at 1,260 lumens each, rated 9&ndash;30V DC for 12V and 24V systems. IP67 sealed against water, dust, vibration and corrosion, operating from &minus;40&deg; to 85&deg;C with over 30,000 hours of service. CE, FCC and RoHS certified." data-price="$30.00" aria-label="View photo and details for the LED Flood Light Pods"><img src="images/Accessories/thumbs/led-light-pods-thumb.png" width="700" height="700" alt="LED Flood Light Pods, set of four" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <div class="product-card-body">
+          <h3>LED Flood Light Pods (Set of 4)</h3>
+          <p class="product-price">$30.00</p>
         </div>
       </div>
     </div>
@@ -354,6 +377,7 @@
       <div>
         <h5>Contact</h5>
         <p>info@bbengineering.us</p>
+        <p>9415 Susan S.E.<br>Albuquerque, NM 87123</p>
       </div>
     </div>
     <div class="footer-bottom">

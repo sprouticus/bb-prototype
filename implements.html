@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Implements | B.B. Engineering</title>
-<meta name="description" content="Mowers, brush cutters, sprayers, plows, and snowblowers from Demco, Kunz, and Rammy — supported implements for the Enabler, all connected through our quick-connect catch-and-release hitch. No transfer needed.">
+<meta name="description" content="Mowers, brush cutters, sprayers, plows, and snowblowers from B.B. Engineering, Demco, Kunz, and Rammy — supported implements for the Enabler, all connected through our quick-connect catch-and-release hitch. No transfer needed.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -96,7 +96,7 @@
     <p class="eyebrow">Tow-Behind Tools</p>
     <h1>Implements</h1>
     <div class="rule"></div>
-    <p>Supported implements for the Enabler 2.1, from Demco, Kunz, and Rammy.</p>
+    <p>Supported implements for the Enabler 2.1, built in-house and by Demco, Kunz, and Rammy.</p>
   </div>
 </section>
 
@@ -186,6 +186,7 @@
 
 <nav class="brand-jumpnav" aria-label="Jump to brand">
   <div class="wrap">
+      <a href="#bb">B.B. Engineering</a>
       <a href="#demco">Demco</a>
       <a href="#kunz">Kunz</a>
       <a href="#rammy">Rammy</a>
@@ -194,21 +195,147 @@
 
 <!-- ============ BRAND SECTIONS — populated 2026-07-26 from the
      supported-implements spreadsheet for the Enabler 2.1 pre-order.
-     Brands run alphabetically (Demco / Kunz / Rammy); the jump nav
+     Brands run alphabetically (B.B. / Demco / Kunz / Rammy); the jump nav
      above mirrors that order. Kunz is new as of this pass.
 
-     THUMBNAIL/LIGHTBOX SPLIT: cards intentionally carry the photo and
-     the name only — no specs, no price. Size, power and price live in
-     the lightbox (see data-specs / data-price on each button) so the
-     grid stays scannable. Where a US price isn't settled (Demco 80 gal,
-     Rammy Lawn Mower, Rammy Plow W165 — the plow is sold only as a
-     W165/ST30 package by Wolfe Ridge), the lightbox routes to
-     schedule-conversation.html instead of publishing a soft number.
+     THUMBNAIL/LIGHTBOX SPLIT, revised 2026-07-29: cards now carry the
+     photo, the name AND the price, matching the Accessories page card
+     for card. Specs (size, power, weight) still live in the lightbox
+     via data-specs so the grid stays scannable — the price was the one
+     thing people needed without a click.
+
+     Card price is rendered from the same value as the button's
+     data-price, so the two are duplicated by hand. If a price changes,
+     change BOTH the data-price attribute and the .product-price
+     paragraph in that card's body, or the grid and the lightbox will
+     disagree.
+
+     Where a US price isn't settled (Demco 80 gal, Rammy Lawn Mower,
+     Rammy Plow W165 — the plow is sold only as a W165/ST30 package by
+     Wolfe Ridge), the card reads "Contact us" and the lightbox routes
+     to schedule-conversation.html rather than publishing a soft number.
+
+     The "SPECS & PRICE" caption under each card is gone, along with its
+     .product-note rule in styles.css — no page uses that class now.
+     As on Accessories, the only remaining cue that a photo opens is the
+     hover zoom icon, which does not exist on touch. Per-button
+     aria-labels are unchanged, so screen readers still announce it.
 
      Rammy publishes metric; figures below are converted to imperial.
      HP is shown only where the manufacturer publishes it — otherwise
      engine displacement in cc, rather than inventing a conversion.
+
+     THUMBNAILS, 2026-07-29: source photos ranged from 1.20 to 1.94 in
+     aspect ratio, so products read at different sizes even inside the
+     square .product-card-img tile. Every one is now normalized into
+     images/Implements/thumbs/ — trimmed to its true subject bounds,
+     scaled so its LONGEST side is 644px, and centred on a 700x700
+     transparent canvas. Identical treatment to the Accessories grid.
+
+     Card <img src> points at the thumb; data-full still points at the
+     full-resolution original so the lightbox stays sharp. Untouched
+     originals are archived in images/Implements/_originals/. Brand
+     LOGOS are not thumbnailed — they load straight from
+     images/Implements/ and are sized by .brand-logo in styles.css.
+
+     Regenerate with: python3 tools/make-product-thumbs.py implements
+     Do not hand-crop; uniformity depends on the longest side being
+     exactly 644. Two sources are low-res and get upscaled, so their
+     thumbs are slightly soft — the Demco 80 gallon (474x264, x1.77)
+     and the Kunz AcrEase (598x354, x1.09). Better source art would fix
+     both; nothing else needs doing.
+
+     RAMMY PRICING VERIFIED 2026-07-29 against the "Rammy Dealer Cost
+     Price List - 11/24/25" (two sheets: BC & FM, SB & PT). Prices on
+     this page are the Retail/MAP column, NOT dealer cost. Rammy sets
+     MAP, so these are the numbers we're permitted to advertise —
+     do not publish the dealer column.
+
+       Brush Cutter 120  $5,599.00 — matches what was already live.
+       Flail Mower 120   $4,399.00 — matches what was already live.
+       Snowblower 155    $6,398.99 — corrected from $6,398 to $6,399.
+         Not a single SKU: it is the Snowblower 120 / 420 CC base at
+         $5,899.00 (p/n 74131062) plus the 155 Wing Set at $499.99
+         (p/n 74131285). If either line moves, re-add them.
+
+     Whole-dollar rounding is deliberate and applies page-wide, so
+     Rammy reads consistently with the Demco and Kunz figures. The
+     Snowblower is the only implement with cents in the source.
+
+     STILL "Contact us" after this pass, both confirmed intentional:
+       Lawn Mower 120 — no standalone SKU exists in either sheet. The
+         only related line is a Lawn Mower Conversion Kit at $849.99
+         (p/n 74131290), which converts a Brush Cutter rather than
+         being its own machine. Do not infer a price by adding the two.
+         Fill this in only when Rammy supplies a real lawn mower sheet.
+       Plow W165 — the sheet does price it, but as PT-PKG at $5,599.00,
+         which is the complete package: W165 plow with wings PLUS the
+         ST30 snow thrower. Rammy states the ST30 is not sold
+         separately and the package is not sold split, so a $5,599.00
+         tag on a card labelled "Plow W165" would misrepresent what
+         the buyer gets. Left as a conversation on purpose.
+
+     Demco and Kunz prices are untouched — the 11/24/25 list is Rammy
+     only, and no equivalent sheet has been supplied for those brands.
      ============ -->
+
+<!-- ============ B.B. ENGINEERING — added 2026-07-29.
+
+     Sits FIRST for two reasons that happen to agree: it is the house
+     brand, and "B.B." also leads alphabetically. The jump nav above
+     mirrors this order, so if brands are ever reordered, reorder both.
+
+     LOGO: uses bb-logo-mark.png, the vehicle mark on its own, NOT
+     bb-logo.png which carries the "BB ENGINEERING" wordmark under it.
+     Chosen 2026-07-29. Note this makes B.B. the only brand row without
+     a visible name — Demco and Kunz are flat wordmarks and Rammy is
+     icon-over-wordmark, so all three name themselves. Reasonable here
+     since it is our own site and the jump nav says "B.B. Engineering"
+     directly above, but be aware of it. Accessibility is unaffected
+     either way: the <h2> takes its heading text from the img alt, so
+     the section is still announced as "B.B. Engineering".
+
+     The mark is 1170x701 and renders at 110x66 under .brand-logo's
+     fixed 110px width — comfortably within the range the other three
+     occupy (Demco ~110x25, Kunz ~110x36, Rammy ~110x115).
+
+     The Utility Trailer was moved here from the Accessories page the
+     same day. It was always an implement rather than a bolt-on
+     accessory — it tows behind the Enabler on the catch-and-release
+     hitch like everything else on this page, rather than mounting to
+     the vehicle. Its photo moved with it: images/Accessories/
+     utility-trailer.png is now images/Implements/bb-utility-trailer.png.
+
+     Price stays "Price TBD" rather than the "Contact us" wording the
+     other unpriced cards use. That is deliberate and was confirmed —
+     the trailer genuinely has no price set yet, whereas the Demco 80
+     gallon, Rammy Lawn Mower and Rammy Plow are priced but not in a
+     form we can publish as a single number. Different problems, so
+     they read differently. Because this one is not a "come talk to us"
+     case, it carries no data-price-link.
+
+     If more B.B.-built implements land, add them here — the grid is
+     the same 4-column .product-grid, so a lone card is expected to sit
+     left-aligned in its row (Kunz already does this). ============ -->
+<section class="brand-section" id="bb">
+  <div class="wrap">
+    <div class="brand-header">
+      <h2 class="brand-logo"><img src="images/bb-logo-mark.png" alt="B.B. Engineering" loading="lazy"></h2>
+      <div>
+        <p>Built in-house in Albuquerque alongside the Enabler itself, and designed from the start around the same catch-and-release hitch.</p>
+      </div>
+    </div>
+    <div class="product-grid">
+      <div class="product-card">
+        <button type="button" class="product-card-img" data-full="images/Implements/bb-utility-trailer.png" data-caption="Utility Trailer" data-specs="Single-axle utility trailer with fold-down side panels and a drop-down rear gate." data-price="Price TBD" aria-label="View photo and specs for the Utility Trailer"><img src="images/Implements/thumbs/bb-utility-trailer-thumb.png" width="700" height="700" alt="Utility Trailer" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <div class="product-card-body">
+          <h3>Utility Trailer</h3>
+          <p class="product-price">Price TBD</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="brand-section" id="demco">
   <div class="wrap">
@@ -220,24 +347,24 @@
     </div>
     <div class="product-grid">
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="images/Implements/demco-pro-series-40-gallon-sprayer.png" data-caption="Demco Pro Series 40 Gallon Sprayer" data-specs="40 gal tank &middot; 5 GPM electric pump &middot; 80&quot; boom" data-price="$2,162" aria-label="View photo, specs and price for the Demco Pro Series 40 Gallon Sprayer"><img src="images/Implements/demco-pro-series-40-gallon-sprayer.png" alt="Demco Pro Series 40 Gallon Sprayer" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Implements/demco-pro-series-40-gallon-sprayer.png" data-caption="Demco Pro Series 40 Gallon Sprayer" data-specs="40 gal tank &middot; 5 GPM electric pump &middot; 80&quot; boom" data-price="$2,162" aria-label="View photo, specs and price for the Demco Pro Series 40 Gallon Sprayer"><img src="images/Implements/thumbs/demco-pro-series-40-gallon-sprayer-thumb.png" width="700" height="700" alt="Demco Pro Series 40 Gallon Sprayer" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>Pro Series 40 Gallon Sprayer</h3>
-          <p class="product-note">Specs &amp; price</p>
+          <p class="product-price">$2,162</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="images/Implements/demco-pro-series-60-gallon-sprayer.png" data-caption="Demco Pro Series 60 Gallon Sprayer" data-specs="60 gal tank &middot; 5 GPM electric pump &middot; 80&quot; boom" data-price="$2,262" aria-label="View photo, specs and price for the Demco Pro Series 60 Gallon Sprayer"><img src="images/Implements/demco-pro-series-60-gallon-sprayer.png" alt="Demco Pro Series 60 Gallon Sprayer" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Implements/demco-pro-series-60-gallon-sprayer.png" data-caption="Demco Pro Series 60 Gallon Sprayer" data-specs="60 gal tank &middot; 5 GPM electric pump &middot; 80&quot; boom" data-price="$2,262" aria-label="View photo, specs and price for the Demco Pro Series 60 Gallon Sprayer"><img src="images/Implements/thumbs/demco-pro-series-60-gallon-sprayer-thumb.png" width="700" height="700" alt="Demco Pro Series 60 Gallon Sprayer" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>Pro Series 60 Gallon Sprayer</h3>
-          <p class="product-note">Specs &amp; price</p>
+          <p class="product-price">$2,262</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="images/Implements/demco-pro-series-80-gallon-sprayer.png" data-caption="Demco Pro Series 80 Gallon Sprayer" data-specs="80 gal tank &middot; 5 GPM electric pump &middot; 80&quot; boom" data-price="Contact us" data-price-link="schedule-conversation.html" aria-label="View photo and specs for the Demco Pro Series 80 Gallon Sprayer"><img src="images/Implements/demco-pro-series-80-gallon-sprayer.png" alt="Demco Pro Series 80 Gallon Sprayer" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Implements/demco-pro-series-80-gallon-sprayer.png" data-caption="Demco Pro Series 80 Gallon Sprayer" data-specs="80 gal tank &middot; 5 GPM electric pump &middot; 80&quot; boom" data-price="Contact us" data-price-link="schedule-conversation.html" aria-label="View photo and specs for the Demco Pro Series 80 Gallon Sprayer"><img src="images/Implements/thumbs/demco-pro-series-80-gallon-sprayer-thumb.png" width="700" height="700" alt="Demco Pro Series 80 Gallon Sprayer" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>Pro Series 80 Gallon Sprayer</h3>
-          <p class="product-note">Specs &amp; price</p>
+          <p class="product-price">Contact us</p>
         </div>
       </div>
     </div>
@@ -254,10 +381,10 @@
     </div>
     <div class="product-grid">
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="images/Implements/kunz-acrease-mr55be-rough-cut-mower.png" data-caption="Kunz AcrEase Rough Cut Mower MR55BE" data-specs="57&quot; cutting width &middot; 27 HP &middot; 580 lbs" data-price="$5,195" aria-label="View photo, specs and price for the Kunz AcrEase Rough Cut Mower MR55BE"><img src="images/Implements/kunz-acrease-mr55be-rough-cut-mower.png" alt="Kunz AcrEase Rough Cut Mower MR55BE" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Implements/kunz-acrease-mr55be-rough-cut-mower.png" data-caption="Kunz AcrEase Rough Cut Mower MR55BE" data-specs="57&quot; cutting width &middot; 27 HP &middot; 580 lbs" data-price="$5,195" aria-label="View photo, specs and price for the Kunz AcrEase Rough Cut Mower MR55BE"><img src="images/Implements/thumbs/kunz-acrease-mr55be-rough-cut-mower-thumb.png" width="700" height="700" alt="Kunz AcrEase Rough Cut Mower MR55BE" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>AcrEase Rough Cut Mower MR55BE</h3>
-          <p class="product-note">Specs &amp; price</p>
+          <p class="product-price">$5,195</p>
         </div>
       </div>
     </div>
@@ -274,38 +401,38 @@
     </div>
     <div class="product-grid">
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="images/Implements/rammy-brush-cutter-120-atv-pro.png" data-caption="Rammy Brush Cutter 120 ATV PRO" data-specs="45&quot; cutting width &middot; 344 cc &middot; 198 lbs" data-price="$5,599" aria-label="View photo, specs and price for the Rammy Brush Cutter 120 ATV PRO"><img src="images/Implements/rammy-brush-cutter-120-atv-pro.png" alt="Rammy Brush Cutter 120 ATV PRO" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Implements/rammy-brush-cutter-120-atv-pro.png" data-caption="Rammy Brush Cutter 120 ATV PRO" data-specs="45&quot; cutting width &middot; 344 cc &middot; 198 lbs" data-price="$5,599" aria-label="View photo, specs and price for the Rammy Brush Cutter 120 ATV PRO"><img src="images/Implements/thumbs/rammy-brush-cutter-120-atv-pro-thumb.png" width="700" height="700" alt="Rammy Brush Cutter 120 ATV PRO" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>Brush Cutter 120 ATV PRO</h3>
-          <p class="product-note">Specs &amp; price</p>
+          <p class="product-price">$5,599</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="images/Implements/rammy-flail-mower-120-atv.png" data-caption="Rammy Flail Mower 120 ATV" data-specs="39&quot; cutting width &middot; 9 HP &middot; 209 lbs" data-price="$4,399" aria-label="View photo, specs and price for the Rammy Flail Mower 120 ATV"><img src="images/Implements/rammy-flail-mower-120-atv.png" alt="Rammy Flail Mower 120 ATV" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Implements/rammy-flail-mower-120-atv.png" data-caption="Rammy Flail Mower 120 ATV" data-specs="39&quot; cutting width &middot; 9 HP &middot; 209 lbs" data-price="$4,399" aria-label="View photo, specs and price for the Rammy Flail Mower 120 ATV"><img src="images/Implements/thumbs/rammy-flail-mower-120-atv-thumb.png" width="700" height="700" alt="Rammy Flail Mower 120 ATV" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>Flail Mower 120 ATV</h3>
-          <p class="product-note">Specs &amp; price</p>
+          <p class="product-price">$4,399</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="images/Implements/rammy-lawn-mower-120-atv-pro.png" data-caption="Rammy Lawn Mower 120 ATV PRO" data-specs="45&quot; cutting width &middot; 344 cc &middot; 198 lbs" data-price="Contact us" data-price-link="schedule-conversation.html" aria-label="View photo and specs for the Rammy Lawn Mower 120 ATV PRO"><img src="images/Implements/rammy-lawn-mower-120-atv-pro.png" alt="Rammy Lawn Mower 120 ATV PRO" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Implements/rammy-lawn-mower-120-atv-pro.png" data-caption="Rammy Lawn Mower 120 ATV PRO" data-specs="45&quot; cutting width &middot; 344 cc &middot; 198 lbs" data-price="Contact us" data-price-link="schedule-conversation.html" aria-label="View photo and specs for the Rammy Lawn Mower 120 ATV PRO"><img src="images/Implements/thumbs/rammy-lawn-mower-120-atv-pro-thumb.png" width="700" height="700" alt="Rammy Lawn Mower 120 ATV PRO" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>Lawn Mower 120 ATV PRO</h3>
-          <p class="product-note">Specs &amp; price</p>
+          <p class="product-price">Contact us</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="images/Implements/rammy-plow-w165-atv-pro.png" data-caption="Rammy Plow W165 ATV PRO" data-specs="46&quot;&ndash;65&quot; working width &middot; 110 lbs" data-price="Contact us" data-price-link="schedule-conversation.html" aria-label="View photo and specs for the Rammy Plow W165 ATV PRO"><img src="images/Implements/rammy-plow-w165-atv-pro.png" alt="Rammy Plow W165 ATV PRO" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Implements/rammy-plow-w165-atv-pro.png" data-caption="Rammy Plow W165 ATV PRO" data-specs="46&quot;&ndash;65&quot; working width &middot; 110 lbs" data-price="Contact us" data-price-link="schedule-conversation.html" aria-label="View photo and specs for the Rammy Plow W165 ATV PRO"><img src="images/Implements/thumbs/rammy-plow-w165-atv-pro-thumb.png" width="700" height="700" alt="Rammy Plow W165 ATV PRO" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>Plow W165 ATV PRO</h3>
-          <p class="product-note">Specs &amp; price</p>
+          <p class="product-price">Contact us</p>
         </div>
       </div>
       <div class="product-card">
-        <button type="button" class="product-card-img" data-full="images/Implements/rammy-snowblower-155-utv-pro.png" data-caption="Rammy Snowblower 155 UTV PRO" data-specs="61&quot; clearing width &middot; 420 cc &middot; 276 lbs" data-price="$6,398" aria-label="View photo, specs and price for the Rammy Snowblower 155 UTV PRO"><img src="images/Implements/rammy-snowblower-155-utv-pro.png" alt="Rammy Snowblower 155 UTV PRO" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <button type="button" class="product-card-img" data-full="images/Implements/rammy-snowblower-155-utv-pro.png" data-caption="Rammy Snowblower 155 UTV PRO" data-specs="61&quot; clearing width &middot; 420 cc &middot; 276 lbs" data-price="$6,399" aria-label="View photo, specs and price for the Rammy Snowblower 155 UTV PRO"><img src="images/Implements/thumbs/rammy-snowblower-155-utv-pro-thumb.png" width="700" height="700" alt="Rammy Snowblower 155 UTV PRO" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
           <h3>Snowblower 155 UTV PRO</h3>
-          <p class="product-note">Specs &amp; price</p>
+          <p class="product-price">$6,399</p>
         </div>
       </div>
     </div>
@@ -370,6 +497,7 @@
       <div>
         <h5>Contact</h5>
         <p>info@bbengineering.us</p>
+        <p>9415 Susan S.E.<br>Albuquerque, NM 87123</p>
       </div>
     </div>
     <div class="footer-bottom">

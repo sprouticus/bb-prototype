@@ -232,9 +232,23 @@
 <!-- ============ CUSTOMIZE YOUR ACCESSORIES — replaced the vehicle
      photo carousel (vp-* markup) at the bottom of the page, 2026-07-18.
      Thumbnails link through to the Accessories page rather than
-     opening individually here; images are the same hotlinked Wix CDN
-     photos used on accessories.html (per catalog-intro note there,
-     these should be re-hosted locally before real launch). ============ -->
+     opening individually here.
+
+     SYNCED 2026-07-29 with accessories.html, which is the source of
+     truth. Same nine products in the same order, on the same normalized
+     700x700 thumbs from images/Accessories/thumbs/. The Wix CDN
+     hotlinks that used to sit here are gone, so this strip no longer
+     breaks when the Wix site goes away.
+
+     Four of the old tiles were products we no longer sell at all — the
+     2" Trailer Hitch Receiver, 5-Panel Panoramic Wide Mirror, Cargo
+     Lights and the old High Lift Jack — plus a winch that has since
+     been replaced by the Superwinch LT2000. Added: West Coast Mirrors,
+     the 48" farm jack, 32" light bar and LED flood pods.
+
+     Mirror any change made on the Accessories page here. This strip is
+     photo-only by design — no names, no prices — so it needs no
+     re-syncing when a price moves, only when the LINEUP changes. ============ -->
 <section class="accessories-teaser">
   <div class="wrap">
     <div class="section-head">
@@ -251,28 +265,40 @@
       </button>
       <div class="accessories-scroll" role="list" aria-label="Available accessories">
         <a class="accessories-scroll-item" href="accessories.html" role="listitem">
-          <img src="https://static.wixstatic.com/media/7bf9b2_a8f76f4defe44e4ab061946107c86203~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="Traditional Driver's Seat" loading="lazy">
+          <img src="images/Accessories/thumbs/driver-seat-thumb.png" width="700" height="700" alt="Traditional Driver&#x27;s Seat" loading="lazy">
+          <span class="accessories-scroll-label" aria-hidden="true">Traditional Driver's Seat</span>
         </a>
         <a class="accessories-scroll-item" href="accessories.html" role="listitem">
-          <img src="https://static.wixstatic.com/media/7bf9b2_8adecc3887044fe58aa2f2c51a223c93~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="2-In-1 Split Flip Windshield" loading="lazy">
+          <img src="images/Accessories/thumbs/split-windshield-thumb.png" width="700" height="700" alt="2-In-1 Split Flip Windshield" loading="lazy">
+          <span class="accessories-scroll-label" aria-hidden="true">2-In-1 Split Flip Windshield</span>
         </a>
         <a class="accessories-scroll-item" href="accessories.html" role="listitem">
-          <img src="https://static.wixstatic.com/media/7bf9b2_ca48946546194a338b69f1986f7a224f~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="2&quot; Trailer Hitch Receiver" loading="lazy">
+          <img src="images/Accessories/thumbs/west-coast-mirrors-thumb.png" width="700" height="700" alt="West Coast Mirrors" loading="lazy">
+          <span class="accessories-scroll-label" aria-hidden="true">West Coast Mirrors</span>
         </a>
         <a class="accessories-scroll-item" href="accessories.html" role="listitem">
-          <img src="https://static.wixstatic.com/media/7bf9b2_74877a3ad8104ffe95d72cddd1ad9ebc~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="5-Panel Panoramic Wide Mirror" loading="lazy">
+          <img src="images/Accessories/thumbs/cargo-basket-thumb.png" width="700" height="700" alt="45&quot; Front Cargo Basket" loading="lazy">
+          <span class="accessories-scroll-label" aria-hidden="true">45" Front Cargo Basket</span>
         </a>
         <a class="accessories-scroll-item" href="accessories.html" role="listitem">
-          <img src="https://static.wixstatic.com/media/7bf9b2_f4b807e9f9c547428c05caf53a35ac97~mv2.png/v1/fit/w_500,h_500,q_90/file.png" alt="Cargo Lights" loading="lazy">
+          <img src="images/Accessories/thumbs/tow-hitch-thumb.png" width="700" height="700" alt="Bumper-Mounted Tow Hitch Receiver" loading="lazy">
+          <span class="accessories-scroll-label" aria-hidden="true">Bumper-Mounted Tow Hitch Receiver</span>
         </a>
         <a class="accessories-scroll-item" href="accessories.html" role="listitem">
-          <img src="https://static.wixstatic.com/media/7bf9b2_6af4a2111fb94c869e3d6060b36d40e9~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="High Lift Jack / Farm Jack" loading="lazy">
+          <img src="images/Accessories/thumbs/superwinch-thumb.png" width="700" height="700" alt="Superwinch LT2000 12-Volt Winch" loading="lazy">
+          <span class="accessories-scroll-label" aria-hidden="true">Superwinch LT2000 12-Volt Winch</span>
         </a>
         <a class="accessories-scroll-item" href="accessories.html" role="listitem">
-          <img src="https://static.wixstatic.com/media/7bf9b2_2243c5c1b6dd4f7d8457ff0b52c27de5~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="45&quot; Front Cargo Basket" loading="lazy">
+          <img src="images/Accessories/thumbs/farm-jack-thumb.png" width="700" height="700" alt="48&quot; High Lift Farm Jack" loading="lazy">
+          <span class="accessories-scroll-label" aria-hidden="true">48" High Lift Farm Jack</span>
         </a>
         <a class="accessories-scroll-item" href="accessories.html" role="listitem">
-          <img src="https://static.wixstatic.com/media/7bf9b2_750a55989b694a6b8fd15c74366f0d4d~mv2.jpg/v1/fit/w_500,h_500,q_90/file.jpg" alt="12-Volt DC 2,000 lb. Utility Vehicle Winch" loading="lazy">
+          <img src="images/Accessories/thumbs/light-bar-thumb.png" width="700" height="700" alt="32&quot; LED Light Bar" loading="lazy">
+          <span class="accessories-scroll-label" aria-hidden="true">32" LED Light Bar</span>
+        </a>
+        <a class="accessories-scroll-item" href="accessories.html" role="listitem">
+          <img src="images/Accessories/thumbs/led-light-pods-thumb.png" width="700" height="700" alt="LED Flood Light Pods (Set of 4)" loading="lazy">
+          <span class="accessories-scroll-label" aria-hidden="true">LED Flood Light Pods (Set of 4)</span>
         </a>
       </div>
       <button type="button" class="accessories-arrow accessories-next" aria-label="Scroll accessories right">
@@ -316,6 +342,7 @@
       <div>
         <h5>Contact</h5>
         <p>info@bbengineering.us</p>
+        <p>9415 Susan S.E.<br>Albuquerque, NM 87123</p>
       </div>
     </div>
     <div class="footer-bottom">
