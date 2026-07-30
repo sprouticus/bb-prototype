@@ -52,14 +52,14 @@
           </div>
           <div class="nav-item has-dropdown">
             <div class="nav-dropdown-trigger-row">
-              <a href="videos.html" class="nav-dropdown-trigger">Gallery</a>
+              <a href="photos.html" class="nav-dropdown-trigger">Gallery</a>
               <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-label="Toggle Gallery menu">
                 <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
               </button>
             </div>
             <div class="nav-dropdown">
-      <a href="videos.html">Videos</a>
       <a href="photos.html">Photos</a>
+      <a href="videos.html">Videos</a>
             </div>
           </div>
           <div class="nav-item has-dropdown">
@@ -170,64 +170,80 @@
 
     <div class="spec-section">
       <h3><span class="idx">06</span> Pricing</h3>
-      <div class="pricing-box">
-        <div>
-          <span class="amount">$32,500</span>
-          <p class="note">Base unit, introductory price. Subject to change.</p>
-        </div>
-        <div style="display:flex;gap:10px;flex-wrap:wrap;">
-          <a href="pre-order.html" class="btn btn-orange">Pre-Order the Enabler 2.1</a>
-          <a href="schedule-conversation.html" class="btn btn-outline">Schedule a Conversation</a>
-        </div>
-      </div>
+      <table class="spec-table">
+        <tr><td>Base unit</td><td>$32,500</td></tr>
+        <tr><td>Pre-order deposit</td><td>None required</td></tr>
+      </table>
+      <p class="section-head-note" style="margin-top:18px;">Introductory price for the base unit, subject to change. Accessories and tow-behind implements are priced separately.</p>
     </div>
 
   </div>
 </section>
 
-<!-- ============ BEHIND THE BUILD — placeholder photos of the shop
-     team engineering, welding, and assembling the Enabler 2.0. Specs
-     above remain the primary focus of this page; this is a
-     lightweight supporting strip. Added 2026-07-19 — swap each tile
-     for a real shop photo as they come in. ============ -->
+<!-- ============ IN THE SHOP — rebuilt 2026-07-29. Was four small
+     "Photo Pending" placeholder tiles in an even 4-up grid; now a
+     large feature photo with an overlay caption plus a three-up
+     supporting row, using the real welding/fabrication photos shot
+     2026-07-28.
+
+     Source files are the full-resolution originals in images/ (with
+     spaces in their filenames — "Guys with sparks.jpg" etc.). Those
+     are 7-10 MB each and are NOT referenced here; the shop-*.jpg
+     files below are downscaled, web-named copies. Re-run that
+     conversion if the originals are replaced.
+
+     Captions are role-based rather than named on purpose — swap in
+     real first names once it's confirmed who's in each frame.
+     ============ -->
 <section class="behind-build">
   <div class="wrap">
     <div class="section-head">
       <div>
         <p class="eyebrow">In the Shop</p>
         <h2>Engineered and welded in-house.</h2>
-        <p class="section-head-note">Every Enabler 2.0 is designed, fabricated, and assembled by our own team in Albuquerque.</p>
+        <p class="section-head-note">Every Enabler 2.0 is designed, fabricated, and assembled by our own team in Albuquerque. No outsourced chassis, no contract assembly.</p>
       </div>
     </div>
-    <div class="behind-build-grid">
-      <figure class="behind-build-item">
-        <div class="behind-build-photo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Photo Pending</span>
-        </div>
-        <figcaption>Engineering &amp; Design</figcaption>
+
+    <figure class="shop-feature">
+      <img src="images/shop-welding-chassis.jpg" alt="A fabricator welding the Enabler chassis, arc light and sparks visible across the bare steel frame" loading="lazy">
+      <figcaption>Chassis welding &mdash; every frame is laid up and welded by hand</figcaption>
+    </figure>
+
+    <div class="shop-row">
+      <figure class="shop-tile">
+        <img src="images/shop-welding-cage.jpg" alt="Welder working inside the Enabler roll cage" loading="lazy">
+        <figcaption>Roll Cage &amp; Lift Mounts</figcaption>
       </figure>
-      <figure class="behind-build-item">
-        <div class="behind-build-photo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Photo Pending</span>
-        </div>
-        <figcaption>Welding &amp; Fabrication</figcaption>
+      <figure class="shop-tile">
+        <img src="images/shop-cutting-plate.jpg" alt="Cutting steel plate with an angle grinder, sparks streaming from the cut" loading="lazy">
+        <figcaption>Cutting &amp; Grinding</figcaption>
       </figure>
-      <figure class="behind-build-item">
-        <div class="behind-build-photo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Photo Pending</span>
-        </div>
-        <figcaption>Assembly Floor</figcaption>
+      <figure class="shop-tile">
+        <img src="images/shop-grinding-frame.jpg" alt="Fabricator grinding a weld on the vehicle frame in the Albuquerque shop" loading="lazy">
+        <figcaption>Finish Work</figcaption>
       </figure>
-      <figure class="behind-build-item">
-        <div class="behind-build-photo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Photo Pending</span>
-        </div>
-        <figcaption>Final Quality Check</figcaption>
-      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- ============ NEXT STEP — CTA band closing the specs page. Added
+     2026-07-29 when the pre-order/schedule buttons were pulled out of
+     the Pricing block (section 06 is now plain text, like every other
+     spec section). Reuses the homepage .next-step component with a
+     white-background modifier so it separates from the paper-toned
+     "In the Shop" strip directly above it. ============ -->
+<section class="next-step next-step--white">
+  <div class="wrap">
+    <p class="eyebrow">Ready to Move Forward?</p>
+    <h2>Reserve your spot. No payment required.</h2>
+    <div class="rule"></div>
+    <p class="sub">Pre-order takes a couple of minutes and holds your place in line for the Enabler 2.1 &mdash; there's no card to enter. Prefer to talk it through first? Schedule a conversation.</p>
+    <div class="cta-row">
+      <a href="pre-order.html" class="btn btn-orange">Pre-Order the Enabler 2.1
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a href="schedule-conversation.html" class="btn btn-outline">Schedule a Conversation</a>
     </div>
   </div>
 </section>
@@ -246,8 +262,8 @@
         <a href="accessories.html">Accessories</a>
         <a href="implements.html">Implements</a>
         <a href="catch-and-release.html">Catch-and-Release</a>
-        <a href="videos.html">Videos</a>
         <a href="photos.html">Photos</a>
+        <a href="videos.html">Videos</a>
       </div>
       <div>
         <h5>Our Company</h5>
@@ -317,5 +333,6 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   });
 })();
 </script>
+<script src="lightbox.js" defer></script>
 </body>
 </html>

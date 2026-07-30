@@ -34,6 +34,9 @@
   --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
 
   --maxw: 1220px;
+  /* Hero runs wider than the standard container on purpose, but capped so
+     it stops stretching on ultrawide displays. */
+  --hero-maxw: 1440px;
 }
 
 *{box-sizing:border-box;}
@@ -291,7 +294,15 @@ nav.primary a.mobile-cta{display:none;}
    and the photo, no clip-path bleed, no forced cropping of the image.
    ============================================================ */
 .hero{background:var(--white);overflow:hidden;border-bottom:1px solid var(--line);}
-.hero-grid{display:grid;grid-template-columns:19fr 24fr;min-height:540px;}
+/* The hero is deliberately wider than the rest of the page — that extra
+   width is what makes it read as the top of the page rather than just
+   another section. But it's capped rather than full-bleed, so it stops
+   growing on wide monitors instead of stretching indefinitely. Adjust
+   --hero-maxw to tune how much wider than --maxw (1220px) it sits. */
+.hero-grid{
+  display:grid;grid-template-columns:19fr 24fr;min-height:540px;
+  max-width:var(--hero-maxw);margin:0 auto;
+}
 .hero-copy{
   background:var(--white);
   padding:64px 60px 64px 28px;
@@ -419,6 +430,9 @@ nav.primary a.mobile-cta{display:none;}
 .next-step .rule{margin-left:auto;margin-right:auto;}
 .next-step p.sub{color:#454C49;font-size:19.5px;max-width:520px;margin:20px auto 0;line-height:1.6;}
 .next-step .cta-row{display:flex;justify-content:center;gap:14px;margin-top:32px;flex-wrap:wrap;}
+/* White variant — used on the specs page, where this band follows the
+   paper-toned "In the Shop" strip and needs to read as its own step. */
+.next-step--white{background:var(--white);}
 
 /* -------- NEXT-GEN TEASER (Enabler 2.1 coming-soon strip, added
    2026-07-14, promoted directly under the hero + made bolder on
@@ -729,20 +743,59 @@ input:focus,select:focus,textarea:focus{border-color:var(--steel);}
 .photo-pending--landscape{aspect-ratio:7/5;}   /* was 560x400 */
 .photo-pending--portrait{aspect-ratio:5/6;}    /* was 400x480, matches .shop-portrait img */
 
+/* IN THE SHOP — rebuilt 2026-07-29. The old version was four equal
+   placeholder tiles in a 4-up grid, which stayed visually flat once real
+   photos went in. Now one large feature image carries the section and a
+   three-up row supports it, so the shop work reads at a glance instead of
+   as a row of thumbnails.
+
+   The old .behind-build-grid / .behind-build-photo / .behind-build-item
+   rules were removed with the placeholders they styled. The generic
+   .photo-pending helper further up is untouched and still available. */
 .behind-build{padding:76px 0;background:var(--paper);border-top:1px solid var(--line);}
-.behind-build-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:32px;}
-.behind-build-photo{
-  aspect-ratio:4/3;background:var(--white);border:2px dashed var(--steel-pale);border-radius:2px;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;color:var(--steel-pale);
+
+/* -------- .photo-zoom — button wrapper injected by lightbox.js around
+   photos in enhanced sections. Resets default button chrome and passes
+   height straight through, because rules like ".story-img img{height:100%}"
+   and ".shop-feature img{height:100%}" measure against their parent; without
+   height:100% here the button would collapse to auto and those images would
+   lose their aspect sizing. -------- */
+button.photo-zoom{
+  display:block;width:100%;height:100%;padding:0;margin:0;border:none;
+  background:none;font:inherit;color:inherit;cursor:zoom-in;
 }
-.behind-build-photo svg{width:32px;height:32px;}
-.behind-build-photo span{font-family:var(--font-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;}
-.behind-build-item figcaption{
-  margin-top:12px;font-family:var(--font-mono);font-size:12.5px;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--steel);text-align:center;
+button.photo-zoom:focus-visible{outline:3px solid var(--orange);outline-offset:-3px;}
+
+.shop-feature{
+  margin:32px 0 0;position:relative;overflow:hidden;
+  background:var(--white);border:1px solid var(--line);
 }
-@media (max-width:900px){.behind-build-grid{grid-template-columns:repeat(2,1fr);}}
-@media (max-width:520px){.behind-build-grid{grid-template-columns:1fr;}}
+.shop-feature img{width:100%;height:100%;object-fit:cover;aspect-ratio:16/7;display:block;}
+.shop-feature figcaption{
+  position:absolute;bottom:0;left:0;right:0;padding:16px 22px;
+  background:rgba(11,57,84,0.78);
+  font-family:var(--font-mono);font-size:13px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--steel-pale);
+}
+
+.shop-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px;}
+.shop-tile{margin:0;background:var(--white);border:1px solid var(--line);overflow:hidden;}
+.shop-tile img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;}
+.shop-tile figcaption{
+  padding:14px 16px;font-family:var(--font-mono);font-size:12.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--steel);
+}
+
+@media (max-width:900px){
+  .shop-feature img{aspect-ratio:3/2;}
+  .shop-row{grid-template-columns:repeat(3,1fr);gap:12px;}
+  .shop-tile figcaption{padding:12px;font-size:11.5px;}
+}
+@media (max-width:620px){
+  .shop-feature img{aspect-ratio:4/3;}
+  .shop-feature figcaption{padding:12px 16px;font-size:11.5px;}
+  .shop-row{grid-template-columns:1fr;gap:16px;}
+}
 
 /* ============================================================
    SPECS TEASER (home) + SPECS PAGE (vehicles.html)
@@ -1153,6 +1206,10 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
 .feature-list li::before{content:"";position:absolute;left:0;top:7px;width:10px;height:10px;background:var(--orange);}
 @media (max-width:700px){.feature-list{grid-template-columns:1fr;}}
 
+/* UNUSED as of 2026-07-29 — the specs page Pricing block (section 06)
+   was converted to a plain .spec-table like every other section, and its
+   buttons moved into the .next-step band at the bottom of the page.
+   Kept in case a boxed price callout is wanted again. */
 .pricing-box{
   background:var(--paper);color:var(--ink);padding:34px;border:1px solid var(--line);
   display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px;
@@ -1502,7 +1559,37 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
 }
 
 .gallery-grid-section{padding:68px 0 80px;background:var(--white);}
+/* -------- GALLERY CATEGORY FILTER (added 2026-07-29) --------
+   Mono type and a square active state, matching the eyebrow/figcaption
+   treatment used elsewhere rather than introducing a pill/chip style the
+   site doesn't otherwise have. .is-hidden is set by the filter JS. */
+.gallery-filter{
+  display:flex;align-items:center;flex-wrap:wrap;gap:8px;
+  margin:0 0 24px;padding-bottom:18px;border-bottom:1px solid var(--line);
+}
+.gallery-filter-btn{
+  font-family:var(--font-mono);font-size:12.5px;letter-spacing:.06em;text-transform:uppercase;
+  padding:9px 16px;border:1px solid var(--line);background:var(--white);color:#454C49;
+  cursor:pointer;border-radius:0;transition:background .15s ease,color .15s ease,border-color .15s ease;
+}
+.gallery-filter-btn:hover{border-color:var(--steel-pale);color:var(--ink);}
+.gallery-filter-btn.is-active{background:var(--ink);border-color:var(--ink);color:var(--white);}
+.gallery-filter-btn:focus-visible{outline:3px solid var(--orange);outline-offset:2px;}
+.gallery-filter-count{
+  margin-left:auto;font-family:var(--font-mono);font-size:12.5px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--steel);
+}
+.gallery-empty{
+  margin-top:28px;font-family:var(--font-mono);font-size:13px;letter-spacing:.05em;
+  text-transform:uppercase;color:var(--steel);text-align:center;
+}
+@media (max-width:560px){
+  .gallery-filter-btn{padding:8px 12px;font-size:11.5px;}
+  .gallery-filter-count{margin-left:0;width:100%;}
+}
+
 .gallery-grid-full{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+.gallery-item.is-hidden{display:none;}
 .gallery-item{position:relative;overflow:hidden;}
 .gallery-item-inner{aspect-ratio:4/3;overflow:hidden;}
 /* button.gallery-item-inner resets default button chrome so it looks
@@ -1603,6 +1690,59 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
    Below 820px the switchbacks stop making sense: connectors and rules
    are dropped for a single left rail.
    ============================================================ */
+/* ============================================================
+   THROUGH THE YEARS — history page photo band (added 2026-07-29).
+   Sits between the white timeline and the white CTA, so it carries the
+   paper tone to break up the run. Four tiles; each is a photo (or a
+   .photo-pending box where no photo exists yet) over a stacked
+   year / label / note caption.
+   ============================================================ */
+.era-section{padding:76px 0;background:var(--paper);border-top:1px solid var(--line);}
+.era-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:32px;align-items:start;}
+.era-item{margin:0;background:var(--white);border:1px solid var(--line);overflow:hidden;position:relative;}
+.era-item img{width:100%;aspect-ratio:7/5;object-fit:cover;display:block;}
+/* .photo-pending sets its own aspect ratio via the --landscape modifier,
+   which is 7/5 to match the photos above. */
+.era-item .photo-pending{border:none;}
+
+/* Caption is an overlay on the photo, not a block beneath it — same
+   treatment as .story-img, .accessories-scroll-label and
+   .implement-thumb-label. See the .story-img figcaption notes below for
+   why the hover behavior is gated on (hover:hover) and (pointer:fine). */
+.era-item figcaption{
+  position:absolute;bottom:0;left:0;right:0;
+  background:rgba(14,17,18,0.72);color:var(--white);
+  font-family:var(--font-mono);font-size:13px;letter-spacing:.06em;text-transform:uppercase;
+  padding:12px 16px;
+}
+/* Year sits in plain white like the rest of the caption. It was the
+   accent red at first, which measured around 3.6:1 against this overlay
+   — under the 4.5:1 AA minimum, and it read worse still over a light
+   patch of photo. The middot alone carries the separation. */
+.era-year{color:var(--white);}
+.era-year::after{content:" \00b7 ";color:var(--steel-pale);}
+.era-label{color:var(--white);}
+
+@media (hover:hover) and (pointer:fine){
+  .era-item figcaption{
+    opacity:0;transform:translateY(100%);
+    transition:opacity .18s ease,transform .18s ease;
+    pointer-events:none;
+  }
+  .era-item:hover figcaption{opacity:1;transform:translateY(0);}
+}
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:reduce){
+  .era-item figcaption{transition:opacity .18s ease;transform:none;}
+}
+
+@media (max-width:980px){
+  .era-grid{grid-template-columns:repeat(2,1fr);}
+}
+@media (max-width:560px){
+  .era-grid{grid-template-columns:1fr;gap:16px;}
+  .era-item img{aspect-ratio:3/2;}
+}
+
 .snake-section{padding:64px 0 84px;background:var(--white);}
 .snake{--turn-r:70px;position:relative;max-width:1000px;margin:0 auto;}
 

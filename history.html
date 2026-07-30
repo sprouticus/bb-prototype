@@ -52,14 +52,14 @@
           </div>
           <div class="nav-item has-dropdown">
             <div class="nav-dropdown-trigger-row">
-              <a href="videos.html" class="nav-dropdown-trigger">Gallery</a>
+              <a href="photos.html" class="nav-dropdown-trigger">Gallery</a>
               <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-label="Toggle Gallery menu">
                 <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
               </button>
             </div>
             <div class="nav-dropdown">
-      <a href="videos.html">Videos</a>
       <a href="photos.html">Photos</a>
+      <a href="videos.html">Videos</a>
             </div>
           </div>
           <div class="nav-item has-dropdown">
@@ -204,16 +204,80 @@
        (photo: images/bb-teaser-placeholder.jpg, plus a Pre-Order CTA)
      ============ -->
 
+<!-- ============ THROUGH THE YEARS — added 2026-07-29. Paper-toned band
+     between the white timeline above and the white CTA below, so it
+     reads as its own beat rather than a continuation of either.
+
+     CAPTIONS ARE ALL "Text TBD" ON PURPOSE (2026-07-29). Earlier drafts
+     carried years and model names — ~2016, ~2020, The Enabler 2.0 —
+     that weren't verified and put wrong dates in front of David. Nothing
+     here states a date or names a vehicle until the real captions come
+     back confirmed. Don't reintroduce a year to fill the space.
+
+     Each caption is a single .era-label span. The .era-year span is
+     dropped rather than filled with "TBD", because .era-year::after
+     supplies the middot separator and an empty year would leave a
+     dangling dot. Add the span back alongside the label when there are
+     real dates: <span class="era-year">YEAR</span> <span
+     class="era-label">LABEL</span>.
+
+     Tiles 1 and 2 hold the Buddy Buggy photos; 3 and 4 are still
+     .photo-pending. TO DROP IN A PHOTO: replace the whole .photo-pending
+     div with <img src="images/FILE.jpg" alt="..." loading="lazy">.
+     Nothing else needs changing — .era-item img carries the 7/5 crop and
+     lightbox.js picks up any img in an .era-item automatically. Leave
+     data-caption off while captions are TBD so the lightbox falls back
+     to the figcaption instead of showing text the tile doesn't.
+     ============ -->
+<section class="era-section">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Through the Years</p>
+        <h2>From the Buddy Buggy to the Enabler 2.1.</h2>
+        <p class="section-head-note">One idea, three generations of vehicle: board from your chair, drive yourself, get back to work.</p>
+      </div>
+    </div>
+
+    <div class="era-grid">
+      <figure class="era-item">
+        <img src="images/buddy-buggy-sand-dunes.jpg" alt="The white Buddy Buggy parked on sand dunes with its rear wheelchair lift lowered to the ground" loading="lazy">
+        <figcaption><span class="era-label">Text TBD</span></figcaption>
+      </figure>
+
+      <!-- Note for whoever writes the real caption: this black machine is
+           visibly a different build from the white one in the dunes shot
+           beside it — different frame, body and lift. If it's a later
+           iteration it needs its own date, not the one next to it. -->
+      <figure class="era-item">
+        <img src="images/buddy-buggy-fall-colors.jpg" alt="The black Buddy Buggy parked on a dirt trail under cottonwoods in fall color, rear wheelchair lift lowered" loading="lazy">
+        <figcaption><span class="era-label">Text TBD</span></figcaption>
+      </figure>
+
+      <figure class="era-item">
+        <img src="images/enabler-outdoor-ruins.jpg" alt="Enabler 2.0 outdoors on rough ground, off-road tires ready for the trail" loading="lazy">
+        <figcaption><span class="era-label">Text TBD</span></figcaption>
+      </figure>
+
+      <figure class="era-item">
+        <img src="images/bb-teaser-placeholder.jpg" alt="Placeholder silhouette graphic representing the upcoming Enabler 2.1, final artwork coming soon" loading="lazy">
+        <figcaption><span class="era-label">Text TBD</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
 <!-- ============ CTA — the pre-order button used to live inside the third
      milestone; with the milestones on placeholder copy it moved here so the
      page still has a path forward. Reuses the .next-step pattern from the
-     home page. ============ -->
-<section class="next-step">
+     home page. Switched to the white variant 2026-07-29 so it separates
+     from the paper-toned "Through the Years" band above. ============ -->
+<section class="next-step next-step--white">
   <div class="wrap">
     <p class="eyebrow">What's Next</p>
-    <h2>The next Enabler is in production now.</h2>
+    <h2>The next Enabler is in production. No payment to reserve.</h2>
     <div class="rule"></div>
-    <p class="sub">Reserving today secures an Enabler 2.1 as soon as it is ready. Pre-order takes a couple of minutes and requires no payment.</p>
+    <p class="sub">Reserving today secures an Enabler 2.1 as soon as it is ready. It takes a couple of minutes, and there's no card to enter.</p>
     <div class="cta-row">
       <a href="pre-order.html" class="btn btn-orange">Pre-Order the Enabler 2.1
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -237,8 +301,8 @@
         <a href="accessories.html">Accessories</a>
         <a href="implements.html">Implements</a>
         <a href="catch-and-release.html">Catch-and-Release</a>
-        <a href="videos.html">Videos</a>
         <a href="photos.html">Photos</a>
+        <a href="videos.html">Videos</a>
       </div>
       <div>
         <h5>Our Company</h5>
@@ -307,5 +371,7 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
     }
   });
 })();
-</script></body>
+</script>
+<script src="lightbox.js" defer></script>
+</body>
 </html>

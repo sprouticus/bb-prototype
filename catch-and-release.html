@@ -52,14 +52,14 @@
           </div>
           <div class="nav-item has-dropdown">
             <div class="nav-dropdown-trigger-row">
-              <a href="videos.html" class="nav-dropdown-trigger">Gallery</a>
+              <a href="photos.html" class="nav-dropdown-trigger">Gallery</a>
               <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-label="Toggle Gallery menu">
                 <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
               </button>
             </div>
             <div class="nav-dropdown">
-      <a href="videos.html">Videos</a>
       <a href="photos.html">Photos</a>
+      <a href="videos.html">Videos</a>
             </div>
           </div>
           <div class="nav-item has-dropdown">
@@ -262,8 +262,8 @@
         <a href="accessories.html">Accessories</a>
         <a href="implements.html">Implements</a>
         <a href="catch-and-release.html">Catch-and-Release</a>
-        <a href="videos.html">Videos</a>
         <a href="photos.html">Photos</a>
+        <a href="videos.html">Videos</a>
       </div>
       <div>
         <h5>Our Company</h5>
@@ -333,54 +333,12 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   });
 })();
 
-/* ============ DETAIL GALLERY LIGHTBOX — identical to the pattern on
-   photos.html, accessories.html, and implements.html. ============ */
-(function(){
-  const lightbox = document.getElementById('lightbox');
-  const lightboxImg = document.getElementById('lightbox-img');
-  const lightboxCaption = document.getElementById('lightbox-caption');
-  const closeBtn = document.getElementById('lightbox-close');
-  if(!lightbox || !lightboxImg || !closeBtn) return;
-  let lastFocused = null;
-
-  function openLightbox(src, caption){
-    lastFocused = document.activeElement;
-    lightboxImg.src = src;
-    lightboxImg.alt = caption;
-    lightboxCaption.textContent = caption;
-    lightbox.hidden = false;
-    document.body.style.overflow = 'hidden';
-    closeBtn.focus();
-  }
-  function closeLightbox(){
-    lightbox.hidden = true;
-    lightboxImg.src = '';
-    document.body.style.overflow = '';
-    if(lastFocused) lastFocused.focus();
-  }
-  document.querySelectorAll('.gallery-item-inner[data-full]').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      openLightbox(btn.getAttribute('data-full'), btn.getAttribute('data-caption'));
-    });
-  });
-  closeBtn.addEventListener('click', closeLightbox);
-  lightbox.addEventListener('click', function(e){
-    if(e.target === lightbox) closeLightbox();
-  });
-  document.addEventListener('keydown', function(e){
-    if(e.key === 'Escape' && !lightbox.hidden) closeLightbox();
-  });
-})();
+/* ============ DETAIL GALLERY LIGHTBOX — moved to the shared
+   lightbox.js on 2026-07-29. The inline version here had the same
+   ordering bug as photos.html: it ran during parse, above the markup it
+   looked up, so it always bailed and the photos were never clickable.
+   ============ */
 </script>
-
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged photo" hidden>
-  <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close enlarged photo">
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
-  </button>
-  <figure class="lightbox-content">
-    <img src="" alt="" id="lightbox-img">
-    <figcaption id="lightbox-caption"></figcaption>
-  </figure>
-</div>
+<script src="lightbox.js" defer></script>
 </body>
 </html>

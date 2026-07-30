@@ -2,3 +2,14 @@
 .fuse_hidden*
 BB_Engineering_Context_Handoff.md
 video/*(original*.mp4
+
+# Raw camera originals — kept locally, never shipped or committed.
+# The web-sized JPEGs in images/ are generated from these; together
+# these sources are ~100 MB, which does not belong in the repo.
+Vehicle History/
+images/*.png.original
+images/Brett with Sparks*.jpg
+images/Guys with sparks.jpg
+images/Mask and gloves.jpg
+images/Ramon *.jpg
+images/**/_originals/

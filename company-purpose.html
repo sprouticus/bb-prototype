@@ -52,14 +52,14 @@
           </div>
           <div class="nav-item has-dropdown">
             <div class="nav-dropdown-trigger-row">
-              <a href="videos.html" class="nav-dropdown-trigger">Gallery</a>
+              <a href="photos.html" class="nav-dropdown-trigger">Gallery</a>
               <button type="button" class="nav-dropdown-toggle" aria-expanded="false" aria-label="Toggle Gallery menu">
                 <svg class="caret" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M6 9l6 6 6-6"/></svg>
               </button>
             </div>
             <div class="nav-dropdown">
-      <a href="videos.html">Videos</a>
       <a href="photos.html">Photos</a>
+      <a href="videos.html">Videos</a>
             </div>
           </div>
           <div class="nav-item has-dropdown">
@@ -94,7 +94,7 @@
 <section class="page-hero">
   <div class="wrap">
     <p class="eyebrow">Our Story</p>
-    <h1>Built for Independence.</h1>
+    <h1>Built for Independence. Built in the USA.</h1>
     <div class="rule"></div>
     <p>Two people, a workshop, and a problem worth solving.</p>
   </div>
@@ -132,11 +132,12 @@
         <figure class="story-img">
           <img src="images/shop-mask-and-gloves.jpg" width="1400" height="1050" alt="A welding mask, leather gloves and a screwdriver resting on the bare steel frame of an Enabler on the shop floor" loading="lazy">
         </figure>
+        <!-- Placeholder filled 2026-07-29. Source is "Vehicle History/
+             dave in the shop.png", an 11.2 MB PNG; this is a 1400px JPEG
+             of it, sized to match its sibling above. Keep the original
+             out of images/ so it never ships. -->
         <figure class="story-img">
-          <div class="photo-pending photo-pending--landscape">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-            <span>Photo Pending</span>
-          </div>
+          <img src="images/dave-in-the-shop.jpg" width="1400" height="1050" data-caption="Dave with an early Enabler chassis in the shop" alt="Dave White standing behind an early Enabler rolling chassis on the shop floor, frame, axles and wheels assembled but no body yet" loading="lazy">
         </figure>
       </div>
       <h2>Our story</h2>
@@ -192,7 +193,7 @@
     </div>
     <div class="story-grid">
       <figure class="story-img story-img--large">
-        <img src="images/enabler-warehouse-wide.jpg" alt="Enabler 2.0 on the shop floor">
+        <img src="images/enabler-front-outdoor.jpg" alt="Enabler 2.0 outdoors, front view, ready to work">
         <figcaption>Built and finished in-house</figcaption>
       </figure>
       <div class="story-stack">
@@ -206,27 +207,32 @@
         </figure>
       </div>
     </div>
+    <!-- ============ Placeholders filled 2026-07-29 with portrait crops
+         of the 2026-07-28 shop photos (shop-portrait-*.jpg, cropped 5/6
+         from the full-res originals rather than letting object-fit
+         squeeze the landscape frames).
+
+         CAPTIONS CHANGED FROM ROLES TO STAGES. These read "Shop
+         Craftsman / Steel Fabrication", "Assembly Technician /
+         Electrical & Drivetrain", "Quality Inspector / Final Sign-Off".
+         Every photo we have is welding and fabrication — there is no
+         electrical/drivetrain shot and no final-inspection shot — so
+         the last two labels would have described something the images
+         plainly aren't. They now name the stage each photo actually
+         shows. Put the role framing back if and when portraits of the
+         individual team members are taken. ============ -->
     <div class="shop-portraits">
       <figure class="shop-portrait">
-        <div class="photo-pending photo-pending--portrait">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Photo Pending</span>
-        </div>
-        <figcaption><strong>Shop Craftsman</strong><br>Steel Fabrication</figcaption>
+        <img src="images/shop-portrait-welding.jpg" data-caption="Frame welding in the Albuquerque shop" alt="Fabricator welding inside the Enabler roll cage, arc light and sparks visible" loading="lazy">
+        <figcaption><strong>Frame Welding</strong><br>Steel Fabrication</figcaption>
       </figure>
       <figure class="shop-portrait">
-        <div class="photo-pending photo-pending--portrait">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Photo Pending</span>
-        </div>
-        <figcaption><strong>Assembly Technician</strong><br>Electrical &amp; Drivetrain</figcaption>
+        <img src="images/shop-portrait-cutting.jpg" data-caption="Cutting steel plate to size" alt="Cutting steel plate with an angle grinder, sparks streaming from the cut" loading="lazy">
+        <figcaption><strong>Cutting &amp; Shaping</strong><br>Panel and Plate Work</figcaption>
       </figure>
       <figure class="shop-portrait">
-        <div class="photo-pending photo-pending--portrait">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
-          <span>Photo Pending</span>
-        </div>
-        <figcaption><strong>Quality Inspector</strong><br>Final Sign-Off</figcaption>
+        <img src="images/shop-portrait-finish.jpg" data-caption="Grinding welds before assembly" alt="Fabricator grinding a weld on the vehicle frame at the bench" loading="lazy">
+        <figcaption><strong>Finish Work</strong><br>Grinding &amp; Fit-Up</figcaption>
       </figure>
     </div>
   </div>
@@ -246,8 +252,8 @@
         <a href="accessories.html">Accessories</a>
         <a href="implements.html">Implements</a>
         <a href="catch-and-release.html">Catch-and-Release</a>
-        <a href="videos.html">Videos</a>
         <a href="photos.html">Photos</a>
+        <a href="videos.html">Videos</a>
       </div>
       <div>
         <h5>Our Company</h5>
@@ -316,5 +322,7 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
     }
   });
 })();
-</script></body>
+</script>
+<script src="lightbox.js" defer></script>
+</body>
 </html>
