@@ -449,7 +449,13 @@ nav.primary a.mobile-cta{display:none;}
   font-family:var(--font-mono);font-weight:800;font-size:13px;letter-spacing:.1em;
   text-transform:uppercase;padding:8px 16px;border-radius:2px;margin-bottom:16px;
 }
-.next-gen-copy h2{color:var(--ink);font-size:clamp(32px,4.4vw,50px);margin-top:14px;max-width:560px;}
+/* Shrunk from clamp(32px,4.4vw,50px) 2026-07-30, third pass — the huge
+   header was dominating the 1fr 1fr split next to the carousel, making
+   the photo read as small even once it was full-size. Matched to
+   .intro-split-copy h2's scale (clamp(24px,2.9vw,35px)) so the carousel
+   gets equal visual weight instead of playing second fiddle to the
+   headline. */
+.next-gen-copy h2{color:var(--ink);font-size:clamp(24px,2.9vw,35px);margin-top:14px;max-width:560px;}
 .next-gen-copy p.sub{color:#454C49;font-size:19.5px;max-width:500px;margin-top:20px;line-height:1.6;}
 .next-gen-copy .cta-row{margin-top:28px;}
 .next-gen-copy p.micro{
@@ -469,6 +475,71 @@ nav.primary a.mobile-cta{display:none;}
   .next-gen-teaser{padding:52px 0;}
   .next-gen-grid{grid-template-columns:1fr;gap:32px;}
   .next-gen-art{order:-1;max-width:440px;margin:0 auto;}
+}
+
+/* -------- NEXT-GEN ART, FILLED (real photo carousel replacing the
+   dashed placeholder, added 2026-07-30). Reuses the shared .carousel /
+   .carousel-track / .carousel-slide / .carousel-arrow / .carousel-dot
+   component defined further down (search "HERO CAROUSEL" / .intro-split)
+   rather than redefining it — an earlier version of this edit declared
+   its own conflicting .carousel-track/.carousel-slide rules here, which
+   would have broken the transform-based carousels on photos.html and
+   implements.html since all pages share this one stylesheet. Only new
+   thing needed is an unscoped .carousel-frame, since that class
+   previously only existed scoped under .intro-split. -------- */
+/* Border/padding treatment dropped 2026-07-30 (second pass), take two —
+   the first pass only stopped *re-declaring* border/padding, but
+   .next-gen-art--filled is an ADDITIONAL class on the same element as
+   .next-gen-art, not a replacement for it, so the base rule's 2px
+   dashed border and 26px padding were still winning (nothing had
+   overridden them back to none). Explicit zero-out below, this time
+   confirmed against a screenshot next to the real Accessories carousel.
+
+   figcaption also dropped entirely — Accessories/Implements don't have
+   an external caption below the frame, they use a per-slide
+   .carousel-caption overlay (dark gradient + title + description) on
+   the photo itself instead. Switched to that same pattern in the HTML
+   rather than keeping a bolted-on caption line these other carousels
+   don't have. */
+.next-gen-art--filled{border:none;border-radius:0;padding:0;background:none;}
+/* Rest of this block is copied verbatim from .intro-split's carousel
+   rules (see "Overlay arrows" further down) — same aspect ratio, same
+   max-height cap, same arrow size/position/color — so the two read as
+   the same component. Scoped here rather than making it the shared
+   unscoped default, matching how intro-split itself scopes it rather
+   than touching base .carousel-arrow. NOT overflow:hidden on the outer
+   figure — the arrows sit at left/right:-8px and need to be visible
+   past the photo edge; .carousel itself already clips the slides. */
+.next-gen-art--filled .carousel-frame{position:relative;}
+/* Aspect ratio changed from 16/9 to 4/3 2026-07-30, third pass — the
+   intro-split carousels use 16/9 because their source photos (video
+   stills) are natively 16/9, so cover() crops nothing. These two
+   Enabler 2.1 photos are natively ~4/3 (1400x1050); forcing them into
+   16/9 would crop off a meaningful chunk of the top and bottom of the
+   shop, which is exactly what "use as much of the uncropped image as
+   possible" ruled out. 4/3 shows them essentially uncropped. Height cap
+   raised to match — a 4/3 box is taller than 16/9 at the same width, so
+   315px would have fought the aspect-ratio and forced a crop right back
+   in on wide viewports. */
+.next-gen-art--filled .carousel-slide{aspect-ratio:4/3;max-height:min(430px,50vh);}
+.next-gen-art--filled .carousel-arrow{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:2;
+  background:rgba(14,17,18,.55);border:2px solid rgba(255,255,255,.2);
+  color:var(--white);width:44px;height:44px;border-radius:2px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  transition:background .15s,border-color .15s;
+}
+.next-gen-art--filled .carousel-arrow:hover{background:var(--orange);border-color:var(--orange);}
+.next-gen-art--filled .carousel-arrow:focus-visible{outline:3px solid var(--orange);outline-offset:2px;}
+.next-gen-art--filled .carousel-arrow svg{width:20px;height:20px;}
+.next-gen-art--filled .carousel-prev{left:-8px;}
+.next-gen-art--filled .carousel-next{right:-8px;}
+.next-gen-art--filled .carousel-controls{padding:10px 0 0;}
+@media(max-width:560px){
+  .next-gen-art--filled .carousel-arrow{width:36px;height:36px;}
+}
+@media(max-width:900px){
+  .next-gen-art--filled .carousel-slide{max-height:none;}
 }
 
 /* -------- Merged-in "What's Changing" content + bottom CTA (vehicle
@@ -1042,10 +1113,13 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
   background:var(--white);border:1px dashed var(--steel-pale);border-radius:2px;
   padding:16px 18px;font-size:16px;font-weight:500;color:var(--ink);
 }
-.changing-list li .tag-placeholder{
+.changing-list li .tag-placeholder,
+.changing-list li .tag-new{
   display:block;font-family:var(--font-mono);font-size:10.5px;letter-spacing:.06em;
   text-transform:uppercase;color:var(--steel-pale);margin-bottom:6px;
 }
+.changing-list li .tag-new{color:var(--orange);}
+.changing-list li.filled{border-style:solid;border-color:var(--line);}
 @media (max-width:700px){.changing-list{grid-template-columns:1fr;}}
 
 .spec-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
@@ -1171,12 +1245,56 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
 .st-item h4{font-size:22px;margin-top:6px;}
 .st-item p{font-size:17px;color:#454C49;font-weight:500;margin-top:6px;line-height:1.5;}
 
+/* -------- .story-timeline--icons (Catch-and-Release page, added
+   2026-07-30) — themed icons (bullseye / hook / fish+splash) in place
+   of the plain dot marker, scoped to this modifier rather than changed
+   on the base .st-item::before so any other page reusing .story-
+   timeline keeps the plain circle by default.
+
+   Sized up 50% same day, from 32px to 48px (svg 18px to 27px). Kept the
+   same center point on the line each time rather than just growing
+   from the same top/left corner — original 16px circle centered at
+   -35px top / 8px left of the item's edge; 32px version offset -51/-8
+   to land on that same center (-51+16=-35, -8+16=8); this 48px version
+   offsets -59/-16 for the same reason (-59+24=-35, -16+24=8). Border
+   stays 4px — only the circle and icon grew, not the ring weight.
+
+   Re-centered same day, horizontally: was left-aligned to line up with
+   the old left-edge dot, moved to sit centered over each step's text
+   column instead. .st-item's real content width is the item box minus
+   its 28px right padding (that padding is just the gutter to the next
+   column, not part of this step's text), so centering has to target
+   (100% - 28px)'s midpoint rather than the item box's own 50% — hence
+   "50% - 14px" below rather than a plain 50%. Left as an absolute
+   left/transform pairing (not a flex-centered wrapper) so it stays a
+   one-line change against the existing top-offset approach. */
+.story-timeline--icons .st-item::before{display:none;}
+.st-icon{
+  position:absolute;top:-59px;left:calc(50% - 14px);transform:translateX(-50%);
+  width:48px;height:48px;border-radius:50%;
+  background:var(--white);border:4px solid var(--orange);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--orange-dark);
+}
+.st-icon svg{width:27px;height:27px;}
+
 @media(max-width:900px){
   .story-top{grid-template-columns:1fr;}
   .story-timeline{grid-template-columns:1fr;padding-top:0;}
   .story-timeline::before{display:none;}
   .st-item{padding:0 0 28px 24px;border-left:4px solid var(--orange);}
   .st-item::before{top:2px;left:-10px;}
+  /* Mobile switches to a left-rail layout instead of a horizontal
+     line, so the icon moves off the top edge and onto the border-left
+     line instead — not centered over the text like desktop, since in
+     a stacked list the icon reads as a marker/bullet next to each
+     item, not a header sitting above a column. Same 50% bump as
+     desktop: 24px circle (center 6px/-2px) became 36px (top:-12px =
+     6-18, left:-20px = -2-18). transform reset to none — the desktop
+     rule's translateX(-50%) for horizontal centering would otherwise
+     carry through and double-shift this fixed left-rail position. */
+  .st-icon{top:-12px;left:-20px;width:36px;height:36px;transform:none;}
+  .st-icon svg{width:21px;height:21px;}
 }
 
 .mission-band{background:var(--paper);padding:68px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
@@ -1608,6 +1726,26 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
   transition:background .25s,color .25s;
 }
 .gallery-item:hover .gallery-item-label{background:rgba(14,17,18,.82);color:var(--white);}
+/* .is-feature (Catch-and-Release page, added 2026-07-30) — a wider
+   first tile for the one real photo in an otherwise all-video-still
+   grid, so it reads as the upgrade it is without leaving the grid or
+   needing its own section. catch-release-full-detail.jpg is already
+   4/3 natively (same as the shared .gallery-item-inner aspect-ratio),
+   so spanning 2 columns just makes the same crop bigger — nothing new
+   to crop in. Reverts to a normal single-width tile at the 480px
+   breakpoint where the grid itself drops to one column, since a
+   2-column span means nothing there.
+
+   UNUSED as of later 2026-07-30, same day: the grid was trimmed from 9
+   tiles to 3 (see the comment above .gallery-grid-full in
+   catch-and-release.html), and 3 even tiles already fill exactly one
+   row on their own — spanning the first one would leave 2 slots empty
+   on row two instead. Left the rule in rather than deleting it in case
+   the gallery grows back past a clean multiple of 3 later. */
+.gallery-item.is-feature{grid-column:span 2;}
+@media(max-width:480px){
+  .gallery-item.is-feature{grid-column:span 1;}
+}
 @media(max-width:760px){.gallery-grid-full{grid-template-columns:repeat(2,1fr);}}
 @media(max-width:480px){.gallery-grid-full{grid-template-columns:1fr;}}
 
@@ -1628,7 +1766,29 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
   border-radius:2px;overflow:hidden;background:var(--ink);
   border:1px solid var(--line);
 }
+/* -------- .video-featured--tight (Catch-and-Release page, added
+   2026-07-30) — this page dropped the .head div entirely (merged into
+   .page-hero above it), so the base 60px top padding plus the video
+   box's own 32px top margin (meant to space it away from a .head that
+   no longer exists here) left a big empty gap before the video. Cut
+   both down so the video sits close under the header — the goal was
+   getting most of it visible on load without scrolling. videos.html
+   still uses the base, un-tightened .video-featured with its .head
+   intact, so this is a modifier, not a change to the shared rule. -------- */
+.video-featured--tight{padding-top:24px;}
+.video-featured--tight .video-embed-box{margin-top:0;}
 .video-embed-box video{width:100%;height:100%;display:block;object-fit:cover;background:var(--ink);}
+
+/* .detail-feature (one large real photo in its own section between
+   How It Works and the gallery, added 2026-07-30) removed same day —
+   it had no eyebrow/h2 like every other section on the page, so it
+   read as an orphan plopped in between two properly-headed sections
+   rather than a designed part of the page. Replaced with
+   .gallery-item.is-feature below: the real photo now lives inside the
+   Detail Gallery grid it was always meant to upgrade (see that
+   section's comment), just as a wider first tile instead of one more
+   same-size still. Still clickable via the shared lightbox, which the
+   old standalone image wasn't. */
 
 .video-grid-section{padding:24px 0 84px;background:var(--white);}
 .video-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:32px;}

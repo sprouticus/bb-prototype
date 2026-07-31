@@ -115,25 +115,39 @@
      because they made the page read like a second home page. Written
      specs are still an open action item for Grace and David anyway.
      ============ -->
+<!-- ============ PAGE HERO — merged with the video section's own
+     "Watch It Work" head 2026-07-30, so the gray header carries all the
+     intro copy and the video (moved into its own section right below)
+     isn't preceded by a second eyebrow/heading of its own. Eyebrow
+     switched from "The Vehicle" to "Watch It Work" since that's the
+     more specific, accurate label now that this block is introducing
+     the video, not just the page. "Back in, catch the pin, pull the
+     lever." (was the video section's h2) leads the paragraph as a bold
+     first sentence rather than a second heading — .page-hero only ever
+     carries one heading on every other page, and adding an h2 here
+     would've been a one-off pattern nowhere else on the site uses. The
+     video section's "Filmed on the lot..." sentence was dropped
+     entirely per Lesley's note, not folded in anywhere. ============ -->
 <section class="page-hero">
   <div class="wrap">
-    <p class="eyebrow">The Vehicle</p>
+    <p class="eyebrow">Watch It Work</p>
     <h1>Catch-and-Release</h1>
     <div class="rule"></div>
-    <p>Hooking up a trailer is a standing job. You lift the tongue, line it up over the ball, and drop the pin. Catch-and-Release is the hitch we built so none of that has to happen, and so the driver never has to get out to start working.</p>
+    <p><strong>Back in, catch the pin, pull the lever.</strong> Hooking up a trailer is a standing job. You lift the tongue, line it up over the ball, and drop the pin. Catch-and-Release is the hitch we built so none of that has to happen, and so the driver never has to get out to start working.</p>
   </div>
 </section>
 
 <!-- ============ HERO VIDEO — local mp4 with native controls, same
      pattern as the featured video on videos.html rather than a YouTube
-     iframe, so it also plays in the file:// preview. ============ -->
-<section class="video-featured">
+     iframe, so it also plays in the file:// preview.
+
+     Head text (eyebrow/h2/paragraph) removed 2026-07-30 and merged into
+     .page-hero above; this section is now just the video, with top
+     padding cut so it sits right under the header instead of leaving a
+     gap — the point is to get most of the video visible above the fold
+     on load, not to add a second wall of text before it. ============ -->
+<section class="video-featured video-featured--tight">
   <div class="wrap">
-    <div class="head">
-      <p class="eyebrow">Watch It Work</p>
-      <h2>Back in, catch the pin, pull the lever.</h2>
-      <p>Filmed on the lot where every Enabler is built and tested. The trailer goes on, the vehicle drives off with it, and the trailer comes back off. Nobody gets out, and nobody else is standing there to help.</p>
-    </div>
     <div class="video-embed-box">
       <video controls preload="metadata" poster="images/video-catch-release-poster.jpg">
         <source src="video/catch-release.mp4" type="video/mp4">
@@ -144,7 +158,27 @@
 </section>
 
 <!-- ============ HOW IT WORKS — three-step horizontal timeline, the
-     same .story-timeline module used on the Our Purpose page. ============ -->
+     .story-timeline module (also used, or at least referenced, for the
+     Our Purpose page). Plain circle markers swapped for themed icons
+     2026-07-30 — bullseye/hook/leaping fish, playing on "catch and
+     release" as the fishing term as well as the hitch name. Scoped with
+     the .story-timeline--icons modifier (see styles.css) rather than
+     changing the base .st-item::before circle, since that circle is
+     the shared default for any other page that reuses this component
+     without a fishing theme to draw on.
+
+     Step 02 (hook) and Step 03 (fish) icons are traced from two
+     reference images Lesley sent, not hand-drawn — flattened onto
+     white, thresholded to a bitmap, and auto-traced to Bezier paths
+     with potrace (via the Python `potracer` binding) since there's no
+     browser here to eyeball a hand-built SVG against. Path data is the
+     literal traced output, hence the odd-looking coordinate scale
+     (viewBox matches the traced pixel bounding box, not a tidy 24x24)
+     and the long point lists — untouched rather than hand-simplified,
+     to stay faithful to the source art. fill-rule="evenodd" matters
+     here (the hook has a real eye hole, the fish has cutout gill/eye
+     detail); don't collapse it to nonzero. Step 01 (bullseye) has no
+     reference and is still a plain hand-drawn circle icon. ============ -->
 <section class="in-action">
   <div class="wrap">
     <div class="head">
@@ -152,18 +186,27 @@
       <h2>Three moves, all of them from the driver's seat.</h2>
       <p>The mechanism is deliberately simple. A spring-loaded hook on the vehicle, a pin on the implement tongue, and one lever inside the cab.</p>
     </div>
-    <div class="story-timeline">
+    <div class="story-timeline story-timeline--icons">
       <div class="st-item">
+        <span class="st-icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5.2"/><circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none"/></svg>
+        </span>
         <span class="tag">Step 01</span>
         <h4>Line Up</h4>
         <p>Back the vehicle toward the tongue. The catch takes the pin from a range of angles, so you don't have to hit it dead center on the first try.</p>
       </div>
       <div class="st-item">
+        <span class="st-icon" aria-hidden="true">
+          <svg viewBox="67 2 229 319" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" fill-rule="evenodd" d="M146.7,308.0 C119.4,302.1 95.6,281.9 85.2,256.0 C81.2,246.0 79.6,237.1 79.6,225.0 C79.6,208.8 83.0,194.9 91.1,178.8 C98.7,163.7 118.0,137.7 123.6,135.1 C128.3,133.0 133.9,133.7 137.0,136.8 C140.9,140.7 141.2,144.6 140.8,180.8 L140.5,211.2 L137.2,214.1 C132.7,218.2 127.3,218.1 122.6,213.9 L119.0,210.8 L118.8,194.4 C118.6,184.5 118.1,177.9 117.5,177.8 C115.7,177.5 105.0,200.2 102.8,209.0 C96.4,234.9 106.9,262.2 129.0,277.0 C148.6,290.2 173.8,291.6 194.5,280.7 C198.0,278.8 203.9,274.1 208.6,269.5 C215.1,263.1 217.5,259.8 220.8,253.0 C228.4,237.5 228.2,240.0 228.1,170.5 C228.0,136.4 228.0,107.4 228.0,106.0 C228.0,103.9 226.9,103.0 221.1,100.2 C213.4,96.5 203.7,87.3 200.2,80.4 C193.7,67.7 193.2,52.6 198.9,40.3 C202.6,32.3 211.4,22.9 218.6,19.2 C234.4,11.1 252.2,12.7 266.8,23.4 C284.7,36.6 289.8,62.3 278.4,82.3 C274.5,89.3 266.2,96.8 258.4,100.6 L251.2,104.0 L250.8,169.3 L250.3,234.5 L247.8,244.0 C243.0,262.0 235.7,274.4 223.1,286.3 C201.8,306.3 174.7,314.0 146.7,308.0 Z M250.0,80.0 C260.7,74.5 265.7,61.1 261.0,50.2 C253.0,31.7 227.4,31.3 218.9,49.5 C216.3,55.1 216.4,64.1 219.1,69.7 C224.5,80.9 238.8,85.7 250.0,80.0 Z"/></svg>
+        </span>
         <span class="tag">Step 02</span>
         <h4>Catch</h4>
         <p>The hook drops over the pin as the vehicle makes contact and holds it there. That is the entire hookup. Nothing to lift, nothing to thread, nothing to bolt.</p>
       </div>
       <div class="st-item">
+        <span class="st-icon" aria-hidden="true">
+          <svg viewBox="66 57 235 246" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" fill-rule="evenodd" d="M132.0,292.4 C116.1,289.8 95.9,288.9 88.5,290.3 C85.7,290.8 85.0,290.7 86.1,290.1 C88.6,288.5 104.6,286.0 112.0,286.0 C115.7,286.0 125.6,287.0 134.1,288.2 C155.2,291.2 176.0,291.2 193.5,288.3 C200.7,287.1 209.7,285.8 213.5,285.5 L220.5,285.0 L212.6,286.5 C208.3,287.4 201.3,288.9 197.1,290.0 C175.0,295.6 156.7,296.3 132.0,292.4 Z M145.5,283.4 C143.8,283.1 135.8,281.2 127.5,279.2 C113.6,275.9 111.3,275.6 97.0,275.5 C88.5,275.5 79.9,275.8 78.0,276.2 C71.8,277.5 77.2,275.4 85.0,273.4 C97.0,270.4 114.6,270.9 134.3,274.8 C154.7,278.9 165.3,279.0 187.9,275.3 C207.2,272.1 230.5,271.5 240.0,273.9 C246.1,275.4 261.3,281.0 260.8,281.5 C260.6,281.7 256.2,280.7 251.0,279.3 C242.7,277.0 239.5,276.7 226.0,276.7 C212.2,276.6 208.8,277.0 195.0,279.9 C182.0,282.7 177.0,283.3 164.0,283.5 C155.5,283.7 147.2,283.6 145.5,283.4 Z M156.4,272.1 C149.2,266.8 143.0,257.5 138.5,245.5 C136.8,241.0 134.5,237.1 131.9,234.5 L128.0,230.4 L128.1,222.0 C128.1,217.3 128.7,211.7 129.4,209.5 L130.6,205.5 L132.2,208.6 C134.4,212.6 141.3,218.8 144.5,219.6 C147.6,220.4 149.9,220.0 162.0,216.6 C172.0,213.9 183.7,212.3 186.5,213.4 C187.9,213.9 187.4,215.0 183.6,219.7 C178.1,226.8 171.8,232.9 166.7,236.4 L162.8,238.9 L162.9,254.4 C163.1,269.2 162.6,275.0 161.1,275.0 C160.7,275.0 158.6,273.7 156.4,272.1 Z M118.7,224.8 C115.7,220.2 112.2,214.1 111.0,211.2 C109.8,208.4 108.5,206.0 108.2,206.0 C107.9,206.0 105.8,207.6 103.4,209.5 L99.1,213.1 L98.4,210.4 C97.3,206.1 98.7,191.0 100.9,184.0 C102.0,180.4 103.3,173.4 103.9,168.4 C104.5,163.5 105.7,157.0 106.5,154.1 C111.1,138.8 120.7,121.8 131.3,110.4 C134.4,107.0 137.0,103.8 137.0,103.3 C137.0,102.7 135.2,102.6 132.5,103.0 L128.0,103.7 L130.1,100.3 C136.0,90.7 136.5,89.1 136.5,77.1 L136.5,65.7 L151.5,66.3 C167.3,66.9 174.2,67.9 185.3,71.1 C191.9,73.0 192.4,73.1 202.2,71.4 C229.6,66.8 265.5,73.5 286.0,86.9 C293.4,91.7 293.4,93.4 286.6,99.0 C283.6,101.5 281.1,103.8 281.0,104.2 C281.0,104.5 283.3,104.0 286.0,102.9 C294.5,99.7 295.1,100.7 288.9,107.5 C281.2,115.9 251.6,134.0 245.7,134.0 C238.5,134.0 227.3,125.4 223.0,116.5 C219.3,109.1 219.5,98.7 223.3,90.5 L226.1,84.5 L223.1,87.4 C218.2,92.1 215.6,99.3 215.5,108.0 C215.5,114.5 215.9,116.2 218.4,120.8 C222.9,128.9 232.1,135.0 239.6,135.0 C244.3,135.0 241.8,136.8 232.1,140.5 L222.3,144.2 L220.1,149.5 C217.5,155.8 208.0,166.5 202.1,169.8 L198.0,172.1 L198.0,165.8 C198.1,162.3 198.7,157.7 199.5,155.5 C200.3,153.4 200.8,151.5 200.7,151.4 C200.6,151.2 195.8,152.9 190.0,155.0 C177.6,159.7 157.2,169.9 156.0,172.0 C155.6,172.8 154.9,175.7 154.5,178.5 C153.4,186.3 147.2,201.0 145.0,201.0 C144.2,201.0 138.0,189.9 138.0,188.4 C138.0,184.0 131.9,190.8 127.8,199.8 C124.0,208.1 122.4,218.7 123.8,226.5 C124.3,229.8 124.7,232.6 124.5,232.8 C124.4,232.9 121.8,229.3 118.7,224.8 Z M161.5,125.2 C172.6,117.9 188.8,110.2 199.3,107.5 C206.7,105.5 206.4,105.7 207.4,101.7 C208.2,98.5 209.0,98.4 197.0,102.2 C177.5,108.2 153.2,124.5 139.0,141.0 L133.5,147.4 L142.5,139.6 C147.4,135.3 156.0,128.8 161.5,125.2 Z M249.2,122.4 C245.9,120.8 242.7,118.3 241.0,115.8 C237.8,111.5 235.5,102.3 236.5,98.8 C237.0,97.1 236.9,96.8 236.1,97.5 C234.4,99.2 233.7,107.2 234.9,111.8 C237.0,119.3 244.3,124.9 252.0,124.9 C253.9,124.9 253.3,124.3 249.2,122.4 Z M264.8,95.8 C265.5,95.1 266.0,93.4 266.0,92.0 C266.0,88.7 264.3,87.0 261.0,87.0 C257.7,87.0 256.0,88.7 256.0,92.0 C256.0,93.4 256.5,95.1 257.2,95.8 C258.7,97.3 263.3,97.3 264.8,95.8 Z"/></svg>
+        </span>
         <span class="tag">Step 03</span>
         <h4>Release</h4>
         <p>When the work is done, the lever in the cab lifts the hook off the pin. Pull forward and the implement stays exactly where you set it down.</p>
@@ -172,79 +215,47 @@
   </div>
 </section>
 
-<!-- ============ DETAIL GALLERY — stills pulled from catch-release.mp4,
-     ordered as the sequence actually happens: approach, contact, the
-     in-cab lever, then the uncoupled tongue. Uses the same lightbox
-     pattern as photos.html, accessories.html, and implements.html. ============ -->
-<section class="gallery-grid-section">
-  <div class="wrap">
-    <div class="section-head">
-      <div>
-        <p class="eyebrow">The Mechanism</p>
-        <h2>A closer look.</h2>
-        <p class="section-head-note">Detail frames from the footage above. A full photo shoot of the mechanism is planned once the next vehicle comes out of the shop.</p>
+<!-- ============ DETAIL GALLERY — down to 3 real photos, 2026-07-30,
+     after two rounds of edits:
+
+     1st pass: had 8 video stills pulled from catch-release.mp4 plus one
+     real photo (catch-release-full-detail.jpg) as a wide first tile in
+     a .gallery-grid-full grid.
+
+     2nd pass, same day: trimmed to 3 — five of the six removed stills
+     (rear-hitch, tongue-approach, catch, tongue-detail, tongue-jack)
+     were near-duplicate frames a couple seconds apart in the source
+     footage (three near-identical blurry rear-bumper shots from the
+     approach, two essentially identical shots of the tongue on its jack
+     stand); cab-lever went too, weak on its own once the surrounding
+     sequence was gone. Kept catch-release-approach (the one aerial
+     shot) and catch-release-hooked (the payoff frame). Still using
+     .gallery-grid-full at this point, just as 3 even tiles in one row.
+
+     3rd pass, same day: switched from the equal-tile grid to
+     .story-grid — the same large-photo-left, two-stacked-right layout
+     used in "In the Field" on the homepage and "Made by Hand" on the
+     Company Purpose page — because the real photo read better bigger
+     than the stills next to it, not the same size. .story-img is in
+     lightbox.js's SELECTOR list already, so these are still click-to-
+     enlarge without adding gallery-item/data-full markup. Order in the
+     stack is hooked-and-ready on top, backing-to-the-trailer below. -->
+    <div class="story-grid">
+      <figure class="story-img story-img--large">
+        <img src="images/catch-release-full-detail.jpg" alt="Underside view of the Enabler's rear catch bracket, showing the spring-loaded hook mechanism and the backup camera mounted in the crossbar above it">
+        <figcaption>The catch bracket, with the backup camera built in</figcaption>
+      </figure>
+      <div class="story-stack">
+        <figure class="story-img">
+          <img src="images/catch-release-hooked.jpg" alt="The trailer coupled to the Enabler, both sitting ready to move out">
+          <figcaption>Hooked and ready to tow</figcaption>
+        </figure>
+        <figure class="story-img">
+          <img src="images/catch-release-approach.jpg" alt="Overhead view of the Enabler backing across a dirt lot toward a parked utility trailer">
+          <figcaption>Backing to the trailer</figcaption>
+        </figure>
       </div>
-      <a href="photos.html" class="btn btn-outline btn-sm">Full Photo Gallery</a>
     </div>
-    <div class="gallery-grid-full">
-
-      <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/catch-release-approach.jpg" data-caption="Backing to the trailer" aria-label="View larger photo: Backing to the trailer">
-          <img src="images/catch-release-approach.jpg" alt="Overhead view of the Enabler backing across a dirt lot toward a parked utility trailer" loading="lazy">
-        </button>
-        <div class="gallery-item-label">Backing to the trailer</div>
-      </div>
-
-      <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/catch-release-rear-hitch.jpg" data-caption="Rear hitch and receiver" aria-label="View larger photo: Rear hitch and receiver">
-          <img src="images/catch-release-rear-hitch.jpg" alt="Close view of the rear of the Enabler showing the hitch and receiver below the cargo bed" loading="lazy">
-        </button>
-        <div class="gallery-item-label">Rear hitch and receiver</div>
-      </div>
-
-      <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/catch-release-tongue-approach.jpg" data-caption="Tongue lined up" aria-label="View larger photo: Tongue lined up">
-          <img src="images/catch-release-tongue-approach.jpg" alt="The trailer tongue coming into line with the rear of the Enabler" loading="lazy">
-        </button>
-        <div class="gallery-item-label">Tongue lined up</div>
-      </div>
-
-      <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/catch-release-catch.jpg" data-caption="Making contact" aria-label="View larger photo: Making contact">
-          <img src="images/catch-release-catch.jpg" alt="The trailer tongue meeting the rear hitch of the Enabler as the vehicle backs into it" loading="lazy">
-        </button>
-        <div class="gallery-item-label">Making contact</div>
-      </div>
-
-      <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/catch-release-cab-lever.jpg" data-caption="The release lever, in reach from the seat" aria-label="View larger photo: The release lever, in reach from the seat">
-          <img src="images/catch-release-cab-lever.jpg" alt="A driver's hand on the release lever inside the cab, with open ground visible through the windshield" loading="lazy">
-        </button>
-        <div class="gallery-item-label">The release lever, in reach</div>
-      </div>
-
-      <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/catch-release-tongue-detail.jpg" data-caption="Tongue and pin" aria-label="View larger photo: Tongue and pin">
-          <img src="images/catch-release-tongue-detail.jpg" alt="Ground-level view of the trailer tongue and its pin, alongside the Enabler's off-road tire" loading="lazy">
-        </button>
-        <div class="gallery-item-label">Tongue and pin</div>
-      </div>
-
-      <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/catch-release-tongue-jack.jpg" data-caption="Uncoupled, jack down" aria-label="View larger photo: Uncoupled, jack down">
-          <img src="images/catch-release-tongue-jack.jpg" alt="The trailer standing on its own jack after being released, tongue clear of the vehicle" loading="lazy">
-        </button>
-        <div class="gallery-item-label">Uncoupled, jack down</div>
-      </div>
-
-      <div class="gallery-item">
-        <button type="button" class="gallery-item-inner" data-full="images/catch-release-hooked.jpg" data-caption="Hooked and ready to tow" aria-label="View larger photo: Hooked and ready to tow">
-          <img src="images/catch-release-hooked.jpg" alt="The trailer coupled to the Enabler, both sitting ready to move out" loading="lazy">
-        </button>
-        <div class="gallery-item-label">Hooked and ready to tow</div>
-      </div>
-
-    </div><!-- end .gallery-grid-full -->
   </div>
 </section>
 

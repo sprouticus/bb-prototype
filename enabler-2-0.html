@@ -128,30 +128,87 @@
         <div class="rule"></div>
         <p class="sub">Every spec here is the Enabler 2.0. The Enabler 2.1 builds directly on it, in active development now with the same care and attention to every detail. Reserving one takes a couple of minutes and requires no payment.</p>
       </div>
-      <figure class="next-gen-art">
-        <img src="images/bb-teaser-placeholder.jpg" alt="Placeholder graphic representing the upcoming Enabler 2.1, final artwork coming soon">
-        <figcaption>Final artwork coming soon</figcaption>
+      <!-- Placeholder replaced 2026-07-30 with a two-image carousel of
+           real shop photos from "Photo Originals/Enabler 2.1 Photos/" in
+           BB Project Files (Side by side front.jpg / Side by Side
+           back.jpg). Front shot clearly shows the finished Enabler 2.0
+           next to an unfinished 2.1 chassis (badge legible on the 2.0).
+           The rear shot's right-hand vehicle doesn't visually match the
+           2.0's body, so its caption stays generic rather than asserting
+           an identity the photo doesn't confirm — worth Grace/David
+           double-checking.
+
+           2026-07-30, second pass: matched to the Accessories/Implements
+           carousel exactly after a screenshot comparison showed two
+           things still off — the dashed placeholder border/padding was
+           still showing (see the .next-gen-art--filled fix in
+           styles.css: an added class doesn't erase the base class's
+           rules, they need an explicit override) and this had a caption
+           line below the frame where those pages have none. Swapped to
+           the same per-slide .carousel-caption overlay those pages use
+           instead — dark gradient, bold title, gray description, right
+           on the photo — and dropped the outer figcaption.
+
+           Carousel markup/JS reuses the shared .carousel component
+           (same one on photos.html, accessories.html, and
+           implements.html) verbatim rather than inventing a new one —
+           see .next-gen-art--filled in styles.css for the scoped
+           arrow/frame overrides this needed. -->
+      <figure class="next-gen-art next-gen-art--filled">
+        <div class="carousel-frame">
+          <div class="carousel" aria-label="Enabler 2.0 next to the Enabler 2.1">
+            <div class="carousel-track" id="carousel-track">
+              <div class="carousel-slide">
+                <img src="images/enabler-2-1-side-by-side-front.jpg" alt="The finished Enabler 2.0 parked beside an unfinished Enabler 2.1 chassis in the shop, front view">
+                <div class="carousel-caption">
+                  <p class="carousel-caption-title">Enabler 2.0, Meet 2.1</p>
+                  <p>The finished 2.0 (left) beside an unfinished 2.1 chassis, still taking shape.</p>
+                </div>
+              </div>
+              <div class="carousel-slide">
+                <img src="images/enabler-2-1-side-by-side-back.jpg" alt="Two vehicle frames parked side by side in the shop, rear view">
+                <div class="carousel-caption">
+                  <p class="carousel-caption-title">In the Shop</p>
+                  <p>Rear view, side by side, mid-build.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <button type="button" class="carousel-arrow carousel-prev" aria-label="Previous photo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+          </button>
+          <button type="button" class="carousel-arrow carousel-next" aria-label="Next photo">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+          </button>
+        </div>
+        <div class="carousel-controls">
+          <div class="carousel-dots" role="tablist" aria-label="Select photo">
+            <button type="button" class="carousel-dot active" role="tab" aria-label="Photo 1" aria-selected="true"></button>
+            <button type="button" class="carousel-dot" role="tab" aria-label="Photo 2" aria-selected="false"></button>
+          </div>
+        </div>
       </figure>
     </div>
 
     <!-- The card grid was dropped in "Update website content and assets"
-         and restored 2026-07-29, now six cards rather than the original
-         four. Still placeholder copy: the dashed border and the
-         "Placeholder" tag are what mark a card as unfinished, so replace
-         both the tag and the sentence when the real update lands, and
-         drop any card that doesn't get filled. Six is a clean fit for
-         the two-column grid (three rows); it falls to one column under
-         700px. -->
+         and restored 2026-07-29, briefly filled with six items
+         2026-07-30 then trimmed back to four the same day — catch-and-
+         release was cut because it isn't new to 2.1 (it's on the current
+         vehicle too), and flooring was cut to get back to a clean
+         two-column, two-row grid rather than an odd five. Remaining four
+         (capacity, motor/steering, visibility, roof) are items David has
+         repeatedly named as genuinely new. Solid border + orange
+         "tag-new" label mark a card as finished, vs. the dashed border +
+         gray "tag-placeholder" label for unfinished ones. Falls to one
+         column under 700px. -->
     <div class="next-gen-changing">
       <h3>What's New</h3>
-      <p class="section-head-note">A first look at what's different in the next generation. Details below are placeholders — final list to come as the build progresses.</p>
+      <p class="section-head-note">A first look at what's different in the next generation.</p>
       <ul class="changing-list">
-        <li><span class="tag-placeholder">Placeholder</span>Placeholder detail about what's changing in the Enabler 2.1.</li>
-        <li><span class="tag-placeholder">Placeholder</span>Placeholder detail about what's changing in the Enabler 2.1.</li>
-        <li><span class="tag-placeholder">Placeholder</span>Placeholder detail about what's changing in the Enabler 2.1.</li>
-        <li><span class="tag-placeholder">Placeholder</span>Placeholder detail about what's changing in the Enabler 2.1.</li>
-        <li><span class="tag-placeholder">Placeholder</span>Placeholder detail about what's changing in the Enabler 2.1.</li>
-        <li><span class="tag-placeholder">Placeholder</span>Placeholder detail about what's changing in the Enabler 2.1.</li>
+        <li class="filled"><span class="tag-new">Capacity</span>Jump seats added in back bring total capacity to three riders — driver plus two.</li>
+        <li class="filled"><span class="tag-new">Motor &amp; Steering</span>A larger motor delivers more torque, paired with steering so light it takes just one hand.</li>
+        <li class="filled"><span class="tag-new">Visibility</span>More rear-facing cameras and larger mirrors help you see everything behind you, even towing a full load.</li>
+        <li class="filled"><span class="tag-new">Roof</span>A canvas roof option keeps sun and weather off, on days the current model leaves you exposed.</li>
       </ul>
     </div>
 
@@ -499,6 +556,36 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   });
   nextBtn.addEventListener('click', function(){
     row.scrollBy({ left: step(), behavior: 'smooth' });
+  });
+})();
+
+/* ============ NEXT-GEN CAROUSEL — same implementation as the Photos
+   and Implements pages, kept verbatim rather than refactored so the
+   pages don't drift (added 2026-07-30, replacing the "Final artwork
+   coming soon" placeholder). Arrows wrap around; dots jump directly. ============ */
+(function(){
+  const track = document.getElementById('carousel-track');
+  const slides = Array.from(document.querySelectorAll('.carousel-slide'));
+  const prevBtn = document.querySelector('.carousel-prev');
+  const nextBtn = document.querySelector('.carousel-next');
+  const dots = Array.from(document.querySelectorAll('.carousel-dot'));
+  if(!track || !slides.length) return;
+
+  let index = 0;
+
+  function show(i){
+    index = (i + slides.length) % slides.length;
+    track.style.transform = 'translateX(-' + (index * 100) + '%)';
+    dots.forEach(function(dot, n){
+      dot.classList.toggle('active', n === index);
+      dot.setAttribute('aria-selected', String(n === index));
+    });
+  }
+
+  prevBtn?.addEventListener('click', function(){ show(index - 1); });
+  nextBtn?.addEventListener('click', function(){ show(index + 1); });
+  dots.forEach(function(dot, i){
+    dot.addEventListener('click', function(){ show(i); });
   });
 })();
 </script>
