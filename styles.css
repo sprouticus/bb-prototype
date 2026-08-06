@@ -323,6 +323,26 @@ nav.primary a.mobile-cta{display:none;}
 .hero .cta-row{display:flex;gap:14px;margin-top:30px;flex-wrap:wrap;}
 .hero .micro{margin-top:16px;font-size:15.5px;color:#6B7378;font-family:var(--font-mono);}
 
+/* -------- FREE FLAG (2026-08-06). The no-payment line was styled as
+   fine print; David wanted it loud. Split from the price/count so the
+   free part can shout and the terms stay quiet. -------- */
+.free-flag{
+  display:inline-block;margin-top:20px;
+  background:var(--paper);border-left:4px solid var(--orange);
+  padding:12px 18px;
+}
+.free-flag .free-flag-lead{
+  display:block;
+  font-family:var(--font-display);font-weight:800;
+  font-size:21px;letter-spacing:.01em;color:var(--ink);
+  text-transform:uppercase;line-height:1.15;
+}
+.free-flag .free-flag-terms{
+  display:block;margin-top:5px;
+  font-family:var(--font-mono);font-size:13px;letter-spacing:.04em;
+  text-transform:uppercase;color:#6B7378;
+}
+
 .hero-art{
   background:var(--paper);
   margin:0;
@@ -362,6 +382,12 @@ nav.primary a.mobile-cta{display:none;}
   .hero-copy{padding:48px 28px 36px;}
   .hero-art{padding:24px;}
   .hero-art figcaption{left:24px;right:24px;}
+
+  /* Photo first on small screens (2026-08-06) — stacked, the source
+     order buried it under a screen of type. Using order: rather than
+     moving the markup keeps DOM/tab order intact. */
+  .hero-art{order:1;}
+  .hero-copy{order:2;}
 }
 @media (max-width:640px){
   .hero-copy{padding:32px 20px 24px;}
@@ -370,6 +396,9 @@ nav.primary a.mobile-cta{display:none;}
   .hero .cta-row{flex-direction:column;gap:10px;margin-top:20px;}
   .hero .cta-row .btn{width:100%;justify-content:center;}
   .hero .micro{font-size:12.5px;line-height:1.5;}
+  .free-flag{display:block;padding:11px 15px;}
+  .free-flag .free-flag-lead{font-size:17.5px;}
+  .free-flag .free-flag-terms{font-size:11.5px;}
 }
 
 /* ============================================================
@@ -424,14 +453,29 @@ nav.primary a.mobile-cta{display:none;}
    fork module 2026-07-01; pre-order now serves both individuals and
    organizations in one form, so this no longer needs an audience split)
    ============================================================ */
+/* -------- ALIGNMENT (settled 2026-08-06). Eyebrow, h2, rule and buttons
+   centred; subheading left-aligned in a centred box. The section keeps
+   text-align:center and .sub is the single override.
+
+   .sub's cap was widened 520px -> 640px to match the h2 when both were
+   briefly left-aligned and needed a shared left edge. Kept at 640px
+   (~67 characters, fine for body text) rather than churning line counts
+   back. One-line revert if the tighter measure reads better.
+
+   The rule centres on the h2's box, which being auto-margined is also
+   the page centre. That only reads correctly while the h2 is centred —
+   if it ever goes back to left-aligned, a short final line will pull the
+   heading's mass off the dash, and ink-centring would need JS. -------- */
 .next-step{background:var(--paper);color:var(--ink);padding:76px 0;text-align:center;border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
 .next-step .eyebrow{margin:0 auto;}
 .next-step h2{font-size:clamp(31px,4.1vw,48.5px);color:var(--ink);margin-top:14px;max-width:640px;margin-left:auto;margin-right:auto;}
 .next-step .rule{margin-left:auto;margin-right:auto;}
-.next-step p.sub{color:#454C49;font-size:19.5px;max-width:520px;margin:20px auto 0;line-height:1.6;}
+.next-step p.sub{color:#454C49;font-size:19.5px;max-width:640px;margin:20px auto 0;line-height:1.6;text-align:left;}
 .next-step .cta-row{display:flex;justify-content:center;gap:14px;margin-top:32px;flex-wrap:wrap;}
 /* White variant — used on the specs page, where this band follows the
-   paper-toned "In the Shop" strip and needs to read as its own step. */
+   paper-toned "In the Shop" strip and needs to read as its own step,
+   and on the implements page (2026-08-05), where it follows the
+   paper-toned brand strip for the same reason. */
 .next-step--white{background:var(--white);}
 
 /* -------- NEXT-GEN TEASER (Enabler 2.1 coming-soon strip, added
@@ -610,6 +654,10 @@ input[type="text"],input[type="email"],input[type="tel"],select,textarea{
 input:focus,select:focus,textarea:focus{border-color:var(--steel);}
 .radio-row{display:flex;gap:18px;flex-wrap:wrap;}
 .radio-row label{display:flex;align-items:center;gap:6px;font-weight:500;font-size:17px;}
+
+/* Clarifier under a form field (2026-08-06). Sized below the radio
+   labels so it reads as a footnote, not a third option. */
+.field-note{margin-top:7px;font-size:14px;color:#6B7378;line-height:1.45;}
 .form-success{
   display:none;border:2px solid var(--black);background:var(--paper);border-radius:2px;
   padding:18px;font-size:17px;font-weight:600;
@@ -842,29 +890,28 @@ button.photo-zoom:focus-visible{outline:3px solid var(--orange);outline-offset:-
   background:var(--white);border:1px solid var(--line);
 }
 .shop-feature img{width:100%;height:100%;object-fit:cover;aspect-ratio:16/7;display:block;}
-.shop-feature figcaption{
-  position:absolute;bottom:0;left:0;right:0;padding:16px 22px;
-  background:rgba(11,57,84,0.78);
-  font-family:var(--font-mono);font-size:13px;letter-spacing:.05em;
-  text-transform:uppercase;color:var(--steel-pale);
-}
+/* .shop-feature figcaption folded into the shared .story-img rule
+   2026-08-06. */
 
 .shop-row{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:20px;}
-.shop-tile{margin:0;background:var(--white);border:1px solid var(--line);overflow:hidden;}
+/* position:relative added 2026-08-06 so the caption can overlay the photo
+   rather than sit below it — see the shared caption rule further down. */
+.shop-tile{margin:0;background:var(--white);border:1px solid var(--line);overflow:hidden;position:relative;}
 .shop-tile img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;}
-.shop-tile figcaption{
-  padding:14px 16px;font-family:var(--font-mono);font-size:12.5px;letter-spacing:.06em;
-  text-transform:uppercase;color:var(--steel);
-}
+/* .shop-tile figcaption was a static below-image label; folded into the
+   shared .story-img rule 2026-08-06 so it overlays and reveals on hover.
+   The white background and border are a frame decision, not part of the
+   caption pattern. */
 
 @media (max-width:900px){
   .shop-feature img{aspect-ratio:3/2;}
   .shop-row{grid-template-columns:repeat(3,1fr);gap:12px;}
-  .shop-tile figcaption{padding:12px;font-size:11.5px;}
+  /* Dropped the .shop-tile caption mobile override — the shared caption
+     has no size variant anywhere else. */
 }
 @media (max-width:620px){
   .shop-feature img{aspect-ratio:4/3;}
-  .shop-feature figcaption{padding:12px 16px;font-size:11.5px;}
+  /* Dropped the .shop-feature caption mobile override, same reason. */
   .shop-row{grid-template-columns:1fr;gap:16px;}
 }
 
@@ -875,6 +922,15 @@ button.photo-zoom:focus-visible{outline:3px solid var(--orange);outline-offset:-
 .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:34px;flex-wrap:wrap;}
 .section-head h2{font-size:clamp(27.5px,3.7vw,39px);margin-top:10px;}
 .section-head-note{font-size:15.5px;color:#454C49;margin-top:10px;max-width:480px;line-height:1.5;}
+
+/* Emphasis variant (2026-08-06) — carries the origin line and starting
+   price, moved up out of the spec grid. Kept a note, not an h3, so the
+   h2 above still owns the section. */
+.section-head-note--lead{
+  font-size:19px;color:var(--ink);font-weight:600;max-width:520px;
+}
+.section-head-note--lead strong{font-weight:800;}
+@media (max-width:640px){.section-head-note--lead{font-size:17px;}}
 .section-head-note a{color:var(--orange-dark);text-decoration:underline;text-underline-offset:2px;font-weight:700;}
 
 /* ============================================================
@@ -1105,6 +1161,48 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
 .brand-header h2{font-size:clamp(24px,3vw,32px);}
 .brand-header p{font-size:14.5px;color:#454C49;margin-top:6px;}
 
+/* -------- TYPE HEADERS (Implements page, added 2026-08-05)
+
+   The Implements page regrouped from four brand sections to two type
+   sections (Towing / Push), so its section heads no longer have a logo
+   to sit beside. .brand-header's flex row exists only to put a 110px
+   logo next to a block of text, so a type head can't reuse it — this is
+   a plain stacked head instead, matching the eyebrow / h2 / rule / sub
+   rhythm used by .page-hero and .next-step.
+
+   Both .brand-header and .type-header keep the same 2px bottom rule and
+   32px gap to the grid below, so the two treatments line up if a brand
+   section is ever reintroduced alongside a type one. -------- */
+.type-header{margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--line);}
+.type-header h2{font-size:clamp(24px,3vw,32px);margin-top:4px;}
+.type-header p{font-size:14.5px;color:#454C49;margin-top:14px;max-width:64ch;}
+
+/* -------- SUPPORTED BRANDS STRIP (Implements page). Added and parked
+   2026-08-05, unparked 2026-08-06 at David's request.
+
+   Sizing follows .brand-logo's rule — one fixed width, height auto —
+   for the same reason: the three marks have wildly different aspect
+   ratios (Demco and Kunz are flat wordmarks, Rammy is a stacked
+   icon-over-wordmark, roughly square), and matching their widths keeps
+   them comparable where matching a box would not. 130px rather than the
+   110px used by .brand-logo because these stand alone rather than
+   sitting beside a section heading.
+
+   align-items:center vertically centres the short wordmarks against the
+   tall Rammy mark, which sets the row height. -------- */
+.brand-strip{padding:56px 0;background:var(--paper);border-top:1px solid var(--line);}
+.brand-strip .brand-strip-intro{max-width:64ch;}
+.brand-strip .brand-strip-intro p{font-size:14.5px;color:#454C49;margin-top:14px;}
+.brand-strip-logos{
+  display:flex;align-items:center;flex-wrap:wrap;gap:28px 56px;margin-top:32px;
+}
+.brand-strip-logos li{list-style:none;width:130px;flex:none;}
+.brand-strip-logos img{width:100%;height:auto;display:block;}
+@media (max-width:560px){
+  .brand-strip-logos{gap:24px 32px;}
+  .brand-strip-logos li{width:96px;}
+}
+
 /* -------- WHAT'S CHANGING (Enabler page, 2.1 preview list, added
    2026-07-14) -------- */
 .whats-changing{padding:56px 0;background:var(--paper);}
@@ -1129,6 +1227,11 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
 .spec-card li{font-size:17px;padding:8px 0;border-top:1px dashed var(--line);}
 .spec-card li:first-child{border-top:none;}
 .spec-card li .v{font-family:var(--font-display);font-weight:800;color:var(--ink);display:block;font-size:22px;}
+
+/* Unfilled spec row (2026-08-06). Muted rather than dashed — the rows
+   already have a dashed top border. */
+.spec-card li.spec-pending .v{color:var(--steel-pale);}
+.spec-card li.spec-pending .k{color:var(--steel-pale);font-style:italic;}
 .spec-card li .k{color:#454C49;font-size:15.5px;font-weight:500;}
 @media (max-width:900px){.spec-grid{grid-template-columns:1fr 1fr;}}
 @media (max-width:560px){.spec-grid{grid-template-columns:1fr;}}
@@ -1261,16 +1364,34 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
 
    Re-centered same day, horizontally: was left-aligned to line up with
    the old left-edge dot, moved to sit centered over each step's text
-   column instead. .st-item's real content width is the item box minus
-   its 28px right padding (that padding is just the gutter to the next
-   column, not part of this step's text), so centering has to target
-   (100% - 28px)'s midpoint rather than the item box's own 50% — hence
-   "50% - 14px" below rather than a plain 50%. Left as an absolute
-   left/transform pairing (not a flex-centered wrapper) so it stays a
-   one-line change against the existing top-offset approach. */
+   column instead.
+
+   2026-08-06 — ALIGNMENT REWORK. Reported as headings not looking
+   centred under the icons. The icons were NOT mis-positioned; measuring
+   confirmed the old calc had them within a pixel or two of each text
+   box's midpoint. The problem was that nothing visually connected them,
+   with the tag and heading hard against the left edge of a 360px box.
+
+   Two changes: symmetric padding (so the icon can use a plain left:50%
+   instead of a calc that silently depended on a padding value 30 lines
+   away), and centred text.
+
+   Paragraphs are centred too. They were left-aligned first, which always
+   reads a few px left of centre because ragged-right lines stop short of
+   the box — greedy wrapping already minimises that, and text-wrap:balance
+   makes it WORSE (narrower lines, still left-anchored: offsets went from
+   [-5,-1,-5] to [-36,-19,-53] px). Do not re-add it here. Centring
+   removes the problem instead of correcting for it.
+
+   Trade accepted: centred text is harder to scan. Fine at 3-5 short
+   lines; revisit if these paragraphs grow.
+
+   Scoped to the --icons modifier; the mobile override below restores
+   left alignment where the layout switches to a left rail. */
+.story-timeline--icons .st-item{padding:0 14px;text-align:center;}
 .story-timeline--icons .st-item::before{display:none;}
 .st-icon{
-  position:absolute;top:-59px;left:calc(50% - 14px);transform:translateX(-50%);
+  position:absolute;top:-59px;left:50%;transform:translateX(-50%);
   width:48px;height:48px;border-radius:50%;
   background:var(--white);border:4px solid var(--orange);
   display:flex;align-items:center;justify-content:center;
@@ -1283,6 +1404,10 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
   .story-timeline{grid-template-columns:1fr;padding-top:0;}
   .story-timeline::before{display:none;}
   .st-item{padding:0 0 28px 24px;border-left:4px solid var(--orange);}
+  /* Needed: the desktop --icons rule is more specific and would
+     otherwise win inside this media query, collapsing the 24px gutter
+     the border-left needs and centering the text. */
+  .story-timeline--icons .st-item{padding:0 0 28px 24px;text-align:left;}
   .st-item::before{top:2px;left:-10px;}
   /* Mobile switches to a left-rail layout instead of a horizontal
      line, so the icon moves off the top edge and onto the border-left
@@ -1356,6 +1481,14 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
    under the page-hero banner, where the photo carousel used to be.
    ============================================================ */
 .vehicle-video{background:var(--white);padding:52px 0 60px;border-bottom:1px solid var(--line);}
+/* Title above the embed (added 2026-08-06). h2 not h3 despite the size,
+   so the outline doesn't skip a level — which means this rule must stay
+   tightly scoped or it will shrink section headings elsewhere.
+   Capped at 860px to track the embed. -------- */
+.vehicle-video h2{
+  max-width:860px;margin:0 auto 16px;
+  font-size:21px;color:var(--ink);text-align:center;
+}
 .vehicle-video .video-embed{
   max-width:860px;margin:0 auto;aspect-ratio:16/9;
   border-radius:2px;overflow:hidden;background:var(--ink);
@@ -1469,7 +1602,16 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
 .story-img{margin:0;position:relative;overflow:hidden;}
 .story-img img{width:100%;height:100%;object-fit:cover;display:block;}
 .story-img--large{min-height:400px;}
-.story-img figcaption{
+/* THE overlay photo caption. Every caption that sits on a photo uses
+   this one rule; do not write a second. .shop-feature and .shop-tile
+   joined it 2026-08-06 — each had drifted its own way.
+
+   Deliberately NOT in this family: .hero-art.hero-photo (always visible
+   on purpose, above the fold), .shop-portrait (a card, not an overlay),
+   .era-item (still placeholder). */
+.story-img figcaption,
+.shop-feature figcaption,
+.shop-tile figcaption{
   position:absolute;bottom:0;left:0;right:0;
   background:rgba(14,17,18,0.72);color:var(--white);
   font-family:var(--font-mono);font-size:14px;letter-spacing:.06em;text-transform:uppercase;
@@ -1495,15 +1637,21 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
    that matters, the fix is to make these photos real controls that
    open the lightbox, the way the gallery grid already does. */
 @media (hover:hover) and (pointer:fine){
-  .story-img figcaption{
+  .story-img figcaption,
+  .shop-feature figcaption,
+  .shop-tile figcaption{
     opacity:0;transform:translateY(100%);
     transition:opacity .18s ease,transform .18s ease;
     pointer-events:none;
   }
-  .story-img:hover figcaption{opacity:1;transform:translateY(0);}
+  .story-img:hover figcaption,
+  .shop-feature:hover figcaption,
+  .shop-tile:hover figcaption{opacity:1;transform:translateY(0);}
 }
 @media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:reduce){
-  .story-img figcaption{transition:opacity .18s ease;transform:none;}
+  .story-img figcaption,
+  .shop-feature figcaption,
+  .shop-tile figcaption{transition:opacity .18s ease;transform:none;}
 }
 .story-img--large img{min-height:400px;}
 .gallery-link{margin-top:32px;display:flex;justify-content:center;}
@@ -2015,15 +2163,20 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
    CAREERS PLACEHOLDER (careers.html) — added 2026-07-18. Deliberately
    minimal until there are real openings to post.
    ============================================================ */
-.careers-empty{padding:88px 0 100px;background:var(--paper);}
+/* Backgrounds swapped 2026-08-06. --paper on --white is very low
+   contrast, so the 1px border is now most of what defines the card —
+   do not drop it as redundant. */
+.careers-empty{padding:88px 0 100px;background:var(--white);}
 .careers-empty-card{
   max-width:480px;margin:0 auto;text-align:center;
-  background:var(--white);border:1px solid var(--line);border-radius:2px;
+  background:var(--paper);border:1px solid var(--line);border-radius:2px;
   padding:48px 36px;
 }
 .careers-empty-card svg{width:40px;height:40px;color:var(--steel-pale);margin-bottom:18px;}
 .careers-empty-card h2{font-size:24px;margin-bottom:10px;}
-.careers-empty-card p{color:#454C49;font-size:16.5px;line-height:1.5;margin-bottom:24px;}
+/* Zeroed 2026-08-06: the 24px was clearing the removed "Reach Out
+   Anyway" button and became dead space under the card. */
+.careers-empty-card p{color:#454C49;font-size:16.5px;line-height:1.5;margin-bottom:0;}
 
 /* ============================================================
    CONTACT PAGE (contact.html) — added 2026-07-18. Info card reuses

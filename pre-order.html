@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Reserve the Enabler 2.1 | B.B. Engineering</title>
-<meta name="description" content="Reserve your Enabler 2.1, the next generation utility vehicle built on our Enabler 2.0. No payment required for individuals or organizations.">
+<title>Pre-Order the Enabler 2.1 | No Payment Required</title>
+<meta name="description" content="Pre-order the Enabler 2.1 wheelchair accessible work vehicle. No payment required. The first 50 pre-orders get the base vehicle at $34,000.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -14,6 +14,9 @@
 <header class="site">
   <div class="util-bar">
     <div class="wrap">
+      <!-- FTC origin claim: "all or virtually all" domestic content is
+           unverified (battery cells). Accepted risk, confirm before launch.
+           Also on the homepage specs intro and the Company Purpose h1. -->
       <span class="util-left">Albuquerque, NM &middot; Designed &amp; Built in the USA</span>
       <div class="util-right">
         <a href="mailto:info@bbengineering.us" class="util-email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m4 6 8 7 8-7"/></svg>info@bbengineering.us</a>
@@ -93,10 +96,12 @@
 
 <section class="page-hero">
   <div class="wrap">
-    <p class="eyebrow">Reserve Your Spot</p>
-    <h1>Reserve the Enabler 2.1.</h1>
+    <!-- Second-person sweep. Form field labels below keep "your" —
+         functional UI, different from marketing copy. -->
+    <p class="eyebrow">Reserve a Spot</p>
+    <h1>Pre-Order the Enabler 2.1</h1>
     <div class="rule"></div>
-    <p>Built on the Enabler 2.0. No payment required for individuals, families, or organizations.</p>
+    <p>Built on the Enabler 2.0. No payment required, for individuals or organizations. The first 50 pre-orders get the base vehicle at $34,000.</p>
   </div>
 </section>
 
@@ -186,6 +191,8 @@
           </select>
         </div>
 
+        <!-- Timeline field removed 2026-08-06, parked here:
+
         <div class="field">
           <label for="p-timeline">Timeline</label>
           <select id="p-timeline" name="timeline">
@@ -196,15 +203,35 @@
           </select>
         </div>
 
+             Row also removed from buildReview(). If restored, reword —
+             the 2.1 is not expected until 2027. -->
+
+        <!-- Demand signal, not an offer. Must not promise financing or
+             gate the form; optional, no default selection. -->
+        <div class="field">
+          <label for="p-financing">Interested in financing options? <span style="font-weight:500;color:#454C49;">(optional)</span></label>
+          <div class="radio-row" id="p-financing" role="radiogroup" aria-label="Interested in financing options?">
+            <label><input type="radio" name="financing" value="yes"> Yes</label>
+            <label><input type="radio" name="financing" value="no"> No</label>
+          </div>
+          <p class="field-note">Financing isn't available yet. This just tells us whether to pursue it.</p>
+        </div>
+
         <div class="field">
           <label for="p-notes">Configuration &amp; accessibility notes <span style="font-weight:500;color:#454C49;">(optional)</span></label>
           <textarea id="p-notes" name="notes" rows="4" placeholder="Joystick placement, seating, tie-down needs, or anything else specific to how you'll drive it."></textarea>
         </div>
 
+        <!-- "How did you hear about us?" removed 2026-08-06, parked here:
+
         <div class="field">
           <label for="p-source">How did you hear about us? <span style="font-weight:500;color:#454C49;">(optional)</span></label>
           <input type="text" id="p-source" name="source">
         </div>
+
+             Row also removed from buildReview(). This was the site's only
+             attribution capture; a fixed-option select would serve the
+             marketing work better than free text if it returns. -->
 
         <div class="flow-nav" style="justify-content:flex-end;">
           <button type="button" class="btn btn-orange" data-flow-next="2">Next: Accessories &darr;</button>
@@ -250,7 +277,7 @@
       <section class="flow-step" id="flow-step-2" data-step="2" hidden>
         <p class="flow-step-eyebrow">Step 2 of 4</p>
         <h2>Customize with accessories</h2>
-        <p class="flow-step-sub">Select any accessories you'd like included. Nothing is charged now, and you can change your mind later.</p>
+        <p class="flow-step-sub">Pick any accessories you want included. Nothing is charged now and you can change it later.</p>
 
         <div class="pick-grid">
         <label class="pick-card">
@@ -396,7 +423,7 @@
       <section class="flow-step" id="flow-step-3" data-step="3" hidden>
         <p class="flow-step-eyebrow">Step 3 of 4</p>
         <h2>Add implements</h2>
-        <p class="flow-step-sub">Select any implements you'd like included. Where pricing is still being finalized, we'll follow up with a figure before anything is confirmed.</p>
+        <p class="flow-step-sub">Pick any towed implements you want included. Where pricing is still being worked out with a partner, we'll follow up with a figure first.</p>
 
       <div class="pick-brand-group">
         <div class="pick-brand-head">
@@ -552,7 +579,7 @@
       <section class="flow-step" id="flow-step-4" data-step="4" hidden>
         <p class="flow-step-eyebrow">Step 4 of 4</p>
         <h2>Review &amp; submit</h2>
-        <p class="flow-step-sub">Nothing is submitted yet, and no payment information has been collected.</p>
+        <p class="flow-step-sub">Nothing is submitted yet and no payment information has been collected.</p>
 
         <div class="review-block">
           <h3>Your Information</h3>
@@ -586,7 +613,8 @@
     </form>
 
     <div class="form-success" id="pre-order-success" style="max-width:760px;margin:0 auto;">
-      <p style="margin:0 0 12px;">Thanks. Your spot is reserved. No payment required. Someone from B.B. Engineering will follow up with next steps and timing.</p>
+      <!-- Early 2027 availability was agreed 2026-07-22 and the form is supposed to state it. -->
+      <p style="margin:0 0 12px;">Your pre-order is in. No payment was collected. Someone from B.B. Engineering will follow up with next steps. Expected availability is early 2027.</p>
       <p id="pre-order-ref" style="margin:0;font-weight:700;"></p>
     </div>
 
@@ -598,7 +626,7 @@
     <div class="footer-grid">
       <div>
         <p class="footer-logo">B.B. ENGINEERING</p>
-        <p style="margin-top:10px;">Off-road utility vehicles for wheelchair users. Built for independence.</p>
+        <p style="margin-top:10px;">Wheelchair accessible work vehicles, built by hand in Albuquerque, New Mexico.</p>
       </div>
       <div>
         <h5>Vehicle</h5>
@@ -756,18 +784,24 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
       ['Email', fieldVal('p-email') || 'N/A'],
       ['Phone', fieldVal('p-phone') || 'Not provided'],
       ['Location', fieldVal('p-location') || 'N/A'],
-      ['Primary use', fieldVal('p-use') || 'N/A'],
-      ['Timeline', fieldVal('p-timeline') || 'N/A']
+      // Timeline row removed with its field. Note fieldVal() returns ''
+      // for a missing element rather than throwing, so a stale row here
+      // would show a permanent "N/A" instead of erroring.
+      ['Primary use', fieldVal('p-use') || 'N/A']
     ];
     if (!orgFields.hidden){
       info.push(['Organization', fieldVal('p-org') || 'Not provided']);
       info.push(['Role', fieldVal('p-role') || 'Not provided']);
       info.push(['Estimated quantity', fieldVal('p-qty') || 'N/A']);
     }
+    // Financing is optional and unselected by default, so it only appears
+    // in the review summary when the person actually answered. Added
+    // 2026-08-06 alongside the field itself.
+    var financing = radioVal('financing');
+    if (financing) info.push(['Interested in financing', financing === 'yes' ? 'Yes' : 'No']);
     var notes = fieldVal('p-notes');
     if (notes) info.push(['Notes', notes]);
-    var source = fieldVal('p-source');
-    if (source) info.push(['Heard about us via', source]);
+    // "Heard about us via" removed 2026-08-06 with the p-source field.
 
     var infoHtml = info.map(function(pair){
       return '<div class="review-item"><span class="k">' + pair[0] + '</span><span class="v">' + escapeHtml(pair[1]) + '</span></div>';

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Accessories | B.B. Engineering</title>
-<meta name="description" content="Seating, windshields, lighting, and cargo upgrades for the Enabler, including the standard seat that adapts it for any driver.">
+<title>Accessories | Seating, Lighting and Cargo for the Enabler</title>
+<meta name="description" content="Bolt-on accessories for the Enabler: seating, windshields, mirrors, lighting, cargo and recovery gear.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -14,6 +14,9 @@
 <header class="site">
   <div class="util-bar">
     <div class="wrap">
+      <!-- FTC origin claim: "all or virtually all" domestic content is
+           unverified (battery cells). Accepted risk, confirm before launch.
+           Also on the homepage specs intro and the Company Purpose h1. -->
       <span class="util-left">Albuquerque, NM &middot; Designed &amp; Built in the USA</span>
       <div class="util-right">
         <a href="mailto:info@bbengineering.us" class="util-email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m4 6 8 7 8-7"/></svg>info@bbengineering.us</a>
@@ -96,7 +99,9 @@
     <p class="eyebrow">Add-Ons &amp; Upgrades</p>
     <h1>Accessories</h1>
     <div class="rule"></div>
-    <p>Bolt-on upgrades for seating, visibility, lighting, cargo, and recovery.</p>
+    <!-- "cargo" dropped — nothing in the grid below is a cargo
+         accessory, and the built-in bed is standard, not an add-on. -->
+    <p>Bolt-on upgrades for seating, visibility, lighting, and recovery.</p>
   </div>
 </section>
 
@@ -128,9 +133,16 @@
 
       <div class="intro-split-copy">
         <p class="eyebrow">Multifunctional by Design</p>
-        <h2>Adaptable to any driver, now and in the future.</h2>
+        <h2>Adaptable to multiple drivers.</h2>
         <div class="rule"></div>
-        <p class="sub">Seating, visibility, lighting, and cargo are all specified when the vehicle is built, and every one of them can be changed later. An Enabler set up for one driver can be reconfigured for another as an organization's crew changes, so it keeps working for whoever is driving it.</p>
+        <!-- Cut to a summary. The full multifunctionality argument belongs on its own page per the
+             PRD and the SEO Keyword Strategy (least competitive, highest-value cluster). Not built yet.
+
+             "cargo" → "more" for the same reason as the hero line above.
+             David wants customization pushed harder across this page than
+             one paragraph can carry — the dedicated multifunctionality
+             page is where it belongs. -->
+        <p class="sub">Seating, visibility, lighting and more are specified at build and can all be changed later. An Enabler set up for one driver can be set up for another as a crew changes.</p>
       </div>
 
       <div class="intro-split-media">
@@ -276,6 +288,21 @@
 <section class="catalog-section">
   <div class="wrap">
     <div class="product-grid">
+      <!-- Listed first, not alphabetically — it's a paid add-on and
+           buying it is what makes the towed implements usable.
+           Price genuinely unset; do not put a number here until David
+           gives one. The electric jack is NOT included (it ships with
+           each implement).
+           Photo is a real in-situ shot, so it reads differently from the
+           cutout product cards around it — wants a proper cutout later.
+           Thumb was built by hand, not by tools/make-product-thumbs.py. -->
+      <div class="product-card">
+        <button type="button" class="product-card-img" data-full="images/catch-release-full-detail.jpg" data-caption="Catch-and-Release Hitch System" data-specs="Quick-attach hitch for towed implements. Spring-loaded hook, cab-mounted release lever, backup camera in the bracket." data-price="Price TBD" aria-label="View photo and details for the Catch-and-Release Hitch System"><img src="images/Accessories/thumbs/catch-and-release-thumb.png" width="700" height="700" alt="Underside view of the Enabler's rear catch bracket, showing the spring-loaded hook mechanism and the backup camera above it" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
+        <div class="product-card-body">
+          <h3>Catch-and-Release Hitch System</h3>
+          <p class="product-price">Price TBD</p>
+        </div>
+      </div>
       <div class="product-card">
         <button type="button" class="product-card-img" data-full="images/Accessories/driver-seat.png" data-caption="Traditional Driver&#x27;s Seat" data-specs="Standard, traditional style driver&#x27;s seat." data-price="$175.00" aria-label="View photo and details for the Traditional Driver&#x27;s Seat"><img src="images/Accessories/thumbs/driver-seat-thumb.png" width="700" height="700" alt="Traditional Driver&#x27;s Seat" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
@@ -340,6 +367,29 @@
         </div>
       </div>
     </div>
+    <!-- Someone pricing accessories shouldn't wonder whether basic
+         lighting is on the list. Do NOT let this drift into implying the
+         vehicle is road legal — see the off-road note on specs.html. -->
+    <p class="section-head-note" style="margin-top:28px;">Turn signals, brake lights, driving lights, a windshield and mirrors are standard on every base vehicle, not add-ons.</p>
+  </div>
+</section>
+
+<!-- ============ NEXT STEP — added 2026-08-06. Copy differs from the
+     other .next-step bands on purpose: this one closes a browsing
+     session, so it leads with customization rather than the terms.
+     ============ -->
+<section class="next-step">
+  <div class="wrap">
+    <p class="eyebrow">Built Around the Driver</p>
+    <h2>Start a pre-order and customize the vehicle.</h2>
+    <div class="rule"></div>
+    <p class="sub">Accessories are chosen as part of the pre-order, and anything specified at build can be changed later. There's <strong>NO</strong> payment required.</p>
+    <div class="cta-row">
+      <a href="pre-order.html" class="btn btn-orange">Start a Pre-Order
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+      </a>
+      <a href="schedule-conversation.html" class="btn btn-outline">Schedule a Conversation</a>
+    </div>
   </div>
 </section>
 
@@ -348,7 +398,7 @@
     <div class="footer-grid">
       <div>
         <p class="footer-logo">B.B. ENGINEERING</p>
-        <p style="margin-top:10px;">Off-road utility vehicles for wheelchair users. Built for independence.</p>
+        <p style="margin-top:10px;">Wheelchair accessible work vehicles, built by hand in Albuquerque, New Mexico.</p>
       </div>
       <div>
         <h5>Vehicle</h5>
