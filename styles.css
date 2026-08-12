@@ -4,10 +4,9 @@
    White-dominant, color reserved for CTAs/accents, bold blocky type,
    diagonal-cut panels as the recurring signature device.
 
-   2026-07-01 pass: incorporates David & Grace's live design feedback —
-   bigger/bolder type throughout (previous pass read as "too small,
+   2026-07-01 pass: bigger/bolder type throughout (previous pass read as "too small,
    spidery"), and the yellow-green accent (--volt) removed sitewide
-   per explicit "no yellow, no orange" direction. Red is approved.
+   — no yellow, no orange. Red is approved.
 
    NOTE ON NAMING: --orange / --orange-dark / .btn-orange etc. are
    intentionally RED (#D42020), not orange — orange was rejected
@@ -113,8 +112,7 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 }
 
 /* Reservation reassurance badge — sits directly in the CTA row next to
-   the Pre-Order button per David's "put it right on the button"
-   direction (2026-07-07 review). Reuses the .form-card .tag pill
+   the Pre-Order button rather than below it. Reuses the .form-card .tag pill
    language already established elsewhere on the site. */
 .cta-badge{
   display:inline-flex;align-items:center;
@@ -170,7 +168,7 @@ header.site{position:sticky;top:0;z-index:50;}
    "BB Engineering Logo.png" (transparent, no baked-in text) paired
    with live text, restoring the original two-part lockup but with
    the real illustrated icon in place of the red BBE placeholder.
-   Scaled up large per David's direction so the artwork actually
+   Scaled up large so the artwork actually
    reads at a glance. -------- */
 .logo{display:flex;align-items:center;gap:14px;flex-shrink:0;}
 .logo-mark-img{height:66px;width:auto;display:block;flex:none;}
@@ -324,7 +322,7 @@ nav.primary a.mobile-cta{display:none;}
 .hero .micro{margin-top:16px;font-size:15.5px;color:#6B7378;font-family:var(--font-mono);}
 
 /* -------- FREE FLAG (2026-08-06). The no-payment line was styled as
-   fine print; David wanted it loud. Split from the price/count so the
+   fine print; it needs to read loud. Split from the price/count so the
    free part can shout and the terms stay quiet. -------- */
 .free-flag{
   display:inline-block;margin-top:20px;
@@ -480,7 +478,7 @@ nav.primary a.mobile-cta{display:none;}
 
 /* -------- NEXT-GEN TEASER (Enabler 2.1 coming-soon strip, added
    2026-07-14, promoted directly under the hero + made bolder on
-   2026-07-14 per David's "not prominent enough" feedback). The
+   2026-07-14; the first pass was not prominent enough). The
    COMING SOON flag borrows the site's accent color to give this
    section real visual weight — still no CTA button, so it teases
    without competing with the Pre-Order path. -------- */
@@ -667,8 +665,8 @@ input:focus,select:focus,textarea:focus{border-color:var(--steel);}
 
 /* ============================================================
    PRE-ORDER FLOW — multi-step, progressively-revealed form
-   (added 2026-07-14). Big, readable type throughout per David's
-   direction; steps stay visible once revealed (nothing collapses),
+   (added 2026-07-14). Big, readable type throughout;
+   steps stay visible once revealed (nothing collapses),
    each new section just appears below as the user clicks Next, so
    the whole thing reads as one long form rather than a wizard that
    hides your previous answers.
@@ -730,8 +728,7 @@ input:focus,select:focus,textarea:focus{border-color:var(--steel);}
 .flow-step h2{font-size:clamp(26px,3.2vw,34px);margin-top:8px;margin-bottom:8px;}
 .flow-step > p.flow-step-sub{font-size:17.5px;color:#454C49;margin-bottom:32px;line-height:1.55;}
 
-/* Bigger type specifically inside the flow, per David's "big,
-   readable" direction — overrides the sitewide .field defaults. */
+/* Bigger type specifically inside the flow — overrides the sitewide .field defaults. */
 .flow-step .field{margin-bottom:24px;}
 .flow-step .field label{font-size:19px;margin-bottom:9px;}
 .flow-step input[type="text"],
@@ -1018,7 +1015,7 @@ button.photo-zoom:focus-visible{outline:3px solid var(--orange);outline-offset:-
 /* -------- PRODUCT GRID (Accessories & Implements pages, added
    2026-07-14) — deliberately static, non-interactive cards: no add-
    to-cart, no purchase link, no hover-to-buy. These pages are
-   informational only per David's direction; selection happens later,
+   informational only; selection happens later,
    inside the pre-order/customization flow. -------- */
 .catalog-intro{background:var(--paper);border-bottom:1px solid var(--line);padding:22px 0;}
 .catalog-intro .wrap{display:flex;align-items:center;gap:14px;flex-wrap:wrap;}
@@ -1178,7 +1175,7 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
 .type-header p{font-size:14.5px;color:#454C49;margin-top:14px;max-width:64ch;}
 
 /* -------- SUPPORTED BRANDS STRIP (Implements page). Added and parked
-   2026-08-05, unparked 2026-08-06 at David's request.
+   2026-08-05, unparked 2026-08-06.
 
    Sizing follows .brand-logo's rule — one fixed width, height auto —
    for the same reason: the three marks have wildly different aspect
@@ -1250,8 +1247,8 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
    ============================================================ */
 
 /* -------- MISSION STATEMENT (Our Purpose page, added 2026-07-18) —
-   David's own mission language ("to enable people with mobility
-   impairments to participate fully in the world"), given its own
+   The mission line ("to enable people with mobility
+   impairments to participate fully in the world") is given its own
    full-width dark band above Our Story so it reads as a standalone
    statement rather than another paragraph of body copy. Short line
    count means the type can run large; the accent phrase is picked
@@ -1312,7 +1309,7 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
    plain flow text (h2/p as direct children, not a flex column) so it
    wraps around the images and returns to full width once it clears
    past the bottom of the second photo. Only two placeholder photos
-   in the stack; a third was dropped per request. Width bumped from
+   in the stack; a third was dropped. Width bumped from
    320px to 480px (2026-07-18) so the images read closer to the
    original ~50/50 image/text proportions instead of a narrow column. -------- */
 .story-top--wrap{display:block;}
@@ -1566,7 +1563,7 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
   .accessories-scroll-label{transition:opacity .18s ease;transform:none;}
 }
 /* contain + padding since 2026-07-29. Was object-fit:cover with no
-   padding, which suited the edge-to-edge Wix crops this strip used to
+   padding, which suited the edge-to-edge crops this strip used to
    pull. It now shows the same normalized thumbs as the Accessories
    grid — square, transparent, product centred — so cover would push
    them to the tile edge and crop anything not perfectly square.
@@ -1957,33 +1954,52 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
 /* ============================================================
    HISTORY SNAKE TIMELINE (history.html) — rebuilt 2026-07-26,
    replacing the left-rail vertical timeline (.history-timeline /
-   .ht-*). Serpentine path switchbacking down the page, per the
-   client-supplied reference.
+   .ht-*). Serpentine path switchbacking down the page.
 
    HOW THE PATH IS DRAWN — read this before changing any of it.
 
-   Each .snake-row draws TWO path pieces:
-     ::after  the horizontal run along its bottom edge, inset by
-              --turn-r at both ends.
-     ::before the side connector, spanning the row's FULL height on
-              whichever side the path entered from. Bordered on three
-              sides with the outer corners rounded by --turn-r, which
-              renders as: quarter-arc out, straight vertical run,
-              quarter-arc back in.
+   ONE ELEMENT PER TURN. THERE ARE NO JOINS. That is the whole design
+   and it is worth protecting.
 
-   Why the connector belongs to the row and spans 100% of its height:
-   a row's ::after sits at its bottom, so consecutive rules are exactly
-   one row-height apart. The connector therefore has to bridge that
-   whole distance. An earlier attempt used separate fixed-height
-   .snake-turn elements holding a pure semicircle between rows — those
-   only reached the TOP of the following row, leaving a gap equal to
-   that row's height. Don't reintroduce that.
+   Each ::before spans from --turn-r in from one edge all the way to
+   the opposite edge, and from the rule above it down to the rule
+   below it. Bordered on three sides with the two outer corners
+   rounded by --turn-r, a single border path therefore renders as:
 
-   Because both the rules and the connector's arc endpoints sit exactly
-   --turn-r in from the same edge, every segment meets its neighbour at
-   any container width. Change --turn-r alone and the path stays
-   continuous. Rows need to stay at least 2*--turn-r tall or the corner
-   radii get scaled down and the joins drift; min-height enforces it.
+     straight run  ->  quarter-arc  ->  vertical  ->  quarter-arc
+                   ->  straight run
+
+   — which is the rule above, the turn, and the rule below, drawn in
+   one stroke by one element. Four turns cover all five rules: the
+   first rule is the TOP border of row 2's turn, the last is the
+   BOTTOM border of row 5's turn. A one-row timeline would draw
+   nothing at all, which is fine here and would not be if rows were
+   ever removed.
+
+   WHY, because this was got wrong twice: the rules used to be
+   separate .snake-row::after elements that abutted the connectors'
+   arcs. Abutting is not joining. The first version had them a whole
+   border-width apart vertically — a row's ::after paints at
+   [rowBottom-3, rowBottom] but a connector at top:0 paints its top
+   border at [rowTop, rowTop+3], one border width below the rule it
+   was supposed to continue. Fixing that alignment exactly, and then
+   overlapping the pieces by a pixel, still left a visible break at
+   every arc-to-straight transition in both Chrome and Safari:
+   browsers rasterise a border ARC and a straight BORDER through
+   different paths, and two separate elements will not reliably meet.
+   The only reliable fix was to stop having a meeting point.
+
+   Consecutive turns overdraw the rule they share — row 2's bottom
+   border and row 3's top border paint the same band in the same
+   opaque colour. That is deliberate. It costs nothing and it is what
+   guarantees there is no seam even at the ends of the straight runs.
+
+   Rows need to stay at least 2*--turn-r tall or the corner radii get
+   scaled down and the arcs stop meeting the verticals; min-height
+   enforces it.
+
+   The -3px/+3px pair on the box is load-bearing — see the rule
+   itself for why.
 
    Two independent alternations, easy to conflate:
      --right / --left       which side the COPY sits on
@@ -2060,21 +2076,86 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
   gap:44px;padding:38px 0 52px;
   min-height:calc(var(--turn-r) * 2);
 }
-/* horizontal run along the bottom */
-.snake-row::after{
-  content:'';position:absolute;bottom:0;
-  left:var(--turn-r);right:var(--turn-r);
-  border-top:3px solid var(--line);
-}
+/* There is deliberately no .snake-row::after. The horizontal runs
+   used to live there as separate elements and that is exactly what
+   produced the visible breaks; the turns draw them now. See the
+   block comment above before adding one back. */
+/* 430px caps the WHOLE milestone block — badge, heading and copy
+   together (2026-08-11). It sits on .snake-cell rather than on the
+   heading and paragraph separately, because the badge is placed by the
+   cell's own text-align and so only obeys a cap on the cell.
+
+   justify-self is what stops that cap moving the badges. The columns
+   are wider than 430px, so the cap leaves slack; a grid item defaults
+   to the start of its column, which would pull --left rows' blocks
+   away from the centre and drag their right-hand badges with them.
+   Ending --left blocks instead means every block loses its slack from
+   the OUTER edge and both badges stay exactly where they were. Each
+   badge sits on the inner side of its block, nearest the timeline,
+   which is the arrangement the whole layout is built around. */
+.snake-cell{max-width:430px;}
 .snake-row--right .snake-cell{grid-column:2;}
-.snake-row--left  .snake-cell{grid-column:1;text-align:right;}
+/* text-align:right here is doing ONE job: putting the year badge on the
+   outer side of a --left row, matching the direction of travel. The
+   heading and body copy opt back out to left-aligned below (2026-08-11)
+   — right-ragged headings read as a mistake, and the two alignments
+   alternating down the page made the timeline feel unsettled. */
+.snake-row--left  .snake-cell{grid-column:1;text-align:right;justify-self:end;}
+.snake-row--left  .snake-cell h2,
+.snake-row--left  .snake-cell p{text-align:left;}
 
 /* ---- side connector: previous row's rule (this row's top) down to
        this row's own rule (its bottom) ---- */
+/* box-sizing HAS TO BE DECLARED HERE. The global reset at the top of
+   this file is `*{box-sizing:border-box}`, and the universal selector
+   does NOT match pseudo-elements — it never has. Every ::before and
+   ::after on this site is therefore content-box, and this one has a
+   3px border on every side, so without this line height:calc(100% +
+   3px) yields a border box of 100% + 9px and the bottom border lands
+   6px below where the arithmetic below says it does.
+
+   That was the actual cause of the broken path, through three
+   attempts at fixing it. The original top:0/height:100% put the top
+   border 3px low AND the bottom border 6px low, which is why the
+   breaks appeared on both sides of every row. Correcting the top
+   offset alone left the 6px still there. Once the turns were merged
+   into one element, the same 6px showed up as the shared rule being
+   drawn twice, six pixels apart — two parallel lines.
+
+   If the global reset is ever widened to `*, *::before, *::after`,
+   this line becomes redundant but stays harmless. Leave it.
+
+   THE -3px / +3px PAIR IS LOAD-BEARING. Do not "tidy" it back to
+   top:0/height:100%.
+
+   A turn's BOTTOM border has to paint the rule at its own row's
+   bottom edge,
+   which by convention is the 3px band ending there, and its TOP
+   border has to paint the rule at the previous row's bottom edge.
+   Those two are one row-height plus one border-width apart, not one
+   row height: pulling the box up by a border width and handing that
+   width back to the height makes it span [rowTop-3, rowBottom], so
+   both borders land where the rules belong.
+
+   At top:0/height:100% the top border painted at [rowTop, rowTop+3]
+   — a full border width below the previous rule — which stepped the
+   path at every turn.
+
+   The extra 3px also has to stay clear of radius scaling: the two
+   vertical radii still sum to 2*--turn-r, and the row's min-height
+   guarantees the box is taller than that.
+
+   WIDTH IS 100% MINUS --turn-r, NOT --turn-r. The turn reaches all
+   the way across to the far edge so its top and bottom borders carry
+   the straight runs as well as the arcs. Narrowing it back to
+   --turn-r is what forces the runs out into separate elements, and
+   that is the bug. */
 .snake-row--turn-right::before,
 .snake-row--turn-left::before{
-  content:'';position:absolute;top:0;height:100%;
-  width:var(--turn-r);
+  content:'';position:absolute;
+  box-sizing:border-box;
+  top:-3px;height:calc(100% + 3px);
+  width:calc(100% - var(--turn-r));
   border:3px solid var(--line);
 }
 .snake-row--turn-right::before{
@@ -2100,8 +2181,11 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
   letter-spacing:.02em;color:var(--orange-dark);
 }
 .snake-cell h2{font-size:clamp(21px,2.3vw,27px);margin-top:16px;text-transform:none;}
-.snake-cell p{font-size:16px;color:#454C49;line-height:1.6;margin-top:10px;max-width:46ch;}
-.snake-row--left .snake-cell p{margin-left:auto;}
+.snake-cell p{font-size:16px;color:#454C49;line-height:1.6;margin-top:10px;}
+/* The paragraph is max-width:46ch, so it needs its box pinned to the
+   left as well as its text — margin-left:auto used to push the whole
+   box to the cell's right edge. */
+.snake-row--left .snake-cell p{margin-left:0;margin-right:auto;}
 
 /* ---- the vehicle mark, riding the horizontal run ---- */
 .snake-vehicle{
@@ -2146,7 +2230,8 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
     width:3px;background:var(--line);
   }
   .snake-row{grid-template-columns:1fr;gap:0;padding:0 0 36px;min-height:0;}
-  .snake-row::after,
+  /* The turns carry the whole path now, so dropping them drops every
+     switchback; .snake::before above replaces the lot with one rail. */
   .snake-row--turn-right::before,
   .snake-row--turn-left::before{display:none;}
   .snake-row--right .snake-cell,
@@ -2155,10 +2240,263 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
   .snake-row--left .snake-cell p{margin-left:0;}
   .snake-cap{display:none;}
   .snake-badge{width:54px;height:54px;font-size:13.5px;margin-left:-59px;}
-  .snake-cell p{max-width:none;}
+  /* The 430px cap is a desktop-column concern; on the single rail the
+     column is already narrower than that and capping only creates a
+     ragged right edge. justify-self goes back too, or the block would
+     hug the right of a rail it is supposed to run the full width of. */
+  .snake-cell{max-width:none;justify-self:stretch;}
   .snake-vehicle{position:static;width:78px;margin-top:18px;opacity:.55;}
   .snake-row--left .snake-vehicle{transform:none;}
 }
+
+/* ============================================================
+   HISTORY SNAKE — SCROLL ANIMATION (history.html +
+   history-scroll.js), added 2026-08-10.
+
+   One vehicle drives the whole timeline instead of five parked
+   copies. It travels the horizontal run of each row, wiping the
+   milestone copy in behind it, dissolves at the turn and fades
+   back in on the next line facing the other way.
+
+   EVERYTHING HERE IS GATED ON A CLASS THE SCRIPT ADDS.
+   history-scroll.js adds .snake--anim (wide screens) or
+   .snake--simple (narrow) only after it has confirmed it can
+   actually run. No JS, a JS error, or prefers-reduced-motion means
+   no class, and the timeline renders exactly as it did before this
+   was added — all copy visible, five static vehicle marks. Do not
+   move any of these hidden states onto the bare .snake-* selectors;
+   that is what makes the fallback safe.
+
+   WHY A MASK RATHER THAN OPACITY for the copy reveal: the brief
+   asked for the vehicle to uncover the text behind it, not for the
+   block to fade in as a unit. A linear-gradient mask with a soft
+   edge sweeps across the cell, so the text materialises in the
+   direction the vehicle is moving. Opacity was tried first and
+   reads as a plain fade with no sense of direction.
+
+   THE WIPE EDGE IS THE VEHICLE. --lead is a PIXEL distance, set by
+   JS every frame, measured from the cell's leading edge to where
+   the vehicle actually is. It is not a 0..1 schedule — an earlier
+   version ran the reveal on its own timing curve and it visibly
+   drifted away from the vehicle. Keep it in px and keep it driven
+   by the measured x position.
+
+   --band is the width of the soft edge, also in px, also computed
+   per row: it is however much travel is left over after the
+   vehicle clears the cell, so the wipe finishes exactly as the
+   vehicle reaches the end of the run. Clamped either side so a
+   very narrow or very wide viewport still gets a sane ramp.
+
+   The wipe follows DIRECTION OF TRAVEL, not always left-to-right:
+   rows 2 and 4 run right-to-left, and a left-to-right wipe on those
+   rows looks like it is fighting the vehicle. --wipe carries the
+   angle; because a 270deg gradient measures its stops from the
+   right edge, the same --lead value works unchanged for both.
+
+   No transition on --lead: it is driven frame by frame, not
+   triggered. Progress only ever moves forward (the script ratchets
+   it), so scrolling back up cannot un-reveal copy.
+   ============================================================ */
+
+/* ---- copy reveal ---- */
+.snake--anim .snake-row{--lead:0px;--band:80px;--wipe:90deg;}
+.snake--anim .snake-row--left{--wipe:270deg;}
+
+/* At --lead:0 the solid stop sits at -(--band) and the transparent
+   stop at 0, so nothing is painted. Once --lead passes the cell
+   width plus --band, the solid stop is past the far edge and the
+   whole cell is painted. */
+.snake--anim .snake-cell{
+  -webkit-mask-image:linear-gradient(var(--wipe),
+    #000 calc(var(--lead) - var(--band)),
+    transparent var(--lead));
+  mask-image:linear-gradient(var(--wipe),
+    #000 calc(var(--lead) - var(--band)),
+    transparent var(--lead));
+  -webkit-mask-size:100% 100%;mask-size:100% 100%;
+  -webkit-mask-repeat:no-repeat;mask-repeat:no-repeat;
+}
+
+/* ---- the single travelling vehicle ---- */
+/* Hidden by default so the element can sit in the markup without
+   the no-JS page showing a sixth vehicle stacked on the others. */
+.snake-traveler{display:none;}
+.snake--anim .snake-traveler{
+  display:block;position:absolute;top:0;left:0;
+  width:104px;pointer-events:none;
+  /* Below the copy (which gets z-index:2) on purpose. At 104px wide
+     the mark renders 62.3px tall and sits 3px clear of the rule,
+     against 52px of row padding-bottom — so it reaches 13.3px into
+     the copy's box and will cross the descenders of the last line as
+     it passes. Behind reads as the vehicle driving past; in front
+     reads as a rendering bug. */
+  z-index:1;
+  opacity:0;
+  will-change:transform,opacity;
+}
+.snake-traveler img{width:100%;height:auto;display:block;}
+/* The five per-row marks stand down while the traveller is running.
+   visibility rather than display so the reduced-motion override
+   below can hand them straight back without restating layout. */
+.snake--anim .snake-vehicle{visibility:hidden;}
+.snake--anim .snake-cell{position:relative;z-index:2;}
+
+@media(max-width:1000px){
+  .snake--anim .snake-traveler{width:84px;}
+}
+
+/* ---- the pin ----
+   Motion is tied strictly to scrolling, so one line's traverse costs
+   exactly one line's worth of scroll distance and there is no
+   constant anywhere that can slow it down. At the timeline's natural
+   height that was about 300px per line — one trackpad swipe for a
+   whole milestone, far too quick to read.
+
+   So the section buys itself the distance. .snake-pin is a tall
+   empty spacer (height set by JS: one stage plus PIN_SCROLL_PER_LINE
+   x 5). .snake-stage sticks to just below the site header for that
+   whole distance, and the timeline creeps upward inside it under a
+   transform while the vehicle drives. Scrolling therefore advances
+   the vehicle without advancing the page, which is the only way to
+   get a slow traverse without either a time-based animation or a
+   6000px-tall timeline full of empty gaps.
+
+   BOTH WRAPPERS ARE INERT UNTIL JS OPTS IN. No height, no sticky, no
+   clipping without .is-pinned, so the no-JS page renders as though
+   they were not there.
+
+   Sticky is used rather than a JS-driven position:fixed so the
+   browser owns the stick/release and there is nothing to jitter.
+   Note html{overflow-x:hidden} at the top of this file: overflow on
+   the root element propagates to the viewport and leaves sticky
+   descendants sticking to the viewport, so it is safe here. The site
+   header has always been position:sticky on the same page, which is
+   the standing proof. Moving that overflow onto body WOULD break
+   both. */
+/* overflow-anchor:none because the pin's height swings by thousands
+   of pixels when the animation finishes and again if Start at
+   Beginning is pressed. Chrome's scroll anchoring would try to hold
+   the reader's visual position across those swings, fighting the
+   explicit scroll correction the script makes in the same frame and
+   landing them somewhere neither of us chose. The script owns the
+   scroll position through those two moments. */
+.snake-pin{position:relative;overflow-anchor:none;}
+.snake-pin.is-pinned > .snake-stage{
+  position:sticky;
+  top:var(--pin-top,0px);
+  height:var(--stage-h,100vh);
+  overflow:hidden;
+}
+.snake-pin.is-pinned > .snake-stage > .snake{will-change:transform;}
+
+/* ---- scroll cue ----
+   Sits inside .snake so it is positioned in the same coordinates as
+   everything else the script places, and rides the in-stage
+   transform with the timeline. Hidden until .snake--anim, like every
+   other piece of this: with no JS there is no pinned section to
+   explain, and telling a reader to scroll for an animation that is
+   not running would be worse than saying nothing.
+
+   Fades on a CSS transition rather than being scrubbed by scroll
+   position, unlike the vehicle and the copy. It is advice, not part
+   of the animation, and scrubbing it would make it flicker under the
+   small scroll jitter of a trackpad. */
+.snake-cue{
+  display:none;
+  position:absolute;left:0;right:0;
+  z-index:3;pointer-events:none;
+  text-align:center;
+}
+.snake--anim .snake-cue{
+  display:block;
+  opacity:1;
+  transition:opacity .45s ease;
+}
+.snake--anim .snake-cue.is-gone{opacity:0;}
+
+.snake-cue-text{
+  display:block;
+  font-family:var(--font-mono);
+  font-size:14px;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;
+  /* --steel-pale, not the orange used by .eyebrow: the orange reads
+     as a heading and competes with the year badges directly below
+     it. This should sit under everything else in the hierarchy. */
+  color:var(--steel-pale);
+}
+.snake-cue-arrow{
+  width:26px;height:26px;
+  margin:6px auto 0;
+  color:var(--steel-pale);
+}
+/* Two cycles on the same 2.2s clock so the text and the arrowhead
+   breathe together. The arrow also drifts, which is what reads as
+   "downward" — opacity alone just looks like a flicker. */
+@media (prefers-reduced-motion:no-preference){
+  .snake--anim .snake-cue .snake-cue-text{animation:snake-cue-breathe 2.2s ease-in-out infinite;}
+  .snake--anim .snake-cue .snake-cue-arrow{animation:snake-cue-breathe 2.2s ease-in-out infinite,snake-cue-drift 2.2s ease-in-out infinite;}
+}
+@keyframes snake-cue-breathe{
+  0%,100%{opacity:.4;}
+  50%{opacity:1;}
+}
+@keyframes snake-cue-drift{
+  0%,100%{transform:translateY(0);}
+  50%{transform:translateY(5px);}
+}
+
+/* ---- start over ---- */
+/* Appears only once the vehicle has reached the last milestone —
+   the scroll is one-directional, so this is the only way back.
+   Gated on .is-on (added by JS) rather than on a sibling selector,
+   because the pin wrappers put .snake on a different nesting level. */
+.snake-restart{display:none;justify-content:center;margin-top:40px;}
+.snake-restart.is-on{
+  display:flex;
+  opacity:0;visibility:hidden;
+  transition:opacity .4s ease,visibility 0s linear .4s;
+}
+.snake-restart.is-on.is-visible{
+  opacity:1;visibility:visible;
+  transition:opacity .4s ease;
+}
+
+/* ---- narrow screens ---- */
+/* The switchbacks collapse to a single left rail below 820px, where
+   a left/right traverse has nothing to traverse. Copy still fades in
+   on approach; the per-row marks stay exactly as they are. */
+.snake--simple .snake-cell{
+  opacity:0;transform:translateY(14px);
+  transition:opacity .5s ease,transform .5s ease;
+}
+.snake--simple .snake-row.is-revealed .snake-cell{opacity:1;transform:none;}
+
+/* ---- reduced motion ---- */
+/* Belt and braces: history-scroll.js already refuses to add either
+   class when this is set, so this block should never fire. It is
+   here so that a future change which adds the class unconditionally
+   cannot hide the page's content from someone who asked for less
+   motion. */
+@media(prefers-reduced-motion:reduce){
+  .snake--anim .snake-cell,
+  .snake--simple .snake-cell{
+    -webkit-mask-image:none;mask-image:none;
+    opacity:1;transform:none;transition:none;
+  }
+  .snake--anim .snake-traveler{display:none;}
+  .snake--anim .snake-vehicle{visibility:visible;}
+  .snake-restart{display:none;}
+  /* Nothing is waiting on a scroll under reduced motion — the whole
+     timeline is already there — so the cue would be both wrong and
+     the exact kind of looping movement this query asks us to drop. */
+  .snake-cue{display:none;}
+  /* Unpin too, or the timeline would be stuck in a clipped sticky
+     box with nothing driving the transform that scrolls it. */
+  .snake-pin.is-pinned > .snake-stage{
+    position:static;height:auto;overflow:visible;
+  }
+}
+
 /* ============================================================
    CAREERS PLACEHOLDER (careers.html) — added 2026-07-18. Deliberately
    minimal until there are real openings to post.

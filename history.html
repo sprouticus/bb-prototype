@@ -14,9 +14,6 @@
 <header class="site">
   <div class="util-bar">
     <div class="wrap">
-      <!-- FTC origin claim: "all or virtually all" domestic content is
-           unverified (battery cells). Accepted risk, confirm before launch.
-           Also on the homepage specs intro and the Company Purpose h1. -->
       <span class="util-left">Albuquerque, NM &middot; Designed &amp; Built in the USA</span>
       <div class="util-right">
         <a href="mailto:info@bbengineering.us" class="util-email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m4 6 8 7 8-7"/></svg>info@bbengineering.us</a>
@@ -102,32 +99,72 @@
     <p class="eyebrow">Then to Now</p>
     <h1>Our History</h1>
     <div class="rule"></div>
-    <!-- Copy is Lesley's, final. "The '80s" stays vague on purpose —
+    <!-- "The '80s" stays vague on purpose —
          the timeline below already names 1987. -->
     <p>An idea sparked in the '80s turned into a personal commitment that has spanned across decades to make The Enabler a reality.</p>
   </div>
 </section>
 
-<!-- ============ HISTORY SNAKE TIMELINE — rebuilt 2026-07-26 from a
-     client-supplied reference layout, replacing the left-rail vertical
+<!-- ============ HISTORY SNAKE TIMELINE — rebuilt 2026-07-26, replacing the left-rail vertical
      timeline. Serpentine path switchbacks down the page; each milestone
      carries a year badge and the BB vehicle mark, which flips to face
      the direction of travel. Geometry is documented in the
      .snake-* block in styles.css.
 
-     REAL CONTENT LANDED 2026-08-06, replacing lorem ipsum. All five
-     years confirmed by David; 2025 is the softest (he hedged between
-     2025 and 2026).
+     REAL CONTENT LANDED 2026-08-06, replacing lorem ipsum.
 
      STILL PLACEHOLDER: the "Text TBD" photo captions further down and
-     the gallery image dates. That discussion never resolved — ask David
-     rather than inferring.
+     the gallery image dates. That discussion never resolved — confirm rather than inferring.
 
      The vehicle mark is bb-logo-mark.png standing in for proper
-     per-milestone artwork. ============ -->
+     per-milestone artwork.
+
+     SCROLL ANIMATION ADDED 2026-08-10 (history-scroll.js + the
+     .snake--anim block in styles.css). The five per-row
+     .snake-vehicle marks are still the markup of record: they are
+     what the page shows with JS off, with JS broken, and under
+     prefers-reduced-motion. The script hides them and drives the
+     single .snake-traveler below in their place. Keep them.
+
+     THE .snake-pin / .snake-stage WRAPPERS EXIST ONLY FOR THE
+     ANIMATION. .snake-pin is a tall spacer whose height the script
+     sets to buy scroll distance; .snake-stage sticks to the viewport
+     and the timeline creeps upward inside it. Both are inert until
+     the script opts in — no height, no sticky, no clipping — so the
+     no-JS page is unaffected by them. They cannot be flattened away
+     without losing the pin.
+     ============ -->
 <section class="snake-section">
   <div class="wrap">
-    <div class="snake">
+   <div class="snake-pin">
+    <div class="snake-stage">
+     <div class="snake">
+
+      <!-- The one vehicle that actually moves. Hidden by CSS until
+           history-scroll.js opts in, so it is not a sixth mark on the
+           no-JS page. Absolutely positioned against .snake, so it has
+           to stay a direct child of it. -->
+      <span class="snake-traveler" aria-hidden="true"><img src="images/bb-logo-mark.png" alt=""></span>
+
+      <!-- Scroll cue. The section pins itself and waits, which looks
+           like a page that has stopped rather than one asking to be
+           driven, so this says what to do. Only ever shown while the
+           vehicle is still parked at the start; it fades the moment
+           it sets off.
+
+           aria-hidden because it is purely visual advice about the
+           animation. The milestone copy is hidden with a CSS mask,
+           which does not remove it from the accessibility tree, so a
+           screen reader can already read all five milestones without
+           scrolling and has nothing to gain from being told to.
+
+           Its vertical position is set by JS (CUE_ABOVE_LINE), since
+           "above the first line" depends on a row height CSS cannot
+           see. -->
+      <div class="snake-cue" aria-hidden="true">
+        <span class="snake-cue-text">Scroll Down</span>
+        <svg class="snake-cue-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
 
       <div class="snake-row snake-row--right">
         <span class="snake-cap snake-cap--start" aria-hidden="true"></span>
@@ -143,7 +180,7 @@
       <div class="snake-row snake-row--left snake-row--turn-right">
         <div class="snake-cell">
           <span class="snake-badge">2017</span>
-          <h2>The Buddy Buggy</h2>
+          <h2>The Buddy Buggy is Born</h2>
           <p>Thirty years on, the idea got picked back up and built properly. Rear wheelchair lift, all-electric, driven from the chair. The Buddy Buggy proved it out on hunting trips, farms and ranches.</p>
         </div>
         <span class="snake-vehicle" aria-hidden="true"><img src="images/bb-logo-mark.png" alt=""></span>
@@ -153,7 +190,7 @@
       <div class="snake-row snake-row--right snake-row--turn-left">
         <div class="snake-cell">
           <span class="snake-badge">2023</span>
-          <h2>The Enabler</h2>
+          <h2>The Buddy Buggy Becomes The Enabler</h2>
           <p>Back to work after the shop closed for COVID, and back to the frame. All-wheel drive, a self-loading rear lift the driver operates alone, all-steel and built for real work rather than recreation.</p>
         </div>
         <span class="snake-vehicle" aria-hidden="true"><img src="images/bb-logo-mark.png" alt=""></span>
@@ -163,7 +200,7 @@
       <div class="snake-row snake-row--left snake-row--turn-right">
         <div class="snake-cell">
           <span class="snake-badge">2025</span>
-          <h2>The Enabler 2.1</h2>
+          <h2>The Enabler Evolves into 2.1</h2>
           <p>The next one starts taking shape. Same chassis and drivetrain, more capacity, a bigger motor, better rear visibility and a roof.</p>
         </div>
         <span class="snake-vehicle" aria-hidden="true"><img src="images/bb-logo-mark.png" alt=""></span>
@@ -173,13 +210,32 @@
       <div class="snake-row snake-row--right snake-row--turn-left">
         <div class="snake-cell">
           <span class="snake-badge">2027</span>
-          <h2>Out the Door</h2>
-          <p>The 2.1 ships to the first customers. Forty years from a green Jeep at the curb.</p>
+          <h2>Ready to Roll</h2>
+          <p>Forty years in the making, The Enabler 2.1 starts shipping to customers in early 2027. Customize and pre-order your Enabler today!</p>
         </div>
         <span class="snake-vehicle" aria-hidden="true"><img src="images/bb-logo-mark.png" alt=""></span>
         <span class="snake-cap snake-cap--end" aria-hidden="true"></span>
       </div>
 
+     </div>
+    </div>
+   </div>
+
+    <!-- Start over. The scroll only runs one way — scrolling back up
+         does not rewind the vehicle or take the copy away again — so
+         this is the only route back to the beginning.
+
+         Sits OUTSIDE .snake-pin, so it comes into view exactly as the
+         pin releases and the page starts moving again. Hidden until
+         the script adds .is-on, which is what keeps it off the no-JS
+         page where there is no animation to restart. Starts at
+         tabindex="-1" for the same reason; the script puts it in the
+         tab order when it becomes visible. -->
+    <div class="snake-restart">
+      <button type="button" class="btn btn-outline" tabindex="-1">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+        Start at Beginning
+      </button>
     </div>
   </div>
 </section>
@@ -188,14 +244,13 @@
      layout went to placeholders. Three milestones, ready to reinstate:
 
      ~2016 · Where It Started · "The Buddy Buggy"
-       About a decade ago, Dave White built the Buddy Buggy, the first
+       About a decade ago the Buddy Buggy was built, the first
        wheelchair-adaptive off-road vehicle out of the shop. Board through a
        rear wheelchair lift, dock straight into the driver's seat, and steer
        with a joystick. No transfers, no compromises, all-electric. Built and
        based in Albuquerque, NM, the Buddy Buggy went wherever people needed
        it: hunting trips, farms and ranches, and just getting back outside. It
        proved the idea and set up everything that came after it.
-       (photo was hotlinked from static.wixstatic.com — needs re-hosting)
 
      ~2020 · The Next Generation · "The Enabler 2.0"
        Everything learned building the Buddy Buggy went into its successor.
@@ -220,7 +275,7 @@
 
      CAPTIONS ARE ALL "Text TBD" ON PURPOSE (2026-07-29). Earlier drafts
      carried years and model names — ~2016, ~2020, The Enabler 2.0 —
-     that weren't verified and put wrong dates in front of David. Nothing
+     that were never confirmed. Nothing
      here states a date or names a vehicle until the real captions come
      back confirmed. Don't reintroduce a year to fill the space.
 
@@ -383,5 +438,9 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
 })();
 </script>
 <script src="lightbox.js" defer></script>
+<!-- Timeline scroll animation. defer so the rows are parsed and
+     measurable before it runs; it re-measures on load and resize
+     anyway. -->
+<script src="history-scroll.js" defer></script>
 </body>
 </html>

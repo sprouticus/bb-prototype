@@ -2,6 +2,27 @@
 .DS_Store
 .fuse_hidden*
 
+# Working notes for Lesley and Claude only. This repo is PUBLIC, and the
+# notes name people, record which copy is unconfirmed, and write down
+# risks that have been accepted rather than resolved. None of that
+# belongs in front of visitors. Kept local; never committed.
+CLAUDE.md
+
+# Unrelated working art — icon sources and loose photos that aren't
+# referenced by any page. Excluded deliberately, not overlooked.
+images/fish_*
+images/hook_*
+images/embedded_icon_*
+images/steering-wheel-detail.jpg
+images/steering-wheel-detail-portrait.jpg
+
+# Test dependencies. history-scroll.test.js needs jsdom and css-tree:
+#   npm install jsdom css-tree && node history-scroll.test.js
+# That drops ~26 MB / ~1800 files here. The test itself IS committed;
+# only what npm fetches for it is ignored.
+node_modules/
+package-lock.json
+
 # Project files (docs, build scripts, photo/video originals) live in the
 # sibling folder "BB Project Files", deliberately outside this repo — no
 # ignore rule can leak them. These patterns are a safety net for originals
