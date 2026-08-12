@@ -93,37 +93,13 @@
 
 <section class="page-hero">
   <div class="wrap">
-    <p class="eyebrow">Add-Ons &amp; Upgrades</p>
+    <p class="eyebrow">Customize Your Vehicle</p>
     <h1>Accessories</h1>
     <div class="rule"></div>
-    <!-- "cargo" dropped — nothing in the grid below is a cargo
-         accessory, and the built-in bed is standard, not an add-on. -->
-    <p>Bolt-on upgrades for seating, visibility, lighting, and recovery.</p>
+    <p>Built for work or adventure.</p>
   </div>
 </section>
 
-<!-- ============ INTRO — copy left, carousel right (2026-07-26).
-     Replaces the plain-text "Multifunctional by design" callout that
-     used to sit here; same message, but it now earns the horizontal
-     space and carries imagery. Shares the .intro-split pattern and the
-     carousel JS with the Implements page — see styles.css.
-
-     Copy uses approved language only ("multifunctional," "adaptable,"
-     "reconfigured") with no loss/incapacitation framing, per the 06-30
-     client rules, and stays third-person.
-
-     Deliberately NOT written as a two-part contrast ("One vehicle.
-     More than one driver." was rejected 2026-07-26) — plain declarative
-     statements only on this project. The headline states the claim
-     directly: customizable, adaptable to any driver, now and later.
-
-     Swapped 2026-07-27: the original build-stage placeholders (bare
-     frame, rolling chassis, final assembly) were too busy/cluttered
-     for this spot — warehouse backgrounds, a hand in frame on one —
-     and didn't actually illustrate customizable components. Replaced
-     with tight close-ups of the lighting, suspension, and cargo
-     details that back up the "seating, visibility, lighting, and
-     cargo" claim in the copy to the left. ============ -->
 <section class="intro-split">
   <div class="wrap">
     <div class="intro-split-grid">
@@ -132,14 +108,8 @@
         <p class="eyebrow">Multifunctional by Design</p>
         <h2>Adaptable to multiple drivers.</h2>
         <div class="rule"></div>
-        <!-- Cut to a summary. The full multifunctionality argument belongs on its own page —
-             the least competitive, highest-value search cluster. Not built yet.
 
-             "cargo" → "more" for the same reason as the hero line above.
-             Customization wants pushing harder across this page than
-             one paragraph can carry — the dedicated multifunctionality
-             page is where it belongs. -->
-        <p class="sub">Seating, visibility, lighting and more are specified at build and can all be changed later. An Enabler set up for one driver can be set up for another as a crew changes.</p>
+        <p class="sub">Made to adapt to any driver, now and in the future. Pre-order your vehicle with custom seating, lighting, and other accessories to make The Enabler your own.</p>
       </div>
 
       <div class="intro-split-media">
@@ -174,9 +144,6 @@
           </div><!-- end .carousel-track -->
         </div><!-- end .carousel -->
 
-        <!-- Arrows are siblings of .carousel, not children: .carousel
-             needs overflow:hidden to hide inactive slides and would
-             clip them. See styles.css. -->
         <button class="carousel-arrow carousel-prev" aria-label="Previous photo">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
@@ -198,97 +165,10 @@
   </div>
 </section>
 
-<!-- ============ CATALOG NOTE removed 2026-07-18 — the
-     "Browsing only" banner was taking up space right under the hero.
-     Photo/pricing sourcing note retained here since it still applies
-     to the product grid below: names, prices, and descriptions are
-     pulled from the current published product catalog.
-
-     PHOTOS, 2026-07-29: every card on this page now uses a local file
-     in images/Accessories/. All static.wixstatic.com hotlinks have been
-     removed — nothing here depends on an external host.
-
-     What changed on 2026-07-29: the seven externally-hotlinked cards were
-     pulled and replaced with five sourced products (tow hitch receiver,
-     Superwinch LT2000, 48" farm jack, 32" light bar, LED flood pods),
-     with names, prices and specs taken from the accessories sheet.
-     Product/vendor links were deliberately NOT added to the page.
-     Also retired: the 5-Panel Panoramic Wide Mirror (West Coast Mirrors
-     covers it), the 39" Front Cargo Basket (45" kept, now on
-     Basket.png), and the photo-less 21" Overhead Light Bar (superseded
-     by the 32" bar). The old "Cargo Lights" card is gone; the LED flood
-     pods fill that slot.
-
-     Prices for the five new items come from the accessories sheet and
-     want confirming before this page goes public.
-
-     THUMBNAILS, 2026-07-29: source photos ranged from 0.62 to 1.85 in
-     aspect ratio, so even inside the square .product-card-img tile the
-     products read at wildly different sizes. Each one is now normalized
-     into images/Accessories/thumbs/ — trimmed to its true subject
-     bounds, scaled so its LONGEST side is 644px, and centred on a
-     700x700 transparent canvas (92% fill). Every product therefore
-     occupies an identical square, and the 18px CSS padding on
-     .product-card-img img adds the breathing room on top. The
-     Implements grid was given identical treatment the same day.
-
-     The card <img src> points at the thumb; data-full still points at
-     the full-resolution original so the lightbox stays sharp.
-     Untouched originals are archived in images/Accessories/_originals/.
-
-     Regenerate with: python3 tools/make-product-thumbs.py accessories
-     Do not hand-crop — uniformity depends on the longest side being
-     exactly 644. "Tow Hitch.png" is only 391x211 and gets upscaled
-     ~1.66x, so its thumb is a touch soft; better source art would fix
-     it, nothing else needs doing.
-
-     The earlier tools/make-accessory-thumbs.py is SUPERSEDED and should
-     not be run — it used a naive alpha bounding box that a single stray
-     pixel could defeat. That bug made Light Bar.png measure its faint
-     halo as part of the product, shrinking the visible bar. The
-     replacement requires a minimum share of a row/column to clear the
-     alpha threshold before it counts as content.
-
-     ORDERING: the original photography cards — driver's seat, split
-     windshield, West Coast Mirrors — lead the grid on purpose. There
-     were four; the Utility Trailer moved to the Implements page on
-     2026-07-29 under the new B.B. Engineering section, since it tows
-     behind the vehicle rather than mounting to it. Its art moved too:
-     images/Implements/bb-utility-trailer.png. The old Accessories
-     copies (utility-trailer.png and its thumb) are now unreferenced and
-     can be deleted whenever someone is tidying up.
-
-     CARD FORMAT, 2026-07-26: derived from the Implements page. Photo,
-     name and price on the card; the description moved into the
-     lightbox (data-specs). Price deliberately stays visible here,
-     unlike Implements, because this page reads as a price list.
-
-     Updated 2026-07-29: the "DETAILS" caption under each card is gone —
-     the card is now photo, name, price, nothing else. Implements was
-     brought in line the same day (its "SPECS & PRICE" caption dropped,
-     price moved onto the card), so the two pages match again.
-
-     The .product-note rule was deleted from styles.css in that pass
-     since nothing referenced it any more.
-
-     Clickability is now signalled only by the hover zoom-hint icon and
-     the cursor, neither of which exists on touch. The per-button
-     aria-label ("View photo and details for the ...") is unchanged, so
-     screen readers are unaffected, but a tap-only visitor gets no cue
-     that the photos open. Worth watching if the lightbox turns out to
-     matter for conversion. ============ -->
-
 <section class="catalog-section">
   <div class="wrap">
     <div class="product-grid">
-      <!-- Listed first, not alphabetically — it's a paid add-on and
-           buying it is what makes the towed implements usable.
-           Price not set yet; do not put a number here until one is
-           confirmed. The electric jack is NOT included (it ships with
-           each implement).
-           Photo is a real in-situ shot, so it reads differently from the
-           cutout product cards around it — wants a proper cutout later.
-           Thumb was built by hand, not by tools/make-product-thumbs.py. -->
+
       <div class="product-card">
         <button type="button" class="product-card-img" data-full="images/catch-release-full-detail.jpg" data-caption="Catch-and-Release Hitch System" data-specs="Quick-attach hitch for towed implements. Spring-loaded hook, cab-mounted release lever, backup camera in the bracket." data-price="Price TBD" aria-label="View photo and details for the Catch-and-Release Hitch System"><img src="images/Accessories/thumbs/catch-and-release-thumb.png" width="700" height="700" alt="Underside view of the Enabler's rear catch bracket, showing the spring-loaded hook mechanism and the backup camera above it" loading="lazy"><span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span></button>
         <div class="product-card-body">
@@ -360,17 +240,20 @@
         </div>
       </div>
     </div>
-    <!-- Someone pricing accessories shouldn't wonder whether basic
-         lighting is on the list. Do NOT let this drift into implying the
-         vehicle is road legal — see the off-road note on specs.html. -->
-    <p class="section-head-note" style="margin-top:28px;">Turn signals, brake lights, driving lights, a windshield and mirrors are standard on every base vehicle, not add-ons.</p>
+
+    <div class="spec-section" style="margin-top:46px;margin-bottom:0;">
+      <h3>Standard on Every Base Vehicle</h3>
+      <ul class="feature-list">
+        <li>Turn signals</li>
+        <li>Brake lights</li>
+        <li>Driving lights</li>
+        <li>Windshield</li>
+        <li>Mirrors</li>
+      </ul>
+    </div>
   </div>
 </section>
 
-<!-- ============ NEXT STEP — added 2026-08-06. Copy differs from the
-     other .next-step bands on purpose: this one closes a browsing
-     session, so it leads with customization rather than the terms.
-     ============ -->
 <section class="next-step">
   <div class="wrap">
     <p class="eyebrow">Built Around the Driver</p>
@@ -440,8 +323,7 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
 
 /* ============ MOBILE DROPDOWN ACCORDION — Vehicle/Gallery/Company
    dropdowns start collapsed on mobile; tapping the caret button
-   toggles them open/closed (added 2026-07-18, replaces the old
-   "always open" mobile behavior). Also resets all dropdowns closed
+   toggles them open/closed. Also resets all dropdowns closed
    when the hamburger menu itself is closed, so reopening the menu
    later starts fresh. ============ */
 (function(){
@@ -471,7 +353,7 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   });
 })();
 
-/* ============ INTRO CAROUSEL (added 2026-07-26) — identical to the
+/* ============ INTRO CAROUSEL — identical to the
    Implements and Photos page implementation. Arrows wrap around, dots
    jump directly. Kept verbatim rather than refactored into a shared
    file so the pages don't drift apart; adding or removing a slide
@@ -518,13 +400,11 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
 </div>
 
 <script>
-/* ============ ACCESSORY LIGHTBOX — extended 2026-07-26 to match the
-   Implements page. Previously showed photo + a caption that crammed
-   the name and price into one string. Now the name, description and
+/* ============ ACCESSORY LIGHTBOX — the name, description and
    price render as separate lines from data-caption / data-specs /
    data-price on the triggering button. The product cards keep the
    price visible (unlike Implements) because this page reads as a
-   price list; only the description moved into the lightbox. ============ */
+   price list; only the description lives in the lightbox. ============ */
 (function(){
   var lightbox = document.getElementById('lightbox');
   var lightboxImg = document.getElementById('lightbox-img');

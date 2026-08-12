@@ -93,8 +93,7 @@
 
 <section class="page-hero">
   <div class="wrap">
-    <!-- Second-person sweep. Form field labels below keep "your" —
-         functional UI, different from marketing copy. -->
+
     <p class="eyebrow">Reserve a Spot</p>
     <h1>Pre-Order the Enabler 2.1</h1>
     <div class="rule"></div>
@@ -102,12 +101,6 @@
   </div>
 </section>
 
-<!-- ============ PRE-ORDER FLOW ============
-     Single form, four progressively-revealed sections. Nothing here
-     is real e-commerce — accessories/implements are being *selected*
-     for the order, not purchased individually, and no payment info is
-     ever collected.
-============ -->
 <section style="padding:56px 0 96px;">
   <div class="wrap">
 
@@ -155,8 +148,6 @@
           <input type="text" id="p-location" name="location" placeholder="Albuquerque, NM" required>
         </div>
 
-        <!-- Organization-only fields — shown only if "My organization or
-             institution" is selected above; see the flow script below. -->
         <div id="org-fields" hidden>
           <div class="field">
             <label for="p-org">Organization name</label>
@@ -188,23 +179,6 @@
           </select>
         </div>
 
-        <!-- Timeline field removed 2026-08-06, parked here:
-
-        <div class="field">
-          <label for="p-timeline">Timeline</label>
-          <select id="p-timeline" name="timeline">
-            <option>ASAP</option>
-            <option>3&ndash;6 months</option>
-            <option>6&ndash;12 months</option>
-            <option>Just exploring</option>
-          </select>
-        </div>
-
-             Row also removed from buildReview(). If restored, reword —
-             the 2.1 is not expected until 2027. -->
-
-        <!-- Demand signal, not an offer. Must not promise financing or
-             gate the form; optional, no default selection. -->
         <div class="field">
           <label for="p-financing">Interested in financing options? <span style="font-weight:500;color:#454C49;">(optional)</span></label>
           <div class="radio-row" id="p-financing" role="radiogroup" aria-label="Interested in financing options?">
@@ -219,57 +193,12 @@
           <textarea id="p-notes" name="notes" rows="4" placeholder="Joystick placement, seating, tie-down needs, or anything else specific to how you'll drive it."></textarea>
         </div>
 
-        <!-- "How did you hear about us?" removed 2026-08-06, parked here:
-
-        <div class="field">
-          <label for="p-source">How did you hear about us? <span style="font-weight:500;color:#454C49;">(optional)</span></label>
-          <input type="text" id="p-source" name="source">
-        </div>
-
-             Row also removed from buildReview(). This was the site's only
-             attribution capture; a fixed-option select would serve the
-             marketing work better than free text if it returns. -->
-
         <div class="flow-nav" style="justify-content:flex-end;">
           <button type="button" class="btn btn-orange" data-flow-next="2">Next: Accessories &darr;</button>
         </div>
         <p class="flow-step-micro">No payment information required to continue.</p>
       </section>
 
-      <!-- STEP 2 — Accessories
-
-           SYNCED 2026-07-29 with accessories.html, which is the source
-           of truth for this list. The nine picks below mirror that
-           page's cards exactly: same names, same prices, same photos,
-           same order. If a card is added, removed or repriced there,
-           mirror it here or the pre-order form will quote a product we
-           no longer sell.
-
-           Previously these were external hotlinks and a stale product list.
-           Gone: the 2" Trailer Hitch Receiver ($60), 5-Panel Panoramic
-           Wide Mirror ($32), Cargo Lights ($41), old High Lift Jack
-           ($115), 39" Front Cargo Basket ($155), the old 12-Volt Winch
-           ($209) and the photo-less 21" Overhead Light Bar ($65).
-           Added: West Coast Mirrors, which was live on the Accessories
-           page but had never been offered here at all.
-
-           The Utility Trailer is deliberately NOT in this step — it
-           moved to the Implements page under B.B. Engineering the same
-           day. It belongs in Step 3, which is still placeholder data.
-
-           PRICE FORMAT MATTERS: the review step does parseFloat() on
-           data-price and renders '$' + data-price verbatim, so the
-           attribute must be a bare number with no dollar sign, no
-           thousands comma, and two decimals ("131.99"). The literal
-           string "TBD" is the one accepted non-numeric value and is
-           skipped in the subtotal. The visible .pick-card-price keeps
-           the formatted "$131.99".
-
-           ESCAPING: three names contain a literal double quote (45",
-           48", 32"). In attributes these MUST be &quot; or the
-           attribute terminates early and the checkbox value silently
-           truncates — caught exactly that way during this pass. In text
-           nodes a bare " is fine. -->
       <!-- STEP 2 — Accessories -->
       <section class="flow-step" id="flow-step-2" data-step="2" hidden>
         <p class="flow-step-eyebrow">Step 2 of 4</p>
@@ -385,38 +314,7 @@
         <p class="flow-step-micro">Optional. No payment information required to continue.</p>
       </section>
 
-      <!-- STEP 3 — Implements
-
-           SYNCED 2026-07-29 with implements.html, which is the source
-           of truth. Brand groups and cards mirror that page exactly:
-           same order (B.B. / Demco / Kunz / Rammy), same names, same
-           prices, same photos. Mirror any change made there.
-
-           This step was ENTIRELY PLACEHOLDER before this pass —
-           thirteen cards reading "Implement Name 1..4" at Price TBD,
-           under two brands that do not exist: "Wolf Creek" (the
-           distributor is Wolfe Ridge MFG, and Rammy is the brand) and
-           "Kurtz Engineering" (it is Kunz). Nobody could select a real
-           implement. All of it is replaced.
-
-           PRICING: data-price is for MATHS ONLY — a bare number, or the
-           literal "TBD" to be skipped. data-price-label is what the
-           review step prints, so the review always matches the card
-           verbatim. That split exists because the cards show "$2,162"
-           and "Contact us", neither of which survives a parseFloat, and
-           because '$' + "2162.00" would render "$2162.00" with no
-           thousands separator. Four cards are non-numeric: the Utility
-           Trailer (Price TBD), Demco 80 gallon, Rammy Lawn Mower and
-           Rammy Plow W165 (all Contact us).
-
-           Implements are deliberately excluded from the reference
-           subtotal — renderList is called with showSubtotal=false — so
-           a five-figure implement never lands in a total next to an
-           accessory. Accessories keep their subtotal.
-
-           BRAND LOGOS are now the real marks rather than the dashed
-           initial placeholders, using .pick-brand-logo.is-image. B.B.
-           uses the wordless vehicle mark, matching the Implements page. -->
+      <!-- STEP 3 — Implements -->
       <section class="flow-step" id="flow-step-3" data-step="3" hidden>
         <p class="flow-step-eyebrow">Step 3 of 4</p>
         <h2>Add implements</h2>
@@ -602,7 +500,6 @@
         <p class="flow-step-micro">No payment required to submit this reservation.</p>
       </section>
 
-      <!-- Spam honeypot. Hidden from humans; bots fill it and get silently dropped. -->
       <div aria-hidden="true" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;">
         <label>Company website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label>
       </div>
@@ -610,7 +507,7 @@
     </form>
 
     <div class="form-success" id="pre-order-success" style="max-width:760px;margin:0 auto;">
-      <!-- Early 2027 availability was agreed 2026-07-22 and the form is supposed to state it. -->
+
       <p style="margin:0 0 12px;">Your pre-order is in. No payment was collected. Someone from B.B. Engineering will follow up with next steps. Expected availability is early 2027.</p>
       <p id="pre-order-ref" style="margin:0;font-weight:700;"></p>
     </div>
@@ -672,8 +569,7 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
 
 /* ============ MOBILE DROPDOWN ACCORDION — Vehicle/Gallery/Company
    dropdowns start collapsed on mobile; tapping the caret button
-   toggles them open/closed (added 2026-07-18, replaces the old
-   "always open" mobile behavior). Also resets all dropdowns closed
+   toggles them open/closed. Also resets all dropdowns closed
    when the hamburger menu itself is closed, so reopening the menu
    later starts fresh. ============ */
 (function(){
@@ -781,9 +677,6 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
       ['Email', fieldVal('p-email') || 'N/A'],
       ['Phone', fieldVal('p-phone') || 'Not provided'],
       ['Location', fieldVal('p-location') || 'N/A'],
-      // Timeline row removed with its field. Note fieldVal() returns ''
-      // for a missing element rather than throwing, so a stale row here
-      // would show a permanent "N/A" instead of erroring.
       ['Primary use', fieldVal('p-use') || 'N/A']
     ];
     if (!orgFields.hidden){
@@ -792,13 +685,11 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
       info.push(['Estimated quantity', fieldVal('p-qty') || 'N/A']);
     }
     // Financing is optional and unselected by default, so it only appears
-    // in the review summary when the person actually answered. Added
-    // 2026-08-06 alongside the field itself.
+    // in the review summary when the person actually answered.
     var financing = radioVal('financing');
     if (financing) info.push(['Interested in financing', financing === 'yes' ? 'Yes' : 'No']);
     var notes = fieldVal('p-notes');
     if (notes) info.push(['Notes', notes]);
-    // "Heard about us via" removed 2026-08-06 with the p-source field.
 
     var infoHtml = info.map(function(pair){
       return '<div class="review-item"><span class="k">' + pair[0] + '</span><span class="v">' + escapeHtml(pair[1]) + '</span></div>';

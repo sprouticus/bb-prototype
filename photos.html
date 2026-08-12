@@ -97,9 +97,7 @@
     <p class="eyebrow">Photo Gallery</p>
     <h1>The Enabler 2.0 in Photos</h1>
     <div class="rule"></div>
-    <!-- Previous copy claimed work sites, campuses and parks "across the country" and the meta
-         claimed fleet deployments. None of that has happened. Rewritten to describe what the
-         photos actually show. -->
+
     <p>Detail shots of the vehicle, the lift, the hitch, and the shop where it's built. <a href="videos.html" style="color:var(--orange-dark);text-decoration:underline;text-underline-offset:2px;font-weight:700;">Video is here</a>.</p>
   </div>
 </section>
@@ -116,11 +114,6 @@
           <p>Board from the ground and drive from the chair.</p>
         </div>
       </div>
-
-      <!-- The "Self-Loading. Self-Sufficient." slide (enabler-rear-lift-
-           ramp-down.jpg) was pulled 2026-07-29 along with the same photo
-           in the grid below. If a replacement lift shot comes in, this is
-           where it goes — remember to add a matching .carousel-dot. -->
 
       <div class="carousel-slide">
         <img src="images/enabler-warehouse-wide.jpg" alt="Enabler 2.0 in the shop, ready to ship">
@@ -166,18 +159,6 @@
       </div>
     </div>
 
-    <!-- ============ CATEGORY FILTER — added 2026-07-29 alongside the
-         gallery expansion (9 tiles to 22). Each .gallery-item carries a
-         data-cat; the buttons below filter on it and the count updates
-         live. Filtering is progressive enhancement: with JS off every
-         tile stays visible, which is why nothing is hidden in the
-         markup itself.
-
-         TO ADD A PHOTO: copy a .gallery-item block, set data-cat to
-         vehicle / detail / shop, and point src + data-full at the same
-         file. No JS or CSS changes needed. To add a whole new category,
-         add a button with the matching data-filter value.
-         ============ -->
     <div class="gallery-filter" role="group" aria-label="Filter photos by category">
       <button type="button" class="gallery-filter-btn is-active" data-filter="all" aria-pressed="true">All</button>
       <button type="button" class="gallery-filter-btn" data-filter="vehicle" aria-pressed="false">Vehicle</button>
@@ -377,8 +358,7 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
 
 /* ============ MOBILE DROPDOWN ACCORDION — Vehicle/Gallery/Company
    dropdowns start collapsed on mobile; tapping the caret button
-   toggles them open/closed (added 2026-07-18, replaces the old
-   "always open" mobile behavior). Also resets all dropdowns closed
+   toggles them open/closed. Also resets all dropdowns closed
    when the hamburger menu itself is closed, so reopening the menu
    later starts fresh. ============ */
 (function(){
@@ -408,9 +388,8 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   });
 })();
 
-/* ============ FEATURED CAROUSEL — the track, prev/next arrows, and
-   dots all existed in the markup with no listeners at all, so the
-   carousel was completely inert; wired up 2026-07-18. ============ */
+/* ============ FEATURED CAROUSEL — wires up the track, prev/next
+   arrows, and dots, which the markup alone doesn't drive. ============ */
 (function(){
   const track = document.getElementById('carousel-track');
   const slides = Array.from(document.querySelectorAll('.carousel-slide'));
@@ -437,19 +416,16 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   });
 })();
 
-/* ============ GALLERY GRID LIGHTBOX — moved to the shared lightbox.js
-   on 2026-07-29. The inline version that lived here never actually ran:
-   it sat above the lightbox markup it looked up, so the element didn't
-   exist yet and the guard bailed. Clicking a photo silently did nothing
-   from 2026-07-18 until the move. lightbox.js loads with `defer` and
-   injects its own dialog, so the ordering problem can't recur.
-   ============ */
+/* ============ GALLERY GRID LIGHTBOX — uses the shared lightbox.js
+   rather than an inline copy. lightbox.js loads with `defer` and
+   injects its own dialog, so a script running above markup it looks
+   up (and bailing because the element doesn't exist yet) can't happen
+   here. ============ */
 
-/* ============ GALLERY CATEGORY FILTER — added 2026-07-29 when the grid
-   grew from 9 tiles to 22. Reads data-cat off each .gallery-item and
-   data-filter off each button; no category list is hardcoded here, so
-   adding a category means adding a button and tagging tiles, nothing
-   more.
+/* ============ GALLERY CATEGORY FILTER — reads data-cat off each
+   .gallery-item and data-filter off each button; no category list is
+   hardcoded here, so adding a category means adding a button and
+   tagging tiles, nothing more.
 
    Hiding uses the .is-hidden class rather than the hidden attribute so
    the grid keeps its own display rules. The lightbox binds to buttons

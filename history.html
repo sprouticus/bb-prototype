@@ -93,74 +93,23 @@
 
 <section class="page-hero">
   <div class="wrap">
-    <!-- "Our History" here, "Our Journey" on the vehicle page — they
-         were competing for the same label. Nav link and <title> stay
-         terse. -->
+
     <p class="eyebrow">Then to Now</p>
     <h1>Our History</h1>
     <div class="rule"></div>
-    <!-- "The '80s" stays vague on purpose —
-         the timeline below already names 1987. -->
+
     <p>An idea sparked in the '80s turned into a personal commitment that has spanned across decades to make The Enabler a reality.</p>
   </div>
 </section>
 
-<!-- ============ HISTORY SNAKE TIMELINE — rebuilt 2026-07-26, replacing the left-rail vertical
-     timeline. Serpentine path switchbacks down the page; each milestone
-     carries a year badge and the BB vehicle mark, which flips to face
-     the direction of travel. Geometry is documented in the
-     .snake-* block in styles.css.
-
-     REAL CONTENT LANDED 2026-08-06, replacing lorem ipsum.
-
-     STILL PLACEHOLDER: the "Text TBD" photo captions further down and
-     the gallery image dates. That discussion never resolved — confirm rather than inferring.
-
-     The vehicle mark is bb-logo-mark.png standing in for proper
-     per-milestone artwork.
-
-     SCROLL ANIMATION ADDED 2026-08-10 (history-scroll.js + the
-     .snake--anim block in styles.css). The five per-row
-     .snake-vehicle marks are still the markup of record: they are
-     what the page shows with JS off, with JS broken, and under
-     prefers-reduced-motion. The script hides them and drives the
-     single .snake-traveler below in their place. Keep them.
-
-     THE .snake-pin / .snake-stage WRAPPERS EXIST ONLY FOR THE
-     ANIMATION. .snake-pin is a tall spacer whose height the script
-     sets to buy scroll distance; .snake-stage sticks to the viewport
-     and the timeline creeps upward inside it. Both are inert until
-     the script opts in — no height, no sticky, no clipping — so the
-     no-JS page is unaffected by them. They cannot be flattened away
-     without losing the pin.
-     ============ -->
 <section class="snake-section">
   <div class="wrap">
    <div class="snake-pin">
     <div class="snake-stage">
      <div class="snake">
 
-      <!-- The one vehicle that actually moves. Hidden by CSS until
-           history-scroll.js opts in, so it is not a sixth mark on the
-           no-JS page. Absolutely positioned against .snake, so it has
-           to stay a direct child of it. -->
       <span class="snake-traveler" aria-hidden="true"><img src="images/bb-logo-mark.png" alt=""></span>
 
-      <!-- Scroll cue. The section pins itself and waits, which looks
-           like a page that has stopped rather than one asking to be
-           driven, so this says what to do. Only ever shown while the
-           vehicle is still parked at the start; it fades the moment
-           it sets off.
-
-           aria-hidden because it is purely visual advice about the
-           animation. The milestone copy is hidden with a CSS mask,
-           which does not remove it from the accessibility tree, so a
-           screen reader can already read all five milestones without
-           scrolling and has nothing to gain from being told to.
-
-           Its vertical position is set by JS (CUE_ABOVE_LINE), since
-           "above the first line" depends on a row height CSS cannot
-           see. -->
       <div class="snake-cue" aria-hidden="true">
         <span class="snake-cue-text">Scroll Down</span>
         <svg class="snake-cue-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
@@ -176,7 +125,6 @@
         <span class="snake-vehicle" aria-hidden="true"><img src="images/bb-logo-mark.png" alt=""></span>
       </div>
 
-
       <div class="snake-row snake-row--left snake-row--turn-right">
         <div class="snake-cell">
           <span class="snake-badge">2017</span>
@@ -185,7 +133,6 @@
         </div>
         <span class="snake-vehicle" aria-hidden="true"><img src="images/bb-logo-mark.png" alt=""></span>
       </div>
-
 
       <div class="snake-row snake-row--right snake-row--turn-left">
         <div class="snake-cell">
@@ -196,7 +143,6 @@
         <span class="snake-vehicle" aria-hidden="true"><img src="images/bb-logo-mark.png" alt=""></span>
       </div>
 
-
       <div class="snake-row snake-row--left snake-row--turn-right">
         <div class="snake-cell">
           <span class="snake-badge">2025</span>
@@ -205,7 +151,6 @@
         </div>
         <span class="snake-vehicle" aria-hidden="true"><img src="images/bb-logo-mark.png" alt=""></span>
       </div>
-
 
       <div class="snake-row snake-row--right snake-row--turn-left">
         <div class="snake-cell">
@@ -221,16 +166,6 @@
     </div>
    </div>
 
-    <!-- Start over. The scroll only runs one way — scrolling back up
-         does not rewind the vehicle or take the copy away again — so
-         this is the only route back to the beginning.
-
-         Sits OUTSIDE .snake-pin, so it comes into view exactly as the
-         pin releases and the page starts moving again. Hidden until
-         the script adds .is-on, which is what keeps it off the no-JS
-         page where there is no animation to restart. Starts at
-         tabindex="-1" for the same reason; the script puts it in the
-         tab order when it becomes visible. -->
     <div class="snake-restart">
       <button type="button" class="btn btn-outline" tabindex="-1">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
@@ -240,60 +175,6 @@
   </div>
 </section>
 
-<!-- ============ PREVIOUS REAL CONTENT — parked here 2026-07-26 when the
-     layout went to placeholders. Three milestones, ready to reinstate:
-
-     ~2016 · Where It Started · "The Buddy Buggy"
-       About a decade ago the Buddy Buggy was built, the first
-       wheelchair-adaptive off-road vehicle out of the shop. Board through a
-       rear wheelchair lift, dock straight into the driver's seat, and steer
-       with a joystick. No transfers, no compromises, all-electric. Built and
-       based in Albuquerque, NM, the Buddy Buggy went wherever people needed
-       it: hunting trips, farms and ranches, and just getting back outside. It
-       proved the idea and set up everything that came after it.
-
-     ~2020 · The Next Generation · "The Enabler 2.0"
-       Everything learned building the Buddy Buggy went into its successor.
-       Starting around 2020, the vehicle was rebuilt from the frame up:
-       all-wheel drive, an all-electric powertrain, a self-loading rear
-       wheelchair lift the driver operates alone, and all-steel construction
-       rated for real work, not just recreation. It's the vehicle in
-       production today. Links: enabler-2-0.html, specs.html
-       (photo: images/enabler-side-indoor.jpg)
-
-     Now · In Active Development · "The Enabler 2.1"
-       The Enabler 2.1 is our next generation, in active production right now
-       and built directly on everything the 2.0 has proven in the field. We're
-       not ready to show every detail yet. More information is coming soon.
-       Reserving today gets you the 2.1 as soon as it's ready.
-       (photo: images/bb-teaser-placeholder.jpg, plus a Pre-Order CTA)
-     ============ -->
-
-<!-- ============ THROUGH THE YEARS — added 2026-07-29. Paper-toned band
-     between the white timeline above and the white CTA below, so it
-     reads as its own beat rather than a continuation of either.
-
-     CAPTIONS ARE ALL "Text TBD" ON PURPOSE (2026-07-29). Earlier drafts
-     carried years and model names — ~2016, ~2020, The Enabler 2.0 —
-     that were never confirmed. Nothing
-     here states a date or names a vehicle until the real captions come
-     back confirmed. Don't reintroduce a year to fill the space.
-
-     Each caption is a single .era-label span. The .era-year span is
-     dropped rather than filled with "TBD", because .era-year::after
-     supplies the middot separator and an empty year would leave a
-     dangling dot. Add the span back alongside the label when there are
-     real dates: <span class="era-year">YEAR</span> <span
-     class="era-label">LABEL</span>.
-
-     Tiles 1 and 2 hold the Buddy Buggy photos; 3 and 4 are still
-     .photo-pending. TO DROP IN A PHOTO: replace the whole .photo-pending
-     div with <img src="images/FILE.jpg" alt="..." loading="lazy">.
-     Nothing else needs changing — .era-item img carries the 7/5 crop and
-     lightbox.js picks up any img in an .era-item automatically. Leave
-     data-caption off while captions are TBD so the lightbox falls back
-     to the figcaption instead of showing text the tile doesn't.
-     ============ -->
 <section class="era-section">
   <div class="wrap">
     <div class="section-head">
@@ -310,10 +191,6 @@
         <figcaption><span class="era-label">Text TBD</span></figcaption>
       </figure>
 
-      <!-- Note for whoever writes the real caption: this black machine is
-           visibly a different build from the white one in the dunes shot
-           beside it — different frame, body and lift. If it's a later
-           iteration it needs its own date, not the one next to it. -->
       <figure class="era-item">
         <img src="images/buddy-buggy-fall-colors.jpg" alt="The black Buddy Buggy parked on a dirt trail under cottonwoods in fall color, rear wheelchair lift lowered" loading="lazy">
         <figcaption><span class="era-label">Text TBD</span></figcaption>
@@ -332,11 +209,6 @@
   </div>
 </section>
 
-<!-- ============ CTA — the pre-order button used to live inside the third
-     milestone; with the milestones on placeholder copy it moved here so the
-     page still has a path forward. Reuses the .next-step pattern from the
-     home page. Switched to the white variant 2026-07-29 so it separates
-     from the paper-toned "Through the Years" band above. ============ -->
 <section class="next-step next-step--white">
   <div class="wrap">
     <p class="eyebrow">What's Next</p>
@@ -406,8 +278,7 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
 
 /* ============ MOBILE DROPDOWN ACCORDION — Vehicle/Gallery/Company
    dropdowns start collapsed on mobile; tapping the caret button
-   toggles them open/closed (added 2026-07-18, replaces the old
-   "always open" mobile behavior). Also resets all dropdowns closed
+   toggles them open/closed. Also resets all dropdowns closed
    when the hamburger menu itself is closed, so reopening the menu
    later starts fresh. ============ */
 (function(){
@@ -438,9 +309,7 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
 })();
 </script>
 <script src="lightbox.js" defer></script>
-<!-- Timeline scroll animation. defer so the rows are parsed and
-     measurable before it runs; it re-measures on load and resize
-     anyway. -->
+
 <script src="history-scroll.js" defer></script>
 </body>
 </html>

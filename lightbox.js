@@ -1,5 +1,5 @@
 /* ============================================================
-   SHARED PHOTO LIGHTBOX — added 2026-07-29
+   SHARED PHOTO LIGHTBOX
 
    Click any photo in an enhanced section to view it larger.
 
@@ -24,17 +24,14 @@
    Full-size source: data-full if present, otherwise the img's src.
    Caption: data-caption, else the sibling <figcaption>, else the alt.
 
-   ORDERING BUG THIS FIXES (2026-07-29)
-   The inline copies on photos.html and catch-and-release.html sat in a
-   plain <script> ABOVE the lightbox markup they looked up. Inline
-   scripts run during parse, so getElementById('lightbox') returned
-   null, the guard bailed, and clicking a photo did nothing — silently,
-   since bailing is also the correct behavior on pages with no
-   lightbox. It had been broken on both pages since 2026-07-18.
-   Accessories and Implements happened to put their markup first, which
-   is why those kept working. Loading this file with `defer` removes
-   the ordering trap entirely: it runs after the document is parsed,
-   and the dialog is injected rather than authored into the page.
+   ORDERING TRAP THIS AVOIDS
+   A <script> placed above the lightbox markup it looks up would run
+   during parse, before getElementById('lightbox') can find anything —
+   the guard would bail, and clicking a photo would do nothing,
+   silently, since bailing is also the correct behavior on pages with
+   no lightbox. Loading this file with `defer` avoids that entirely:
+   it runs after the document is parsed, and the dialog is injected
+   rather than authored into the page.
 
    Degrades cleanly: with JS off, the photos render exactly as before,
    just not clickable.

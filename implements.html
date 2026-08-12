@@ -93,39 +93,20 @@
 
 <section class="page-hero">
   <div class="wrap">
-    <!-- "Push" → "Front-Mounted" throughout the page 2026-08-06:
-         not a term used in the trade, and "mounted in front" already
-         says how it works. -->
+
     <p class="eyebrow">Towing &amp; Front-Mounted Tools</p>
     <h1>Implements</h1>
     <div class="rule"></div>
-    <p>Towed implements for the Enabler, built in-house and by Demco, Kunz and Rammy.</p>
+    <p>The Enabler is a workhorse designed to support towing implements from Demco and Kunz and front-mounted implements from Rammy.</p>
   </div>
 </section>
 
-<!-- ============ INTRO — copy left, carousel right (added 2026-07-26,
-     restructured from a full-width hero carousel the same day; see the
-     .intro-split block in styles.css for why).
-
-     Carousel behavior reuses the .carousel pattern and JS from the
-     Photos page verbatim so the two stay consistent.
-
-     PLACEHOLDER IMAGERY: none of these show an implement. B.B. has no
-     photos yet of the Enabler pulling a Rammy/Kunz/Demco unit, so these
-     are the closest available — the Enabler towing and hitching to a
-     utility trailer. Captions describe what is actually in frame rather
-     than implying an implement is attached; keep that honest when the
-     real photography lands. Slide count is flexible, just keep the
-     .carousel-dot count in sync. ============ -->
 <section class="intro-split">
   <div class="wrap">
     <div class="intro-split-grid">
 
       <div class="intro-split-copy">
-        <!-- Was "Everything on this page runs off the same hitch" —
-             untrue once front-mounted implements were added. Example
-             changed snowblower → trailer for the same reason (the
-             snowblower is a front-mount). -->
+
         <p class="eyebrow">Built to Connect</p>
         <h2>Towed implements all run off the same hitch.</h2>
         <div class="rule"></div>
@@ -164,12 +145,6 @@
           </div><!-- end .carousel-track -->
         </div><!-- end .carousel -->
 
-        <!-- Arrows are siblings of .carousel, not children of it:
-             .carousel needs overflow:hidden to hide the inactive
-             slides, which would clip anything hanging past its edge.
-             .carousel-frame is an unclipped positioning context of the
-             same size, so the arrows can straddle the photo edge the
-             way they do on the Enabler page. -->
         <button class="carousel-arrow carousel-prev" aria-label="Previous photo">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
         </button>
@@ -191,129 +166,22 @@
   </div>
 </section>
 
-<!-- Jump nav, retargeted 2026-08-05 from brand to implement type. The
-     class name .brand-jumpnav is kept as-is: the styling is generic and
-     renaming it would touch styles.css for no visual change. Same for
-     .brand-section / .brand-header below — those now hold a TYPE, not a
-     brand, but the CSS is unchanged. Rename the whole family in one pass
-     if it starts causing confusion. -->
 <nav class="brand-jumpnav" aria-label="Jump to implement type">
   <div class="wrap">
       <a href="#towing">Towing Implements</a>
-      <!-- Anchor renamed #push → #front-mounted; external links to
-           #push will break. -->
+
       <a href="#front-mounted">Front-Mounted Implements</a>
   </div>
 </nav>
 
-<!-- ============ IMPLEMENT SECTIONS — populated 2026-07-26 from the
-     supported-implements spreadsheet for the Enabler 2.1 pre-order.
-
-     REGROUPED BY TYPE 2026-08-05, from four brand sections to two by
-     attachment method. Brands moved to the logo strip below the grids.
-
-       Towing:        B.B. Utility Trailer, Demco 40/60/80 gal sprayers,
-                      Kunz AcrEase MR55BE.
-       Front-Mounted: everything else, currently the five Rammy units.
-
-     The jump nav above mirrors this order — reorder both together.
-
-     Card <h3>s now lead with the brand ("Demco Pro Series 40 Gallon
-     Sprayer"), which they did not need when a brand logo sat above the
-     grid. They match the lightbox data-caption exactly now, so if you
-     change one change the other.
-
-     THUMBNAIL/LIGHTBOX SPLIT, revised 2026-07-29: cards now carry the
-     photo, the name AND the price, matching the Accessories page card
-     for card. Specs (size, power, weight) still live in the lightbox
-     via data-specs so the grid stays scannable — the price was the one
-     thing people needed without a click.
-
-     Card price is rendered from the same value as the button's
-     data-price, so the two are duplicated by hand. If a price changes,
-     change BOTH the data-price attribute and the .product-price
-     paragraph in that card's body, or the grid and the lightbox will
-     disagree.
-
-     Where a US price isn't settled (Demco 80 gal, Rammy Lawn Mower,
-     Rammy Plow W165 — the plow is sold only as a W165/ST30 package by
-     Wolfe Ridge), the card reads "Contact us" and the lightbox routes
-     to schedule-conversation.html rather than publishing a soft number.
-
-     The "SPECS & PRICE" caption under each card is gone, along with its
-     .product-note rule in styles.css — no page uses that class now.
-     As on Accessories, the only remaining cue that a photo opens is the
-     hover zoom icon, which does not exist on touch. Per-button
-     aria-labels are unchanged, so screen readers still announce it.
-
-     Rammy publishes metric; figures below are converted to imperial.
-     HP is shown only where the manufacturer publishes it — otherwise
-     engine displacement in cc, rather than inventing a conversion.
-
-     THUMBNAILS, 2026-07-29: source photos ranged from 1.20 to 1.94 in
-     aspect ratio, so products read at different sizes even inside the
-     square .product-card-img tile. Every one is now normalized into
-     images/Implements/thumbs/ — trimmed to its true subject bounds,
-     scaled so its LONGEST side is 644px, and centred on a 700x700
-     transparent canvas. Identical treatment to the Accessories grid.
-
-     Card <img src> points at the thumb; data-full still points at the
-     full-resolution original so the lightbox stays sharp. Untouched
-     originals are archived in images/Implements/_originals/. Brand
-     LOGOS are not thumbnailed — they load straight from
-     images/Implements/ and are sized by .brand-logo in styles.css.
-
-     Regenerate with: python3 tools/make-product-thumbs.py implements
-     Do not hand-crop; uniformity depends on the longest side being
-     exactly 644. Two sources are low-res and get upscaled, so their
-     thumbs are slightly soft — the Demco 80 gallon (474x264, x1.77)
-     and the Kunz AcrEase (598x354, x1.09). Better source art would fix
-     both; nothing else needs doing.
-
-     PRICING: the figures on this page are the advertised retail prices
-     and are verified against the supplier's current published list.
-     Whole-dollar rounding is deliberate and applies page-wide so every
-     brand reads consistently.
-
-     Some cards deliberately say "Contact us" rather than carrying a
-     number: either no standalone product exists, or the only listed
-     price covers a bundle that would misrepresent what the buyer gets.
-     Do not infer a price by combining line items.
-     ============ -->
-
-<!-- ============ TOWING IMPLEMENTS — first on the page by request
-     (2026-08-05). Everything here hitches behind the Enabler and is
-     pulled: the B.B. Utility Trailer, the three Demco sprayers, and the
-     Kunz AcrEase pull-behind mower.
-
-     The B.B. Utility Trailer moved here from the Accessories page on
-     2026-07-29. It was always an implement rather than a bolt-on
-     accessory — it tows behind the Enabler on the catch-and-release
-     hitch like everything else on this page, rather than mounting to
-     the vehicle. Its photo moved with it: images/Accessories/
-     utility-trailer.png is now images/Implements/bb-utility-trailer.png.
-
-     Its price stays "Price TBD" rather than the "Contact us" wording the
-     other unpriced cards use. That is deliberate and was confirmed —
-     the trailer genuinely has no price set yet, whereas the Demco 80
-     gallon, Rammy Lawn Mower and Rammy Plow are priced but not in a
-     form we can publish as a single number. Different problems, so
-     they read differently. Because this one is not a "come talk to us"
-     case, it carries no data-price-link.
-
-     Card order within the grid is by brand (B.B., Demco, Kunz), which
-     is what the old brand sections gave us and is as good an order as
-     any until someone asks for a different one. ============ -->
 <section class="brand-section" id="towing">
   <div class="wrap">
     <div class="type-header">
       <p class="eyebrow">Pulled Behind</p>
       <h2>Towing Implements</h2>
       <div class="rule"></div>
-      <!-- The catch aligns the pin horizontally; the electric jack on
-           the tongue handles height. Both halves are needed, and the jack
-           is INCLUDED with every implement — not an accessory. -->
-      <p>Catch-and-Release, mounted on the back of the Enabler, guides the pin on the implement tongue into position from side to side. A remote-controlled electric jack on the tongue raises and lowers it to meet the catch. The jack is included with every implement purchase, and the whole hookup happens without leaving the seat.</p>
+
+      <p>With the catch-and-release added on to the vehicle, The Enabler can tow trailers, sprayers, mowers, or custom implements of your choice. All implement purchases from BB Engineering include a remote-controlled electric jack to keep the pin aligned and the driver in the seat.</p>
     </div>
     <div class="product-grid">
       <div class="product-card">
@@ -355,21 +223,14 @@
   </div>
 </section>
 
-<!-- ============ FRONT-MOUNTED IMPLEMENTS — everything that is not towed.
-     Currently all five are Rammy, but the section is by type, not brand,
-     so a non-Rammy front-mount belongs here too. ============ -->
 <section class="brand-section" id="front-mounted">
   <div class="wrap">
     <div class="type-header">
-      <!-- Body previously claimed catch-and-release applies here; it
-           does not. Front implements bolt to a base plate and the winch
-           raises them. Two caveats kept deliberately: the winch is a paid
-           add-on, and someone must get out to hook it — do not bury that,
-           a snowblower buyer will find out in the first snowfall. -->
+
       <p class="eyebrow">Front-Mounted</p>
       <h2>Front-Mounted Implements</h2>
       <div class="rule"></div>
-      <p>Front-mounted implements do not use Catch-and-Release. They attach to a solid base plate that extends from under the Enabler, and the front winch raises and lowers them from a button in the cab. The winch is available as an add-on.</p>
+      <p>With the winch add-on, The Enabler can handle front-mounted implements like brush cutters, flail mowers, and snowplows with ease.</p>
     </div>
     <div class="product-grid">
       <div class="product-card">
@@ -411,47 +272,17 @@
   </div>
 </section>
 
-<!-- ============ SUPPORTED BRANDS — parked 2026-08-05, restored
-     2026-08-06. Kept to a
-     banner; the old explanatory paragraph claimed catch-and-release runs
-     all these brands, which is wrong for the Rammy front-mounts.
-     B.B. Engineering deliberately absent. ============ -->
-<section class="brand-strip">
+<section class="next-step">
   <div class="wrap">
-    <div class="brand-strip-intro">
-      <p class="eyebrow">Our Friends</p>
-      <h2>Who we work with</h2>
-      <div class="rule"></div>
-      <p>Alongside the implements we build in-house, we work with these manufacturers.</p>
-    </div>
-    <ul class="brand-strip-logos">
+    <p class="eyebrow">Our Friends</p>
+    <h2>Who we work with</h2>
+    <div class="rule"></div>
+    <ul class="brand-strip-logos brand-strip-logos--centered">
       <li><img src="images/Implements/demco-logo.png" alt="Demco" loading="lazy"></li>
       <li><img src="images/Implements/kunz-logo.jpg" alt="Kunz Engineering" loading="lazy"></li>
-      <li><img src="images/Implements/rammy-logo.png" alt="Rammy" loading="lazy"></li>
+      <li class="brand-logo--rammy"><img src="images/Implements/rammy-logo.png" alt="Rammy" loading="lazy"></li>
     </ul>
-  </div>
-</section>
-
-<!-- ============ CUSTOM IMPLEMENTS CTA (added 2026-07-26)
-     Reuses the .next-step pattern from the home page rather than a new
-     one-off band, so the CTA treatment stays consistent sitewide.
-
-     COPY NOTE: phrased in third person ("Don't see the right
-     implement?") rather than second ("Don't see what you need?") to
-     keep the page neutral so it reads the same to an individual buyer and to an
-     institutional one. "Conversation" not "consultation", same reason.
-
-     WHITE: .next-step--white avoids stacking against the paper-toned
-     brand strip directly above.
-     ============ -->
-<section class="next-step next-step--white">
-  <div class="wrap">
-    <!-- Now a question rather than a label. Section stays because B.B.
-         can source equipment that isn't listed. -->
-    <p class="eyebrow">Custom Work</p>
-    <h2>Want something not listed here?</h2>
-    <div class="rule"></div>
-    <p class="sub">The list above is what's supported at pre-order. Custom setups come up often. A short conversation is the fastest way to find out whether something specific will run behind the Enabler.</p>
+    <p class="sub">We work with these manufacturers to support your favorite implements. If you don't see what you want listed above, schedule a conversation to chat about your custom needs.</p>
     <div class="cta-row">
       <a href="schedule-conversation.html" class="btn btn-orange">Schedule a Conversation
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -514,8 +345,7 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
 
 /* ============ MOBILE DROPDOWN ACCORDION — Vehicle/Gallery/Company
    dropdowns start collapsed on mobile; tapping the caret button
-   toggles them open/closed (added 2026-07-18, replaces the old
-   "always open" mobile behavior). Also resets all dropdowns closed
+   toggles them open/closed. Also resets all dropdowns closed
    when the hamburger menu itself is closed, so reopening the menu
    later starts fresh. ============ */
 (function(){
@@ -545,11 +375,10 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   });
 })();
 
-/* ============ HERO CAROUSEL — same implementation as the Photos page
-   (added 2026-07-26). Arrows wrap around; dots jump directly. Kept
-   verbatim rather than refactored so the two pages don't drift.
-   Adding or removing a slide requires matching .carousel-dot buttons
-   in the markup. ============ */
+/* ============ HERO CAROUSEL — same implementation as the Photos page.
+   Arrows wrap around; dots jump directly. Kept verbatim rather than
+   refactored so the two pages don't drift. Adding or removing a slide
+   requires matching .carousel-dot buttons in the markup. ============ */
 (function(){
   const track = document.getElementById('carousel-track');
   const slides = Array.from(document.querySelectorAll('.carousel-slide'));
@@ -592,8 +421,7 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
 </div>
 
 <script>
-/* ============ IMPLEMENT LIGHTBOX (extended 2026-07-26)
-   Previously showed photo + caption only. Now also renders the
+/* ============ IMPLEMENT LIGHTBOX — renders the
    high-level specs and price pulled from data-specs / data-price on
    the triggering button, because the product cards deliberately carry
    no numbers. If data-price-link is present the price renders as a

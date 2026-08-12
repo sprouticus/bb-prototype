@@ -1187,6 +1187,11 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
 
    align-items:center vertically centres the short wordmarks against the
    tall Rammy mark, which sets the row height. -------- */
+/* UNUSED: .brand-strip and .brand-strip-intro. The standalone logo strip
+   on implements.html was folded into the .next-step band below it, which
+   supplies its own padding, background and heading. The logo list rules
+   that follow are still live — that band uses them. Kept in case a
+   standalone strip is wanted again; delete if it isn't. */
 .brand-strip{padding:56px 0;background:var(--paper);border-top:1px solid var(--line);}
 .brand-strip .brand-strip-intro{max-width:64ch;}
 .brand-strip .brand-strip-intro p{font-size:14.5px;color:#454C49;margin-top:14px;}
@@ -1195,9 +1200,26 @@ button.product-card-img:focus-visible .zoom-hint{opacity:1;}
 }
 .brand-strip-logos li{list-style:none;width:130px;flex:none;}
 .brand-strip-logos img{width:100%;height:auto;display:block;}
+/* The logo row now lives inside a .next-step band on implements.html.
+   .next-step sets text-align:center, which does nothing for a flex
+   container, so centering is asked for explicitly. Also gets a top and
+   bottom margin because it sits between the rule and the body copy
+   rather than at the end of a strip. */
+.brand-strip-logos--centered{justify-content:center;margin:34px auto 6px;}
+/* Rammy 25% narrower than the 130px shared width. Its mark is a ram
+   over a wordmark; matched to the flat Demco and Kunz wordmarks it
+   reads far taller and dominates the row. Scales with the 560px step
+   below, so the ratio holds on mobile.
+
+   Written as `li.brand-logo--rammy`, not `.brand-logo--rammy` alone:
+   the width it overrides comes from `.brand-strip-logos li`, which
+   carries a type selector. A bare class loses to it and the override
+   silently does nothing. */
+.brand-strip-logos li.brand-logo--rammy{width:97.5px;}
 @media (max-width:560px){
   .brand-strip-logos{gap:24px 32px;}
   .brand-strip-logos li{width:96px;}
+  .brand-strip-logos li.brand-logo--rammy{width:72px;}
 }
 
 /* -------- WHAT'S CHANGING (Enabler page, 2.1 preview list, added

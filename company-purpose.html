@@ -94,43 +94,13 @@
 <section class="page-hero">
   <div class="wrap">
     <p class="eyebrow">Our Story</p>
-    <!-- City/state out, "the USA" back in — the site is seen
-         everywhere, and naming one city narrows it for no gain.
-         SEO cost: this h1 carried "adaptive vehicle manufacturer New
-         Mexico" and that term is now unmapped sitewide. Raise it rather
-         than quietly restoring the city.
-         Subhead: Bud and the founder are deliberately unnamed. -->
+
     <h1>Built for independence in the USA.</h1>
     <div class="rule"></div>
-    <p>Two guys who hunted together. One of them had an idea he couldn't let go of.</p>
+    <p>An idea forty years in the making. A vehicle engineered for freedom and adventure.</p>
   </div>
 </section>
 
-<!-- ============ OUR STORY — timeline removed and copy replaced
-     2026-07-18 with the longer founding story (Bud's accident, the
-     ADA newspaper, the two restored Jeeps, the move to New Mexico)
-     pulled from an older version of the site. Down to two placeholder
-     photos (third one dropped) floated left in a fixed-width stack;
-     the copy runs as normal flow text so it wraps around them and
-     fills the full width again once it clears past the second image
-     — real photos to come later.
-
-     PLACEHOLDERS, 2026-07-29: these two and the three shop portraits
-     below were hotlinked placehold.co images labelled with the exact
-     shot intended for each slot — "Photo: Bud in the Field", "Photo:
-     Restored Mobility Jeeps", "Photo: Welder Portrait" and so on. They
-     read as a production to-do list to anyone reviewing the page, and
-     depended on a third-party service staying up. All five are now the
-     local, neutral .photo-pending box used elsewhere on the site.
-
-     The two "Placeholder — photo coming soon" figcaptions here were
-     dropped as well: the box now says it, and .story-img figcaption
-     hides until hover, so the note would have been invisible anyway.
-
-     To drop a real photo in, swap the .photo-pending div back to a
-     plain <img> with real alt text. The shop portraits below keep
-     their role figcaptions — those are page content and stay once the
-     photography lands. ============ -->
 <section class="story">
   <div class="wrap">
     <div class="story-top story-top--wrap">
@@ -138,11 +108,7 @@
         <figure class="story-img">
           <img src="images/shop-mask-and-gloves.jpg" width="1400" height="1050" alt="A welding mask, leather gloves and a screwdriver resting on the bare steel frame of an Enabler on the shop floor" loading="lazy">
         </figure>
-        <!-- Swapped 2026-07-30: was dave-in-the-shop.jpg. Source is
-             "Photo Originals/Shop Photos/Metal zia.jpg" in BB Project
-             Files, an 8.9 MB original; this is a 1400px JPEG of it,
-             sized to match its sibling above. Keep the original out of
-             images/ so it never ships. -->
+
         <figure class="story-img">
           <img src="images/metal-zia.jpg" width="1400" height="1050" data-caption="A Zia symbol, cut and shaped by hand in the shop" alt="A steel Zia symbol, the New Mexico state emblem, laid out on the shop workbench after being hand-cut and shaped" loading="lazy">
         </figure>
@@ -157,10 +123,6 @@
   </div>
 </section>
 
-<!-- ============ OUR MISSION — added 2026-07-18, moved beneath Our
-     Story so the mission lands as the payoff after the founding story
-     rather than before it. This is the one place on the
-     site where mission-heavy language belongs. ============ -->
 <section class="mission-statement">
   <div class="wrap">
     <p class="eyebrow">Our Mission</p>
@@ -205,36 +167,14 @@
           <img src="images/enabler-led-suspension-detail.jpg" alt="Close-up of Enabler 2.0 electrical and suspension components">
           <figcaption>Assembly and electrical integration</figcaption>
         </figure>
-        <!-- Swapped 2026-07-30 (corrected same day — this had gone into
-             the shop-portraits gallery below by mistake; that's process/
-             fabrication photos, this is a vehicle detail shot, so it
-             belongs up here with its sibling detail photos instead).
-             Was enabler-underside-detail.jpg. Source is "Photo Originals/
-             Shop Photos/Steering wheel detail.jpg" in BB Project Files,
-             an 8.5 MB original; cropped to the same ~3:2 landscape frame
-             as its sibling above (steering wheel sat off-center in the
-             original, so a plain drop-in would've let object-fit:cover
-             crop it oddly) then compressed to a 1400x933 JPEG. -->
+
         <figure class="story-img">
           <img src="images/steering-wheel-detail-landscape.jpg" alt="Close-up of the Enabler's steering wheel with an integrated hand-control joystick">
           <figcaption>Steering wheel with integrated hand-control joystick</figcaption>
         </figure>
       </div>
     </div>
-    <!-- ============ Placeholders filled 2026-07-29 with portrait crops
-         of the 2026-07-28 shop photos (shop-portrait-*.jpg, cropped 5/6
-         from the full-res originals rather than letting object-fit
-         squeeze the landscape frames).
 
-         CAPTIONS CHANGED FROM ROLES TO STAGES. These read "Shop
-         Craftsman / Steel Fabrication", "Assembly Technician /
-         Electrical & Drivetrain", "Quality Inspector / Final Sign-Off".
-         Every photo we have is welding and fabrication — there is no
-         electrical/drivetrain shot and no final-inspection shot — so
-         the last two labels would have described something the images
-         plainly aren't. They now name the stage each photo actually
-         shows. Put the role framing back if and when portraits of the
-         individual team members are taken. ============ -->
     <div class="shop-portraits">
       <figure class="shop-portrait">
         <img src="images/shop-portrait-welding.jpg" data-caption="Frame welding in the Albuquerque shop" alt="Fabricator welding inside the Enabler roll cage, arc light and sparks visible" loading="lazy">
@@ -306,8 +246,7 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
 
 /* ============ MOBILE DROPDOWN ACCORDION — Vehicle/Gallery/Company
    dropdowns start collapsed on mobile; tapping the caret button
-   toggles them open/closed (added 2026-07-18, replaces the old
-   "always open" mobile behavior). Also resets all dropdowns closed
+   toggles them open/closed. Also resets all dropdowns closed
    when the hamburger menu itself is closed, so reopening the menu
    later starts fresh. ============ */
 (function(){

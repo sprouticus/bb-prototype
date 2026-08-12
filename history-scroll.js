@@ -1,6 +1,6 @@
 /* ============================================================
    HISTORY SNAKE — SCROLL ANIMATION (history.html)
-   Added 2026-08-10. Companion CSS is the .snake--anim /
+   Companion CSS is the .snake--anim /
    .snake--simple block in styles.css; read that first, it explains
    the reveal mask and why every hidden state is class-gated.
 
@@ -35,13 +35,6 @@
    where it is. One line's run therefore costs exactly one row
    height of scroll, and the only way to make the traverse slower is
    to give the row more scroll distance to cover.
-
-   NO BROWSER IN THE DEV SANDBOX — this was developed
-   and checked under jsdom, which executes the module and lets the
-   geometry and state machine be asserted directly. Layout numbers
-   come from offsetTop/offsetHeight, which jsdom does not compute,
-   so the jsdom harness stubs them. Anything about how this *looks*
-   still needs a real browser.
    ============================================================ */
 (function () {
   'use strict';
