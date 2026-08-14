@@ -1733,22 +1733,53 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
 
    Left column is the value proposition, right is the carousel. Stacks
    to one column at 900px with the copy first. -------- */
-.intro-split{background:var(--white);padding:12px 0 22px;}
-/* Even split. The copy column had been the wider of the two purely to
-   shrink the carousel's 16/9 height for the fold; once the arrows moved
-   onto the photo that headroom came back, so the media column gets it.
-   560px of measure is still comfortable for the paragraph. */
+/* Band padding was 12px/22px. Trimmed to 8px/14px as part of the 2026-08-14
+   enlargement below — it buys back 12px of the height the taller photo
+   costs, and at this scale the white band reads the same either way. */
+.intro-split{background:var(--white);padding:8px 0 14px;}
+/* The copy column had been the wider of the two purely to shrink the
+   carousel's 16/9 height for the fold; once the arrows moved onto the photo
+   that headroom came back, so the media column got it and the split went
+   even.
+
+   2026-08-14: the media column gets a bit more again — 1fr 1.25fr with the
+   gap down from 44px to 32px. At the 1220px wrap that takes the photo from
+   560x315 to 629x354 (12% wider, 26% more area) and the section from 367px
+   to 394px tall, 27px of which is the photo and 12px of which comes back
+   out of the band padding above.
+
+   Two alternatives were measured and rejected:
+     - 4fr 6fr with max-height left at 315px gives a 672px photo for zero
+       height cost, but the frame then sits at ~2.13:1 and cover() eats
+       noticeably more of each photo (see the source-ratio note below).
+     - 4fr 6fr at a true 16/9 is 672x378, but that is +63px on the section
+       and pushes the jump nav down by that much on every load.
+   This is the middle option: nothing changes about how much of each photo
+   is visible.
+
+   Copy column lands at ~503px, still wider than p.sub's 46ch measure, so
+   the paragraph wraps exactly as before. Only the h2 rewraps. */
 .intro-split-grid{
-  display:grid;grid-template-columns:1fr 1fr;gap:44px;align-items:center;
+  display:grid;grid-template-columns:1fr 1.25fr;gap:32px;align-items:center;
 }
 .intro-split-copy h2{font-size:clamp(24px,2.9vw,35px);margin-top:12px;}
 .intro-split-copy .rule{margin-top:14px;}
 .intro-split-copy p.sub{
   color:#454C49;font-size:16.5px;line-height:1.6;margin-top:18px;max-width:46ch;
 }
-/* 16/9 matches the source photos, so cover() crops nothing at normal
-   widths. The cap only bites on short viewports. */
-.intro-split .carousel-slide{aspect-ratio:16/9;max-height:min(315px,44vh);}
+/* The source photos are NOT 16/9, despite what this comment used to say.
+   Measured 2026-08-14: the three Accessories details are 1600x1067 (3:2)
+   and the three Implements shots are 1195x896 / 1185x896 (4:3) and
+   1344x799 (~1.68:1). So the 16/9 frame is already cropping ~16% off the
+   height of the 3:2 photos and ~25% off the 4:3 ones. It looks fine —
+   these are landscape shots with headroom — but any future change that
+   widens the frame further is spending real photo, not letterbox.
+
+   max-height tracks the natural height at the 1220px wrap (629 * 9/16 =
+   354). It is a backstop for short viewports only; on a normal laptop it
+   sits exactly at the computed height and does nothing. Raise it in step
+   with the column width or it silently re-crops. */
+.intro-split .carousel-slide{aspect-ratio:16/9;max-height:min(354px,44vh);}
 
 /* -------- Overlay arrows (2026-07-26, fourth pass). Prev/next used to
    sit in a control bar under the photo alongside the dots; moving them
