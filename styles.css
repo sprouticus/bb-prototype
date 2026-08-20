@@ -1067,6 +1067,26 @@ button.product-card-img:focus-visible{outline:3px solid var(--orange);outline-of
 button.product-card-img:hover .zoom-hint,
 button.product-card-img:focus-visible .zoom-hint{opacity:1;}
 
+/* -------- Clickable shop-row photo -> lightbox (2026-08-20) --------
+   implements.html and accessories.html media grids reuse the #lightbox
+   markup and JS already on each page for the product catalog below —
+   only a new trigger class was needed, because .product-card-img's own
+   look (square, object-fit:contain, padded, paper background) is built
+   for a product thumbnail, not a full-bleed .shop-tile cover photo; the
+   two would fight if the same class did both jobs.
+   .zoom-hint moves to the top-right corner here: its default bottom-right
+   position collides with .shop-tile's hover-reveal figcaption, which
+   also slides up from the bottom on hover. */
+button.shop-tile-zoom{
+  display:block;width:100%;height:100%;border:none;padding:0;margin:0;
+  background:none;font:inherit;cursor:zoom-in;position:relative;
+}
+button.shop-tile-zoom:hover img{opacity:.9;}
+button.shop-tile-zoom:focus-visible{outline:3px solid var(--orange);outline-offset:-3px;}
+button.shop-tile-zoom .zoom-hint{top:10px;right:10px;bottom:auto;}
+button.shop-tile-zoom:hover .zoom-hint,
+button.shop-tile-zoom:focus-visible .zoom-hint{opacity:1;}
+
 .lightbox{
   position:fixed;inset:0;background:rgba(14,17,18,0.94);
   display:flex;align-items:center;justify-content:center;
@@ -1492,6 +1512,24 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
 }
 
 /* ============================================================
+   LIFT SHOWCASE (enabler-2-0.html, added 2026-08-20) — sits between
+   the What's New list and the Catch-and-Release section. White
+   background so it reads as its own band between the two paper-toned
+   sections on either side of it, same as .vehicle-video does against
+   .page-hero above. Reuses .implements-video's video pane +
+   .video-toggle pattern from the homepage's Catch-and-Release section
+   rather than a new one; renamed to .lift-video since it's a
+   standalone single-video block, not the two-column video+thumbnail
+   layout .implements-video ships inside on the homepage.
+   ============================================================ */
+.lift-showcase{background:var(--white);padding:52px 0 60px;border-bottom:1px solid var(--line);}
+.lift-video{
+  position:relative;border-radius:2px;overflow:hidden;background:var(--ink);
+  max-width:860px;margin:32px auto 0;aspect-ratio:16/9;
+}
+.lift-video video{width:100%;height:100%;object-fit:cover;display:block;}
+
+/* ============================================================
    VEHICLE VIDEO (enabler-2-0.html, added 2026-07-19) — sits directly
    under the page-hero banner, where the photo carousel used to be.
    ============================================================ */
@@ -1670,6 +1708,15 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
 }
 .story-img--large img{min-height:400px;}
 
+/* -------- Lift-deploy video in the top-right story-stack slot
+   (2026-08-20) — same cover-crop sizing as .story-img img, since
+   .story-img's own rule only targets <img>. The toggle button
+   defaults to bottom-right (see .video-toggle), which sits under the
+   hover-reveal figcaption here; moved to top-right so the two don't
+   overlap, same fix as .shop-tile-zoom's .zoom-hint. -------- */
+.story-video video{width:100%;height:100%;object-fit:cover;display:block;}
+.story-video .video-toggle{bottom:auto;top:14px;right:14px;}
+
 /* -------- Annotated catch-and-release diagram (2026-08-16) --------
    This frame is a labelled diagram, not a photo, and the whole point is
    being able to read "SPRING-LOADED HOOK" and the rest without opening
@@ -1732,11 +1779,60 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
    ============================================================ */
 .gallery-carousel-section{background:var(--white);padding-bottom:60px;}
 
-/* -------- INTRO SPLIT — copy left, carousel right
+/* -------- Plain image grids under a merged page-hero (2026-08-20) --------
+   implements.html and accessories.html both reuse .shop-row/.shop-tile
+   (Specs page's 3-column component) for 3 photos apiece. implements.html
+   started on .era-grid (History page's 4-column component) at 4 photos,
+   but dropped to 3 the same day — at 4-up the thumbnails read too small
+   and too close to the product cards below. Both components were already
+   unscoped for exactly this kind of reuse. Only the section wrapper needs
+   page-specific padding since .wrap/.shop-row supply everything else. */
+.implements-media,
+.accessories-media{padding:20px 0 40px;background:var(--white);}
+
+/* .shop-tile crops to 4:3 with object-fit:cover; default centering (50%)
+   is fine when the source is already close to 4:3, but these sources are
+   wider (1.5:1 to 1.68:1) so a meaningful strip comes off the left and
+   right at dead-center. Nudge the focal point toward the actual subject
+   instead of splitting the crop evenly. */
+.implements-media .shop-tile:nth-child(1) img{
+  /* Towing a Rough-Cut Mower, 1.68:1 source: default center crops evenly
+     off both edges; keep the vehicle and driver fully in frame rather
+     than the barn's roofline on the right. */
+  object-position:42% center;
+}
+.accessories-media .shop-tile:nth-child(1) img{
+  /* Built-In Cargo, 1.5:1 source: keep the full diamond-plate box and
+     tailgate, crop into the mesh rack and tire on the right instead. */
+  object-position:35% center;
+}
+.accessories-media .shop-tile:nth-child(2) img{
+  /* Lighting & Suspension, 1.5:1 source: keep the LED light bar,
+     coil-over, and tire together, crop the plain body panel on the left. */
+  object-position:62% center;
+}
+.accessories-media .shop-tile:nth-child(3) img{
+  /* Steering Wheel & Hand Control, 1.5:1 source: keep the handle and
+     joystick centered, crop further into the shop shelving on the right. */
+  object-position:45% center;
+}
+
+/* -------- INTRO SPLIT — copy left, carousel right --------
+   SUPERSEDED 2026-08-20: implements.html and accessories.html no longer
+   use this. Both pages merged this section's eyebrow/heading/sub-copy
+   into their page-hero above (it was duplicating that block) and swapped
+   the carousel for a plain image grid (.implements-media/.era-grid and
+   .accessories-media/.shop-row) so the section doesn't add the height a
+   carousel costs. Left in place rather than deleted in case a future
+   page wants the same copy-left/carousel-right treatment; the reasoning
+   below for why a carousel over a plain grid was chosen in the first
+   place is still accurate for THAT tradeoff, it just no longer applies
+   to these two pages specifically.
+
    (2026-07-26, third pass; generalized from .implements-intro to
    .intro-split on 2026-07-26 when the Accessories page adopted the
-   same treatment. Used by implements.html and accessories.html — keep
-   it page-agnostic.)
+   same treatment. Was used by implements.html and accessories.html —
+   built page-agnostic.)
 
    HISTORY, so this doesn't get "simplified" back: this started as a
    full-bleed 16/7 carousel copied from the Photos page. Because that

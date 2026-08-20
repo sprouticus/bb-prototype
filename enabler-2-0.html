@@ -173,8 +173,8 @@
       <ul class="changing-list">
 
         <li class="filled"><span class="tag-new">Capacity</span>Jump seats in back bring capacity to three.</li>
-        <li class="filled"><span class="tag-new">Motor &amp; Steering</span>A bigger motor with more torque, and power-assist steering.</li>
-        <li class="filled"><span class="tag-new">Visibility</span>More rear cameras and larger West Coast mirrors for towing.</li>
+        <li class="filled"><span class="tag-new">Motor</span>A bigger motor with more torque, up to a top speed of 25 miles an hour.</li>
+        <li class="filled"><span class="tag-new">Visibility</span>A better rear camera with a larger viewing screen on the dashboard, and larger West Coast mirrors for towing.</li>
         <li class="filled"><span class="tag-new">Roof</span>A curved canvas roof on tensioning rods, so it stays taut. The current model has none.</li>
       </ul>
     </div>
@@ -190,6 +190,32 @@
   </div>
 </section>
 
+<!-- ============ LIFT SHOWCASE — the rear lift is the mechanism the
+     hero's "unassisted access" claim depends on. Same muted-autoplay-loop
+     pattern as the Catch-and-Release video just below: plays only once
+     scrolled into view, pauses on scroll-out, never autoplays for
+     prefers-reduced-motion. ============ -->
+<section class="lift-showcase">
+  <div class="wrap">
+    <div class="section-head">
+      <div>
+        <p class="eyebrow">Built-In Access</p>
+        <h2>The lift, self-operated.</h2>
+        <p class="section-head-note">The lift is what makes solo operation possible. It lowers to ground level, the driver boards on their own, and it raises them into the seat. No spotter, no transfer, no one else needed to get the vehicle moving.</p>
+      </div>
+    </div>
+    <div class="lift-video">
+      <video loop muted playsinline aria-label="A wheelchair user operating the Enabler's rear lift to board the vehicle">
+        <source src="video/enabler-lift-boarding.mp4" type="video/mp4">
+      </video>
+      <button type="button" class="video-toggle is-paused" aria-label="Play video" aria-pressed="false">
+        <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+        <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+      </button>
+    </div>
+  </div>
+</section>
+
 <section class="implements-teaser">
   <div class="wrap">
     <div class="section-head">
@@ -197,7 +223,7 @@
         <p class="eyebrow">Why the Enabler Is a Workhorse</p>
         <h2>Catch-and-Release: a quick-attach hitch for towed implements.</h2>
 
-        <p class="section-head-note">Catch-and-Release is an add-on. Adding it to the vehicle is what makes the towed implements work. Mowers, sprayers, blades and trailers hook up from the driver's seat. No transfer, no help needed.</p>
+        <p class="section-head-note">Catch-and-Release is an available add-on. Adding it to the vehicle is what makes the towed implements work. Mowers, sprayers, blades and trailers hook up from the driver's seat. No transfer, no help needed.</p>
       </div>
     </div>
     <div class="implements-showcase">
@@ -402,14 +428,22 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
     '</a>';
 })();
 
-/* ============ IMPLEMENTS VIDEO — starts playing only once the
-   section scrolls into view, pauses once it scrolls out, and always
-   respects a manual pause/play from the toggle button. Never
-   autoplays for prefers-reduced-motion users; they have to press
-   play themselves. ============ */
-(function(){
-  const container = document.querySelector('.implements-video');
-  if(!container) return;
+/* ============ SCROLL-TRIGGERED VIDEOS — Catch-and-Release and the
+   lift both use this pattern: play only once the section scrolls
+   into view, pause once it scrolls out, always respect a manual
+   pause/play from the toggle button, and never autoplay for
+   prefers-reduced-motion users; they have to press play themselves.
+   One instance runs per container so the two videos on this page
+   don't interfere with each other.
+
+   Both source files have a short fade to/from black baked into the
+   start and end (re-encode, not CSS/JS), so the hard cut where the
+   native loop restarts reads as a soft transition instead of a jump.
+   A direct crossfade dissolve was tried first and rejected — the
+   encode came out visibly noisy through the transition, not a clean
+   blend. If either video is ever re-exported from the original
+   footage, redo this fade or the loop seam comes back. ============ */
+document.querySelectorAll('.implements-video, .lift-video').forEach(function(container){
   const video = container.querySelector('video');
   const toggle = container.querySelector('.video-toggle');
   if(!video || !toggle) return;
@@ -451,7 +485,7 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   } else if(!reduceMotion){
     video.play().catch(function(){});
   }
-})();
+});
 
 /* ============ ACCESSORIES SCROLL ARROWS — left/right buttons step
    the thumbnail row by roughly one viewport width per click, replacing

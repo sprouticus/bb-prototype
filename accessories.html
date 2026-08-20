@@ -93,74 +93,45 @@
 
 <section class="page-hero">
   <div class="wrap">
-    <p class="eyebrow">Customize Your Vehicle</p>
-    <h1>Accessories</h1>
+    <p class="eyebrow">Multifunctional by Design</p>
+    <h1>Adaptable to multiple drivers.</h1>
     <div class="rule"></div>
-    <p>Built for work or adventure.</p>
+    <p>Made to adapt to any driver. Configure the Enabler with custom driver seating, specialized lighting, and high-capacity cargo accessories built for your specific trade, fleet, or terrain requirements.</p>
   </div>
 </section>
 
-<section class="intro-split">
+<!-- Used to run as a two-column split below this hero (copy left, carousel
+     right) with its own eyebrow/heading/sub-copy duplicating the block
+     above. Merged into the single page-hero (2026-08-20) and the media
+     collapsed from a carousel to a plain grid, so this section doesn't add
+     the height a full-width carousel would — see the .intro-split comment
+     in styles.css for why a carousel was chosen originally; a static grid
+     sidesteps that tradeoff entirely since every photo is visible without
+     scrolling through slides. -->
+<section class="accessories-media">
   <div class="wrap">
-    <div class="intro-split-grid">
-
-      <div class="intro-split-copy">
-        <p class="eyebrow">Multifunctional by Design</p>
-        <h2>Adaptable to multiple drivers.</h2>
-        <div class="rule"></div>
-
-        <p class="sub">Made to adapt to any driver. Configure the Enabler with custom driver seating, specialized lighting, and high-capacity cargo accessories built for your specific trade, fleet, or terrain requirements.</p>
-      </div>
-
-      <div class="intro-split-media">
-        <div class="carousel-frame">
-        <div class="carousel" aria-label="Close-up details of the Enabler's customizable components">
-          <div class="carousel-track" id="carousel-track">
-
-            <div class="carousel-slide">
-              <img src="images/enabler-cargo-bed-detail.jpg" alt="Close-up of the Enabler's diamond-plate cargo bed and tie-down hardware">
-              <div class="carousel-caption">
-                <p class="carousel-caption-title">Built-In Cargo</p>
-                <p>Diamond-plate cargo bed with integrated tie-downs, standard on every build.</p>
-              </div>
-            </div>
-
-            <div class="carousel-slide">
-              <img src="images/enabler-led-suspension-detail.jpg" alt="Close-up of an off-road LED light bar and coil-over suspension on the Enabler">
-              <div class="carousel-caption">
-                <p class="carousel-caption-title">Lighting &amp; Suspension</p>
-                <p>Off-road LED lighting and coil-over suspension, specified per driver and per job.</p>
-              </div>
-            </div>
-
-            <div class="carousel-slide">
-              <img src="images/enabler-taillight-detail.jpg" alt="Close-up of the Enabler's rear taillight and grab handle">
-              <div class="carousel-caption">
-                <p class="carousel-caption-title">Finish Details</p>
-                <p>Every light, handle, and fastener is chosen to match how the vehicle will be used.</p>
-              </div>
-            </div>
-
-          </div><!-- end .carousel-track -->
-        </div><!-- end .carousel -->
-
-        <button class="carousel-arrow carousel-prev" aria-label="Previous photo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+    <div class="shop-row">
+      <figure class="shop-tile">
+        <button type="button" class="shop-tile-zoom" data-full="images/enabler-cargo-bed-detail.jpg" data-caption="Built-In Cargo" aria-label="View larger photo: Built-In Cargo">
+          <img src="images/enabler-cargo-bed-detail.jpg" alt="Close-up of the Enabler's diamond-plate cargo bed and tie-down hardware">
+          <span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span>
         </button>
-        <button class="carousel-arrow carousel-next" aria-label="Next photo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        <figcaption>Built-In Cargo</figcaption>
+      </figure>
+      <figure class="shop-tile">
+        <button type="button" class="shop-tile-zoom" data-full="images/enabler-led-suspension-detail.jpg" data-caption="Lighting &amp; Suspension" aria-label="View larger photo: Lighting and Suspension">
+          <img src="images/enabler-led-suspension-detail.jpg" alt="Close-up of an off-road LED light bar and coil-over suspension on the Enabler">
+          <span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span>
         </button>
-        </div><!-- end .carousel-frame -->
-
-        <div class="carousel-controls">
-          <div class="carousel-dots" role="tablist" aria-label="Select photo">
-            <button class="carousel-dot active" role="tab" aria-label="Photo 1" aria-selected="true"></button>
-            <button class="carousel-dot" role="tab" aria-label="Photo 2" aria-selected="false"></button>
-            <button class="carousel-dot" role="tab" aria-label="Photo 3" aria-selected="false"></button>
-          </div>
-        </div>
-      </div>
-
+        <figcaption>Lighting &amp; Suspension</figcaption>
+      </figure>
+      <figure class="shop-tile">
+        <button type="button" class="shop-tile-zoom" data-full="images/steering-wheel-detail-landscape.jpg" data-caption="Steering Wheel &amp; Hand Control" aria-label="View larger photo: Steering Wheel and Hand Control">
+          <img src="images/steering-wheel-detail-landscape.jpg" alt="Close-up of the Enabler's steering wheel with an integrated hand-control joystick">
+          <span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span>
+        </button>
+        <figcaption>Steering Wheel &amp; Hand Control</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -247,8 +218,8 @@
         <li>Turn signals</li>
         <li>Brake lights</li>
         <li>Driving lights</li>
-        <li>Windshield</li>
-        <li>Mirrors</li>
+        <li>Mirror</li>
+        <li>Lift</li>
       </ul>
     </div>
   </div>
@@ -259,7 +230,7 @@
     <p class="eyebrow">Built Around the Driver</p>
     <h2>Start a pre-order and customize the vehicle.</h2>
     <div class="rule"></div>
-    <p class="sub">Accessories are chosen as part of the pre-order, and anything specified at build can be changed later. There's <strong>NO</strong> payment required.</p>
+    <p class="sub">Accessories are chosen as part of the pre-order, and anything specified at pre-order can be changed later. There's <strong>NO</strong> payment required.</p>
     <div class="cta-row">
       <a href="pre-order.html" class="btn btn-orange">Start a Pre-Order
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -353,36 +324,6 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   });
 })();
 
-/* ============ INTRO CAROUSEL — identical to the
-   Implements and Photos page implementation. Arrows wrap around, dots
-   jump directly. Kept verbatim rather than refactored into a shared
-   file so the pages don't drift apart; adding or removing a slide
-   requires matching .carousel-dot buttons in the markup. ============ */
-(function(){
-  const track = document.getElementById('carousel-track');
-  const slides = Array.from(document.querySelectorAll('.carousel-slide'));
-  const prevBtn = document.querySelector('.carousel-prev');
-  const nextBtn = document.querySelector('.carousel-next');
-  const dots = Array.from(document.querySelectorAll('.carousel-dot'));
-  if(!track || !slides.length) return;
-
-  let index = 0;
-
-  function show(i){
-    index = (i + slides.length) % slides.length;
-    track.style.transform = 'translateX(-' + (index * 100) + '%)';
-    dots.forEach(function(dot, n){
-      dot.classList.toggle('active', n === index);
-      dot.setAttribute('aria-selected', String(n === index));
-    });
-  }
-
-  prevBtn?.addEventListener('click', function(){ show(index - 1); });
-  nextBtn?.addEventListener('click', function(){ show(index + 1); });
-  dots.forEach(function(dot, i){
-    dot.addEventListener('click', function(){ show(i); });
-  });
-})();
 </script>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged accessory photo" hidden>
@@ -432,7 +373,7 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
     document.body.style.overflow = '';
     if (lastFocused) lastFocused.focus();
   }
-  document.querySelectorAll('.product-card-img[data-full]').forEach(function(btn){
+  document.querySelectorAll('.product-card-img[data-full], .shop-tile-zoom[data-full]').forEach(function(btn){
     btn.addEventListener('click', function(){
       openLightbox(btn);
     });

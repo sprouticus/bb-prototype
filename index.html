@@ -128,13 +128,19 @@
     <div class="story-grid">
 
       <figure class="story-img story-img--large">
-        <img src="images/enabler-2-0-solar-farm.jpg" alt="Rear view of the Enabler 2.0 parked on a dirt road at a solar array, showing the roll cage, rear winch, and BBE Enabler 2.0 badge">
+        <img src="images/enabler-2-0-solar-farm.jpg" alt="Rear view of the Enabler 2.0 parked on a dirt road at a solar array, showing the frame, rear winch, and BBE Enabler 2.0 badge">
         <figcaption>Built for demanding worksites</figcaption>
       </figure>
       <div class="story-stack">
-        <figure class="story-img">
-          <img src="images/enabler-desert-path.jpg" alt="The Enabler parked on a paved path near a solar array">
-          <figcaption>Built for rough terrain</figcaption>
+        <figure class="story-img story-video">
+          <video loop muted playsinline aria-label="The Enabler's rear wheelchair lift deploying to ground level on its own">
+            <source src="video/enabler-lift-deploy.mp4" type="video/mp4">
+          </video>
+          <button type="button" class="video-toggle is-paused" aria-label="Play video" aria-pressed="false">
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
+          <figcaption>Rear lift deploys to ground level</figcaption>
         </figure>
         <figure class="story-img">
           <img src="images/enabler-2-0-orchard-mowing.jpg" alt="Person wearing a hard hat driving the Enabler 2.0 with a Rammy flail mower on the front mount, offset to the right, cutting grass in an orchard row">
@@ -143,7 +149,7 @@
       </div>
     </div>
     <div class="gallery-link">
-      <a href="photos.html" class="btn btn-outline">View Photo Gallery
+      <a href="photos.html" class="btn btn-outline">View Gallery
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
       </a>
     </div>
@@ -207,7 +213,7 @@
         <p class="eyebrow">Why the Enabler Is a Workhorse</p>
         <h2>Catch-and-Release: a quick-attach hitch for towed implements.</h2>
 
-        <p class="section-head-note">Catch-and-Release is our quick-connect implement hitch. A spring-loaded hook catches a pin on the implement tongue, and a lever in the cab lets it go. Mowers, sprayers, plows and trailers hook up from the driver's seat.</p>
+        <p class="section-head-note">Catch-and-Release is our quick-connect implement hitch. A spring-loaded hook catches a pin on the implement tongue, and a lever in the cab lets it go. Mowers, sprayers and trailers hook up from the driver's seat.</p>
       </div>
     </div>
     <div class="implements-showcase">
@@ -269,7 +275,7 @@
     <h2>Pre-order the Enabler 2.1. No payment required.</h2>
     <div class="rule"></div>
 
-    <p class="sub">Takes a few minutes and holds a place in line. There's <strong>NO</strong> deposit. The first 50 pre-orders get the base vehicle at $34,000.</p>
+    <p class="sub">Take a few minutes and hold your place in line. There's <strong>NO</strong> deposit. The first 50 pre-orders get the base vehicle at $34,000.</p>
     <div class="cta-row">
       <a href="pre-order.html" class="btn btn-orange">Pre-Order the Enabler 2.1
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
@@ -363,14 +369,22 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   });
 })();
 
-/* ============ IMPLEMENTS VIDEO — starts playing only once the
-   section scrolls into view, pauses once it scrolls out, and always
-   respects a manual pause/play from the toggle button. Never
-   autoplays for prefers-reduced-motion users; they have to press
-   play themselves. ============ */
-(function(){
-  const container = document.querySelector('.implements-video');
-  if(!container) return;
+/* ============ SCROLL-TRIGGERED VIDEOS — Catch-and-Release and the
+   lift-deploy clip in the On the Job grid both use this pattern:
+   play only once the section scrolls into view, pause once it scrolls
+   out, always respect a manual pause/play from the toggle button, and
+   never autoplay for prefers-reduced-motion users; they have to press
+   play themselves. One instance runs per container so the two videos
+   on this page don't interfere with each other.
+
+   Both source files have a short fade to/from black baked into the
+   start and end (re-encode, not CSS/JS), so the hard cut where the
+   native loop restarts reads as a soft transition instead of a jump.
+   A direct crossfade dissolve was tried first and rejected — the
+   encode came out visibly noisy through the transition, not a clean
+   blend. If either video is ever re-exported from the original
+   footage, redo this fade or the loop seam comes back. ============ */
+document.querySelectorAll('.implements-video, .story-video').forEach(function(container){
   const video = container.querySelector('video');
   const toggle = container.querySelector('.video-toggle');
   if(!video || !toggle) return;
@@ -412,7 +426,7 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   } else if(!reduceMotion){
     video.play().catch(function(){});
   }
-})();
+});
 </script>
 <script src="lightbox.js" defer></script>
 </body>

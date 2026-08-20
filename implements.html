@@ -94,93 +94,64 @@
 <section class="page-hero">
   <div class="wrap">
 
-    <p class="eyebrow">Towing &amp; Front-Mounted Tools</p>
-    <h1>Implements</h1>
+    <!-- Heading is attachment-neutral on purpose: it has to cover the
+         towed implements and the front-mounted ones equally, since both
+         have a section below showing both. It read "Towed implements all
+         run off the same hitch", which put a towing-only frame on a
+         section that is not towing-only.
+
+         Kept strictly factual on both mechanisms, no self-sufficiency
+         pitch (no spotter, couples on contact, etc.) — that messaging
+         belongs only on the Catch-and-Release page, which is
+         rear-hitch-specific. Front-mounted implements still need manual
+         help to connect, so this section must not imply otherwise. -->
+    <p class="eyebrow">Built to Connect</p>
+    <h1>Implements mount front and rear.</h1>
     <div class="rule"></div>
-    <p>The Enabler is a workhorse designed to support towing implements from Demco and Kunz and front-mounted implements from Rammy.</p>
+    <p>Towed implements run off the Catch-and-Release hitch. Front-mounted implements run off the winch. Both are add-ons, so the Enabler can carry implements front and back.</p>
   </div>
 </section>
 
-<section class="intro-split">
+<!-- Used to run as a two-column split below this hero (copy left, carousel
+     right) with its own eyebrow/heading/sub-copy duplicating the block
+     above. Merged into the single page-hero (2026-08-20) and the media
+     collapsed from a carousel to a plain grid, so this section doesn't add
+     the height a full-width carousel would — see the .intro-split comment
+     in styles.css for why a carousel was chosen originally; a static grid
+     sidesteps that tradeoff entirely since every photo is visible without
+     scrolling through slides.
+
+     Grid started at 4 photos on .era-grid (History page's 4-column
+     component); dropped to 3 (2026-08-20) — at 4-up the thumbnails read as
+     too small and too similar to the Towed/Front-Mounted product cards
+     below. Switched to .shop-row (Specs page's 3-column component, also
+     reused on accessories.html) so 3 photos render larger rather than
+     leaving a dead 4th column. Dropped the towed-sprayer photo since the
+     Towing Implements section below already leads with a sprayer photo. -->
+<section class="implements-media">
   <div class="wrap">
-    <div class="intro-split-grid">
-
-      <div class="intro-split-copy">
-
-        <!-- Heading is attachment-neutral on purpose: it has to cover the
-             towed implements and the front-mounted ones equally, since both
-             have a section below and the carousel beside it shows both. It
-             read "Towed implements all run off the same hitch", which put a
-             towing-only frame on a section that is not towing-only.
-
-             The driver's-seat sentence stays scoped to the Catch-and-Release
-             hitch, because that is the part that couples on contact.
-             Front-mounted implements go on with the winch add-on, which is a
-             different mechanism — keep the two described separately. -->
-        <p class="eyebrow">Built to Connect</p>
-        <h2>Implements mount front and rear.</h2>
-        <div class="rule"></div>
-        <p class="sub">Towed implements run off the Catch-and-Release hitch. It couples on contact, so going from a mower to a sprayer to a trailer happens from the driver's seat, with no spotter and no hardware to swap between brands. Front-mounted implements run off the winch. Both are add-ons to the vehicle.</p>
-      </div>
-
-      <div class="intro-split-media">
-        <div class="carousel-frame">
-        <div class="carousel" aria-label="The Enabler 2.0 with towed and front-mounted implements">
-          <div class="carousel-track" id="carousel-track">
-
-            <div class="carousel-slide">
-              <img src="images/enabler-2-0-towing-sprayer.jpg" alt="The Enabler 2.0 towing a Demco boom sprayer between rows of young orchard trees, driver visible">
-              <div class="carousel-caption">
-                <p class="carousel-caption-title">Towing to the Job Site</p>
-                <p>Pulling a boom sprayer between orchard rows.</p>
-              </div>
-            </div>
-
-            <div class="carousel-slide">
-              <img src="images/enabler-2-0-towing-mower.jpg" alt="The Enabler 2.0 towing a rough-cut mower along a farm track past a weathered barn, driver at the wheel">
-              <div class="carousel-caption">
-                <p class="carousel-caption-title">Towing a Rough-Cut Mower</p>
-                <p>Pulling a rough-cut mower along a farm track.</p>
-              </div>
-            </div>
-
-            <div class="carousel-slide">
-              <img src="images/enabler-2-0-towing-snowblower.jpg" alt="Rear view of the Enabler 2.0 with a Rammy snowblower attachment staged behind it in the snow">
-              <div class="carousel-caption">
-                <p class="carousel-caption-title">Ready for the Attachment</p>
-                <p>Staged with a snowblower attachment.</p>
-              </div>
-            </div>
-
-            <div class="carousel-slide">
-              <img src="images/enabler-2-0-orchard-mowing.jpg" alt="Person wearing a hard hat driving the Enabler 2.0 with a Rammy flail mower on the front mount, offset to the right, cutting grass in an orchard row">
-              <div class="carousel-caption">
-                <p class="carousel-caption-title">Front-Mounted Mowing</p>
-                <p>A Rammy flail mower on the front mount, offset to the right of the vehicle.</p>
-              </div>
-            </div>
-
-          </div><!-- end .carousel-track -->
-        </div><!-- end .carousel -->
-
-        <button class="carousel-arrow carousel-prev" aria-label="Previous photo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
+    <div class="shop-row">
+      <figure class="shop-tile">
+        <button type="button" class="shop-tile-zoom" data-full="images/enabler-2-0-towing-mower.jpg" data-caption="Towing a Rough-Cut Mower" aria-label="View larger photo: Towing a Rough-Cut Mower">
+          <img src="images/enabler-2-0-towing-mower.jpg" alt="The Enabler 2.0 towing a rough-cut mower along a farm track past a weathered barn, driver at the wheel">
+          <span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span>
         </button>
-        <button class="carousel-arrow carousel-next" aria-label="Next photo">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
+        <figcaption>Towing a Rough-Cut Mower</figcaption>
+      </figure>
+      <figure class="shop-tile">
+        <button type="button" class="shop-tile-zoom" data-full="images/enabler-2-0-towing-snowblower.jpg" data-caption="Front-Mounted Snowblower" aria-label="View larger photo: Front-Mounted Snowblower">
+          <img src="images/enabler-2-0-towing-snowblower.jpg" alt="Rear view of the Enabler 2.0 with a Rammy snowblower attachment staged behind it in the snow">
+          <span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span>
         </button>
-        </div><!-- end .carousel-frame -->
-
-        <div class="carousel-controls">
-          <div class="carousel-dots" role="tablist" aria-label="Select photo">
-            <button class="carousel-dot active" role="tab" aria-label="Photo 1" aria-selected="true"></button>
-            <button class="carousel-dot" role="tab" aria-label="Photo 2" aria-selected="false"></button>
-            <button class="carousel-dot" role="tab" aria-label="Photo 3" aria-selected="false"></button>
-            <button class="carousel-dot" role="tab" aria-label="Photo 4" aria-selected="false"></button>
-          </div>
-        </div>
-      </div>
-
+        <figcaption>Front-Mounted Snowblower</figcaption>
+      </figure>
+      <figure class="shop-tile">
+        <button type="button" class="shop-tile-zoom" data-full="images/enabler-2-0-orchard-mowing.jpg" data-caption="Front-Mounted Mowing" aria-label="View larger photo: Front-Mounted Mowing">
+          <img src="images/enabler-2-0-orchard-mowing.jpg" alt="Person wearing a hard hat driving the Enabler 2.0 with a Rammy flail mower on the front mount, offset to the right, cutting grass in an orchard row">
+          <span class="zoom-hint" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3M11 8v6M8 11h6"/></svg></span>
+        </button>
+        <figcaption>Front-Mounted Mowing</figcaption>
+      </figure>
     </div>
   </div>
 </section>
@@ -394,35 +365,6 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
   });
 })();
 
-/* ============ HERO CAROUSEL — same implementation as the Photos page.
-   Arrows wrap around; dots jump directly. Kept verbatim rather than
-   refactored so the two pages don't drift. Adding or removing a slide
-   requires matching .carousel-dot buttons in the markup. ============ */
-(function(){
-  const track = document.getElementById('carousel-track');
-  const slides = Array.from(document.querySelectorAll('.carousel-slide'));
-  const prevBtn = document.querySelector('.carousel-prev');
-  const nextBtn = document.querySelector('.carousel-next');
-  const dots = Array.from(document.querySelectorAll('.carousel-dot'));
-  if(!track || !slides.length) return;
-
-  let index = 0;
-
-  function show(i){
-    index = (i + slides.length) % slides.length;
-    track.style.transform = 'translateX(-' + (index * 100) + '%)';
-    dots.forEach(function(dot, n){
-      dot.classList.toggle('active', n === index);
-      dot.setAttribute('aria-selected', String(n === index));
-    });
-  }
-
-  prevBtn?.addEventListener('click', function(){ show(index - 1); });
-  nextBtn?.addEventListener('click', function(){ show(index + 1); });
-  dots.forEach(function(dot, i){
-    dot.addEventListener('click', function(){ show(i); });
-  });
-})();
 </script>
 
 <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Enlarged implement photo" hidden>
@@ -487,7 +429,7 @@ document.querySelector('.nav-toggle')?.addEventListener('click', function(){
     document.body.style.overflow = '';
     if (lastFocused) lastFocused.focus();
   }
-  document.querySelectorAll('.product-card-img[data-full]').forEach(function(btn){
+  document.querySelectorAll('.product-card-img[data-full], .shop-tile-zoom[data-full]').forEach(function(btn){
     btn.addEventListener('click', function(){
       openLightbox(btn);
     });
