@@ -21,13 +21,20 @@
 
    PROGRESS IS ONE-DIRECTIONAL — this is the load-bearing idea.
    Progress is a single float in [0, rowCount]: the integer part is
-   which row the vehicle is on, the fraction is how far along that
-   row's run it has travelled. Scroll position proposes a raw value;
+   which row the vehicle is on, the fraction is how far through that
+   row's four phases it is. Scroll position proposes a raw value;
    `progress` only ever accepts a larger one. So scrolling back up
    does not rewind the vehicle and does not un-reveal copy — which
    is the requested behavior, and also means a reader who scrolls up
    to re-read milestone 2 is not punished by having it wiped out
    from under them. The Start Over button is the only way back.
+
+   THE PIN LETS GO IF THE READER SCROLLS BACK UP. The ratchet on its
+   own froze the frame while the stage stayed stuck, so scrolling up
+   moved nothing at all — thousands of pixels of dead page. Instead
+   the section releases and becomes an ordinary block, keeping every
+   milestone revealed so far, and re-pins where it left off when the
+   reader comes back down. See detach().
 
    MOTION IS TIED DIRECTLY TO SCROLLING. Position is a pure function
    of scroll position — no easing, no time-based loop, nothing that
@@ -35,6 +42,13 @@
    where it is. One line's run therefore costs exactly one row
    height of scroll, and the only way to make the traverse slower is
    to give the row more scroll distance to cover.
+
+   A LINE IS FOUR PHASES, NOT ONE — drive, hold, fade, lift. See the
+   tuning block. The hold is the load-bearing one: a stretch of
+   scrolling where nothing moves at all, so the copy stands finished
+   and still for a while before the line carries it out of view.
+   Anything added here that moves the line, the copy or the vehicle
+   belongs after it.
    ============================================================ */
 (function () {
   'use strict';
@@ -62,18 +76,45 @@
   var siteHeader = document.querySelector('header.site');
 
   /* ---- tuning ----------------------------------------------------
+     A LINE'S SCROLL BUDGET IS SPENT IN FOUR PHASES, in this order,
+     and the four constants below are how many pixels of scrolling
+     each phase costs. They are the speed knobs, and the only ones.
+
+       PIN_DRIVE  the traverse: the vehicle crosses the line, wiping
+                that line's copy in behind it. The wipe finishes on
+                the last pixel of this phase, as the vehicle reaches
+                the corner. The timeline's own height gave about
+                300px per line, which was a single trackpad swipe per
+                milestone; 1200 is the quarter-speed that asked for.
+       PIN_HOLD   nothing moves. Vehicle parked at the corner, line
+                stationary, that milestone's copy fully revealed.
+                THIS IS READING TIME, and it is why the phases exist
+                at all. Before them a line was one undivided run: the
+                wipe finished on the same pixel the vehicle finished
+                on, while the line had already been sliding up since
+                72% and the vehicle dissolving since 86%. So the tail
+                of every milestone was carried out of view while it
+                was still under the gradient — unreadable by
+                construction, no matter how slowly the reader went.
+       PIN_FADE   the vehicle dissolves out. Line still stationary.
+       PIN_LIFT   the line rides up to the next milestone. The
+                vehicle is invisible for the whole of it, so it is
+                never seen teleporting or driving diagonally.
+
+     The ordering matters more than the numbers: every phase that
+     moves something sits after the phase that made the copy
+     readable. Keep it that way when tuning.
+
+     COST. Five lines is now about 11,300px of scrolling held on this
+     section, against 6,600 before the hold existed. Raising any of
+     these four makes the page markedly longer to get through — a
+     real cost, not a free dial.
+
+     THE REST OF THE DIALS
      PIN_LEAD   pixels of pinned scrolling before the vehicle sets
                 off, held with it parked at the start of line 1 and
                 no copy showing. Absorbs the overshoot of whatever
                 flick brought the reader here; see measure().
-     PIN_PER_LINE  THE SPEED KNOB, and the only one. Pixels of
-                scrolling it takes to drive one line end to end.
-                The timeline's own height gave about 300px per line,
-                which was a single trackpad swipe per milestone;
-                1200 is the quarter-speed that asked for. Five lines
-                at 1200 is 6000px of scrolling held on this section,
-                so raising this makes the page markedly longer to get
-                through — it is a real cost, not a free dial.
      STAGE_ANCHOR where in the pinned stage the line currently being
                 driven sits, as a fraction of stage height. 0.62
                 leaves room for the milestone copy above it and the
@@ -84,24 +125,46 @@
                 vehicle looks half cut off; with it the last line
                 rides up clear of the edge and the stage shows this
                 much white underneath.
-     FADE       fraction of a run spent dissolving out at the end /
-                back in at the start. Both ends together read as one
-                cross-dissolve across the turn.
      BAND_MIN   floor and ceiling, in px, for the soft edge of the
      BAND_MAX   copy wipe. See revealFor().
      CUE_ABOVE_LINE  how far above the first rule the Scroll Down cue
                 sits, in px. Placed from JS because it is measured
                 from the rule, and the rule's position depends on a
                 row height that CSS has no way to read.
+     UP_RELEASE how far back up the reader has to scroll, in px,
+                before the pin lets go mid-run — see detach(). Small
+                enough that scrolling up feels like it works
+                immediately, large enough that the tail of a flick or
+                a stray delta from a mouse wheel does not release it
+                by accident.
      ---------------------------------------------------------------- */
-  var PIN_PER_LINE = 1200;
+  var PIN_DRIVE = 1200;
+  var PIN_HOLD = 550;
+  var PIN_FADE = 180;
+  var PIN_LIFT = 300;
   var PIN_LEAD = 600;
   var STAGE_ANCHOR = 0.62;
   var STAGE_TAIL = 90;
-  var FADE = 0.14;
   var BAND_MIN = 40;
   var BAND_MAX = 140;
   var CUE_ABOVE_LINE = 200;
+  var UP_RELEASE = 24;
+  var RESUME_SLACK = 4;
+
+  /* The phases as fractions of one line's budget, which is the unit
+     the fractional part of `progress` is measured in. Everything
+     downstream compares against these rather than against raw pixels,
+     so changing a phase length above moves its boundary here and
+     nothing else has to know. */
+  var PIN_PER_LINE = PIN_DRIVE + PIN_HOLD + PIN_FADE + PIN_LIFT;
+  var P_DRIVE_END = PIN_DRIVE / PIN_PER_LINE;
+  var P_HOLD_END = (PIN_DRIVE + PIN_HOLD) / PIN_PER_LINE;
+  var P_FADE_END = (PIN_DRIVE + PIN_HOLD + PIN_FADE) / PIN_PER_LINE;
+  /* The fade back IN at the start of the next line costs the same as
+     the fade out, so the two together read as one cross-dissolve
+     across the turn. It runs against the opening of that line's
+     drive, so the vehicle is already moving as it appears. */
+  var P_FADE_IN = PIN_FADE / PIN_PER_LINE;
 
   var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   /* 821px, not 820px: the CSS collapses the switchbacks AT max-width
@@ -115,9 +178,20 @@
      and only ever upward — see the ratchet note at the top. */
   var progress = 0;
   /* Is the section currently holding the viewport and driving the
-     animation? Goes false for good once the vehicle parks — see
-     finish() — and only comes back via Start Over. */
+     animation? Three states between these two flags:
+       pinned            running — scrolling drives the vehicle
+       neither           released mid-run, because the reader scrolled
+                         back up. Everything revealed stays revealed
+                         and `progress` keeps its place; scrolling
+                         back down re-pins. See detach().
+       finished          the vehicle has parked at the last milestone.
+                         Released for good; only Start Over comes back.
+     ---------------------------------------------------------------- */
   var pinned = false;
+  var finished = false;
+  /* The furthest down the reader has been since the pin last took
+     hold. Only used to spot them scrolling back up — see onScroll. */
+  var peakY = 0;
   var queued = false;        // a paint is already scheduled for this frame
   var simpleObserver = null;
 
@@ -161,7 +235,14 @@
        reader arrived. */
     var stickyTop = siteHeader ? siteHeader.offsetHeight : 0;
     var stageH = Math.max(window.innerHeight - stickyTop, 240);
-    var travel = rowEls.length * PIN_PER_LINE;
+    /* The last line has nowhere to move on to, so it is bought its
+       drive and its hold and nothing more — a fade and a lift there
+       would be scroll distance spent on a dissolve the reader must
+       not see and a reposition that cannot happen. `endP` is that
+       stopping point in the same line units as `progress`, and it is
+       what "finished" means everywhere below. */
+    var endP = (rowEls.length - 1) + P_HOLD_END;
+    var travel = endP * PIN_PER_LINE;
     var distance = PIN_LEAD + travel;
     var pinTopDoc = pin.getBoundingClientRect().top + window.pageYOffset;
 
@@ -184,6 +265,7 @@
     geo = {
       stickyTop: stickyTop,
       stageH: stageH,
+      endP: endP,
       travel: travel,
       distance: distance,
       pinnedH: stageH + distance,
@@ -266,25 +348,53 @@
   function rawProgress() {
     if (geo.travel <= 0) return 0;
     var through = (window.pageYOffset - geo.pinStart - PIN_LEAD) / geo.travel;
-    return clamp(through, 0, 1) * geo.rows.length;
+    return clamp(through, 0, 1) * geo.endP;
+  }
+
+  /* The inverse: the scroll position, with the pin in force, that
+     reads as progress `p`. Used to put the reader back where they
+     were when the pin is restored. */
+  function pinnedYFor(p) {
+    if (geo.travel <= 0) return geo.pinStart + PIN_LEAD;
+    return geo.pinStart + PIN_LEAD + (p / geo.endP) * geo.travel;
+  }
+
+  /* And the scroll position, with the section RELEASED, that leaves
+     the current frame exactly where it is on screen. Pinned, the
+     timeline's top sits at stickyTop + shift; released, .snake sits
+     at the pin's own document top, so the reader belongs that same
+     shift above pinStart.
+
+     Derived, never stored: progress is frozen while released, so this
+     only moves if a resize moves the geometry under it — and then it
+     moves with it, which a stored copy would not. It is both the
+     landing point on the way out and the trigger on the way back in,
+     and those two have to be the same number or the frame jumps. */
+  function releasedY() {
+    return geo.pinStart - shiftFor(progress);
   }
 
   /* How far up the timeline is lifted inside the stage, in px, so
      that the line currently being driven sits at STAGE_ANCHOR.
 
-     THE LINE HOLDS STILL WHILE THE VEHICLE CROSSES IT. The lift
+     THE LINE HOLDS STILL UNTIL THE VEHICLE HAS GONE. The lift
      interpolates from this row's rule to the next one's, but not
-     evenly across the run — it is held at zero for the first ~72%
-     and then smoothstepped through in the last 2 x FADE, which is
-     the window the vehicle spends dissolving out. So the reader
-     watches a stationary line being driven along, and the page
-     repositions to the next line while the vehicle is invisible.
+     evenly across the line — it is held at zero right through the
+     drive, the hold and the fade, and only then smoothstepped
+     through in the PIN_LIFT tail. By then the vehicle is at zero
+     opacity, so the reader watches a stationary line being driven
+     along, gets the hold to read it, and the page repositions while
+     there is nothing on screen to see move.
 
-     Interpolating evenly instead (the obvious first version) slid
-     the line upward by a full row height during the traverse: the
-     vehicle appeared to drive diagonally, and the copy it was
-     uncovering crawled out from under it. Only noticeable once the
-     pin made runs long enough to watch.
+     Two earlier versions of this were wrong, in the same direction
+     both times. Interpolating evenly across the whole line slid it
+     upward by a full row height during the traverse: the vehicle
+     appeared to drive diagonally and the copy it was uncovering
+     crawled out from under it. Confining the lift to the last 28% of
+     the line fixed the diagonal but still started it halfway through
+     the dissolve — and, worse, before the wipe had finished, which is
+     what carried the end of each milestone out of view unread.
+     Whatever this window becomes, it starts after the fade.
 
      The last row does not interpolate — there is no rule after it —
      so the timeline is still while the vehicle parks. */
@@ -296,8 +406,7 @@
     var a = rows[idx].lineLocal;
     var b = idx + 1 < n ? rows[idx + 1].lineLocal : a;
 
-    var window_ = 2 * FADE;
-    var u = clamp((frac - (1 - window_)) / window_, 0, 1);
+    var u = clamp((frac - P_FADE_END) / (1 - P_FADE_END), 0, 1);
     var eased = u * u * (3 - 2 * u);        /* smoothstep, so the move
                                                has no hard start or stop */
     var lineY = a + (b - a) * eased;
@@ -338,7 +447,13 @@
     var end = geo.width - geo.turnR;
     var from = row.rtl ? end : start;
     var to = row.rtl ? start : end;
-    var cx = from + (to - from) * frac;
+    /* ONLY THE DRIVE PHASE MOVES THE VEHICLE. Through the hold, the
+       fade and the lift it stays on the corner it arrived at, which
+       is also what freezes the wipe below with the copy fully
+       revealed — the reveal is a function of this x and nothing
+       else, so parking the vehicle parks the reveal for free. */
+    var driven = clamp(frac / P_DRIVE_END, 0, 1);
+    var cx = from + (to - from) * driven;
 
     /* Copy: rows behind the vehicle are fully revealed, rows ahead of
        it are not revealed at all, and the row under it has its wipe
@@ -356,14 +471,18 @@
     var x = cx - geo.travelerW / 2;
     var y = row.lineLocal - geo.travelerH - 3;
 
-    /* Dissolve across the turn. The first row never fades in (the
-       vehicle is meant to be sitting at the start line waiting) and
-       the last never fades out (it parks). The x jump and the flip
-       both happen while opacity is at or near zero, so the vehicle is
-       never seen teleporting or spinning. */
+    /* Dissolve across the turn. Out during PIN_FADE, once the hold is
+       over; back in over the opening of the next line's drive. The
+       first row never fades in (the vehicle is meant to be sitting at
+       the start line waiting) and the last never fades out (it
+       parks). The x jump and the flip both happen while opacity is at
+       or near zero, so the vehicle is never seen teleporting or
+       spinning. */
     var opacity = 1;
-    if (idx > 0 && frac < FADE) opacity = frac / FADE;
-    else if (idx < n - 1 && frac > 1 - FADE) opacity = (1 - frac) / FADE;
+    if (idx > 0 && frac < P_FADE_IN) opacity = frac / P_FADE_IN;
+    else if (idx < n - 1 && frac > P_HOLD_END) {
+      opacity = clamp(1 - (frac - P_HOLD_END) / (P_FADE_END - P_HOLD_END), 0, 1);
+    }
 
     /* scaleX is applied after the translate and pivots on the
        element's own centre (default transform-origin), so flipping
@@ -400,7 +519,7 @@
   function draw() {
     if (mode !== 'full' || !geo) return;
     render(progress);
-    setRestartVisible(progress >= geo.rows.length - 0.001);
+    setRestartVisible(progress >= geo.endP - 0.001);
     /* The cue survives the whole lead-in — progress is still 0 there,
        and a reader scrolling through a stretch where nothing moves is
        precisely who still needs telling to keep going. It goes the
@@ -414,7 +533,7 @@
     /* Release after painting the final frame, not before: finish()
        reads the end shift out of the same geometry render() just
        used, and needs the timeline already drawn in its end state. */
-    if (pinned && progress >= geo.rows.length - 0.001) finish();
+    if (pinned && progress >= geo.endP - 0.001) finish();
   }
 
   function schedule() {
@@ -425,9 +544,42 @@
 
   function onScroll() {
     if (mode !== 'full' || !geo) return;
-    /* Once released the section is an ordinary static block and
-       scrolling has nothing to drive. */
-    if (!pinned) return;
+    var y = window.pageYOffset;
+
+    if (!pinned) {
+      /* Finished: the section is an ordinary static block for good
+         and scrolling has nothing to drive. */
+      if (finished) return;
+      /* Released mid-run. Coming back down past the point it let go
+         at re-pins it and the run carries on from where it stopped.
+
+         RESUME_SLACK is there because the landing point and the
+         trigger are deliberately the same number: without it the
+         scroll event fired by detach()'s own correction can land a
+         rounded pixel past it and re-pin the section it just
+         released, on the spot. */
+      if (y - releasedY() > RESUME_SLACK) reattach();
+      return;
+    }
+
+    if (y > peakY) peakY = y;
+    /* Scrolled clean above the section in one go — a Home key, a
+       dragged scrollbar, an in-page link. The stage is not stuck any
+       more, so the pin is holding nothing and the timeline is left
+       sitting shifted inside a clipped box with thousands of pixels
+       of empty spacer under it. Let it go, and leave the scroll
+       alone: collapsing the pin only takes height from BELOW the
+       reader, so nothing they are looking at moves. peakY gates it
+       so that the ordinary approach from the top of the page — where
+       the reader is above the section and has never reached it —
+       does not read as leaving. */
+    if (y < geo.pinStart && peakY > geo.pinStart) { detach(false); return; }
+    /* Scrolling back up inside the pinned stretch, which is the case
+       this is really for. `y > releasedY()` keeps it from firing
+       where the correction would have to drag the reader FORWARDS to
+       meet a frame they had already left behind. */
+    if (peakY - y > UP_RELEASE && y > releasedY()) { detach(true); return; }
+
     var raw = rawProgress();
     if (raw > progress) { progress = raw; schedule(); }
   }
@@ -520,15 +672,84 @@
     if (!pinned || !geo) return;
     var y = window.pageYOffset;
     var pastPin = y - (geo.pinStart + geo.distance);
-    var endShift = shiftFor(geo.rows.length);
+    var endShift = shiftFor(geo.endP);
 
     setPinned(false);
-    progress = geo.rows.length;
+    finished = true;
+    progress = geo.endP;
     render(progress);
     setRestartVisible(true);
 
     var shrankBy = geo.pinnedH - pin.offsetHeight;
     jumpTo(pastPin > 0 ? y - shrankBy : geo.pinStart - endShift);
+  }
+
+  /* ---- letting go mid-run, and taking hold again -------------------
+     THE PROBLEM. Progress ratchets forward, so with the pin in force
+     scrolling back up does nothing whatsoever: the stage stays stuck,
+     the frame stays frozen, and the reader can push thousands of
+     pixels of scroll into a page that will not move. There is no
+     way out of it except reaching the end. It reads as a broken
+     page, and it is worse than the thing the ratchet was protecting
+     against.
+
+     THE FIX is the move finish() already makes, only earlier and
+     reversibly: drop the pin, correct the scroll so the frame does
+     not move, and let the section be an ordinary block. Everything
+     revealed stays revealed, the vehicle stays parked where it
+     stopped, and the reader scrolls the whole timeline under their
+     own power in either direction.
+
+     NOTHING IS SPENT BY LEAVING. `progress` is not touched by any of
+     this, so the run has not lost its place — and because the reveal
+     and the vehicle are pure functions of it, the released section
+     paints the same frame without any special casing. The scroll
+     position that preserved the frame on the way out is the position
+     that preserves it on the way back in, which is why releasedY()
+     is both the landing point and the trigger.
+
+     `correct` is false only for the reader who left the section in a
+     single jump rather than by scrolling — see onScroll. */
+  function detach(correct) {
+    if (!pinned || !geo || finished) return;
+    var y = releasedY();
+    setPinned(false);
+    draw();
+    if (correct) jumpTo(y);
+  }
+
+  /* Buy the scroll distance back and put the reader at the pinned
+     position for the progress they left at. Measured twice for the
+     same reason restart() is: setPinned() has just changed the
+     document height and the scroll target is meaningless until that
+     is accounted for.
+
+     WHATEVER THEY SCROLLED PAST THE TRIGGER IS DROPPED, and that is
+     the deliberate choice. Handing it to the ratchet instead was the
+     first version and it reads worse: released, a pixel of scrolling
+     moves the page a pixel; pinned, it drives the vehicle. There is
+     exactly one scroll position per frame, so a handover that
+     happens some way past the trigger has to jump by that much
+     however it is done — the question is only what else moves with
+     it. Carrying it forward compounds the jump anywhere the timeline
+     is in motion: mid-lift the line travels well over a pixel per
+     pixel scrolled, so a 40px overshoot landed as a ~100px lurch.
+     Dropping it holds the jump to the overshoot alone, in every
+     phase, which is the floor. The cost is at most one scroll
+     event's worth of gesture, which nobody can see. */
+  function reattach() {
+    if (pinned || finished || mode !== 'full' || !geo) return;
+    var resumeAt = progress;
+    pinned = true;
+    measure();
+    setPinned(true);
+    measure();
+    jumpTo(pinnedYFor(resumeAt));
+    /* Re-arm the up-scroll watch after the jump, for the same reason
+       restart() does. */
+    peakY = window.pageYOffset;
+    progress = Math.max(resumeAt, rawProgress());
+    draw();
   }
 
   /* ---- start over ------------------------------------------------
@@ -564,12 +785,18 @@
   function restart() {
     if (mode !== 'full' || !geo) return;
     pinned = true;
+    finished = false;
     measure();
     setPinned(true);
     /* Re-measure: setPinned just changed the document height, and
        jumpTo needs a pinStart that accounts for it. */
     measure();
     jumpTo(geo.pinStart + PIN_LEAD);
+    /* Re-arm the up-scroll watch AFTER the jump. Seeding it from the
+       old position — the reader was at the far end of a spent
+       animation — would read the jump back to the start as the
+       reader scrolling up and release the pin on the spot. */
+    peakY = window.pageYOffset;
     progress = rawProgress();   /* 0 at that position, by construction */
     draw();
   }
@@ -605,6 +832,8 @@
        behind strands the section in a clipped sticky box with
        nothing driving it. */
     pinned = false;
+    finished = false;
+    peakY = 0;
     pin.classList.remove('is-pinned');
     pin.style.removeProperty('height');
     pin.style.removeProperty('--pin-top');
@@ -672,6 +901,7 @@
          apply() mid-page, and seeding 0 there would blank copy the
          reader is looking at. */
       progress = rawProgress();
+      peakY = window.pageYOffset;
       draw();
     } else if (mode === 'simple') {
       startSimple();

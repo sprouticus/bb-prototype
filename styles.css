@@ -2308,29 +2308,45 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
    used to live there as separate elements and that is exactly what
    produced the visible breaks; the turns draw them now. See the
    block comment above before adding one back. */
-/* 430px caps the WHOLE milestone block — badge, heading and copy
-   together (2026-08-11). It sits on .snake-cell rather than on the
-   heading and paragraph separately, because the badge is placed by the
-   cell's own text-align and so only obeys a cap on the cell.
+/* The cell used to be capped at 430px and every column is 478px, so
+   each block sat in a 430px box with 48px of slack. That cap was on
+   the cell rather than on the heading and the paragraph separately
+   for one reason: the year badge was placed by the cell's own
+   text-align, so only a cap on the cell moved it. justify-self:end
+   went with it, to take that slack off the OUTER edge and leave the
+   badges where they were.
 
-   justify-self is what stops that cap moving the badges. The columns
-   are wider than 430px, so the cap leaves slack; a grid item defaults
-   to the start of its column, which would pull --left rows' blocks
-   away from the centre and drag their right-hand badges with them.
-   Ending --left blocks instead means every block loses its slack from
-   the OUTER edge and both badges stay exactly where they were. Each
-   badge sits on the inner side of its block, nearest the timeline,
-   which is the arrangement the whole layout is built around. */
-.snake-cell{max-width:430px;}
+   With the year inline in the heading (2026-08-20) the badge half of
+   that reasoning is gone, but the cap and justify-self both stay —
+   for the symmetry, which is the part that survives. 430 became 470
+   because a heading plus its year runs to about 452px, so at 430 the
+   longest of them wrapped its year onto a line of its own and made
+   that row taller than the rest, in a section whose whole point is
+   fitting a milestone inside one stage.
+
+   THE CAP HAS TO COVER THE HEADING AND THE COPY TOGETHER, at one
+   width. Capping them separately — the column for the heading, 430
+   for the paragraph — was tried first and it breaks the mirror: a
+   narrower paragraph left-aligned inside a wider block cannot itself
+   be mirrored, so the left column's copy ended up sitting 48px
+   further out than the right column's. Two boxes of the same width
+   is the only arrangement where the blocks mirror AND the heading
+   and paragraph share a left edge.
+
+   Widening it leaves the wipe untouched. The reveal is measured from
+   the cell edge the vehicle arrives at, and the soft band is
+   whatever travel is left over past the cell, so a wider cell buys a
+   narrower band and the copy still finishes on the same pixel. */
+.snake-cell{max-width:470px;}
 .snake-row--right .snake-cell{grid-column:2;}
-/* text-align:right here is doing ONE job: putting the year badge on the
-   outer side of a --left row, matching the direction of travel. The
-   heading and body copy opt back out to left-aligned below (2026-08-11)
-   — right-ragged headings read as a mistake, and the two alignments
-   alternating down the page made the timeline feel unsettled. */
-.snake-row--left  .snake-cell{grid-column:1;text-align:right;justify-self:end;}
-.snake-row--left  .snake-cell h2,
-.snake-row--left  .snake-cell p{text-align:left;}
+/* This carried text-align:right as well, doing ONE job: putting the
+   year badge on the outer side of a --left row. The heading and the
+   body copy both opted straight back out to left-aligned, because
+   right-ragged headings read as a mistake and the two alignments
+   alternating down the page made the timeline feel unsettled. With
+   the year inline there is nothing left for it to place, so it and
+   both opt-outs are gone (2026-08-20); justify-self stays. */
+.snake-row--left  .snake-cell{grid-column:1;justify-self:end;}
 
 /* ---- side connector: previous row's rule (this row's top) down to
        this row's own rule (its bottom) ---- */
@@ -2400,19 +2416,30 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
 .snake-cap--start{bottom:-7px;left:calc(var(--turn-r) - 7px);}
 .snake-cap--end{bottom:-7px;right:calc(var(--turn-r) - 7px);}
 
-/* ---- year badge ---- */
-.snake-badge{
-  display:inline-flex;align-items:center;justify-content:center;
-  width:66px;height:66px;border-radius:50%;
-  background:var(--white);border:3px solid var(--orange);
-  font-family:var(--font-mono);font-weight:800;font-size:15px;
-  letter-spacing:.02em;color:var(--orange-dark);
+/* ---- the year, on the heading's own line ----
+   This was a 66px circular badge above the heading (2026-08-20). It
+   cost every row the badge's height plus the heading's margin — call
+   it 80px x 5 rows — and the whole point of the pinned stage is that
+   a milestone has to fit inside one viewport with room above and
+   below it. Inline in the heading the year reads as part of the
+   headline and the rows lost the height they were wasting.
+
+   Mono, matching every other year and eyebrow on the site, so it
+   still reads as a date rather than as part of the sentence. nowrap
+   keeps "(1987)" whole; a long heading wraps before it instead. */
+.snake-year{
+  font-family:var(--font-mono);font-weight:700;
+  font-size:.62em;letter-spacing:.02em;
+  color:var(--orange);white-space:nowrap;
 }
-.snake-cell h2{font-size:clamp(21px,2.3vw,27px);margin-top:16px;text-transform:none;}
+/* margin-top was the gap under the badge; with the heading first in
+   the cell it was only padding the row out. */
+.snake-cell h2{font-size:clamp(21px,2.3vw,27px);margin-top:0;text-transform:none;}
 .snake-cell p{font-size:16px;color:#454C49;line-height:1.6;margin-top:10px;}
-/* The paragraph is max-width:46ch, so it needs its box pinned to the
-   left as well as its text — margin-left:auto used to push the whole
-   box to the cell's right edge. */
+/* Belt and braces: the paragraph takes its measure from the cell cap
+   above, so it has no slack to drift in — but if one is ever given a
+   max-width of its own, this keeps its box on the left with its text
+   rather than sliding to the cell's far edge. */
 .snake-row--left .snake-cell p{margin-left:0;margin-right:auto;}
 
 /* ---- the vehicle mark, riding the horizontal run ---- */
@@ -2467,8 +2494,7 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
   .snake-row--right .snake-vehicle{transform:none;}
   .snake-row--left .snake-cell p{margin-left:0;}
   .snake-cap{display:none;}
-  .snake-badge{width:54px;height:54px;font-size:13.5px;margin-left:-59px;}
-  /* The 430px cap is a desktop-column concern; on the single rail the
+  /* The 470px cap is a desktop-column concern; on the single rail the
      column is already narrower than that and capping only creates a
      ragged right edge. justify-self goes back too, or the block would
      hug the right of a rail it is supposed to run the full width of. */
@@ -2581,8 +2607,9 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
    whole milestone, far too quick to read.
 
    So the section buys itself the distance. .snake-pin is a tall
-   empty spacer (height set by JS: one stage plus PIN_SCROLL_PER_LINE
-   x 5). .snake-stage sticks to just below the site header for that
+   empty spacer (height set by JS: one stage plus each line's four
+   phases x 5 — see the tuning block in history-scroll.js).
+   .snake-stage sticks to just below the site header for that
    whole distance, and the timeline creeps upward inside it under a
    transform while the vehicle drives. Scrolling therefore advances
    the vehicle without advancing the page, which is the only way to
@@ -2602,12 +2629,14 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
    the standing proof. Moving that overflow onto body WOULD break
    both. */
 /* overflow-anchor:none because the pin's height swings by thousands
-   of pixels when the animation finishes and again if Start at
-   Beginning is pressed. Chrome's scroll anchoring would try to hold
-   the reader's visual position across those swings, fighting the
-   explicit scroll correction the script makes in the same frame and
-   landing them somewhere neither of us chose. The script owns the
-   scroll position through those two moments. */
+   of pixels whenever the section takes hold or lets go — when the
+   animation finishes, if Start at Beginning is pressed, and every
+   time the reader scrolls back up mid-run and then returns. Chrome's
+   scroll anchoring would try to hold the reader's visual position
+   across those swings, fighting the explicit scroll correction the
+   script makes in the same frame and landing them somewhere neither
+   of us chose. The script owns the scroll position through all of
+   them. */
 .snake-pin{position:relative;overflow-anchor:none;}
 .snake-pin.is-pinned > .snake-stage{
   position:sticky;

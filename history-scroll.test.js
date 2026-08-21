@@ -27,7 +27,7 @@
    THE FAKE LAYOUT (all CSS px)
      .snake at document y=700, 1000 wide, --turn-r 70, 1500 tall
      5 rows x 300 tall  -> row i spans 300i..300(i+1), rule at 300(i+1)
-     .snake-cell 478 wide; x=372 on --right rows, x=150 on --left
+     .snake-cell 470 wide; x=372 on --right rows, x=158 on --left
      traveller 104x62, sticky header 120, viewport 900
    ============================================================ */
 'use strict';
@@ -41,18 +41,29 @@ const SITE = __dirname;
 
 const ROW_H = 300, SNAKE_TOP = 700, SNAKE_W = 1000, TURN_R = 70;
 const TRAV_W = 104, TRAV_H = 62, VH = 900, HDR_H = 120;
-const PIN_PER_LINE = 1200, PIN_LEAD = 600, ANCHOR = 0.62, TAIL = 90;
-const FADE = 0.14, CUE_ABOVE_LINE = 200, N = 5;
+/* The four phases of a line, in px of scroll, and the phase
+   boundaries as fractions of a line. Keep in step with the tuning
+   block in history-scroll.js. */
+const PIN_DRIVE = 1200, PIN_HOLD = 550, PIN_FADE = 180, PIN_LIFT = 300;
+const PIN_PER_LINE = PIN_DRIVE + PIN_HOLD + PIN_FADE + PIN_LIFT;  // 2230
+const P_DRIVE_END = PIN_DRIVE / PIN_PER_LINE;                     // 0.538
+const P_HOLD_END = (PIN_DRIVE + PIN_HOLD) / PIN_PER_LINE;         // 0.785
+const P_FADE_END = (PIN_DRIVE + PIN_HOLD + PIN_FADE) / PIN_PER_LINE;
+const P_FADE_IN = PIN_FADE / PIN_PER_LINE;
+const PIN_LEAD = 600, ANCHOR = 0.62, TAIL = 90;
+const CUE_ABOVE_LINE = 200, N = 5;
 const SNAKE_H = ROW_H * N;                                   // 1500
 const STAGE_H = VH - HDR_H;                                  // 780
-const TRAVEL = N * PIN_PER_LINE;                             // 6000
-const DIST = PIN_LEAD + TRAVEL;                              // 6600
+/* The last line buys its drive and its hold only — no fade, no lift. */
+const END_P = (N - 1) + P_HOLD_END;                          // 4.785
+const TRAVEL = END_P * PIN_PER_LINE;                          // 10670
+const DIST = PIN_LEAD + TRAVEL;                               // 11270
 const PIN_START = SNAKE_TOP - HDR_H;                         // 580
 const MIN_SHIFT = Math.min(0, STAGE_H - SNAKE_H - TAIL);     // -810
-/* .snake-cell is max-width:430 and --left rows justify-self:end, so both
+/* .snake-cell is max-width:470 and --left rows justify-self:end, so both
    blocks lose their column slack from the outer edge and sit 372 from
    their respective sides. Keep these in step with the CSS. */
-const CELL_W = 430, CELL_L_R = 372, CELL_L_L = SNAKE_W - CELL_L_R - CELL_W;
+const CELL_W = 470, CELL_L_R = 372, CELL_L_L = SNAKE_W - CELL_L_R - CELL_W;
 
 function build({ reduce = false, wide = true, initialY = 0 } = {}) {
   const dom = new JSDOM(fs.readFileSync(path.join(SITE, 'history.html'), 'utf8'),
@@ -168,8 +179,10 @@ const near = (a, b, t, m) => { const ok = Math.abs(a - b) <= t; ok ? pass++ : fa
   console.log(`${ok ? 'ok  ' : 'FAIL'} ${m}${ok ? '' : `  (got ${a}, want ~${b})`}`); };
 const truthy = (a, m) => eq(!!a, true, m);
 
-// scroll position that puts the vehicle at fraction f of line i
+// scroll position at fraction f through line i's whole four-phase budget
 const at = (i, f) => PIN_START + PIN_LEAD + (i + f) * PIN_PER_LINE;
+// ...and at fraction t of line i's TRAVERSE, which is only the drive phase
+const atDrive = (i, t) => at(i, t * P_DRIVE_END);
 const atEnd = () => PIN_START + DIST;
 const vehX = (t) => parseFloat(/translate3d\(([-\d.]+)px/.exec(t)[1]) + TRAV_W / 2;
 const vehY = (t) => parseFloat(/translate3d\([-\d.]+px,([-\d.]+)px/.exec(t)[1]);
@@ -178,9 +191,17 @@ const runX = (rtl, f) => (rtl ? (SNAKE_W - TURN_R) + (TURN_R - (SNAKE_W - TURN_R
 const expShift = (p) => {
   const idx = Math.min(Math.floor(p), N - 1), frac = p >= N ? 1 : Math.min(Math.max(p - idx, 0), 1);
   const a = (idx + 1) * ROW_H, b = idx + 1 < N ? (idx + 2) * ROW_H : a;
-  const w = 2 * FADE, u = Math.min(Math.max((frac - (1 - w)) / w, 0), 1), e = u * u * (3 - 2 * u);
+  // the lift is the tail of the line, after the fade — never before it
+  const u = Math.min(Math.max((frac - P_FADE_END) / (1 - P_FADE_END), 0), 1);
+  const e = u * u * (3 - 2 * u);
   return Math.min(Math.max(-((a + (b - a) * e) - STAGE_H * ANCHOR), MIN_SHIFT), 0);
 };
+/* where a row's rule actually sits in the viewport, in both states:
+   pinned it rides the stuck stage under the transform, released it is
+   just document position minus scroll */
+const ruleScreenY = (h, i) => h.isPinned()
+  ? HDR_H + (i + 1) * ROW_H + h.shift()
+  : SNAKE_TOP + (i + 1) * ROW_H - h.window.pageYOffset;
 const fullyRevealed = (a) => a.leads().every((l, i) => Math.abs(l - (CELL_W + a.bands()[i])) < 0.6);
 
 console.log('\n--- 1. page load ---');
@@ -233,7 +254,7 @@ truthy(vehX(a.transform()) > TURN_R + 20, 'sets off immediately after the lead')
 
 console.log('\n--- 5. motion is tied directly to scroll ---');
 a = build({ initialY: 0 }); a.settle();
-a.scrollTo(at(0, 0.5)); a.step();
+a.scrollTo(atDrive(0, 0.5)); a.step();
 near(vehX(a.transform()), runX(false, 0.5), 0.5, 'one paint puts the vehicle exactly where scroll says');
 const frozen = a.transform(), frozenShift = a.shift();
 for (let i = 0; i < 200; i++) a.step();
@@ -244,7 +265,7 @@ eq(a.pending, 0, 'nothing queued - no self-driving loop');
   let ok = true, prev = null;
   const lin = build({ initialY: 0 }); lin.settle();
   for (let i = 0; i <= 12; i++) {
-    lin.scrollTo(at(0, i / 12)); lin.step();
+    lin.scrollTo(atDrive(0, i / 12)); lin.step();
     if (Math.abs(vehX(lin.transform()) - runX(false, i / 12)) > 0.6) ok = false;
     if (prev !== null && vehX(lin.transform()) < prev) ok = false;
     prev = vehX(lin.transform());
@@ -255,24 +276,77 @@ eq(a.pending, 0, 'nothing queued - no self-driving loop');
 console.log('\n--- 6. speed ---');
 {
   const d = build({ initialY: 0 }); d.settle();
-  d.scrollTo(at(0, 0)); d.step();
+  d.scrollTo(atDrive(0, 0)); d.step();
   const y0 = d.window.pageYOffset;
-  d.scrollTo(at(1, 0)); d.step();
-  near(d.window.pageYOffset - y0, PIN_PER_LINE, 0.5, `one line = ${PIN_PER_LINE}px of scroll`);
-  near(PIN_PER_LINE / ROW_H, 4, 0.01, 'which is 4x the unpinned rate the timeline would give on its own');
+  d.scrollTo(atDrive(0, 1)); d.step();
+  near(d.window.pageYOffset - y0, PIN_DRIVE, 0.5, `crossing one line = ${PIN_DRIVE}px of scroll`);
+  near(PIN_DRIVE / ROW_H, 4, 0.01, 'which is 4x the unpinned rate the timeline would give on its own');
+  near(at(1, 0) - at(0, 0), PIN_PER_LINE, 0.5,
+    `a whole line costs ${PIN_PER_LINE}px - the traverse plus hold, fade and lift`);
+  near(DIST, 11270, 1, `the section holds ${DIST}px of scrolling in total`);
 }
 
-console.log('\n--- 7. the line holds still while the vehicle crosses it ---');
+console.log('\n--- 7. the line holds still until the vehicle has gone ---');
 {
   const h = build({ initialY: 0 }); h.settle();
   const ruleAt = (i, f) => { h.go(at(i, f)); return (i + 1) * ROW_H + h.shift(); };
   const r0 = ruleAt(1, 0.0);
-  near(ruleAt(1, 0.5), r0, 0.5, 'line 2 has not moved at all by halfway through its run');
-  near(ruleAt(1, 0.70), r0, 0.5, 'still stationary at 70%, while the vehicle is still visible');
-  near(r0 - ruleAt(1, 1.0), ROW_H, 1.0, 'repositions by exactly one row - during the dissolve, not the traverse');
+  near(ruleAt(1, P_DRIVE_END * 0.5), r0, 0.5, 'line 2 has not moved at all by halfway across');
+  near(ruleAt(1, P_DRIVE_END), r0, 0.5, 'still stationary when the vehicle reaches the corner');
+  near(ruleAt(1, P_HOLD_END), r0, 0.5, 'STILL stationary through the whole hold - this is the reading beat');
+  near(ruleAt(1, P_FADE_END), r0, 0.5, 'and through the dissolve');
+  near(r0 - ruleAt(1, 1.0), ROW_H, 1.0, 'repositions by exactly one row, entirely in the lift phase');
+}
+{
+  /* The regression this whole rebuild is about: nothing may move the
+     line while there is still copy under the gradient. */
   const d = build({ initialY: 0 }); d.settle();
-  d.go(at(1, 0.93));
-  truthy(d.opacity() < 0.55, `vehicle is dissolving while the page repositions (opacity ${d.opacity()})`);
+  const ruleY = () => 2 * ROW_H + d.shift();
+  d.go(at(1, P_DRIVE_END));
+  const parked = ruleY();
+  near(d.leads()[1], CELL_W + d.bands()[1], 0.6, 'line 2 copy is fully revealed the moment the vehicle parks');
+  eq(d.opacity(), 1, 'and the vehicle is still fully visible, standing at the corner');
+  d.go(at(1, P_HOLD_END));
+  near(ruleY(), parked, 0.5, 'the line has not budged for the whole hold');
+  near(d.leads()[1], CELL_W + d.bands()[1], 0.6, 'copy still fully revealed');
+  eq(d.opacity(), 1, 'vehicle still there, not yet dissolving');
+  d.go(at(1, 0.999));
+  truthy(d.opacity() < 0.01, `vehicle is gone before the line finishes moving (opacity ${d.opacity()})`);
+}
+{
+  // the vehicle must be invisible for every frame of the lift
+  let worst = 1;
+  const v = build({ initialY: 0 }); v.settle();
+  for (let i = 0; i <= 10; i++) {
+    v.go(at(1, P_FADE_END + (1 - P_FADE_END) * (i / 10)));
+    worst = Math.min(worst, 1 - v.opacity());
+  }
+  truthy(worst > 0.99, 'vehicle stays invisible for the whole lift, so it never drives diagonally');
+}
+{
+  /* THE REGRESSION, stated as an invariant and swept across the whole
+     pinned stretch rather than spot-checked: a line may not move
+     while any of its own copy is still under the gradient. The old
+     single-run version broke this on every line — the lift began at
+     72% and the wipe did not finish until 100% — which is what made
+     the end of each milestone unreadable no matter how slowly the
+     reader scrolled. */
+  const s = build({ initialY: 0 }); s.settle();
+  let bad = '', parkedY = 0, lastIdx = -1;
+  for (let y = PIN_START; y <= PIN_START + DIST && !bad; y += 40) {
+    s.go(y);
+    if (!s.isPinned()) break;
+    const p = Math.min(Math.max((y - PIN_START - PIN_LEAD) / TRAVEL, 0), 1) * END_P;
+    const idx = Math.min(Math.floor(p), N - 1);
+    const ruleY = (idx + 1) * ROW_H + s.shift();
+    if (idx !== lastIdx) { lastIdx = idx; parkedY = ruleY; }
+    const revealed = s.leads()[idx] >= CELL_W + s.bands()[idx] - 0.6;
+    if (!revealed && Math.abs(ruleY - parkedY) > 0.5) {
+      bad = `row ${idx + 1} moved ${(ruleY - parkedY).toFixed(1)}px at y=${y} with only ` +
+            `${s.leads()[idx].toFixed(0)} of ${(CELL_W + s.bands()[idx]).toFixed(0)} revealed`;
+    }
+  }
+  eq(bad, '', `no line moves while its own copy is still coming in${bad ? ` - ${bad}` : ''}`);
 }
 {
   let vis = true, worst = '';
@@ -288,33 +362,39 @@ console.log('\n--- 7. the line holds still while the vehicle crosses it ---');
 
 console.log('\n--- 8. the wipe edge sits on the vehicle ---');
 a = build({ initialY: 0 }); a.settle();
-a.go(at(0, 0.5));
+a.go(atDrive(0, 0.5));
 near(a.leads()[0], vehX(a.transform()) - CELL_L_R, 1.0, 'row1: wipe edge is exactly at the vehicle x');
 near(a.bands()[0], (SNAKE_W - TURN_R) - CELL_L_R - CELL_W, 0.5, 'soft band = travel left over past the cell');
 {
   const e = build({ initialY: 0 }); e.settle();
-  e.go(at(0, 0.25));
-  truthy(vehX(e.transform()) < CELL_L_R, 'at 25% the vehicle has not reached the copy yet');
+  e.go(atDrive(0, 0.25));
+  truthy(vehX(e.transform()) < CELL_L_R, 'at 25% of the traverse the vehicle has not reached the copy yet');
   eq(e.leads()[0], 0, 'so nothing of that copy is showing - the wipe waits for the vehicle');
 }
-a.go(at(1, 0));
+a.go(atDrive(0, 1));
 near(a.leads()[0], CELL_W + a.bands()[0], 0.6, 'row1 fully revealed exactly as the vehicle reaches the end cap');
+a.go(at(0, 0.999));
+near(a.leads()[0], CELL_W + a.bands()[0], 0.6, 'and stays revealed - the parked vehicle freezes the wipe');
 
 console.log('\n--- 9. row 2 runs right-to-left ---');
-a.go(at(1, 0.5));
+a.go(atDrive(1, 0.5));
 truthy(/scaleX\(-1\)/.test(a.transform()), 'flipped to face left');
 near(vehX(a.transform()), runX(true, 0.5), 0.5, 'at the midpoint travelling right-to-left');
 near(a.leads()[1], (CELL_L_L + CELL_W) - vehX(a.transform()), 1.0, 'wipe measured from the cell RIGHT edge, at the vehicle');
 const midX = vehX(a.transform());
-a.go(at(1, 0.8));
+a.go(atDrive(1, 0.8));
 truthy(vehX(a.transform()) < midX, 'keeps moving LEFT as scrolling continues');
 eq(a.leads()[2], 0, 'row3 still untouched');
 
 console.log('\n--- 10. the dissolve across a turn ---');
 {
   const d = build({ initialY: 0 }); d.settle();
-  d.go(at(0, 0.95)); near(d.opacity(), 0.05 / FADE, 0.03, 'fading OUT at 95%');
-  d.go(at(1, 0.05)); near(d.opacity(), 0.05 / FADE, 0.03, 'fading back IN at 5% of the next line');
+  d.go(at(0, P_HOLD_END)); eq(d.opacity(), 1, 'still solid at the end of the hold');
+  d.go(at(0, P_HOLD_END + (P_FADE_END - P_HOLD_END) * 0.5));
+  near(d.opacity(), 0.5, 0.03, 'half dissolved halfway through the fade phase');
+  d.go(at(0, P_FADE_END)); near(d.opacity(), 0, 0.01, 'fully gone by the end of it');
+  d.go(at(1, P_FADE_IN * 0.5)); near(d.opacity(), 0.5, 0.03, 'fading back IN over the opening of the next line');
+  d.go(at(1, P_FADE_IN)); near(d.opacity(), 1, 0.01, 'solid again once the fade-in is done');
   const f = build({ initialY: 0 }); f.settle();
   f.go(at(0, 0)); eq(f.opacity(), 1, 'first row never fades in');
   f.go(atEnd());   eq(f.opacity(), 1, 'last row never fades out - it parks');
@@ -334,7 +414,7 @@ console.log('\n--- 11. the section releases once the vehicle parks ---');
   near(vehX(f.transform()), SNAKE_W - TURN_R, 0.5, 'vehicle still parked at the finish');
   truthy(f.restartEl.classList.contains('is-visible'), 'restart button showing');
   eq(f.restartBtn.getAttribute('tabindex'), '0', 'and in the tab order');
-  near(f.window.pageYOffset, PIN_START - expShift(N), 1.0, 'scroll corrected so the timeline does not jump');
+  near(f.window.pageYOffset, PIN_START - expShift(END_P), 1.0, 'scroll corrected so the timeline does not jump');
   const t = f.transform(), l = f.leads().join();
   f.go(PIN_START);
   eq(f.transform(), t, 'scrolling back up does not move the vehicle');
@@ -354,12 +434,81 @@ console.log('\n--- 11. the section releases once the vehicle parks ---');
 console.log('\n--- 12. one-directional ratchet ---');
 a = build({ initialY: 0 }); a.settle();
 a.go(at(2, 0.5));
-const mid = a.transform();
-a.go(at(0, 0.2)); eq(a.transform(), mid, 'scrolling up mid-animation does not rewind');
-a.go(PIN_START);  eq(a.transform(), mid, 'nor does going back to the pin start');
-truthy(a.isPinned(), 'still pinned - not finished');
+const mid = a.transform(), midLeads = a.leads().join();
+a.go(a.window.pageYOffset - 10);
+eq(a.transform(), mid, 'a nudge back up does not rewind the vehicle');
+truthy(a.isPinned(), 'and is under UP_RELEASE, so the pin keeps hold');
+a.go(a.window.pageYOffset - 400);
+eq(a.transform(), mid, 'a real scroll back up still does not rewind');
+eq(a.leads().join(), midLeads, 'and takes no copy away');
+a.go(PIN_START);
+eq(a.transform(), mid, 'nor does carrying on up to the pin start');
+eq(a.leads().join(), midLeads, 'still nothing un-revealed');
 
-console.log('\n--- 13. start at beginning ---');
+console.log('\n--- 13. scrolling back up lets the pin go, and coming back resumes ---');
+{
+  const r = build({ initialY: 0 }); r.settle();
+  r.go(at(1, 0.4));
+  const p0 = r.transform(), leads0 = r.leads().join(), before = ruleScreenY(r, 1);
+  truthy(r.isPinned(), 'pinned and running');
+
+  r.go(r.window.pageYOffset - 600);
+  eq(r.isPinned(), false, 'scrolling back up releases the section');
+  eq(r.pinHeight(), 0, 'the bought scroll distance goes back');
+  eq(r.snake.style.transform, '', 'and the in-stage transform with it');
+  near(ruleScreenY(r, 1), before, 0.6, 'the frame does not move as it lets go');
+  const releasedAt = r.window.pageYOffset;
+
+  /* the correction is a scroll of its own, and the trigger to come
+     back is the same number it just landed on */
+  r.scrollTo(releasedAt); r.settle();
+  eq(r.isPinned(), false, "the correction's own scroll event does not re-pin it on the spot");
+
+  r.go(releasedAt - 900);
+  eq(r.transform(), p0, 'vehicle stays parked where it stopped while they read back');
+  eq(r.leads().join(), leads0, 'and every revealed milestone stays revealed');
+  eq(r.isPinned(), false, 'the page scrolls normally the whole way up');
+  r.go(0);
+  eq(r.leads().join(), leads0, 'still revealed at the very top of the page');
+
+  r.go(releasedAt - 200);
+  eq(r.isPinned(), false, 'not re-pinned before the point it let go at');
+  r.go(releasedAt + 20);
+  truthy(r.isPinned(), 're-pins on the way back down past that point');
+  near(ruleScreenY(r, 1), before, 1.5, 'and the frame does not move as it takes hold');
+  eq(r.transform(), p0, 'vehicle picks up exactly where it left off');
+  eq(r.leads().join(), leads0, 'with exactly the copy it had, no more and no less');
+  /* line 2 runs right-to-left, so "on" means a smaller x */
+  const back = vehX(r.transform());
+  r.go(r.window.pageYOffset + 300);
+  truthy(back - vehX(r.transform()) > 100, 'and the next scroll drives it on from there');
+}
+{
+  /* the reader who leaves in one jump rather than by scrolling */
+  const j = build({ initialY: 0 }); j.settle();
+  j.go(at(2, 0.3));
+  const leads = j.leads().join();
+  j.go(0);
+  eq(j.isPinned(), false, 'a jump clean above the section releases the pin too');
+  eq(j.window.pageYOffset, 0, 'and leaves the reader exactly where they put themselves');
+  eq(j.leads().join(), leads, 'with everything revealed so far still revealed');
+  j.go(PIN_START + 900);
+  truthy(j.isPinned(), 'scrolling back down re-pins it');
+}
+{
+  /* approaching the section for the first time must not read as leaving it */
+  const n = build({ initialY: 0 }); n.settle();
+  for (let y = 0; y < PIN_START; y += 60) n.go(y);
+  n.go(PIN_START - 40);
+  truthy(n.isPinned(), 'scrolling down to the section, then up a little, keeps it armed');
+  eq(n.pinHeight() > 0, true, 'the bought distance is still there');
+}
+
+console.log('\n--- 14. start at beginning ---');
+/* `a` is released mid-run from the section above: the first scroll to
+   the end re-pins it at the progress it left at, the second drives it
+   the rest of the way. */
+a.go(atEnd());
 a.go(atEnd());
 eq(a.isPinned(), false, 'released before the button is clicked');
 a.click(a.restartBtn);
@@ -377,7 +526,7 @@ near(vehX(a.transform()), TURN_R, 0.5, 'vehicle back at the starting position');
 a.go(PIN_START + PIN_LEAD + 120);
 truthy(vehX(a.transform()) > TURN_R + 10, 'a small scroll straight after restart moves it immediately');
 
-console.log('\n--- 14. restart then scroll continuously, no pause ---');
+console.log('\n--- 15. restart then scroll continuously, no pause ---');
 {
   const r = build({ initialY: 0 }); r.settle();
   r.go(atEnd());
@@ -387,7 +536,7 @@ console.log('\n--- 14. restart then scroll continuously, no pause ---');
   truthy(r.leads()[0] > 0, 'and copy is uncovered');
 }
 
-console.log('\n--- 15. refresh starts over ---');
+console.log('\n--- 16. refresh starts over ---');
 {
   const spent = build({ initialY: 0 }); spent.settle();
   spent.go(atEnd());
@@ -400,7 +549,7 @@ console.log('\n--- 15. refresh starts over ---');
   truthy(restored.leads()[0] > 0, 'if a browser restores scroll anyway, the timeline matches where the reader is');
 }
 
-console.log('\n--- 16. reduced motion, narrow, resize ---');
+console.log('\n--- 17. reduced motion, narrow, resize ---');
 {
   const b = build({ reduce: true }); b.settle();
   eq(b.snake.classList.contains('snake--anim'), false, 'reduced motion: no .snake--anim');
@@ -430,7 +579,7 @@ console.log('\n--- 16. reduced motion, narrow, resize ---');
   truthy(d.isPinned(), 'narrow -> wide restores the pin');
 }
 
-console.log('\n--- 17. snake path joins (CSS arithmetic) ---');
+console.log('\n--- 18. snake path joins (CSS arithmetic) ---');
 {
   const css = fs.readFileSync(path.join(SITE, 'styles.css'), 'utf8');
   let parseErrors = 0;
