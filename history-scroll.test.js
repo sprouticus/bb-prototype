@@ -52,6 +52,15 @@ const P_FADE_END = (PIN_DRIVE + PIN_HOLD + PIN_FADE) / PIN_PER_LINE;
 const P_FADE_IN = PIN_FADE / PIN_PER_LINE;
 const PIN_LEAD = 600, ANCHOR = 0.62, TAIL = 90;
 const CUE_ABOVE_LINE = 200, N = 5;
+/* Narrow-screen mode. Keep in step with the narrow-screen dials block
+   in history-scroll.js, exactly as the four phase lengths above are.
+   NODE_TOP / NODE_H mirror the .snake-node rule in the max-width:820px
+   block of styles.css. */
+const SIMPLE_ANCHOR = 0.42, SIMPLE_HOLD = 0.55, SIMPLE_REVEAL = 0.82;
+const NODE_TOP = 1, NODE_H = 21;
+/* Six stops on the rail, not five: the terminus dot below the last
+   milestone is an ordinary stop as far as the drive is concerned. */
+const STOPS = N + 1;
 const SNAKE_H = ROW_H * N;                                   // 1500
 const STAGE_H = VH - HDR_H;                                  // 780
 /* The last line buys its drive and its hold only — no fade, no lift. */
@@ -139,6 +148,31 @@ function build({ reduce = false, wide = true, initialY = 0 } = {}) {
     cell.getBoundingClientRect = () => ({ left, width: CELL_W, top: 0, height: 200 });
   });
 
+  /* Narrow-screen mode measures the node spans and reads live row
+     rects for the reveal, neither of which the wide path touches. */
+  const nodes = rows.map((r) => r.querySelector('.snake-node'));
+  rows.forEach((r, i) => {
+    r.getBoundingClientRect = () => ({
+      top: SNAKE_TOP + i * ROW_H - scrollY, left: 0, width: SNAKE_W, height: ROW_H,
+    });
+    const node = nodes[i];
+    if (!node) return;
+    box.set(node, { top: NODE_TOP, h: NODE_H, w: NODE_H });
+    node.getBoundingClientRect = () => ({
+      top: SNAKE_TOP + i * ROW_H + NODE_TOP - scrollY,
+      left: 0, width: NODE_H, height: NODE_H,
+    });
+  });
+
+  const endNode = snake.querySelector('.snake-node--end');
+  if (endNode) {
+    box.set(endNode, { top: SNAKE_H - NODE_H, h: NODE_H, w: NODE_H });
+    endNode.getBoundingClientRect = () => ({
+      top: SNAKE_TOP + SNAKE_H - NODE_H - scrollY,
+      left: 0, width: NODE_H, height: NODE_H,
+    });
+  }
+
   const ioTargets = [];
   window.IntersectionObserver = class {
     constructor(cb) { this.cb = cb; ioTargets.push(this); this.seen = []; }
@@ -167,6 +201,10 @@ function build({ reduce = false, wide = true, initialY = 0 } = {}) {
     opacity: () => parseFloat(traveler.style.opacity),
     cueTop: () => parseFloat(cue.style.top),
     cueShown: () => !cue.classList.contains('is-gone'),
+    nodes, endNode,
+    endReached: () => !!endNode && endNode.classList.contains('is-reached'),
+    reached: () => rows.map((r) => r.classList.contains('is-reached')),
+    revealed: () => rows.map((r) => r.classList.contains('is-revealed')),
     restartEl: doc.querySelector('.snake-restart'),
     restartBtn: doc.querySelector('.snake-restart button'),
   };
@@ -185,6 +223,13 @@ const at = (i, f) => PIN_START + PIN_LEAD + (i + f) * PIN_PER_LINE;
 const atDrive = (i, t) => at(i, t * P_DRIVE_END);
 const atEnd = () => PIN_START + DIST;
 const vehX = (t) => parseFloat(/translate3d\(([-\d.]+)px/.exec(t)[1]) + TRAV_W / 2;
+/* Narrow mode drives translateY only, and centres the mark on the node,
+   so the node's own local Y is the transform plus half a mark. */
+const nodeLocal = (i) => (i < N ? i * ROW_H + NODE_TOP + NODE_H / 2
+                               : SNAKE_H - NODE_H / 2);
+const nodeDoc = (i) => SNAKE_TOP + nodeLocal(i);
+const arriveAt = (i) => nodeDoc(i) - VH * SIMPLE_ANCHOR;
+const railY = (t) => parseFloat(/translate3d\(0,([-\d.]+)px/.exec(t)[1]) + TRAV_H / 2;
 const vehY = (t) => parseFloat(/translate3d\([-\d.]+px,([-\d.]+)px/.exec(t)[1]);
 const runX = (rtl, f) => (rtl ? (SNAKE_W - TURN_R) + (TURN_R - (SNAKE_W - TURN_R)) * f
                               : TURN_R + ((SNAKE_W - TURN_R) - TURN_R) * f);
@@ -562,10 +607,9 @@ console.log('\n--- 17. reduced motion, narrow, resize ---');
   const c = build({ wide: false }); c.settle();
   eq(c.snake.classList.contains('snake--simple'), true, 'narrow: .snake--simple');
   eq(c.isPinned(), false, 'narrow: not pinned');
+  eq(c.pinHeight(), 0, 'narrow: buys no scroll distance - the phone must not be trapped');
   eq(c.restoration(), 'auto', 'narrow: scroll restoration left alone');
-  c.ioTargets[0]._reveal(c.rows[1]);
-  truthy(c.rows[1].classList.contains('is-revealed'), 'narrow: row reveals on intersect');
-  eq(c.rows[3].classList.contains('is-revealed'), false, 'narrow: unseen rows stay hidden');
+  eq(c.snake.style.transform, '', 'narrow: the timeline itself never moves');
 
   const d = build(); d.settle();
   d.mqs['(min-width: 821px)']._set(false); d.settle();
@@ -577,6 +621,95 @@ console.log('\n--- 17. reduced motion, narrow, resize ---');
   eq(d.restoration(), 'auto', 'wide -> narrow hands scroll restoration back');
   d.mqs['(min-width: 821px)']._set(true); d.settle();
   truthy(d.isPinned(), 'narrow -> wide restores the pin');
+}
+
+console.log('\n--- 17b. narrow: the vehicle rides the rail ---');
+{
+  const r = build({ wide: false, initialY: 0 }); r.settle();
+
+  near(railY(r.transform()), nodeLocal(0), 0.5,
+    'parked on the first node before the reader has reached the section');
+  eq(r.reached()[0], true, 'and that first node is already filled');
+  eq(r.reached().slice(1).some(Boolean), false, 'no node ahead of it is filled');
+
+  /* The hold is the whole point: for the first SIMPLE_HOLD of a segment
+     the vehicle does not move at all, which is what lets it drift up the
+     screen with the page and then visibly overtake the reader. */
+  const span = arriveAt(1) - arriveAt(0);
+  r.go(arriveAt(0) + span * SIMPLE_HOLD * 0.9);
+  near(railY(r.transform()), nodeLocal(0), 0.5,
+    'still parked nine tenths of the way through the hold');
+  r.go(arriveAt(0) + span * (SIMPLE_HOLD + (1 - SIMPLE_HOLD) / 2));
+  const mid = railY(r.transform());
+  truthy(mid > nodeLocal(0) + 20 && mid < nodeLocal(1) - 20,
+    'and under way, between the two nodes, once the drive starts');
+
+  /* Landing exactly on each node is what the whole thing is for - short
+     by a mark's width reads as a parking error. This is the assertion
+     that caught the vehicle stopping 25px short of the last node when
+     the geometry was measured before the web fonts had settled. */
+  for (let i = 1; i < N; i++) {
+    r.go(arriveAt(i));
+    near(railY(r.transform()), nodeLocal(i), 0.5, `lands dead on node ${i + 1}`);
+    eq(r.reached()[i], true, `node ${i + 1} fills as it is reached`);
+  }
+
+  /* Mid-run the mark tracks the reader in BOTH directions - it is a
+     "you are here" and following someone back up a timeline they are
+     re-reading is the useful behaviour. Only the end is final. */
+  r.go(arriveAt(3));
+  near(railY(r.transform()), nodeLocal(3), 0.5, 'sits on node 4');
+  r.go(arriveAt(1));
+  near(railY(r.transform()), nodeLocal(1), 0.5,
+    'and follows the reader back up to node 2 - the latch is not armed yet');
+
+  /* One-directional, same ratchet as the wide layout: scrolling back up
+     to re-read a milestone must not undo the nodes or the copy. */
+  eq(r.reached().every(Boolean), true, 'but every node it passed stays filled');
+  eq(r.revealed().every(Boolean), true, 'and every milestone stays revealed');
+}
+
+console.log('\n--- 17d. narrow: the end of the line is final ---');
+{
+  const r = build({ wide: false, initialY: 0 }); r.settle();
+
+  eq(r.nodes.length + 1, STOPS, 'the terminus dot is the sixth stop on the rail');
+  eq(r.endReached(), false, 'it starts hollow');
+
+  r.go(arriveAt(N - 1));
+  near(railY(r.transform()), nodeLocal(N - 1), 0.5, 'reaches the last milestone');
+  eq(r.endReached(), false, 'the end dot is still hollow with a leg left to drive');
+
+  r.go(arriveAt(STOPS - 1));
+  near(railY(r.transform()), nodeLocal(STOPS - 1), 0.5, 'drives on and lands on the end dot');
+  eq(r.endReached(), true, 'which fills as it arrives');
+
+  /* ARRIVED IS FINAL. Everywhere else the mark follows the reader back
+     up; here it must not, or a stray upward flick undoes the one moment
+     the whole section is built to arrive at. */
+  const parked = railY(r.transform());
+  r.go(arriveAt(2));
+  near(railY(r.transform()), parked, 0.5, 'stays on the end dot when the reader scrolls back up');
+  r.go(0);
+  near(railY(r.transform()), parked, 0.5, 'and all the way back to the top of the page');
+  eq(r.endReached(), true, 'end dot stays filled');
+  r.go(arriveAt(STOPS - 1) + 5000);
+  near(railY(r.transform()), parked, 0.5, 'and scrolling on past it moves nothing');
+}
+
+console.log('\n--- 17c. narrow: copy reveals where it can be seen ---');
+{
+  const r = build({ wide: false, initialY: 0 }); r.settle();
+  /* Row i's top crosses SIMPLE_REVEAL at scroll = rowDocTop - VH*REVEAL.
+     The old IntersectionObserver fired at 5% of a row that is taller
+     than the viewport, i.e. off the bottom of the screen every time. */
+  const reveals = (i) => SNAKE_TOP + i * ROW_H - VH * SIMPLE_REVEAL;
+  r.go(reveals(2) - 30);
+  eq(r.revealed()[2], false, 'row 3 is still hidden just before its trigger');
+  r.go(reveals(2) + 30);
+  eq(r.revealed()[2], true, 'and revealed just after it');
+  truthy(reveals(2) < SNAKE_TOP + 2 * ROW_H,
+    'the trigger is above the row itself, so the reveal happens on screen');
 }
 
 console.log('\n--- 18. snake path joins (CSS arithmetic) ---');

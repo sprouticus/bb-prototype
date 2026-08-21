@@ -151,6 +151,33 @@
   var UP_RELEASE = 24;
   var RESUME_SLACK = 4;
 
+  /* ---- narrow-screen dials ---------------------------------------
+     The rail version has its own three, and they are unrelated to the
+     four phase lengths above: nothing is pinned at this width, so
+     these are fractions of the viewport and of a segment rather than
+     pixel budgets.
+
+     SIMPLE_ANCHOR  where on screen a node counts as arrived at, as a
+                fraction of viewport height. The vehicle is parked on
+                that node when it crosses this line. 0.42 is a little
+                above centre, which is where a milestone's heading
+                sits when its copy is comfortable to read.
+     SIMPLE_HOLD  how much of the scroll between two nodes the vehicle
+                spends parked on the first of them, before driving.
+                THIS IS THE ONE THAT MAKES THE MOTION VISIBLE — see
+                drawSimple() for why an even mapping shows nothing at
+                all.
+     SIMPLE_REVEAL  the row's copy fades in when its top crosses this
+                fraction of the viewport. It was an IntersectionObserver
+                at threshold 0.05, which on a phone fires when 5% of a
+                row that is taller than the screen has appeared — that
+                is before its first line is readable, so the reveal
+                always happened off-screen and the page looked static.
+     ---------------------------------------------------------------- */
+  var SIMPLE_ANCHOR = 0.42;
+  var SIMPLE_HOLD = 0.55;
+  var SIMPLE_REVEAL = 0.82;
+
   /* The phases as fractions of one line's budget, which is the unit
      the fractional part of `progress` is measured in. Everything
      downstream compares against these rather than against raw pixels,
@@ -193,7 +220,8 @@
      hold. Only used to spot them scrolling back up — see onScroll. */
   var peakY = 0;
   var queued = false;        // a paint is already scheduled for this frame
-  var simpleObserver = null;
+  var simpleGeo = null;      // narrow-screen node positions, see measureSimple()
+  var simpleDone = false;    // vehicle has reached the end of the rail and latched there
 
   function clamp(v, lo, hi) { return v < lo ? lo : (v > hi ? hi : v); }
 
@@ -529,6 +557,9 @@
 
   function paint() {
     queued = false;
+    /* The narrow-screen mode shares the rAF coalescing and nothing
+       else — no pin, no progress ratchet, no finish state. */
+    if (mode === 'simple') { drawSimple(); return; }
     draw();
     /* Release after painting the final frame, not before: finish()
        reads the end shift out of the same geometry render() just
@@ -543,6 +574,7 @@
   }
 
   function onScroll() {
+    if (mode === 'simple') { schedule(); return; }
     if (mode !== 'full' || !geo) return;
     var y = window.pageYOffset;
 
@@ -801,30 +833,169 @@
     draw();
   }
 
-  /* ---- narrow-screen mode ---------------------------------------- */
-  function startSimple() {
-    snake.classList.add('snake--simple');
-    if (!('IntersectionObserver' in window)) {
-      /* No observer, no reveal — show everything rather than leaving
-         the copy invisible. */
-      rowEls.forEach(function (el) { el.classList.add('is-revealed'); });
+  /* ---- narrow-screen mode ----------------------------------------
+     Below 821px the switchbacks are gone and the timeline is a single
+     left rail (the max-width:820px block in styles.css). The vehicle
+     rides that rail: parked on a milestone's node while its copy is
+     being read, driving down to the next node as the reader arrives
+     at it. Nodes fill as it reaches them and stay filled.
+
+     NOTHING IS PINNED HERE. The wide layout buys its slow traverse
+     with ~11,300px of held scrolling; on a phone that is a reader who
+     cannot get out of the section. The rows' own trip up the viewport
+     is the entire budget, so this mode adds no page height at all.
+     ---------------------------------------------------------------- */
+
+  /* Node centres, in both coordinate spaces — same split as measure()
+     above, and the same trap if they are conflated. `local` places the
+     traveller, which is absolutely positioned inside .snake; `doc` is
+     compared against scroll position.
+
+     Measured once per layout rather than per frame because the reveal
+     changes only opacity and transform, so nothing here moves once it
+     has settled. refresh() re-reads it on resize, on load, and when
+     the mark finishes loading. */
+  function measureSimple() {
+    var sr = snake.getBoundingClientRect();
+    var top = window.pageYOffset;
+
+    var stops = rowEls.map(function (el) {
+      var node = el.querySelector('.snake-node');
+      /* Fall back to the row's own top edge if the node is missing or
+         has no box — an older copy of history.html without the spans
+         should still get a vehicle that moves, rather than one parked
+         at zero for the whole page. */
+      var r = (node && node.offsetHeight) ? node.getBoundingClientRect()
+                                          : el.getBoundingClientRect();
+      var mid = r.top + (node && node.offsetHeight ? r.height / 2 : 11);
+      return { el: el, node: node, local: mid - sr.top, doc: mid + top };
+    });
+
+    /* THE END OF THE LINE IS JUST ANOTHER STOP. Appending the terminus
+       dot here rather than special-casing it in drawSimple() means the
+       last leg — the drive down off the final milestone to the end of
+       the rail — is the same hold-then-drive as every other leg, with
+       no code that knows it is the last one. Its `el` is null because
+       it belongs to no row: nothing reveals when the vehicle gets
+       there, and the filled state goes on the dot itself. */
+    var endNode = snake.querySelector('.snake-node--end');
+    if (endNode && endNode.offsetHeight) {
+      var er = endNode.getBoundingClientRect();
+      var emid = er.top + er.height / 2;
+      stops.push({ el: null, node: endNode, local: emid - sr.top, doc: emid + top });
+    }
+
+    simpleGeo = {
+      travelerH: traveler ? traveler.offsetHeight : 0,
+      nodes: stops
+    };
+  }
+
+  /* HOLD, THEN DRIVE — and the hold is what makes the drive visible.
+     Mapping the vehicle evenly onto scroll position was the obvious
+     first version and it shows nothing: the vehicle advances down the
+     document at exactly the rate the reader does, so its position on
+     screen never changes and it looks pinned to the glass. Parking it
+     on a node for the first SIMPLE_HOLD of each segment and then
+     driving the whole gap in what is left means it drifts up the
+     screen with the page while a milestone is being read, then
+     overtakes the reader on the way to the next one. Same drive/hold
+     shape as the wide layout's line phases, for the same reason.
+
+     Smoothstepped so the drive has no hard start or stop. */
+  function drawSimple() {
+    if (mode !== 'simple' || !simpleGeo) return;
+    var vh = window.innerHeight;
+    var y = window.pageYOffset;
+    var nodes = simpleGeo.nodes;
+    var n = nodes.length;
+    var i;
+
+    /* Copy reveal, off live rects so a late layout shift cannot strand
+       a row invisible. Add only, never remove: scrolling back up to
+       re-read a milestone must not wipe it, which is the same ratchet
+       the wide layout runs on. The terminus has no row, so no copy. */
+    for (i = 0; i < n; i++) {
+      if (nodes[i].el &&
+          nodes[i].el.getBoundingClientRect().top < vh * SIMPLE_REVEAL) {
+        nodes[i].el.classList.add('is-revealed');
+      }
+    }
+
+    if (!traveler) return;
+
+    /* ARRIVED IS FINAL. Once the vehicle has reached the end of the
+       line it stays there, however far back up the reader scrolls.
+       Everywhere else the vehicle tracks the reader in both directions
+       — it is a "you are here" mark and following them back up a
+       timeline they are re-reading is the useful behaviour — but the
+       end is not a position, it is a finished journey. Letting it
+       reverse off the last dot undoes the one moment the whole thing
+       is built to arrive at, and it undoes it on a stray upward flick. */
+    if (simpleDone) {
+      traveler.style.transform =
+        'translate3d(0,' +
+        (nodes[n - 1].local - simpleGeo.travelerH / 2).toFixed(1) + 'px,0)';
       return;
     }
-    simpleObserver = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('is-revealed');
-          simpleObserver.unobserve(entry.target);
-        }
-      });
-    }, { rootMargin: '0px 0px -18% 0px', threshold: 0.05 });
-    rowEls.forEach(function (el) { simpleObserver.observe(el); });
+
+    /* A node has been arrived at once it has climbed to SIMPLE_ANCHOR.
+       arrive(0) is usually negative — the first node is near the top of
+       a short page — which is what leaves the vehicle sitting on the
+       first node before the reader has got anywhere near it. */
+    function arrive(k) { return nodes[k].doc - vh * SIMPLE_ANCHOR; }
+
+    var idx = 0;
+    while (idx < n - 1 && y >= arrive(idx + 1)) idx++;
+
+    var local = nodes[idx].local;
+    var eased = 0;
+    if (idx < n - 1) {
+      var span = arrive(idx + 1) - arrive(idx);
+      var t = span > 0 ? clamp((y - arrive(idx)) / span, 0, 1) : 0;
+      var u = clamp((t - SIMPLE_HOLD) / (1 - SIMPLE_HOLD), 0, 1);
+      eased = u * u * (3 - 2 * u);
+      local += (nodes[idx + 1].local - nodes[idx].local) * eased;
+    }
+
+    /* Fill every node behind the vehicle, and the one ahead once the
+       drive has all but landed — a node that fills a frame after the
+       vehicle has covered it reads as a lag.
+
+       The class goes on the ROW for a milestone (the CSS reaches the
+       dot through it) but on the DOT ITSELF for the terminus, which
+       has no row to hang it on. */
+    function fill(k) {
+      var target = nodes[k].el || nodes[k].node;
+      if (target) target.classList.add('is-reached');
+    }
+    for (i = 0; i <= idx; i++) fill(i);
+    if (eased >= 0.85 && idx + 1 < n) fill(idx + 1);
+
+    /* Latch on the last stop. Checked after the fill above so the end
+       dot is already red on the frame the latch closes. */
+    if (idx === n - 1) simpleDone = true;
+
+    traveler.style.transform =
+      'translate3d(0,' + (local - simpleGeo.travelerH / 2).toFixed(1) + 'px,0)';
+  }
+
+  function startSimple() {
+    snake.classList.add('snake--simple');
+    measureSimple();
+    /* The mark's height centres the vehicle on the node; if it has not
+       loaded, re-measure when it does or the first frames sit half a
+       mark too low. Same guard the wide layout uses. */
+    var img = traveler ? traveler.querySelector('img') : null;
+    if (img && !img.complete) img.addEventListener('load', refresh, { once: true });
+    drawSimple();
   }
 
   /* ---- mode switching -------------------------------------------- */
   function teardown() {
     queued = false;
-    if (simpleObserver) { simpleObserver.disconnect(); simpleObserver = null; }
+    simpleGeo = null;
+    simpleDone = false;
     snake.classList.remove('snake--anim', 'snake--simple');
     /* Unpin completely: the class, the inline height that buys the
        scroll distance, the custom properties, and the transform that
@@ -840,7 +1011,7 @@
     pin.style.removeProperty('--stage-h');
     snake.style.removeProperty('transform');
     rowEls.forEach(function (el) {
-      el.classList.remove('is-revealed');
+      el.classList.remove('is-revealed', 'is-reached');
       el.style.removeProperty('--lead');
       el.style.removeProperty('--band');
     });
@@ -865,6 +1036,7 @@
      scroll advance anything — for resize, late layout shifts, and the
      mark finishing loading. */
   function refresh() {
+    if (mode === 'simple') { measureSimple(); drawSimple(); return; }
     if (mode !== 'full') return;
     measure();
     /* Re-assert the height: measure() recomputes it (the stage is a
@@ -915,6 +1087,17 @@
      timeline — move every row's document Y. Re-measure rather than
      trusting the first reading. */
   window.addEventListener('load', refresh);
+
+  /* `load` is not enough on its own for the fonts. With display=swap
+     the page renders in the fallback face and reflows when Inter and
+     Archivo arrive, which on a cold cache can be after load has
+     already fired — and the reflow moves every node down the document
+     by tens of pixels. Measured once before that, the narrow-screen
+     vehicle parks short of its last node by about the accumulated
+     drift. Guarded because Safari shipped document.fonts late. */
+  if (document.fonts && document.fonts.ready && document.fonts.ready.then) {
+    document.fonts.ready.then(refresh);
+  }
 
   /* addListener is the deprecated spelling, still the only one older
      Safari has. */

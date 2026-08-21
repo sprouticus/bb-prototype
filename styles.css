@@ -2456,6 +2456,12 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
 
 /* ---- end caps on the first and last rules ---- */
 .snake-cap{position:absolute;width:15px;height:15px;border-radius:50%;background:var(--orange);}
+
+/* The milestone nodes belong to the narrow-screen rail only — the wide
+   layout has the switchback path itself and does not need dots on it.
+   Hidden here rather than shown only in the media query so the markup
+   can carry them unconditionally. */
+.snake-node{display:none;}
 .snake-cap--start{bottom:-7px;left:calc(var(--turn-r) - 7px);}
 .snake-cap--end{bottom:-7px;right:calc(var(--turn-r) - 7px);}
 
@@ -2520,14 +2526,19 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
   .snake-vehicle{width:84px;}
 }
 
-/* ---- collapse to a single left rail ---- */
+/* ---- collapse to a single left rail ----
+   The gutter is 56px rather than the 34px it was, because the rail now
+   carries two things that need room beside it: a node at every
+   milestone and the vehicle mark riding down it. Rail spans x=20..23,
+   so its centre is 21.5, and everything below is centred on that
+   number — change the rail and all three have to move together. */
 @media(max-width:820px){
-  .snake{--turn-r:0px;padding-left:34px;}
+  .snake{--turn-r:0px;padding-left:56px;}
   .snake::before{
-    content:'';position:absolute;top:6px;bottom:6px;left:9px;
+    content:'';position:absolute;top:6px;bottom:6px;left:20px;
     width:3px;background:var(--line);
   }
-  .snake-row{grid-template-columns:1fr;gap:0;padding:0 0 36px;min-height:0;}
+  .snake-row{grid-template-columns:1fr;gap:0;padding:0 0 42px;min-height:0;}
   /* The turns carry the whole path now, so dropping them drops every
      switchback; .snake::before above replaces the lot with one rail. */
   .snake-row--turn-right::before,
@@ -2544,6 +2555,62 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
   .snake-cell{max-width:none;justify-self:stretch;}
   .snake-vehicle{position:static;width:78px;margin-top:18px;opacity:.55;}
   .snake-row--left .snake-vehicle{transform:none;}
+
+  /* ---- milestone node on the rail ----
+     A REAL ELEMENT, NOT .snake-row::before. Rows 2-5 already spend
+     their ::before on the desktop connector arcs, and one pseudo
+     cannot be two things; repurposing it means the turn rules and the
+     node rules fight over display, which is a cascade problem with no
+     good answer. A span costs five lines of markup and no ambiguity.
+
+     THE OFFSET IS NEGATIVE BECAUSE THE ROW IS THE CONTAINING BLOCK,
+     not .snake. .snake-row is position:relative, so `left` here is
+     measured from the row's padding box — which starts at .snake's
+     CONTENT edge, 56px in, past the rail entirely. The node has to be
+     pulled back out of the copy column to reach the rail: the rail's
+     centre is 21.5px from .snake's left edge, so it is 34.5px left of
+     the copy, and a 21px box centred there starts at -45px. Setting
+     this to a positive 11px — the figure that would be right if
+     .snake were the containing block — lands it in the middle of the
+     first line of copy instead, which is exactly what happened.
+
+     The border box is 15 + 3 + 3 = 21 wide. This element
+     IS matched by the `*{box-sizing:border-box}` reset at the top of
+     the file — only ::before and ::after are missed by it — so the
+     border is absorbed into the 21px rather than added to it.
+
+     top:1px lines the node up with the cap height of the heading
+     beside it: the heading is 21px at this width with line-height
+     1.04, so its centre sits about 11px down and the node's own
+     centre is 10.5 down from its top. */
+  .snake-node{
+    display:block;position:absolute;left:-45px;top:1px;
+    width:21px;height:21px;border-radius:50%;
+    background:var(--white);border:3px solid var(--line);
+    z-index:2;
+  }
+
+  /* ---- the end of the line ----
+     A sixth dot below the last milestone, and the only one that is not
+     a milestone: it is where the timeline stops and where the vehicle
+     finishes. The drive treats it as an ordinary node, so nothing in
+     the script knows it is special — see drawSimple().
+
+     POSITIVE left, unlike every other node, and that is not an
+     inconsistency: this one is a child of .snake rather than of a row,
+     so its containing block is .snake's own padding box and 11px is
+     measured from the same edge the rail's 20px is. The rows' -45px is
+     the same 11px with the 56px gutter subtracted back off. Move it
+     into a row and it needs the negative figure again.
+
+     The rail stops 6px short of .snake's bottom edge, so it dies
+     inside this dot rather than poking out below it. */
+  .snake-node--end{left:11px;top:auto;bottom:0;}
+
+  /* Room for it. The last row carried the same 42px as the rest, which
+     put the end dot close enough to the final paragraph to read as
+     that paragraph's bullet rather than as the end of the line. */
+  .snake-row:last-of-type{padding-bottom:60px;}
 }
 
 /* ============================================================
@@ -2761,15 +2828,82 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
   transition:opacity .4s ease;
 }
 
-/* ---- narrow screens ---- */
-/* The switchbacks collapse to a single left rail below 820px, where
-   a left/right traverse has nothing to traverse. Copy still fades in
-   on approach; the per-row marks stay exactly as they are. */
+/* ---- narrow screens ----
+   The switchbacks collapse to a single left rail below 820px, where a
+   left/right traverse has nothing to traverse. The vehicle drives that
+   rail instead: parked on a milestone's node while its copy is being
+   read, then driving down to the next node as the reader arrives.
+   history-scroll.js sets the transform; everything else is here.
+
+   THE FIVE PARKED MARKS GO. Before this, the narrow layout showed the
+   per-row .snake-vehicle five times at 55% opacity under each
+   paragraph, which read as the logo repeated down the page rather than
+   as a vehicle on a timeline — and it sat alongside a rail that had
+   nothing on it at all. One mark that moves says what five that do not
+   were trying to. They are hidden on .snake--simple rather than in the
+   media query so the no-JS page still gets them.
+
+   NOTHING IS PINNED AT THIS WIDTH and nothing should be. The wide
+   layout buys its slow traverse with about 11,300px of held scrolling,
+   which on a phone is a reader who cannot get out of the section. Here
+   the rows' own trip up the viewport is the whole scroll budget, so
+   the page is exactly as long as its content. */
+.snake--simple .snake-vehicle{display:none;}
 .snake--simple .snake-cell{
-  opacity:0;transform:translateY(14px);
-  transition:opacity .5s ease,transform .5s ease;
+  opacity:0;transform:translateX(16px);
+  transition:opacity .55s cubic-bezier(.22,.61,.36,1),
+             transform .55s cubic-bezier(.22,.61,.36,1);
 }
 .snake--simple .snake-row.is-revealed .snake-cell{opacity:1;transform:none;}
+
+/* translateX, and from the rail rather than from below. The copy used
+   to lift 14px on a plain ease, which at this width is a movement you
+   feel rather than see — every row is wider than it is tall, so
+   vertical travel of that size reads as a flicker. Coming in off the
+   rail gives the reveal the same direction the rail has. */
+
+/* The node fills as the vehicle reaches it, and stays filled: progress
+   is one-directional here for the same reason it is on the wide
+   layout — scrolling back up to re-read a milestone must not undo it. */
+.snake--simple .snake-row.is-reached .snake-node,
+.snake--simple .snake-node--end.is-reached{
+  background:var(--orange);border-color:var(--orange);
+}
+
+/* Rides the rail: 40px wide against the 21px node, centred on the same
+   21.5 the node and rail share, so left = 21.5 - 20. Full opacity —
+   this is the only vehicle on the page now, and the 55% the parked
+   marks used made sense only when there were five of them.
+   Above the node it is passing (z-index 2) and below nothing, because
+   the copy sits clear of the rail at this width. */
+.snake--simple .snake-traveler{
+  display:block;position:absolute;top:0;left:1.5px;
+  width:40px;opacity:1;pointer-events:none;
+  z-index:3;
+  will-change:transform;
+}
+
+/* A WHITE DISC UNDER THE MARK, and it is not decoration. The mark is
+   open line art — the cab is a box with a window in it and the driver
+   is a cut-out — so whatever is behind it shows straight through.
+   Riding the rail with nothing underneath, the vehicle had a grey line
+   running across its windscreen; parked on a filled node it had a red
+   blob sitting behind the driver. Both read as a printing fault rather
+   than as a vehicle on a track.
+
+   32px covers the 21px node and the 3px rail with room either side.
+   The mark is 40px wide, so its nose and tail overhang the disc onto
+   the page's own white — which is why the disc is invisible except
+   exactly where it is doing its job.
+
+   The img needs position:relative to take part in stacking at all;
+   without it the disc paints over the mark rather than under it. */
+.snake--simple .snake-traveler::before{
+  content:'';position:absolute;
+  left:50%;top:50%;width:32px;height:32px;margin:-16px 0 0 -16px;
+  border-radius:50%;background:var(--white);
+}
+.snake--simple .snake-traveler img{position:relative;}
 
 /* ---- reduced motion ---- */
 /* Belt and braces: history-scroll.js already refuses to add either
@@ -2783,8 +2917,10 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
     -webkit-mask-image:none;mask-image:none;
     opacity:1;transform:none;transition:none;
   }
-  .snake--anim .snake-traveler{display:none;}
+  .snake--anim .snake-traveler,
+  .snake--simple .snake-traveler{display:none;}
   .snake--anim .snake-vehicle{visibility:visible;}
+  .snake--simple .snake-vehicle{display:block;}
   .snake-restart{display:none;}
   /* Nothing is waiting on a scroll under reduced motion — the whole
      timeline is already there — so the cue would be both wrong and
