@@ -193,34 +193,72 @@ header.site{position:sticky;top:0;z-index:50;}
   font-size:11.5px;letter-spacing:.08em;color:var(--steel-pale);text-transform:uppercase;
   white-space:nowrap;
 }
-nav.primary{display:flex;align-items:center;gap:30px;flex-shrink:0;}
-nav.primary a{
+/* nav.primary stretches to the full height of .nav-row — the -14px
+   margins cancel that row's 14px padding — so a dropdown anchored at
+   top:100% opens flush against the bar's bottom edge instead of
+   floating below the word. See the dropdown block below for why that
+   matters. Selectors here are deliberately "nav.primary > a": the
+   dropdown's own links are NOT top-row links and must not inherit
+   uppercase from this rule (they did, which is why menu items rendered
+   ALL CAPS despite .nav-dropdown a asking for text-transform:none). */
+nav.primary{
+  display:flex;align-items:stretch;align-self:stretch;
+  margin:-14px 0;gap:30px;flex-shrink:0;
+}
+nav.primary > a{
+  display:flex;align-items:center;position:relative;
   font-size:16.5px;font-weight:700;color:var(--ink);
   text-transform:uppercase;letter-spacing:.04em;
-  padding:6px 0;border-bottom:3px solid transparent;
   white-space:nowrap;
 }
-nav.primary a:hover, nav.primary a[aria-current="page"]{border-bottom-color:var(--orange);}
+/* The only underline in the top row, and it marks exactly one thing:
+   the page you are actually on. Menu parents (Vehicle / Gallery /
+   Company) are buttons that navigate nowhere, so they never take a
+   marker — not on hover, and not when you are on one of their child
+   pages. Drawn as ::after rather than border-bottom so it sits under
+   the word while the link itself fills the full height of the bar. */
+nav.primary > a[aria-current="page"]::after{
+  content:"";position:absolute;left:0;right:0;top:calc(50% + 13px);
+  height:3px;background:var(--orange);
+}
 
 /* -------- VEHICLE / GALLERY / COMPANY DROPDOWNS (added 2026-07-14,
-   restructured 2026-07-18) — desktop shows the sub-pages on hover/
-   focus. Mobile used to force the dropdown permanently open (hover
-   doesn't exist on touch, so there was no way to collapse it). Fixed
-   by splitting the trigger into two independent controls: the label
-   is still a plain link to its own page, and a separate caret
-   <button class="nav-dropdown-toggle"> now toggles an .open class via
-   JS (see the toggle script at the bottom of the page) so each
-   dropdown starts collapsed on mobile and expands on tap. -------- */
-.nav-item.has-dropdown{position:relative;}
-.nav-item.has-dropdown:has(.nav-dropdown a[aria-current="page"]) .nav-dropdown-trigger{border-bottom-color:var(--orange);}
-.nav-dropdown-trigger-row{display:flex;align-items:center;gap:2px;}
-.nav-dropdown-toggle{background:none;border:none;padding:4px;margin:0;cursor:pointer;display:inline-flex;align-items:center;color:inherit;}
-.nav-dropdown-toggle .caret{width:9px;height:9px;flex:none;transition:transform .15s ease;}
-.nav-item.has-dropdown:hover .caret,
-.nav-item.has-dropdown:focus-within .caret,
+   restructured 2026-07-18, rebuilt 2026-08-21)
+
+   The parent is a <button>, not a link. It used to be a link to its own
+   page sitting next to a separate 9px caret <button>: on touch the caret
+   was the only way in, and on desktop the link swallowed the click and
+   navigated away. The pages those links pointed at (enabler-2-0, photos,
+   company-purpose) are the first item inside each menu, so nothing became
+   unreachable and the hit target grew from 17px to the whole word.
+
+   The trigger fills the full height of the nav row so the panel, at
+   top:100%, opens flush against the bar's bottom edge. There used to be
+   a margin-top:16px here. It created a strip belonging to neither the
+   trigger nor the panel, and a cursor crossing it slower than the 150ms
+   visibility transition lost the menu — reported from a real machine and
+   reproduced at a ~1.2s traverse. Do not reintroduce a gap unless you
+   also give the hover surface something to bridge it.
+
+   Desktop opens on hover OR click; the hover half is gated on a real
+   pointer so a touchscreen laptop can't get stuck in a hover state.
+   Mobile is click-only. .open, set by nav.js, is the source of truth for
+   click state on both. :focus-within is deliberately NOT used to reveal
+   the panel: it used to, which is exactly why a click opened the menu and
+   a second click could not close it — focus outlived the class toggle.
+   -------- */
+.nav-item.has-dropdown{position:relative;display:flex;align-items:stretch;}
+.nav-dropdown-trigger{
+  display:flex;align-items:center;gap:3px;
+  margin:0;padding:0;background:none;border:none;
+  font-family:inherit;font-size:16.5px;font-weight:700;color:var(--ink);
+  text-transform:uppercase;letter-spacing:.04em;white-space:nowrap;
+  cursor:pointer;
+}
+.nav-dropdown-trigger .caret{width:9px;height:9px;flex:none;transition:transform .15s ease;}
 .nav-item.has-dropdown.open .caret{transform:rotate(180deg);}
 .nav-dropdown{
-  position:absolute;top:100%;left:0;margin-top:16px;
+  position:absolute;top:100%;left:0;
   background:var(--white);border:1px solid var(--line);
   box-shadow:0 16px 32px rgba(14,17,18,0.14);
   min-width:190px;padding:8px;border-radius:2px;
@@ -228,33 +266,37 @@ nav.primary a:hover, nav.primary a[aria-current="page"]{border-bottom-color:var(
   transition:opacity .15s ease, transform .15s ease, visibility .15s;
   z-index:60;
 }
-.nav-item.has-dropdown:hover .nav-dropdown,
-.nav-item.has-dropdown:focus-within .nav-dropdown{
+.nav-item.has-dropdown.open .nav-dropdown{
   opacity:1;visibility:visible;transform:translateY(0);
+}
+/* .hover-suppressed is set by nav.js when a menu is deliberately closed
+   (second click, Escape, click outside) while the pointer is still on
+   its button, and cleared on mouseleave. Without it :hover would hold
+   the panel open right after the class came off and the close would
+   look like it did nothing. */
+@media (hover:hover) and (pointer:fine){
+  .nav-item.has-dropdown:hover:not(.hover-suppressed) .caret{transform:rotate(180deg);}
+  .nav-item.has-dropdown:hover:not(.hover-suppressed) .nav-dropdown{
+    opacity:1;visibility:visible;transform:translateY(0);
+  }
 }
 .nav-dropdown a{
   display:block;padding:10px 12px;font-size:15px;font-weight:600;
   text-transform:none;letter-spacing:0;color:var(--ink);
-  border-bottom:none;border-radius:2px;
+  border-radius:2px;white-space:nowrap;
 }
 .nav-dropdown a:hover,
 .nav-dropdown a[aria-current="page"]{background:var(--paper);color:var(--orange-dark);}
-/* Override the generic nav.primary a underline (border-bottom) for
-   dropdown items specifically — red text on hover/current is enough,
-   the underline bar was cluttering the menu (fixed 2026-07-18). Needs
-   the extra nav.primary prefix for specificity over "nav.primary
-   a:hover" / "nav.primary a[aria-current]" at the top of this file. */
-nav.primary .nav-dropdown a:hover,
-nav.primary .nav-dropdown a[aria-current="page"]{border-bottom-color:transparent;}
 
-/* Mobile: collapsed accordion by default. :focus-within isn't relied
-   on here since iOS Safari doesn't reliably focus a tapped <button> —
-   the .open class (added/removed by JS on toggle click) is the source
-   of truth for mobile visibility instead. */
+/* Mobile: collapsed accordion by default, driven solely by .open. Hover
+   does not exist on touch, and iOS Safari does not reliably focus a
+   tapped <button>, so neither :hover nor :focus-within can be trusted
+   here — the class set by nav.js is the only source of truth. The
+   trigger's 10px vertical padding is what makes the row a real tap
+   target rather than a line of text. */
 @media (max-width:980px){
-  .nav-item.has-dropdown{width:100%;}
-  .nav-dropdown-trigger-row{width:100%;justify-content:space-between;}
-  .nav-dropdown-toggle{padding:10px;margin:-10px -6px -10px 0;}
+  .nav-item.has-dropdown{width:100%;display:block;}
+  .nav-dropdown-trigger{width:100%;justify-content:space-between;padding:10px 0;}
   .nav-dropdown{
     position:static;opacity:0;visibility:hidden;transform:none;
     border:none;box-shadow:none;padding:0 0 0 18px;margin-top:0;
@@ -282,6 +324,7 @@ nav.primary a.mobile-cta{display:none;}
     position:absolute;top:100%;left:0;right:0;
     background:var(--white);
     flex-direction:column;align-items:flex-start;
+    margin:0;                       /* cancel the desktop full-height stretch */
     padding:8px 28px 18px;
     border-bottom:1px solid var(--line);
     gap:14px;
