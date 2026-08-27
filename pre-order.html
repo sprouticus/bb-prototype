@@ -14,7 +14,7 @@
 <header class="site">
   <div class="util-bar">
     <div class="wrap">
-      <span class="util-left">Albuquerque, NM &middot; Designed &amp; Built in the USA</span>
+      <span class="util-left">Albuquerque, NM &middot; Assembled in the USA</span>
       <div class="util-right">
         <a href="mailto:info@bbengineering.us" class="util-email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v16H4z"/><path d="m4 6 8 7 8-7"/></svg>info@bbengineering.us</a>
         <span class="util-social">
@@ -112,6 +112,7 @@
         <p class="flow-step-eyebrow">Step 1 of 4</p>
         <h2>Your information</h2>
         <p class="flow-step-sub">No payment required. We just need to know who you are and how to reach you.</p>
+        <p class="field-req-legend">Fields marked <span class="req">*</span> are required.</p>
 
         <div class="field">
           <label for="p-for">Who is this for?</label>
@@ -123,23 +124,31 @@
         </div>
 
         <div class="field">
-          <label for="p-name">Full name</label>
-          <input type="text" id="p-name" name="name" required>
+          <label for="p-name">Full name <span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="p-name" name="name" required aria-describedby="p-name-error"
+                 data-error-missing="Enter your full name so we know who the reservation is for.">
+          <p class="field-error" id="p-name-error" role="alert" hidden></p>
         </div>
 
         <div class="field">
-          <label for="p-email">Email</label>
-          <input type="email" id="p-email" name="email" required>
+          <label for="p-email">Email <span class="req" aria-hidden="true">*</span></label>
+          <input type="email" id="p-email" name="email" required aria-describedby="p-email-error"
+                 data-error-missing="Enter an email address so we can reach you."
+                 data-error-invalid="That doesn't look like an email address. Check for a missing @ or a typo.">
+          <p class="field-error" id="p-email-error" role="alert" hidden></p>
         </div>
 
         <div class="field">
-          <label for="p-phone">Phone <span style="font-weight:500;color:#454C49;">(optional)</span></label>
+          <label for="p-phone">Phone <span class="field-opt">(optional)</span></label>
           <input type="tel" id="p-phone" name="phone">
         </div>
 
         <div class="field">
-          <label for="p-location">City &amp; state</label>
-          <input type="text" id="p-location" name="location" placeholder="Albuquerque, NM" required>
+          <label for="p-location">City &amp; state <span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="p-location" name="location" placeholder="Albuquerque, NM" required
+                 aria-describedby="p-location-error"
+                 data-error-missing="Enter your city and state. Delivery range decides what we can quote.">
+          <p class="field-error" id="p-location-error" role="alert" hidden></p>
         </div>
 
         <div id="org-fields" hidden>
@@ -174,7 +183,7 @@
         </div>
 
         <div class="field">
-          <label for="p-financing">Interested in financing options? <span style="font-weight:500;color:#454C49;">(optional)</span></label>
+          <label for="p-financing">Interested in financing options? <span class="field-opt">(optional)</span></label>
           <div class="radio-row" id="p-financing" role="radiogroup" aria-label="Interested in financing options?">
             <label><input type="radio" name="financing" value="yes"> Yes</label>
             <label><input type="radio" name="financing" value="no"> No</label>
@@ -183,7 +192,7 @@
         </div>
 
         <div class="field">
-          <label for="p-notes">Configuration &amp; accessibility notes <span style="font-weight:500;color:#454C49;">(optional)</span></label>
+          <label for="p-notes">Configuration &amp; accessibility notes <span class="field-opt">(optional)</span></label>
           <textarea id="p-notes" name="notes" rows="4" placeholder="Specify hand control configuration, custom seating preferences, wheelchair tie-down dimensions, or specific jobsite requirements."></textarea>
         </div>
 
@@ -597,16 +606,80 @@
     if (step === 4) buildReview();
   }
 
+  /* ---- Step validation -------------------------------------------------
+     This used to call reportValidity() on the step, which is a <section>.
+     Only forms and form controls have that method, so the call was
+     undefined, the guard fell through, and pressing Next on an empty form
+     did nothing a user could see. The form also carries novalidate, so no
+     native bubble was ever going to appear either.
+
+     Messages are authored per field in data-error-missing /
+     data-error-invalid rather than generated here, so the copy lives in the
+     markup where it gets edited. The red outline comes from .is-invalid on
+     the wrapping .field, not from :invalid, because :invalid matches an
+     empty required field the moment the page loads and would paint the form
+     red before anyone has typed anything. -------------------------------- */
+
+  function inHiddenBlock(el, stepEl){
+    for (var n = el.parentNode; n && n !== stepEl; n = n.parentNode){
+      if (n.hidden) return true;
+    }
+    return false;
+  }
+
+  function messageFor(el){
+    if (el.validity.valueMissing){
+      return el.getAttribute('data-error-missing') || 'This field is required.';
+    }
+    return el.getAttribute('data-error-invalid') || 'Check this entry.';
+  }
+
+  function markField(el, msg){
+    var field = el.closest('.field');
+    var box = document.getElementById(el.id + '-error');
+    if (msg){
+      if (field) field.classList.add('is-invalid');
+      el.setAttribute('aria-invalid', 'true');
+      if (box){ box.textContent = msg; box.hidden = false; }
+    } else {
+      if (field) field.classList.remove('is-invalid');
+      el.removeAttribute('aria-invalid');
+      if (box){ box.hidden = true; box.textContent = ''; }
+    }
+  }
+
+  // Returns the first control that failed, or null. Marks every failure, not
+  // just the first, so the user fixes the whole step in one pass.
+  function validateStep(stepEl){
+    var firstBad = null;
+    [].forEach.call(stepEl.querySelectorAll('[required]'), function(el){
+      if (inHiddenBlock(el, stepEl)) return;
+      var bad = !el.checkValidity();
+      markField(el, bad ? messageFor(el) : '');
+      if (bad && !firstBad) firstBad = el;
+    });
+    return firstBad;
+  }
+
+  // Clear a field's error as soon as it becomes valid, but never introduce
+  // one mid-keystroke — an error that appears while you are still typing an
+  // email address is noise.
+  function clearWhenFixed(e){
+    var el = e.target;
+    if (el.hasAttribute && el.hasAttribute('required') &&
+        el.getAttribute('aria-invalid') === 'true' && el.checkValidity()){
+      markField(el, '');
+    }
+  }
+  form.addEventListener('input', clearWhenFixed);
+  form.addEventListener('change', clearWhenFixed);
+
   document.querySelectorAll('[data-flow-next]').forEach(function(btn){
     btn.addEventListener('click', function(){
       var stepEl = btn.closest('.flow-step');
-      if (stepEl && stepEl.getAttribute('data-step') === '1'){
-        var invalid = stepEl.querySelector(':invalid');
-        if (invalid){
-          if (stepEl.reportValidity) stepEl.reportValidity();
-          invalid.focus();
-          return;
-        }
+      if (stepEl){
+        var firstBad = validateStep(stepEl);
+        if (firstBad){ firstBad.focus(); return; }
       }
       goToStep(parseInt(btn.getAttribute('data-flow-next'), 10));
     });
@@ -746,6 +819,14 @@
 
   form.addEventListener('submit', function(e){
     e.preventDefault();
+
+    // Reaching Review means step 1 already passed, but a stale autofill or a
+    // cleared field between then and submitting should not post a blank name.
+    var step1 = document.getElementById('flow-step-1');
+    if (step1){
+      var firstBad = validateStep(step1);
+      if (firstBad){ goToStep(1); firstBad.focus(); return; }
+    }
 
     if (!ORDER_ENDPOINT) { showSuccess(''); return; }
 

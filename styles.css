@@ -709,6 +709,47 @@ input:focus,select:focus,textarea:focus{border-color:var(--steel);}
 /* Clarifier under a form field (2026-08-06). Sized below the radio
    labels so it reads as a footnote, not a third option. */
 .field-note{margin-top:7px;font-size:14px;color:#6B7378;line-height:1.45;}
+
+/* -------- Required / optional field marking and inline errors (2026-08-27).
+   Before this the only signal was an "(optional)" note on the fields that
+   were not required, which reads as decoration rather than as the inverse of
+   a rule — a reviewer pressed Next on an empty form and read the button as
+   broken. Required fields now carry the asterisk and the legend explains it.
+
+   The invalid state hangs off .is-invalid on the .field wrapper rather than
+   :invalid on the control. :invalid matches an empty required input from
+   first paint, so styling it would open the form already outlined in red.
+   The class is only ever added after a Next or Submit attempt. -------- */
+.req{color:var(--orange-dark);font-weight:800;}
+.field-opt{font-weight:500;color:#454C49;}
+.field-req-legend{margin:0 0 20px;font-size:14px;color:#6B7378;}
+.field-req-legend .req{font-size:15px;}
+
+.field-error{
+  margin:7px 0 0;font-size:14.5px;font-weight:600;line-height:1.45;
+  color:var(--orange-dark);
+}
+.field-error[hidden]{display:none;}
+
+.field.is-invalid label{color:var(--orange-dark);}
+.field.is-invalid input[type="text"],
+.field.is-invalid input[type="email"],
+.field.is-invalid input[type="tel"],
+.field.is-invalid select,
+.field.is-invalid textarea{
+  border-color:var(--orange);background:#FFF8F7;
+}
+/* Focus normally repaints the border steel, which would wipe the red the
+   moment the field is focused for correction — and focus is exactly where
+   the user lands after a failed Next. Hold the red border only; the ring is
+   left to the global input:focus-visible rule near the top of this file, so
+   an invalid field does not end up with a thinner focus ring than a valid
+   one just because this selector sits later in the cascade. */
+.field.is-invalid input:focus,
+.field.is-invalid select:focus,
+.field.is-invalid textarea:focus{
+  border-color:var(--orange);
+}
 .form-success{
   display:none;border:2px solid var(--black);background:var(--paper);border-radius:2px;
   padding:18px;font-size:17px;font-weight:600;
@@ -891,6 +932,13 @@ input:focus,select:focus,textarea:focus{border-color:var(--steel);}
   margin-top:28px;padding-top:16px;border-top:1px solid var(--line);
   font-size:12.5px;line-height:1.6;color:#8A9096;
 }
+/* .story p (0,0,1,1) outranks the single class above, so the Our Purpose
+   copy's 20px body treatment was winning and the qualifier read as another
+   paragraph of the story rather than as fine print. Scoped override, not a
+   change to .story p, which the story copy still needs. */
+.story p.spec-fine-print{
+  font-size:12.5px;line-height:1.6;color:#8A9096;margin-bottom:0;
+}
 
 /* ============================================================
    BEHIND THE BUILD (Specs page, added 2026-07-19) — placeholder
@@ -955,6 +1003,10 @@ button.photo-zoom:focus-visible{outline:3px solid var(--orange);outline-offset:-
    rather than sit below it — see the shared caption rule further down. */
 .shop-tile{margin:0;background:var(--white);border:1px solid var(--line);overflow:hidden;position:relative;}
 .shop-tile img{width:100%;aspect-ratio:4/3;object-fit:cover;display:block;}
+/* .photo-pending--landscape is 7/5, which leaves a sliver of tile background
+   under the box when it sits in this 4/3 row. Match the photos it stands in
+   for so a pending tile is the same shape as a filled one. */
+.shop-tile .photo-pending{aspect-ratio:4/3;}
 /* .shop-tile figcaption was a static below-image label; folded into the
    shared .story-img rule 2026-08-06 so it overlays and reveals on hover.
    The white background and border are a frame decision, not part of the
