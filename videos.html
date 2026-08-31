@@ -89,61 +89,84 @@
   </div>
 </header>
 
-<!-- ============ FEATURED VIDEO ============ -->
-<section class="video-featured">
-  <div class="wrap">
-    <div class="head">
-      <p class="eyebrow">Featured</p>
-      <h2>Towing a loaded trailer.</h2>
-      <p>The Enabler 2.0 hauls a loaded trailer across open ground, filmed on the lot where every unit is built.</p>
-    </div>
-    <div class="video-embed-box">
-      <video controls preload="metadata" poster="images/video-towing-poster.jpg">
-        <source src="video/Enabler%20Towing.mp4" type="video/mp4">
-        Your browser doesn't support embedded video. <a href="video/Enabler%20Towing.mp4">Download the video</a> instead.
-      </video>
-    </div>
-  </div>
-</section>
-
-<!-- ============ MORE FIELD FOOTAGE ============ -->
-<section class="video-grid-section">
+<!-- ============ VIDEO GRID — mirrors the Photos page's
+     .gallery-grid-section shell (eyebrow, h1, filter buttons,
+     .gallery-empty) exactly; see the .video-gallery-grid comment in
+     styles.css for what's new vs. shared. Only 4 videos on hand right
+     now, so the category split (Towing / Lift & Loading) is a starting
+     point, not a final taxonomy — more videos and categories are
+     expected here. ============ -->
+<section class="gallery-grid-section">
   <div class="wrap">
     <div class="section-head">
       <div>
-        <p class="eyebrow">More Field Footage</p>
-        <h2>More field footage.</h2>
+        <p class="eyebrow">All Videos</p>
+        <h1>The Enabler in Motion</h1>
       </div>
     </div>
-    <div class="video-grid">
 
-      <div class="video-card">
-        <div class="video-card-embed">
+    <div class="gallery-filter" role="group" aria-label="Filter videos by category">
+      <button type="button" class="gallery-filter-btn is-active" data-filter="all" aria-pressed="true">All</button>
+      <button type="button" class="gallery-filter-btn" data-filter="towing" aria-pressed="false">Towing</button>
+      <button type="button" class="gallery-filter-btn" data-filter="lift" aria-pressed="false">Lift &amp; Loading</button>
+      <button type="button" class="gallery-filter-btn" data-filter="history" aria-pressed="false">History</button>
+      <span class="gallery-filter-count" aria-live="polite"></span>
+    </div>
+
+    <div class="video-gallery-grid">
+
+      <!-- -------- TOWING -------- -->
+      <div class="video-gallery-item" data-cat="towing">
+        <div class="video-gallery-embed">
+          <video controls preload="metadata" poster="images/video-towing-poster.jpg">
+            <source src="video/Enabler%20Towing.mp4" type="video/mp4">
+            Your browser doesn't support embedded video. <a href="video/Enabler%20Towing.mp4">Download the video</a> instead.
+          </video>
+        </div>
+        <p class="video-gallery-caption">Towing a Loaded Trailer</p>
+      </div>
+
+      <div class="video-gallery-item" data-cat="towing">
+        <div class="video-gallery-embed">
           <video controls preload="metadata" poster="images/video-catch-release-poster.jpg">
             <source src="video/catch-release.mp4" type="video/mp4">
             Your browser doesn't support embedded video. <a href="video/catch-release.mp4">Download the video</a> instead.
           </video>
         </div>
-        <div class="video-card-body">
-          <h3>Hooking up and towing.</h3>
-          <p>Attaching a trailer through the catch-and-release hitch and towing it out, without the driver leaving the seat.</p>
-        </div>
+        <p class="video-gallery-caption">Hooking Up and Towing</p>
       </div>
 
-      <div class="video-card">
-        <div class="video-card-embed">
-          <video controls preload="metadata" poster="images/video-lift-deploy-poster.jpg">
-            <source src="video/enabler-lift-deploy.mp4" type="video/mp4">
-            Your browser doesn't support embedded video. <a href="video/enabler-lift-deploy.mp4">Download the video</a> instead.
-          </video>
+      <!-- -------- LIFT & LOADING — Vimeo embeds, same source video as
+           enabler-2-0.html (boarding) and index.html (deploy). Plain
+           click-to-play iframe, not those pages' muted-autoplay-loop
+           showcase treatment; see the styles.css comment above
+           .video-gallery-grid. -------- -->
+      <div class="video-gallery-item" data-cat="lift">
+        <div class="video-gallery-embed" id="video-lift-deploy-embed" data-video-id="1222522948" data-platform="vimeo">
+          <iframe src="https://player.vimeo.com/video/1222522948?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" title="The Enabler's rear lift deploying" allow="fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe>
         </div>
-        <div class="video-card-body">
-          <h3>The lift, deploying.</h3>
-          <p>The rear lift unfolding on its own, from stowed to ground level.</p>
-        </div>
+        <p class="video-gallery-caption">The Lift Deploying</p>
       </div>
 
-    </div><!-- end .video-grid -->
+      <div class="video-gallery-item" data-cat="lift">
+        <div class="video-gallery-embed" id="video-lift-boarding-embed" data-video-id="1222523423" data-platform="vimeo">
+          <iframe src="https://player.vimeo.com/video/1222523423?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" title="A wheelchair user operating the Enabler's rear lift to board the vehicle" allow="fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe>
+        </div>
+        <p class="video-gallery-caption">Boarding From the Lift</p>
+      </div>
+
+      <!-- -------- HISTORY — YouTube embed, same source video as
+           history.html's Buddy Buggy Test Ride section. -------- -->
+      <div class="video-gallery-item" data-cat="history">
+        <div class="video-gallery-embed" id="video-buddy-buggy-embed" data-video-id="OKyxLgSPlKw" data-platform="youtube">
+          <iframe src="https://www.youtube-nocookie.com/embed/OKyxLgSPlKw" title="Buddy Buggy Test Ride (2017)" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+        </div>
+        <p class="video-gallery-caption">Buddy Buggy Test Ride (2017)</p>
+      </div>
+
+    </div><!-- end .video-gallery-grid -->
+
+    <p class="gallery-empty" hidden>No videos in this category yet.</p>
   </div>
 </section>
 
@@ -191,6 +214,66 @@
   </div>
 </footer>
 
+<script>
+/* ============ EXTERNAL EMBED FALLBACK — same reasoning as
+   history.html's Buddy Buggy embed and enabler-2-0.html's/index.html's
+   Vimeo embeds: neither Vimeo's nor YouTube's player can initialize
+   from a file:// origin, so opened locally these three tiles would
+   just sit there as broken, inert iframes. Swap each for a clickable
+   card that opens the video on its host site instead. Generalized
+   here (photos.html/other pages only ever had one embed to fall back)
+   since this page has three, on two different platforms. Once this
+   site is hosted on a real domain, this block does nothing and the
+   iframes play normally. ============ */
+(function(){
+  if(location.protocol !== 'file:') return;
+  document.querySelectorAll('.video-gallery-embed[data-video-id]').forEach(function(embed){
+    const videoId = embed.getAttribute('data-video-id');
+    const platform = embed.getAttribute('data-platform');
+    const isYouTube = platform === 'youtube';
+    const url = isYouTube
+      ? 'https://www.youtube.com/watch?v=' + videoId
+      : 'https://vimeo.com/' + videoId;
+    embed.innerHTML =
+      '<a class="video-embed-fallback" href="' + url + '" target="_blank" rel="noopener">' +
+        '<span class="video-embed-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' +
+        '<span class="video-embed-label">Watch on ' + (isYouTube ? 'YouTube' : 'Vimeo') + ' &mdash; preview only works once this site is hosted online</span>' +
+      '</a>';
+  });
+})();
+
+(function(){
+  const buttons = document.querySelectorAll('.gallery-filter-btn');
+  const items = document.querySelectorAll('.video-gallery-item[data-cat]');
+  const count = document.querySelector('.gallery-filter-count');
+  const empty = document.querySelector('.gallery-empty');
+  if(!buttons.length || !items.length) return;
+
+  function apply(filter){
+    let shown = 0;
+    items.forEach(function(item){
+      const match = filter === 'all' || item.getAttribute('data-cat') === filter;
+      item.classList.toggle('is-hidden', !match);
+      if(match) shown++;
+    });
+    if(count) count.textContent = shown + (shown === 1 ? ' video' : ' videos');
+    if(empty) empty.hidden = shown > 0;
+  }
+
+  buttons.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      buttons.forEach(function(b){
+        const active = b === btn;
+        b.classList.toggle('is-active', active);
+        b.setAttribute('aria-pressed', String(active));
+      });
+      apply(btn.getAttribute('data-filter'));
+    });
+  });
+
+  apply('all');
+})();
+</script>
 <script src="nav.js" defer></script>
 
 </body>
