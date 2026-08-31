@@ -181,6 +181,13 @@
       </div>
     </div>
 
+    <div class="history-video">
+      <h3>Buddy Buggy Test Ride (2017)</h3>
+      <div class="video-embed" id="history-video-embed" data-video-id="OKyxLgSPlKw">
+        <iframe src="https://www.youtube-nocookie.com/embed/OKyxLgSPlKw" title="Buddy Buggy Test Ride (2017)" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+      </div>
+    </div>
+
     <div class="era-grid">
       <figure class="era-item">
         <img src="images/buddy-buggy-sand-dunes.jpg" alt="The white Buddy Buggy parked on sand dunes with its rear wheelchair lift lowered to the ground" loading="lazy">
@@ -265,6 +272,30 @@
 </footer>
 
 <script src="lightbox.js" defer></script>
+
+<script>
+/* ============ HISTORY VIDEO FALLBACK — moved here from enabler-2-0.html
+   2026-08-30 along with the Buddy Buggy Test Ride video itself. YouTube's
+   embedded player requires a real http/https origin to initialize; it
+   cannot work from a file:// preview no matter what markup is used (this
+   is a YouTube/browser limitation, not something referrerpolicy or
+   nocookie domains fix). When the page is opened as a local file, swap
+   the iframe for a clickable thumbnail that opens the video on YouTube
+   instead of showing a broken player. Once this site is hosted on a real
+   domain, this block does nothing and the iframe plays normally. ============ */
+(function(){
+  const embed = document.getElementById('history-video-embed');
+  if(!embed || location.protocol !== 'file:') return;
+  const videoId = embed.getAttribute('data-video-id');
+  if(!videoId) return;
+  embed.innerHTML =
+    '<a class="video-embed-fallback" href="https://www.youtube.com/watch?v=' + videoId + '" target="_blank" rel="noopener">' +
+      '<img src="https://i.ytimg.com/vi/' + videoId + '/hqdefault.jpg" alt="" loading="lazy">' +
+      '<span class="video-embed-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' +
+      '<span class="video-embed-label">Watch on YouTube — preview only works once this site is hosted online</span>' +
+    '</a>';
+})();
+</script>
 
 <script src="history-scroll.js" defer></script>
 <script src="nav.js" defer></script>

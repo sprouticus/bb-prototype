@@ -85,117 +85,13 @@
   </div>
 </header>
 
-<!-- ============ PAGE HERO ============ -->
-<section class="page-hero">
-  <div class="wrap">
-    <p class="eyebrow">Photo Gallery</p>
-    <h1>The Enabler 2.0 in Photos</h1>
-    <div class="rule"></div>
-
-    <p>The vehicle at work and at rest, plus the lift, the hitch, and the shop where it's built. <a href="videos.html" style="color:var(--orange-dark);text-decoration:underline;text-underline-offset:2px;font-weight:700;">Video is here</a>.</p>
-  </div>
-</section>
-
-<!-- ============ FEATURED CAROUSEL ============ -->
-<section class="gallery-carousel-section">
-  <div class="carousel" id="featured-carousel" aria-label="Featured photos">
-    <div class="carousel-track" id="carousel-track">
-
-      <div class="carousel-slide">
-        <img src="images/enabler-hero-driver.jpg" alt="Driver in a wheelchair operating the Enabler with no transfer to a seat">
-        <div class="carousel-caption">
-          <h3>The rear lift</h3>
-          <p>Board from the ground and drive from the chair.</p>
-        </div>
-      </div>
-
-      <div class="carousel-slide">
-        <img src="images/enabler-2-0-solar-farm.jpg" alt="Rear view of the Enabler 2.0 parked on a dirt road at a solar array, showing the frame, rear winch, and BBE Enabler 2.0 badge">
-        <div class="carousel-caption">
-          <h3>On the job site</h3>
-          <p>Working a solar array, where the ground is rough and the rows are tight.</p>
-        </div>
-      </div>
-
-      <div class="carousel-slide">
-        <img src="images/enabler-desert-path.jpg" alt="The Enabler 2.0 parked on a concrete path running between rows of solar panels, rear gate raised">
-        <div class="carousel-caption">
-          <h3>Site access</h3>
-          <p>Same site, other angle. Paved path in, open ground either side.</p>
-        </div>
-      </div>
-
-      <div class="carousel-slide">
-        <img src="images/enabler-2-0-orchard-mowing.jpg" alt="Person wearing a hard hat driving the Enabler 2.0 with a Rammy flail mower on the front mount, offset to the right, cutting grass in an orchard row">
-        <div class="carousel-caption">
-          <h3>Front-mounted implements</h3>
-          <p>A flail mower on the front mount, run from the cab.</p>
-        </div>
-      </div>
-
-      <div class="carousel-slide">
-        <img src="images/enabler-2-0-towing-sprayer.jpg" alt="The Enabler 2.0 towing a Demco boom sprayer between rows of young orchard trees, driver visible">
-        <div class="carousel-caption">
-          <h3>Towed implements</h3>
-          <p>Hitched to a boom sprayer through the catch-and-release.</p>
-        </div>
-      </div>
-
-      <div class="carousel-slide">
-        <img src="images/enabler-2-0-towing-snowblower.jpg" alt="Rear view of the Enabler 2.0 with a Rammy snowblower attachment staged behind it in the snow">
-        <div class="carousel-caption">
-          <h3>Winter work</h3>
-          <p>Snowblower staged and ready to hook up.</p>
-        </div>
-      </div>
-
-      <div class="carousel-slide">
-        <img src="images/enabler-2-0-trailhead.jpg" alt="Enabler 2.0 parked at a forest trailhead with its rear gate raised, ranger station and trailhead parking sign in the pines behind it">
-        <div class="carousel-caption">
-          <h3>At the trailhead</h3>
-          <p>Off the clock, and still no help needed to get out there.</p>
-        </div>
-      </div>
-
-      <div class="carousel-slide">
-        <img src="images/enabler-outdoor-ruins.jpg" alt="Enabler 2.0 outdoors, off-road tires ready for the trail">
-        <div class="carousel-caption">
-          <h3>Driveline</h3>
-          <p>All-wheel drive, 14-inch off-road tires, 8.25 inches of clearance.</p>
-        </div>
-      </div>
-
-    </div><!-- end .carousel-track -->
-
-    <div class="carousel-controls">
-      <button class="carousel-btn carousel-prev" aria-label="Previous photo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <div class="carousel-dots" role="tablist" aria-label="Select photo">
-        <button class="carousel-dot active" role="tab" aria-label="Photo 1" aria-selected="true"></button>
-        <button class="carousel-dot" role="tab" aria-label="Photo 2" aria-selected="false"></button>
-        <button class="carousel-dot" role="tab" aria-label="Photo 3" aria-selected="false"></button>
-        <button class="carousel-dot" role="tab" aria-label="Photo 4" aria-selected="false"></button>
-        <button class="carousel-dot" role="tab" aria-label="Photo 5" aria-selected="false"></button>
-        <button class="carousel-dot" role="tab" aria-label="Photo 6" aria-selected="false"></button>
-        <button class="carousel-dot" role="tab" aria-label="Photo 7" aria-selected="false"></button>
-        <button class="carousel-dot" role="tab" aria-label="Photo 8" aria-selected="false"></button>
-      </div>
-      <button class="carousel-btn carousel-next" aria-label="Next photo">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-    </div>
-  </div><!-- end .carousel -->
-
-</section>
-
 <!-- ============ IMAGE GRID ============ -->
 <section class="gallery-grid-section">
   <div class="wrap">
     <div class="section-head">
       <div>
         <p class="eyebrow">All Photos</p>
-        <h2>Browse the collection.</h2>
+        <h1>The Enabler Photo Collection</h1>
       </div>
     </div>
 
@@ -446,34 +342,6 @@
 
 <script>
 
-
-/* ============ FEATURED CAROUSEL — wires up the track, prev/next
-   arrows, and dots, which the markup alone doesn't drive. ============ */
-(function(){
-  const track = document.getElementById('carousel-track');
-  const slides = Array.from(document.querySelectorAll('.carousel-slide'));
-  const prevBtn = document.querySelector('.carousel-prev');
-  const nextBtn = document.querySelector('.carousel-next');
-  const dots = Array.from(document.querySelectorAll('.carousel-dot'));
-  if(!track || !slides.length) return;
-
-  let index = 0;
-
-  function show(i){
-    index = (i + slides.length) % slides.length;
-    track.style.transform = 'translateX(-' + (index * 100) + '%)';
-    dots.forEach(function(dot, n){
-      dot.classList.toggle('active', n === index);
-      dot.setAttribute('aria-selected', String(n === index));
-    });
-  }
-
-  prevBtn?.addEventListener('click', function(){ show(index - 1); });
-  nextBtn?.addEventListener('click', function(){ show(index + 1); });
-  dots.forEach(function(dot, i){
-    dot.addEventListener('click', function(){ show(i); });
-  });
-})();
 
 /* ============ GALLERY GRID LIGHTBOX — uses the shared lightbox.js
    rather than an inline copy. lightbox.js loads with `defer` and

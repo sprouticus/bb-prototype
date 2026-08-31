@@ -116,29 +116,25 @@
 <section class="in-action">
   <div class="wrap">
     <div class="head">
-      <p class="eyebrow">On the Job</p>
-      <h2>No help needed to use it.</h2>
+      <p class="eyebrow">The Enabler in Action</p>
+      <h2>No assistance needed.</h2>
     </div>
     <div class="story-grid">
 
       <figure class="story-img story-img--large">
-        <img src="images/enabler-2-0-solar-farm.jpg" alt="Rear view of the Enabler 2.0 parked on a dirt road at a solar array, showing the frame, rear winch, and BBE Enabler 2.0 badge">
+        <img src="images/enabler-2-0-vineyard-evening.jpg" alt="Rear view of the Enabler 2.0 parked on a gravel path between rows of grapevines at dusk, hills in the background">
         <figcaption>Built for demanding worksites</figcaption>
       </figure>
       <div class="story-stack">
         <figure class="story-img story-video">
-          <video loop muted playsinline aria-label="The Enabler's rear wheelchair lift deploying to ground level on its own">
-            <source src="video/enabler-lift-deploy.mp4" type="video/mp4">
-          </video>
-          <button type="button" class="video-toggle is-paused" aria-label="Play video" aria-pressed="false">
-            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
-            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          </button>
+          <div class="video-embed" id="lift-deploy-embed" data-video-id="1222522948">
+            <iframe src="https://player.vimeo.com/video/1222522948?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1" title="Lift deploy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe>
+          </div>
           <figcaption>Rear lift deploys to ground level</figcaption>
         </figure>
         <figure class="story-img">
-          <img src="images/enabler-2-0-orchard-mowing.jpg" alt="Person wearing a hard hat driving the Enabler 2.0 with a Rammy flail mower on the front mount, offset to the right, cutting grass in an orchard row">
-          <figcaption>Front-mounted tools for outdoor work</figcaption>
+          <img src="images/enabler-2-0-creek-crossing.jpg" alt="Person driving the Enabler 2.0 through a shallow rocky creek in a forest, water splashing around the wheels">
+          <figcaption>Crossing a creek without slowing down</figcaption>
         </figure>
       </div>
     </div>
@@ -214,11 +210,19 @@
       </div>
     </div>
     <div class="implements-showcase">
-      <div class="implements-video">
-        <video loop muted playsinline aria-label="The Enabler towing an implement in the field">
-          <source src="video/catch-release.mp4" type="video/mp4">
-        </video>
-        <button type="button" class="video-toggle is-paused" aria-label="Play video" aria-pressed="false">
+      <div class="implements-video implements-carousel" data-carousel-interval="5000" role="group" aria-roledescription="carousel" aria-label="Photos of the Enabler towing implements">
+        <ul class="implements-carousel-track">
+          <li class="implements-carousel-slide is-active">
+            <img src="images/enabler-firewood-trailer.jpg" alt="The Enabler 2.0 towing a trailer loaded with split firewood through the woods at dusk">
+          </li>
+          <li class="implements-carousel-slide" aria-hidden="true">
+            <img src="images/enabler-2-0-towing-sprayer.jpg" alt="The Enabler 2.0 towing a Demco boom sprayer between rows of young orchard trees, driver visible">
+          </li>
+          <li class="implements-carousel-slide" aria-hidden="true">
+            <img src="images/enabler-beach-dunes-trailer.jpg" alt="The Enabler 2.0 towing a trailer across coastal sand dunes">
+          </li>
+        </ul>
+        <button type="button" class="video-toggle is-paused" aria-label="Play slideshow" aria-pressed="false">
           <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
           <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
         </button>
@@ -329,21 +333,28 @@
 <script>
 
 
-/* ============ SCROLL-TRIGGERED VIDEOS — Catch-and-Release and the
-   lift-deploy clip in the On the Job grid both use this pattern:
-   play only once the section scrolls into view, pause once it scrolls
-   out, always respect a manual pause/play from the toggle button, and
-   never autoplay for prefers-reduced-motion users; they have to press
-   play themselves. One instance runs per container so the two videos
-   on this page don't interfere with each other.
+/* ============ SCROLL-TRIGGERED VIDEO — this pattern plays a
+   self-hosted clip only once its section scrolls into view, pauses it
+   once it scrolls out, always respects a manual pause/play from the
+   toggle button, and never autoplays for prefers-reduced-motion
+   users; they have to press play themselves.
 
-   Both source files have a short fade to/from black baked into the
+   Neither .implements-video nor .story-video actually has a <video>
+   in it anymore, so both just fall through this loop's guard clause
+   now — left in the selector list rather than deleted, same as
+   before. Catch-and-Release's clip became an auto-advancing photo
+   carousel (see implements-carousel.js, same pattern, different
+   mechanism); the lift-deploy clip in this section became a Vimeo embed
+   (2026-08-30) with its own autoplay/muted/loop URL params instead of
+   this toggle.
+
+   The source file has a short fade to/from black baked into the
    start and end (re-encode, not CSS/JS), so the hard cut where the
    native loop restarts reads as a soft transition instead of a jump.
    A direct crossfade dissolve was tried first and rejected — the
    encode came out visibly noisy through the transition, not a clean
-   blend. If either video is ever re-exported from the original
-   footage, redo this fade or the loop seam comes back. ============ */
+   blend. If it is ever re-exported from the original footage, redo
+   this fade or the loop seam comes back. ============ */
 document.querySelectorAll('.implements-video, .story-video').forEach(function(container){
   const video = container.querySelector('video');
   const toggle = container.querySelector('.video-toggle');
@@ -388,7 +399,30 @@ document.querySelectorAll('.implements-video, .story-video').forEach(function(co
   }
 });
 </script>
+<script>
+/* ============ LIFT-DEPLOY VIDEO FALLBACK — same reasoning as the
+   Buddy Buggy embed on history.html: Vimeo's player can't initialize
+   from a file:// origin, so opened locally this would just show a
+   broken gray box. Swap it for a clickable card that opens the video
+   on vimeo.com instead. No thumbnail image here (Vimeo doesn't expose
+   one at a predictable URL the way YouTube does), so it's just the
+   play badge and label on the embed's own dark background. Once this
+   site is hosted on a real domain, this block does nothing and the
+   iframe plays normally. ============ */
+(function(){
+  var embed = document.getElementById('lift-deploy-embed');
+  if(!embed || location.protocol !== 'file:') return;
+  var videoId = embed.getAttribute('data-video-id');
+  if(!videoId) return;
+  embed.innerHTML =
+    '<a class="video-embed-fallback" href="https://vimeo.com/' + videoId + '" target="_blank" rel="noopener">' +
+      '<span class="video-embed-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' +
+      '<span class="video-embed-label">Watch on Vimeo &mdash; preview only works once this site is hosted online</span>' +
+    '</a>';
+})();
+</script>
 <script src="lightbox.js" defer></script>
+<script src="implements-carousel.js" defer></script>
 <script src="nav.js" defer></script>
 
 </body>

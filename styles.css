@@ -538,7 +538,7 @@ nav.primary a.mobile-cta{display:none;}
 .next-gen-teaser{
   background:var(--paper);color:var(--ink);padding:64px 0;
 }
-.next-gen-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center;}
+.next-gen-grid{display:grid;grid-template-columns:4fr 5fr;gap:56px;align-items:center;}
 .next-gen-flag{
   display:inline-block;background:var(--orange);color:var(--white);
   font-family:var(--font-mono);font-weight:800;font-size:13px;letter-spacing:.1em;
@@ -558,6 +558,14 @@ nav.primary a.mobile-cta{display:none;}
   color:#6B7378;max-width:460px;line-height:1.6;
 }
 .next-gen-art{
+  /* margin:0 resets the browser default figure margin (1em 40px in most
+     UAs) — otherwise 80px of horizontal margin eats into the grid
+     column on desktop, invisible while the filled variant's old carousel
+     had its own max-height cap doing the real size-limiting, but the
+     binding constraint once that cap is gone (2026-08-30). The mobile
+     override below already zeroed it for its own reason (centering via
+     margin:0 auto); this brings desktop in line with the same fix. */
+  margin:0;
   border:2px dashed var(--steel-pale);border-radius:2px;padding:26px;
   background:var(--white);
 }
@@ -572,70 +580,25 @@ nav.primary a.mobile-cta{display:none;}
   .next-gen-art{order:-1;max-width:440px;margin:0 auto;}
 }
 
-/* -------- NEXT-GEN ART, FILLED (real photo carousel replacing the
-   dashed placeholder, added 2026-07-30). Reuses the shared .carousel /
+/* -------- NEXT-GEN ART, FILLED (real photo, added 2026-07-30, back
+   down to a single static image 2026-08-30). Was a 3-photo carousel
+   (teaser sheet + two build shots) reusing the shared .carousel /
    .carousel-track / .carousel-slide / .carousel-arrow / .carousel-dot
-   component defined further down (search "HERO CAROUSEL" / .intro-split)
-   rather than redefining it — an earlier version of this edit declared
-   its own conflicting .carousel-track/.carousel-slide rules here, which
-   would have broken the transform-based carousels on photos.html and
-   implements.html since all pages share this one stylesheet. Only new
-   thing needed is an unscoped .carousel-frame, since that class
-   previously only existed scoped under .intro-split. -------- */
+   component defined further down — dropped in favor of just the
+   teaser-sheet photo, so all of that (frame, arrows, dot row, the
+   per-slide .carousel-caption overlay) went with it. Just a plain
+   <img> now; .next-gen-art img (base rule, above) already sizes it at
+   width:100% of the column with height:auto, i.e. its native ratio,
+   uncropped — no aspect-ratio/object-fit needed since there's no
+   fixed box to fill anymore. -------- */
 /* Border/padding treatment dropped 2026-07-30 (second pass), take two —
    the first pass only stopped *re-declaring* border/padding, but
    .next-gen-art--filled is an ADDITIONAL class on the same element as
    .next-gen-art, not a replacement for it, so the base rule's 2px
    dashed border and 26px padding were still winning (nothing had
    overridden them back to none). Explicit zero-out below, this time
-   confirmed against a screenshot next to the real Accessories carousel.
-
-   figcaption also dropped entirely — Accessories/Implements don't have
-   an external caption below the frame, they use a per-slide
-   .carousel-caption overlay (dark gradient + title + description) on
-   the photo itself instead. Switched to that same pattern in the HTML
-   rather than keeping a bolted-on caption line these other carousels
-   don't have. */
+   confirmed against a screenshot next to the real Accessories carousel. */
 .next-gen-art--filled{border:none;border-radius:0;padding:0;background:none;}
-/* Rest of this block is copied verbatim from .intro-split's carousel
-   rules (see "Overlay arrows" further down) — same aspect ratio, same
-   max-height cap, same arrow size/position/color — so the two read as
-   the same component. Scoped here rather than making it the shared
-   unscoped default, matching how intro-split itself scopes it rather
-   than touching base .carousel-arrow. NOT overflow:hidden on the outer
-   figure — the arrows sit at left/right:-8px and need to be visible
-   past the photo edge; .carousel itself already clips the slides. */
-.next-gen-art--filled .carousel-frame{position:relative;}
-/* Aspect ratio changed from 16/9 to 4/3 2026-07-30, third pass — the
-   intro-split carousels use 16/9 because their source photos (video
-   stills) are natively 16/9, so cover() crops nothing. These two
-   Enabler 2.1 photos are natively ~4/3 (1400x1050); forcing them into
-   16/9 would crop off a meaningful chunk of the top and bottom of the
-   shop, which is exactly what "use as much of the uncropped image as
-   possible" ruled out. 4/3 shows them essentially uncropped. Height cap
-   raised to match — a 4/3 box is taller than 16/9 at the same width, so
-   315px would have fought the aspect-ratio and forced a crop right back
-   in on wide viewports. */
-.next-gen-art--filled .carousel-slide{aspect-ratio:4/3;max-height:min(430px,50vh);}
-.next-gen-art--filled .carousel-arrow{
-  position:absolute;top:50%;transform:translateY(-50%);z-index:2;
-  background:rgba(14,17,18,.55);border:2px solid rgba(255,255,255,.2);
-  color:var(--white);width:44px;height:44px;border-radius:2px;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  transition:background .15s,border-color .15s;
-}
-.next-gen-art--filled .carousel-arrow:hover{background:var(--orange);border-color:var(--orange);}
-.next-gen-art--filled .carousel-arrow:focus-visible{outline:3px solid var(--orange);outline-offset:2px;}
-.next-gen-art--filled .carousel-arrow svg{width:20px;height:20px;}
-.next-gen-art--filled .carousel-prev{left:-8px;}
-.next-gen-art--filled .carousel-next{right:-8px;}
-.next-gen-art--filled .carousel-controls{padding:10px 0 0;}
-@media(max-width:560px){
-  .next-gen-art--filled .carousel-arrow{width:36px;height:36px;}
-}
-@media(max-width:900px){
-  .next-gen-art--filled .carousel-slide{max-height:none;}
-}
 
 /* -------- Merged-in "What's Changing" content + bottom CTA (vehicle
    page only, added 2026-07-18) — scoped to their own wrapper classes
@@ -1026,7 +989,13 @@ button.photo-zoom:focus-visible{outline:3px solid var(--orange);outline-offset:-
    ============================================================ */
 .specs-teaser{padding:76px 0;background:var(--white);}
 .section-head{display:flex;justify-content:space-between;align-items:flex-end;gap:24px;margin-bottom:34px;flex-wrap:wrap;}
-.section-head h2{font-size:clamp(27.5px,3.7vw,39px);margin-top:10px;}
+/* h1 added 2026-08-30 — photos.html promoted its .section-head heading
+   to the page's h1 (the old page-hero banner that used to hold the
+   page's only h1 was removed, so this heading is it now). Every other
+   .section-head on the site still uses h2, so this just adds h1 to the
+   selector rather than swapping it, keeping both on the same styling
+   without touching the nine other instances. */
+.section-head h1, .section-head h2{font-size:clamp(27.5px,3.7vw,39px);margin-top:10px;}
 .section-head-note{font-size:15.5px;color:#454C49;margin-top:10px;max-width:480px;line-height:1.5;}
 
 /* Emphasis variant (2026-08-06) — carries the origin line and starting
@@ -1055,6 +1024,27 @@ button.photo-zoom:focus-visible{outline:3px solid var(--orange);outline-offset:-
 .implements-showcase{display:grid;grid-template-columns:3fr 2fr;gap:24px;margin-top:32px;}
 .implements-video{position:relative;border-radius:2px;overflow:hidden;background:var(--ink);min-height:260px;}
 .implements-video video{width:100%;height:100%;object-fit:cover;display:block;}
+
+/* -------- Catch-and-Release photo carousel (homepage + vehicle page,
+   added 2026-08-30) — replaces the catch-release.mp4 loop that used
+   to fill this same .implements-video box on both pages. Slides are
+   stacked with position:absolute and cross-fade via opacity, so the
+   box never has to reflow or animate a translateX track; only the
+   .is-active slide is visible. This is a different component from
+   the "next-gen carousel" used on the Photos/Implements/vehicle-build
+   pages (.carousel-track etc.) — that one is manual, arrow/dot-driven,
+   and its script queries dots globally, so it only supports one
+   instance per page. This one advances on its own and needed its own
+   classes to coexist with that carousel on the vehicle page, which
+   already has one further up. Logic lives in implements-carousel.js,
+   shared by both pages so they can't drift out of sync. -------- */
+.implements-carousel-track{position:relative;width:100%;height:100%;list-style:none;margin:0;padding:0;}
+.implements-carousel-slide{position:absolute;inset:0;opacity:0;transition:opacity .8s ease;}
+.implements-carousel-slide.is-active{opacity:1;}
+.implements-carousel-slide img{width:100%;height:100%;object-fit:cover;display:block;}
+@media (prefers-reduced-motion:reduce){
+  .implements-carousel-slide{transition:opacity .3s ease;}
+}
 
 /* -------- Thumbnail column wrapper — stretches to match the video's
    height (grid row stretch), so the CTA button below the thumbnails
@@ -1622,30 +1612,65 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
   position:relative;border-radius:2px;overflow:hidden;background:var(--ink);
   max-width:860px;margin:32px auto 0;aspect-ratio:16/9;
 }
-.lift-video video{width:100%;height:100%;object-fit:cover;display:block;}
+/* iframe (Vimeo embed, 2026-08-30) replacing a native video element —
+   same box, same fill treatment, just border:0 added since iframes
+   default to a 2px inset border browsers give them and nothing here
+   was resetting it before (video never needed the reset). */
+.lift-video iframe{width:100%;height:100%;border:0;display:block;}
 
 /* ============================================================
-   VEHICLE VIDEO (enabler-2-0.html, added 2026-07-19) — sits directly
-   under the page-hero banner, where the photo carousel used to be.
+   VEHICLE HERO CAROUSEL (enabler-2-0.html, replaced the Buddy Buggy
+   Test Ride video here 2026-08-30 — video moved to history.html's
+   Through the Years section, see .history-video below). Sits directly
+   under the page-hero banner. Auto-advancing photo carousel: reuses
+   the .implements-carousel component and implements-carousel.js script
+   from the Catch-and-Release section further down the page (same JS,
+   a second independent instance), but gets its own box class instead
+   of .implements-video so it isn't stretched by a sibling grid column,
+   and its slides get a hard cut instead of that carousel's cross-fade
+   (see the no-fade override below) since this one should not dissolve
+   between photos.
+
+   Full-bleed at 16:7, the same box the Photos page's featured carousel
+   used before that carousel was removed (2026-08-30) — no .wrap in the
+   markup, no border-bottom here since .page-hero above already draws
+   that line. Was boxed at 4:3 to
+   avoid cropping the source photos (they're ~4:3 natively, vehicle
+   filling most of the frame); going to 16:7 unavoidably crops some of
+   the light bar and the ground below the tires on all five. The
+   object-position override just below re-centers that crop on the
+   vehicle — measured from the actual photos, not guessed — instead of
+   on the frame's geometric middle, which clips the light bar and
+   leaves slack under the tires (the default 50% 50% crop). Same
+   max-height guard as .gallery-carousel-section, so it can't grow
+   taller than the viewport under the header on a short window. Unlike
+   that component, this box has no separate outer wrapper to hold it
+   at 100% while an inner element carries the ratio — width:100% is
+   set explicitly here so a capped max-height can't also shrink the
+   width to preserve 16:7 exactly, which would pull the photo in from
+   the edges and break the full-bleed look on a wide, short window.
    ============================================================ */
-.vehicle-video{background:var(--white);padding:52px 0 60px;border-bottom:1px solid var(--line);}
-/* Title above the embed (added 2026-08-06). h2 not h3 despite the size,
-   so the outline doesn't skip a level — which means this rule must stay
-   tightly scoped or it will shrink section headings elsewhere.
-   Capped at 860px to track the embed. -------- */
-.vehicle-video h2{
-  max-width:860px;margin:0 auto 16px;
-  font-size:21px;color:var(--ink);text-align:center;
+.vehicle-hero-carousel{background:var(--white);padding-bottom:60px;}
+.hero-carousel{
+  position:relative;overflow:hidden;background:var(--ink);
+  width:100%;aspect-ratio:16/7;max-height:calc(100vh - var(--header-h) - 40px);
 }
-.vehicle-video .video-embed{
-  max-width:860px;margin:0 auto;aspect-ratio:16/9;
-  border-radius:2px;overflow:hidden;background:var(--ink);
+.hero-carousel .implements-carousel-slide{transition:none;}
+.hero-carousel .implements-carousel-slide img{object-position:50% 47%;}
+@media(max-width:760px){
+  /* 16:7 on a phone-width box is a letterbox sliver; fall back to the
+     original 4:3 box, which barely crops these photos at all, so the
+     47% anchor above is a no-op here rather than needing its own
+     value. */
+  .hero-carousel{aspect-ratio:4/3;max-height:none;}
 }
-.vehicle-video .video-embed iframe{width:100%;height:100%;display:block;border:0;}
-/* Local file:// fallback card (see script at bottom of enabler-2-0.html) —
-   only ever shown when this page is opened as a local file, since
-   YouTube's iframe player can't initialize without a real http/https
-   origin. Styled to fill the same box the iframe would occupy. */
+/* Local file:// fallback card — shared by every external video embed
+   on the site (history.html's YouTube embed, index.html's and
+   enabler-2-0.html's Vimeo embeds; see each page's own fallback script
+   near the bottom of its file). Only ever shown when that page is
+   opened as a local file, since neither YouTube's nor Vimeo's iframe
+   player can initialize without a real http/https origin. Styled to
+   fill the same box the iframe would occupy. */
 .video-embed-fallback{position:relative;display:block;width:100%;height:100%;}
 .video-embed-fallback img{width:100%;height:100%;object-fit:cover;display:block;}
 .video-embed-fallback::after{content:'';position:absolute;inset:0;background:rgba(14,17,18,.4);}
@@ -1803,14 +1828,19 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
 }
 .story-img--large img{min-height:400px;}
 
-/* -------- Lift-deploy video in the top-right story-stack slot
-   (2026-08-20) — same cover-crop sizing as .story-img img, since
-   .story-img's own rule only targets <img>. The toggle button
-   defaults to bottom-right (see .video-toggle), which sits under the
-   hover-reveal figcaption here; moved to top-right so the two don't
-   overlap, same fix as .shop-tile-zoom's .zoom-hint. -------- */
-.story-video video{width:100%;height:100%;object-fit:cover;display:block;}
-.story-video .video-toggle{bottom:auto;top:14px;right:14px;}
+/* -------- Lift-deploy video in the top-right story-stack slot.
+   Was a self-hosted <video> (2026-08-20); replaced 2026-08-30 with a
+   Vimeo embed that looks the same but isn't ours to serve. Same
+   aspect-ratio box technique as .history-video .video-embed rather
+   than the old object-fit:cover sizing, since an <iframe> can't be
+   cropped the way an <img>/<video> can — aspect-ratio:16/9 matches
+   the source video's own ~16:9 frame closely enough that nothing
+   visibly shifts. No .video-toggle here anymore: the embed's own
+   autoplay/muted/loop URL params reproduce the old default state, and
+   there's no self-hosted <video> element left for that button's JS to
+   attach to. */
+.story-video .video-embed{aspect-ratio:16/9;overflow:hidden;background:var(--ink);}
+.story-video .video-embed iframe{width:100%;height:100%;display:block;border:0;}
 
 /* -------- Annotated catch-and-release diagram (2026-08-16) --------
    This frame is a labelled diagram, not a photo, and the whole point is
@@ -1870,9 +1900,8 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
 }
 
 /* ============================================================
-   GALLERY PAGE — page hero, carousel, grid
+   GALLERY PAGE — page hero, grid
    ============================================================ */
-.gallery-carousel-section{background:var(--white);padding-bottom:60px;}
 
 /* -------- Plain image grids under a merged page-hero (2026-08-20) --------
    implements.html and accessories.html both reuse .shop-row/.shop-tile
@@ -2034,7 +2063,9 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
 @media(max-width:900px){
   .intro-split-grid{grid-template-columns:1fr;gap:26px;}
   .intro-split-copy p.sub{max-width:none;}
-  /* Beat the shared 4/3 mobile rule from the Photos carousel — 4/3 is
+  /* Beat the shared 4/3 mobile rule on the base .carousel-slide class
+     (originally written for the Photos page carousel, since removed;
+     still the default for any future .carousel reuse) — 4/3 is
      needlessly tall here and the sources are 16/9 anyway. */
   .intro-split .carousel-slide{aspect-ratio:16/9;max-height:none;}
 }
@@ -2048,14 +2079,13 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
   background:linear-gradient(transparent,rgba(14,17,18,.88));
   padding:48px 40px 28px;color:var(--white);
 }
-/* Caption title accepts either an <h3> (Photos page, original markup)
-   or a <p class="carousel-caption-title"> (Implements page, 2026-07-26).
-   The <p> form exists because a carousel caption labels a photo rather
-   than opening a document section — on Implements the carousel sits
-   between the <h1> and the brand <h2>s, so an <h3> there produced an
-   h1 -> h3 skip in the heading outline. Same rendering either way.
-   NOTE: Photos page still uses <h3> and has that same skip if it's
-   ever worth cleaning up. */
+/* Caption title accepts either an <h3> (original markup, Photos page's
+   now-removed carousel used this form) or a <p class="carousel-caption-title">
+   (Implements page, 2026-07-26). The <p> form exists because a carousel
+   caption labels a photo rather than opening a document section — on
+   Implements the carousel sits between the <h1> and the brand <h2>s, so
+   an <h3> there produced an h1 -> h3 skip in the heading outline. Same
+   rendering either way. */
 .carousel-caption h3,
 .carousel-caption .carousel-caption-title{
   font-family:var(--font-display);font-weight:800;line-height:1.04;letter-spacing:-0.01em;
@@ -2084,64 +2114,6 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
 @media(max-width:760px){
   .carousel-slide{aspect-ratio:4/3;}
   .carousel-caption{padding:24px 20px 16px;}
-}
-
-/* -------- FEATURED CAROUSEL, controls overlaid (2026-08-16) --------
-   These used to sit in a bar underneath the photo. That works on the
-   vehicle and implements carousels, which are boxed inside a column, but
-   the Photos page carousel is full-bleed at 16/7 — on a wide monitor the
-   photo alone was taller than the viewport under the sticky header, so
-   the controls were always below the fold. Selecting a slide meant
-   scrolling down to click and back up to look at it, every time.
-
-   Two changes, and both are needed. Overlaying the controls puts the
-   button and the image it changes on the same screenful at any scroll
-   position. Capping the slide height stops the photo exceeding one
-   screenful in the first place, so the whole thing lands in view
-   together. Scoped to this section so the boxed carousels elsewhere,
-   which have no such problem, keep their existing bar. */
-.gallery-carousel-section .carousel-slide{
-  /* 40px of slack below the header so the top edge clears it visibly
-     rather than sitting flush against it. */
-  max-height:calc(100vh - var(--header-h) - 40px);
-}
-.gallery-carousel-section .carousel-controls{
-  position:absolute;inset:0;z-index:2;
-  display:block;padding:0;
-  /* The layer spans the whole photo so the arrows can centre against it;
-     it must not eat pointer events meant for anything underneath. */
-  pointer-events:none;
-}
-.gallery-carousel-section .carousel-btn{
-  position:absolute;top:50%;transform:translateY(-50%);pointer-events:auto;
-  background:rgba(14,17,18,.55);border-color:rgba(255,255,255,.22);color:var(--white);
-}
-.gallery-carousel-section .carousel-btn:hover{background:var(--orange);border-color:var(--orange);color:var(--white);}
-.gallery-carousel-section .carousel-btn:focus-visible{outline:3px solid var(--orange);outline-offset:2px;}
-.gallery-carousel-section .carousel-prev{left:20px;}
-.gallery-carousel-section .carousel-next{right:20px;}
-.gallery-carousel-section .carousel-dots{
-  position:absolute;right:24px;bottom:24px;pointer-events:auto;
-}
-.gallery-carousel-section .carousel-dot{background:rgba(255,255,255,.45);}
-.gallery-carousel-section .carousel-dot:focus-visible{outline:3px solid var(--orange);outline-offset:3px;}
-/* Caption text is bottom-left; reserve the bottom-right corner so a long
-   caption cannot run under the dot row. 8 dots at 8px with 8px gaps is
-   120px, plus the 24px inset and room for the active dot's 1.4 scale. */
-.gallery-carousel-section .carousel-caption{padding-right:164px;}
-
-@media(max-width:760px){
-  /* Not enough width to hold a caption and a dot row side by side, so the
-     dots move to bottom-centre and the caption gets padding to sit above
-     them rather than behind them. */
-  .gallery-carousel-section .carousel-btn{width:36px;height:36px;}
-  .gallery-carousel-section .carousel-btn svg{width:17px;height:17px;}
-  .gallery-carousel-section .carousel-prev{left:10px;}
-  .gallery-carousel-section .carousel-next{right:10px;}
-  .gallery-carousel-section .carousel-dots{
-    left:0;right:0;bottom:14px;justify-content:center;
-  }
-  .gallery-carousel-section .carousel-caption{padding-right:20px;padding-bottom:40px;}
 }
 
 .gallery-grid-section{padding:68px 0 80px;background:var(--white);}
@@ -2345,6 +2317,16 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
    year / label / note caption.
    ============================================================ */
 .era-section{padding:76px 0;background:var(--paper);border-top:1px solid var(--line);}
+/* Buddy Buggy Test Ride video (moved here from enabler-2-0.html
+   2026-08-30, see .vehicle-hero-carousel above). Sits between the
+   section head and the four era photos, same 860px/16:9 embed box
+   .vehicle-video used to use on the vehicle page. */
+.history-video{max-width:860px;margin:32px auto 0;}
+.history-video h3{font-size:19px;color:var(--ink);text-align:center;margin:0 0 14px;}
+.history-video .video-embed{
+  aspect-ratio:16/9;border-radius:2px;overflow:hidden;background:var(--ink);
+}
+.history-video .video-embed iframe{width:100%;height:100%;display:block;border:0;}
 .era-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:32px;align-items:start;}
 .era-item{margin:0;background:var(--white);border:1px solid var(--line);overflow:hidden;position:relative;}
 .era-item img{width:100%;aspect-ratio:7/5;object-fit:cover;display:block;}
