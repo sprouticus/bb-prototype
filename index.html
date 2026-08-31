@@ -132,7 +132,11 @@
       <div class="story-stack">
         <figure class="story-img story-video">
           <div class="video-embed" id="lift-deploy-embed" data-video-id="1222522948">
-            <iframe src="https://player.vimeo.com/video/1222522948?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;autoplay=1&amp;muted=1&amp;loop=1" title="Lift deploy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe>
+            <iframe src="https://player.vimeo.com/video/1222522948?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;muted=1&amp;loop=1&amp;controls=0" title="Lift deploy" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe>
+            <button type="button" class="video-toggle is-paused" aria-label="Play video" aria-pressed="false">
+              <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+              <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+            </button>
           </div>
           <figcaption>Rear lift deploys to ground level</figcaption>
         </figure>
@@ -334,6 +338,7 @@
   </div>
 </footer>
 
+<script src="https://player.vimeo.com/api/player.js"></script>
 <script>
 
 
@@ -348,9 +353,10 @@
    now — left in the selector list rather than deleted, same as
    before. Catch-and-Release's clip became an auto-advancing photo
    carousel (see implements-carousel.js, same pattern, different
-   mechanism); the lift-deploy clip in this section became a Vimeo embed
-   (2026-08-30) with its own autoplay/muted/loop URL params instead of
-   this toggle.
+   mechanism); the lift-deploy clip in this section became a Vimeo
+   embed (2026-08-30), and now runs on the Vimeo Player SDK instead of
+   this <video>-driven loop — see the LIFT-DEPLOY VIDEO block further
+   down for its version of this same contract.
 
    The source file has a short fade to/from black baked into the
    start and end (re-encode, not CSS/JS), so the hard cut where the
@@ -423,6 +429,68 @@ document.querySelectorAll('.implements-video, .story-video').forEach(function(co
       '<span class="video-embed-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' +
       '<span class="video-embed-label">Watch on Vimeo &mdash; preview only works once this site is hosted online</span>' +
     '</a>';
+})();
+
+/* ============ LIFT-DEPLOY VIDEO — VIMEO PLAYER SDK (2026-08-31).
+   Same contract as .lift-video on enabler-2-0.html: play only once
+   scrolled into view, pause on scroll-out, respect a manual
+   pause/play from the .video-toggle button, and never autoplay for
+   prefers-reduced-motion users. This embed originally (2026-08-30)
+   ran on raw autoplay/muted/loop URL params with no toggle at all, on
+   the theory that the params alone reproduced the old self-hosted
+   <video>'s default state — but that also meant it autoplayed
+   regardless of scroll position and ignored reduced-motion entirely,
+   and there was no way to pause it. Brought in line with the vehicle
+   page's version instead of staying the simpler one-off. autoplay and
+   controls are deliberately left off the embed URL for the same
+   reason as there: Vimeo's own controls would double up with
+   .video-toggle and look like a second, foreign player bolted onto
+   the page. ============ */
+(function(){
+  const container = document.getElementById('lift-deploy-embed');
+  const iframe = container && container.querySelector('iframe');
+  const toggle = container && container.querySelector('.video-toggle');
+  if(!container || !iframe || !toggle || typeof Vimeo === 'undefined') return;
+
+  const player = new Vimeo.Player(iframe);
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let userPaused = false;
+
+  function syncToggleUI(paused){
+    toggle.classList.toggle('is-paused', paused);
+    toggle.setAttribute('aria-label', paused ? 'Play video' : 'Pause video');
+    toggle.setAttribute('aria-pressed', String(!paused));
+  }
+  player.on('play', function(){ syncToggleUI(false); });
+  player.on('pause', function(){ syncToggleUI(true); });
+  syncToggleUI(true);
+
+  toggle.addEventListener('click', function(){
+    player.getPaused().then(function(paused){
+      if(paused){
+        player.play().catch(function(){});
+        userPaused = false;
+      } else {
+        player.pause().catch(function(){});
+        userPaused = true;
+      }
+    });
+  });
+
+  if('IntersectionObserver' in window){
+    const observer = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          if(!userPaused && !reduceMotion) player.play().catch(function(){});
+        } else {
+          player.pause().catch(function(){});
+        }
+      });
+    }, { threshold: 0.5 });
+    observer.observe(container);
+  } else if(!reduceMotion){
+    player.play().catch(function(){});
+  }
 })();
 </script>
 <script src="lightbox.js" defer></script>

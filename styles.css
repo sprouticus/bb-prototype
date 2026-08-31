@@ -1835,11 +1835,14 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
    than the old object-fit:cover sizing, since an <iframe> can't be
    cropped the way an <img>/<video> can — aspect-ratio:16/9 matches
    the source video's own ~16:9 frame closely enough that nothing
-   visibly shifts. No .video-toggle here anymore: the embed's own
-   autoplay/muted/loop URL params reproduce the old default state, and
-   there's no self-hosted <video> element left for that button's JS to
-   attach to. */
-.story-video .video-embed{aspect-ratio:16/9;overflow:hidden;background:var(--ink);}
+   visibly shifts. position:relative added 2026-08-31 so .video-toggle
+   can sit on it again: the embed had briefly dropped the button in
+   favor of autoplay/muted/loop URL params reproducing the old default
+   state, but that also meant it autoplayed for reduced-motion
+   visitors and had no pause control — brought back in line with
+   .lift-video's Vimeo Player SDK version on enabler-2-0.html instead
+   of staying the simpler one-off. */
+.story-video .video-embed{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--ink);}
 .story-video .video-embed iframe{width:100%;height:100%;display:block;border:0;}
 
 /* -------- Annotated catch-and-release diagram (2026-08-16) --------
