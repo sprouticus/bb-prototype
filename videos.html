@@ -137,29 +137,48 @@
       </div>
 
       <!-- -------- LIFT & LOADING — Vimeo embeds, same source video as
-           enabler-2-0.html (boarding) and index.html (deploy). Plain
-           click-to-play iframe, not those pages' muted-autoplay-loop
-           showcase treatment; see the styles.css comment above
-           .video-gallery-grid. -------- -->
+           enabler-2-0.html (boarding) and index.html (deploy), and now
+           matching their behavior exactly: muted, looped, no native
+           Vimeo controls, custom .video-toggle button, plays only once
+           scrolled into view. See the Vimeo Player SDK block near the
+           bottom of this file. -------- -->
       <div class="video-gallery-item" data-cat="lift">
         <div class="video-gallery-embed" id="video-lift-deploy-embed" data-video-id="1222522948" data-platform="vimeo">
-          <iframe src="https://player.vimeo.com/video/1222522948?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" title="The Enabler's rear lift deploying" allow="fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe>
+          <iframe src="https://player.vimeo.com/video/1222522948?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;muted=1&amp;loop=1&amp;controls=0" title="The Enabler's rear lift deploying" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe>
+          <button type="button" class="video-toggle is-paused" aria-label="Play video" aria-pressed="false">
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
         </div>
         <p class="video-gallery-caption">The Lift Deploying</p>
       </div>
 
       <div class="video-gallery-item" data-cat="lift">
         <div class="video-gallery-embed" id="video-lift-boarding-embed" data-video-id="1222523423" data-platform="vimeo">
-          <iframe src="https://player.vimeo.com/video/1222523423?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479" title="A wheelchair user operating the Enabler's rear lift to board the vehicle" allow="fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe>
+          <iframe src="https://player.vimeo.com/video/1222523423?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479&amp;muted=1&amp;loop=1&amp;controls=0" title="A wheelchair user operating the Enabler's rear lift to board the vehicle" allow="autoplay; fullscreen; picture-in-picture; clipboard-write; encrypted-media; web-share" referrerpolicy="strict-origin-when-cross-origin" loading="lazy"></iframe>
+          <button type="button" class="video-toggle is-paused" aria-label="Play video" aria-pressed="false">
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
         </div>
         <p class="video-gallery-caption">Boarding From the Lift</p>
       </div>
 
       <!-- -------- HISTORY — YouTube embed, same source video as
-           history.html's Buddy Buggy Test Ride section. -------- -->
+           history.html's Buddy Buggy Test Ride section, but here it
+           follows the site's muted/looped/scroll-gated/custom-toggle
+           convention instead of history.html's plain click-to-play
+           embed with YouTube's own controls. YouTube has no SDK
+           equivalent to Vimeo's Player script, so this one runs on the
+           YouTube IFrame Player API instead — see the second script
+           block near the bottom of this file. -------- -->
       <div class="video-gallery-item" data-cat="history">
         <div class="video-gallery-embed" id="video-buddy-buggy-embed" data-video-id="OKyxLgSPlKw" data-platform="youtube">
-          <iframe src="https://www.youtube-nocookie.com/embed/OKyxLgSPlKw" title="Buddy Buggy Test Ride (2017)" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <iframe src="https://www.youtube-nocookie.com/embed/OKyxLgSPlKw?enablejsapi=1&amp;controls=0&amp;modestbranding=1&amp;rel=0&amp;playsinline=1&amp;mute=1&amp;loop=1&amp;playlist=OKyxLgSPlKw" title="Buddy Buggy Test Ride (2017)" loading="lazy" referrerpolicy="strict-origin-when-cross-origin" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <button type="button" class="video-toggle is-paused" aria-label="Play video" aria-pressed="false">
+            <svg class="icon-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6" y="5" width="4" height="14"/><rect x="14" y="5" width="4" height="14"/></svg>
+            <svg class="icon-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          </button>
         </div>
         <p class="video-gallery-caption">Buddy Buggy Test Ride (2017)</p>
       </div>
@@ -214,6 +233,7 @@
   </div>
 </footer>
 
+<script src="https://player.vimeo.com/api/player.js"></script>
 <script>
 /* ============ EXTERNAL EMBED FALLBACK — same reasoning as
    history.html's Buddy Buggy embed and enabler-2-0.html's/index.html's
@@ -239,6 +259,137 @@
         '<span class="video-embed-play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span>' +
         '<span class="video-embed-label">Watch on ' + (isYouTube ? 'YouTube' : 'Vimeo') + ' &mdash; preview only works once this site is hosted online</span>' +
       '</a>';
+  });
+})();
+
+/* ============ LIFT VIDEOS — VIMEO PLAYER SDK. Same contract as
+   .lift-video on enabler-2-0.html and #lift-deploy-embed on index.html:
+   play only once scrolled into view, pause on scroll-out, respect a
+   manual pause/play from .video-toggle, never autoplay for
+   prefers-reduced-motion. Generalized to loop over both Vimeo tiles on
+   this page instead of targeting one container by class/id. ============ */
+(function(){
+  const vimeoEmbeds = document.querySelectorAll('.video-gallery-embed[data-platform="vimeo"]');
+  if(!vimeoEmbeds.length || typeof Vimeo === 'undefined') return;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  vimeoEmbeds.forEach(function(container){
+    const iframe = container.querySelector('iframe');
+    const toggle = container.querySelector('.video-toggle');
+    if(!iframe || !toggle) return;
+
+    const player = new Vimeo.Player(iframe);
+    let userPaused = false;
+
+    function syncToggleUI(paused){
+      toggle.classList.toggle('is-paused', paused);
+      toggle.setAttribute('aria-label', paused ? 'Play video' : 'Pause video');
+      toggle.setAttribute('aria-pressed', String(!paused));
+    }
+    player.on('play', function(){ syncToggleUI(false); });
+    player.on('pause', function(){ syncToggleUI(true); });
+    syncToggleUI(true);
+
+    toggle.addEventListener('click', function(){
+      player.getPaused().then(function(paused){
+        if(paused){ player.play().catch(function(){}); userPaused = false; }
+        else { player.pause().catch(function(){}); userPaused = true; }
+      });
+    });
+
+    if('IntersectionObserver' in window){
+      const observer = new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            if(!userPaused && !reduceMotion) player.play().catch(function(){});
+          } else {
+            player.pause().catch(function(){});
+          }
+        });
+      }, { threshold: 0.5 });
+      observer.observe(container);
+    } else if(!reduceMotion){
+      player.play().catch(function(){});
+    }
+  });
+})();
+
+/* ============ BUDDY BUGGY VIDEO — YOUTUBE IFRAME PLAYER API. Same
+   contract as the Vimeo videos above, but Vimeo's Player SDK has no
+   YouTube equivalent, so this drives the iframe through YouTube's own
+   API (loaded on demand below) instead of player.vimeo.com/api/player.js.
+   The iframe's own src already carries mute=1&loop=1&controls=0&
+   playlist=<id> (the trick YouTube requires for a single video to
+   loop) so it never shows YouTube's native chrome even before this
+   script finishes loading. ============ */
+(function(){
+  const container = document.getElementById('video-buddy-buggy-embed');
+  const iframe = container && container.querySelector('iframe');
+  const toggle = container && container.querySelector('.video-toggle');
+  if(!container || !iframe || !toggle) return;
+
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let userPaused = false;
+  let player = null;
+
+  function syncToggleUI(paused){
+    toggle.classList.toggle('is-paused', paused);
+    toggle.setAttribute('aria-label', paused ? 'Play video' : 'Pause video');
+    toggle.setAttribute('aria-pressed', String(!paused));
+  }
+  syncToggleUI(true);
+
+  function whenApiReady(cb){
+    if(window.YT && window.YT.Player){ cb(); return; }
+    const existingCallback = window.onYouTubeIframeAPIReady;
+    window.onYouTubeIframeAPIReady = function(){
+      if(typeof existingCallback === 'function') existingCallback();
+      cb();
+    };
+    if(!document.getElementById('youtube-iframe-api')){
+      const tag = document.createElement('script');
+      tag.id = 'youtube-iframe-api';
+      tag.src = 'https://www.youtube.com/iframe_api';
+      document.head.appendChild(tag);
+    }
+  }
+
+  whenApiReady(function(){
+    player = new YT.Player(iframe, {
+      events: {
+        onStateChange: function(e){
+          if(e.data === YT.PlayerState.PLAYING) syncToggleUI(false);
+          else if(e.data === YT.PlayerState.PAUSED || e.data === YT.PlayerState.ENDED) syncToggleUI(true);
+        },
+        onReady: function(){
+          if('IntersectionObserver' in window){
+            const observer = new IntersectionObserver(function(entries){
+              entries.forEach(function(entry){
+                if(entry.isIntersecting){
+                  if(!userPaused && !reduceMotion) player.playVideo();
+                } else {
+                  player.pauseVideo();
+                }
+              });
+            }, { threshold: 0.5 });
+            observer.observe(container);
+          } else if(!reduceMotion){
+            player.playVideo();
+          }
+        }
+      }
+    });
+  });
+
+  toggle.addEventListener('click', function(){
+    if(!player || typeof player.getPlayerState !== 'function') return;
+    if(player.getPlayerState() === YT.PlayerState.PLAYING){
+      player.pauseVideo();
+      userPaused = true;
+    } else {
+      player.playVideo();
+      userPaused = false;
+    }
   });
 })();
 

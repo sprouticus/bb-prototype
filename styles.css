@@ -2273,17 +2273,22 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
    Added 2026-08-31: two tiles now embed the Vimeo-hosted lift clips
    (same source as enabler-2-0.html/index.html) and one embeds the
    Buddy Buggy YouTube video from history.html, instead of a local
-   <video>. Those use plain click-to-play iframes with the host's own
-   controls — not the muted-autoplay-loop/.video-toggle showcase
-   pattern those pages use for their hero sections, since autoplaying
-   several embeds at once as the grid scrolls would be a mess. Iframe
-   sizing reuses .video-gallery-embed's existing 16/9 box; the
-   file:// fallback card (.video-embed-fallback etc.) is the same
-   shared block those other pages already use. ============================================================ */
+   <video>. Updated 2026-09-01 to match those pages' muted/looped/
+   no-native-controls/.video-toggle behavior exactly, rather than the
+   host's own visible player chrome, so nothing on this page reads as
+   a third-party embed — see the Vimeo Player SDK and YouTube IFrame
+   API script blocks near the bottom of videos.html.
+   .video-gallery-embed needs position:relative for .video-toggle
+   (position:absolute) to anchor to the right tile; overflow:hidden
+   keeps its border-radius clipping the iframe/video the same as
+   .video-gallery-item already does. Iframe sizing otherwise reuses
+   the existing 16/9 box; the file:// fallback card
+   (.video-embed-fallback etc.) is the same shared block those other
+   pages already use. ============================================================ */
 .video-gallery-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
 .video-gallery-item{background:var(--paper);border:1px solid var(--line);border-radius:2px;overflow:hidden;}
 .video-gallery-item.is-hidden{display:none;}
-.video-gallery-embed{aspect-ratio:16/9;background:var(--ink);}
+.video-gallery-embed{position:relative;aspect-ratio:16/9;background:var(--ink);overflow:hidden;}
 .video-gallery-embed video{width:100%;height:100%;display:block;object-fit:cover;}
 .video-gallery-embed iframe{width:100%;height:100%;display:block;border:0;}
 .video-gallery-caption{
