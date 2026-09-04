@@ -1943,7 +1943,10 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
 .accessories-static-pair{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:20px;}
 .accessories-static-pair img{width:100%;aspect-ratio:4/3;object-fit:contain;background:var(--white);display:block;}
 @media(max-width:600px){
-  .accessories-static-pair{grid-template-columns:1fr;gap:16px;}
+  /* Stay side by side even at phone widths — two photos of the same
+     product (chair vs. wheelchair variant) read as a pair and lose that
+     comparison if one stacks above the other. Just tighten the gap. */
+  .accessories-static-pair{gap:10px;}
 }
 .accessories-media .shop-tile:nth-child(2) img{
   /* Lighting & Suspension, 1.5:1 source: keep the LED light bar,
