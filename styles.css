@@ -414,13 +414,19 @@ nav.primary a.mobile-cta{display:none;}
    sides to get cropped/zoomed on wide columns and the top/bottom to get
    cropped on tall ones. If the text is taller than the photo at a given
    width, the extra space just becomes plain background above/below the
-   photo instead of cropping into the vehicle. */
+   photo instead of cropping into the vehicle. This value must match the
+   CURRENT hero photo's actual pixel dimensions exactly, or object-fit:
+   contain letterboxes it and the mismatch shows as gray bars top/bottom
+   (portrait-ish photo in a wider box) or left/right (the reverse) --
+   it does not derive this automatically. 1302x816 is
+   images/enabler-2-0-lift-studio-white-final.png (2026-09-06); update
+   this the next time the hero photo changes. */
 .hero-art.hero-photo{
   padding:0;overflow:hidden;
   align-self:center;
-  aspect-ratio:1800/1280;
+  aspect-ratio:1302/816;
 }
-.hero-art.hero-photo img{width:100%;height:100%;object-fit:cover;display:block;}
+.hero-art.hero-photo img{width:100%;height:100%;object-fit:contain;display:block;}
 .hero-art.hero-photo figcaption{
   position:absolute;bottom:0;left:0;right:0;
   padding:14px 20px;
