@@ -93,3 +93,82 @@
     });
   }
 })();
+
+/* ============ HEADER FIT — collapses the header from measured overflow,
+   not just viewport width. (2026-09-10)
+
+   The @media rules in styles.css collapse the header at fixed viewport
+   widths, which is correct for a narrow window but assumes the visitor's
+   text is the size the layout was designed at. A "text only" resize (a
+   browser or assistive-tech feature that enlarges just the text, not the
+   viewport -- full-page zoom is not this, it shrinks the viewport too and
+   already hits those rules correctly) can make the utility strip or the
+   header buttons too wide to fit well above 980px. This measures the real
+   rendered width of the utility strip and the nav row and sets
+   data-hdr-compact / -compact2 / -compact3 on <html> when they do not fit,
+   whatever the reason. See the CSS comment above those attributes for
+   exactly what each one does. ============ */
+(function () {
+  var html = document.documentElement;
+  var navRow = document.querySelector('.nav-row');
+  var utilWrap = document.querySelector('.util-bar .wrap');
+  if (!navRow) return;
+
+  var measuring = false;
+
+  function tooWide(el) {
+    return !!el && el.scrollWidth > el.clientWidth + 1;
+  }
+
+  function fit() {
+    if (measuring) return;
+    measuring = true;
+
+    html.removeAttribute('data-hdr-compact');
+    html.removeAttribute('data-hdr-compact2');
+    html.removeAttribute('data-hdr-compact3');
+
+    if (tooWide(navRow) || tooWide(utilWrap)) {
+      html.setAttribute('data-hdr-compact', '');
+    }
+    if (tooWide(navRow)) {
+      html.setAttribute('data-hdr-compact2', '');
+    }
+    if (tooWide(navRow)) {
+      html.setAttribute('data-hdr-compact3', '');
+    }
+
+    measuring = false;
+  }
+
+  var scheduled = false;
+  function schedule() {
+    if (scheduled) return;
+    scheduled = true;
+    requestAnimationFrame(function () {
+      scheduled = false;
+      fit();
+    });
+  }
+
+  schedule();
+  window.addEventListener('resize', schedule);
+  window.addEventListener('load', schedule);
+  if (document.fonts && document.fonts.ready) {
+    document.fonts.ready.then(schedule);
+  }
+
+  /* Fires on real font-size growth even when nothing about the window
+     itself changes size -- exactly the "text only" resize case above,
+     which does not dispatch a resize event at all. */
+  if (window.ResizeObserver) {
+    var ro = new ResizeObserver(schedule);
+    [
+      document.querySelector('.logo'),
+      document.querySelector('nav.primary'),
+      document.querySelector('.header-ctas'),
+      document.querySelector('.util-left'),
+      document.querySelector('.util-right'),
+    ].forEach(function (el) { if (el) ro.observe(el); });
+  }
+})();

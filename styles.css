@@ -340,6 +340,61 @@ nav.primary a.mobile-cta{display:none;}
   .header-ctas .btn-orange{display:none;}
 }
 
+/* Content-driven compact header (2026-09-10) -------------------------------
+   The two breakpoints above collapse the header at fixed viewport widths.
+   That is the right trigger for a narrow window, but it assumes the
+   visitor's text is the size the layout was measured at. Full-page zoom
+   (Ctrl/Cmd +) shrinks the viewport right along with the text, so it
+   already lands on the rules above correctly. A "text only" resize -- a
+   browser or assistive-tech feature that enlarges just the text and
+   leaves the viewport alone -- does not, and on any window under roughly
+   1900px wide that lets the utility strip, or the Pre-Order / Schedule
+   Conversation buttons, run past the edge of the page before the
+   viewport itself is ever narrow enough to trigger a breakpoint.
+
+   nav.js measures the real rendered width of the utility strip and the
+   nav row (not the viewport) after load, after webfonts settle, and
+   whenever either one's content changes size, and sets one or more of
+   the three attributes below on <html> when the content genuinely does
+   not fit -- regardless of why. Each one reproduces exactly what a real
+   viewport breakpoint above already does, so a visitor who *is* narrow
+   enough to trigger it natively sees no difference at all; this only
+   changes what happens when the window is wide but the text is not.
+
+     data-hdr-compact  -- same as max-width:980px: hide the utility
+                          strip, collapse the nav links into the
+                          hamburger dropdown, drop the Schedule
+                          Conversation button (still reachable inside
+                          the dropdown as .mobile-cta).
+     data-hdr-compact2 -- same as max-width:560px on top of that: also
+                          drop the inline Pre-Order button (same
+                          fallback).
+     data-hdr-compact3 -- no viewport-width equivalent. The logo
+                          wordmark is the one thing left that can crowd
+                          the hamburger icon once everything else above
+                          is already gone, and it has nowhere to
+                          collapse to, so this drops the word and keeps
+                          the mark. */
+html[data-hdr-compact] .util-bar{display:none;}
+html[data-hdr-compact] .header-ctas .btn-sm-text{display:none;}
+html[data-hdr-compact] .nav-toggle{display:block;}
+html[data-hdr-compact] nav.primary{
+  position:absolute;top:100%;left:0;right:0;
+  background:var(--white);
+  flex-direction:column;align-items:flex-start;
+  margin:0;
+  padding:8px 28px 18px;
+  border-bottom:1px solid var(--line);
+  gap:14px;
+  display:none;
+}
+html[data-hdr-compact] nav.primary.open{display:flex;}
+html[data-hdr-compact] nav.primary a.mobile-cta{display:block;}
+
+html[data-hdr-compact2] .header-ctas .btn-orange{display:none;}
+
+html[data-hdr-compact3] .logo .word{display:none;}
+
 /* ============================================================
    HERO — plain two-column layout. No overlap between the text panel
    and the photo, no clip-path bleed, no forced cropping of the image.

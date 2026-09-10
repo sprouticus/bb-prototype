@@ -138,9 +138,10 @@
 
       <!-- -------- LIFT & LOADING — Vimeo embeds, same source video as
            enabler-2-0.html (boarding) and index.html (deploy), and now
-           matching their behavior exactly: muted, looped, no native
-           Vimeo controls, custom .video-toggle button, plays only once
-           scrolled into view. See the Vimeo Player SDK block near the
+           muted and looped when playing, no native
+           Vimeo controls, custom .video-toggle button. Click-to-play
+           only — never autoplays; auto-pauses if scrolled out of view
+           while playing. See the Vimeo Player SDK block near the
            bottom of this file. -------- -->
       <div class="video-gallery-item" data-cat="lift">
         <div class="video-gallery-embed" id="video-lift-deploy-embed" data-video-id="1222522948" data-platform="vimeo">
@@ -166,9 +167,9 @@
 
       <!-- -------- HISTORY — YouTube embed, same source video as
            history.html's Buddy Buggy Test Ride section, but here it
-           follows the site's muted/looped/scroll-gated/custom-toggle
-           convention instead of history.html's plain click-to-play
-           embed with YouTube's own controls. YouTube has no SDK
+           follows the site's muted/looped/custom-toggle convention
+           (like history.html's embed, it never autoplays — playback
+           starts only when the visitor clicks the toggle). YouTube has no SDK
            equivalent to Vimeo's Player script, so this one runs on the
            YouTube IFrame Player API instead — see the second script
            block near the bottom of this file. -------- -->
@@ -264,14 +265,13 @@
 
 /* ============ LIFT VIDEOS — VIMEO PLAYER SDK. Same contract as
    .lift-video on enabler-2-0.html and #lift-deploy-embed on index.html:
-   play only once scrolled into view, pause on scroll-out, respect a
-   manual pause/play from .video-toggle, never autoplay for
-   prefers-reduced-motion. Generalized to loop over both Vimeo tiles on
+   click-to-play only via .video-toggle — never
+   autoplays on load or on scroll-in; auto-pauses if scrolled out of
+   view while playing. Generalized to loop over both Vimeo tiles on
    this page instead of targeting one container by class/id. ============ */
 (function(){
   const vimeoEmbeds = document.querySelectorAll('.video-gallery-embed[data-platform="vimeo"]');
   if(!vimeoEmbeds.length || typeof Vimeo === 'undefined') return;
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
   vimeoEmbeds.forEach(function(container){
     const iframe = container.querySelector('iframe');
@@ -300,16 +300,12 @@
     if('IntersectionObserver' in window){
       const observer = new IntersectionObserver(function(entries){
         entries.forEach(function(entry){
-          if(entry.isIntersecting){
-            if(!userPaused && !reduceMotion) player.play().catch(function(){});
-          } else {
+          if(!entry.isIntersecting){
             player.pause().catch(function(){});
           }
         });
       }, { threshold: 0.5 });
       observer.observe(container);
-    } else if(!reduceMotion){
-      player.play().catch(function(){});
     }
   });
 })();
@@ -328,7 +324,6 @@
   const toggle = container && container.querySelector('.video-toggle');
   if(!container || !iframe || !toggle) return;
 
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   let userPaused = false;
   let player = null;
 
@@ -365,16 +360,12 @@
           if('IntersectionObserver' in window){
             const observer = new IntersectionObserver(function(entries){
               entries.forEach(function(entry){
-                if(entry.isIntersecting){
-                  if(!userPaused && !reduceMotion) player.playVideo();
-                } else {
+                if(!entry.isIntersecting){
                   player.pauseVideo();
                 }
               });
             }, { threshold: 0.5 });
             observer.observe(container);
-          } else if(!reduceMotion){
-            player.playVideo();
           }
         }
       }
