@@ -1825,12 +1825,26 @@ footer.site{background:var(--paper);color:#454C49;padding:56px 0 28px;border-top
   .accessories-arrow{width:36px;height:36px;}
 }
 
+/* Catch-and-Release page's implements carousel reuses the Made to
+   Order component (see .accessories-scroll-item above) but wants its
+   thumbnails 20% bigger — scoped to .story-gallery so the Enabler
+   page's own accessories strip is untouched. */
+.story-gallery .accessories-scroll-item{width:220px;}
+@media(max-width:560px){
+  .story-gallery .accessories-scroll-item{width:160px;}
+}
+
 /* ============================================================
    IN THE FIELD — photo story section
    ============================================================ */
 .in-action{padding:76px 0;background:var(--paper);border-top:1px solid var(--line);}
 .in-action .head{text-align:center;max-width:560px;margin:0 auto 40px;}
 .in-action .head h2{font-size:clamp(27.5px,3.4vw,37px);margin-top:10px;}
+
+/* Catch-and-Release page split its photo gallery out of .in-action into
+   its own section (2026-09-14) so the two could alternate background
+   color like the rest of the site's sections do. */
+.story-gallery{padding:76px 0;background:var(--white);}
 .story-grid{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;}
 .story-stack{display:flex;flex-direction:column;gap:20px;}
 .story-img{margin:0;position:relative;overflow:hidden;}
@@ -2297,6 +2311,8 @@ button.gallery-item-inner:focus-visible{outline:3px solid var(--orange);outline-
 .video-featured--tight{padding-top:24px;}
 .video-featured--tight .video-embed-box{margin-top:0;}
 .video-embed-box video{width:100%;height:100%;display:block;object-fit:cover;background:var(--ink);}
+.video-embed-box img{width:100%;height:100%;display:block;object-fit:contain;background:var(--white);}
+.video-embed-box:has(img){background:var(--white);border:none;}
 
 /* .detail-feature (one large real photo in its own section between
    How It Works and the gallery, added 2026-07-30) removed same day —
