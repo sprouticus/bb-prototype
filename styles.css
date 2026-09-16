@@ -1298,6 +1298,7 @@ button.shop-tile-zoom:focus-visible .zoom-hint{opacity:1;}
   letter-spacing:.03em;text-align:center;
   display:flex;flex-direction:column;align-items:center;gap:10px;
 }
+.lightbox-content figcaption:empty{display:none;}
 /* -------- Lightbox spec/price block (Implements page, added
    2026-07-26). The product cards carry no numbers by design, so size,
    power and price surface here instead. Empty spans collapse via

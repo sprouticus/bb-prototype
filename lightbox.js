@@ -22,7 +22,12 @@
       just works.
 
    Full-size source: data-full if present, otherwise the img's src.
-   Caption: data-caption, else the sibling <figcaption>, else the alt.
+   Visible caption: data-caption, else the sibling <figcaption>. There is
+   no automatic fallback to alt text for the VISIBLE caption — alt text
+   is accessibility metadata, not authored caption copy, so a photo with
+   neither shows enlarged with no caption bar (it collapses via CSS).
+   The enlarged image's alt attribute is always set from the source
+   img's own alt, independent of the caption.
 
    ORDERING TRAP THIS AVOIDS
    A <script> placed above the lightbox markup it looks up would run
@@ -72,10 +77,10 @@
   var closeBtn = lightbox.querySelector('#lightbox-close');
   var lastFocused = null;
 
-  function openLightbox(src, caption) {
+  function openLightbox(src, alt, caption) {
     lastFocused = document.activeElement;
     lightboxImg.src = src;
-    lightboxImg.alt = caption || '';
+    lightboxImg.alt = alt || '';
     lightboxCaption.textContent = caption || '';
     lightbox.hidden = false;
     document.body.style.overflow = 'hidden';
@@ -92,10 +97,10 @@
   /* -------- 1. explicit data-full triggers (already real buttons) -------- */
   Array.prototype.forEach.call(triggers, function (el) {
     var inner = el.querySelector('img');
-    var caption = el.getAttribute('data-caption') ||
-                  (inner ? inner.getAttribute('alt') : '') || '';
+    var alt = inner ? (inner.getAttribute('alt') || '') : '';
+    var caption = el.getAttribute('data-caption') || '';
     el.addEventListener('click', function () {
-      openLightbox(el.getAttribute('data-full'), caption);
+      openLightbox(el.getAttribute('data-full'), alt, caption);
     });
   });
 
@@ -107,23 +112,26 @@
 
     /* data-caption on the img wins, for captions that are marked up
        across multiple lines (a <strong> role over a <br> subtitle, say)
-       and would otherwise run together as one string. */
+       and would otherwise run together as one string. No fallback to
+       alt here: alt is accessibility metadata, not authored caption
+       copy, so a photo with neither shows enlarged with no caption. */
+    var alt = (img.getAttribute('alt') || '').trim();
     var cap = fig.querySelector('figcaption');
     var caption = (img.getAttribute('data-caption') ||
-                   (cap ? cap.textContent : '') ||
-                   img.getAttribute('alt') || '').trim();
+                   (cap ? cap.textContent : '') || '').trim();
     var full = img.getAttribute('data-full') || img.getAttribute('src');
 
     var btn = document.createElement('button');
     btn.type = 'button';
     btn.className = 'photo-zoom';
-    btn.setAttribute('aria-label', caption ? 'View larger photo: ' + caption : 'View larger photo');
+    var labelText = caption || alt;
+    btn.setAttribute('aria-label', labelText ? 'View larger photo: ' + labelText : 'View larger photo');
 
     img.parentNode.insertBefore(btn, img);
     btn.appendChild(img);
 
     btn.addEventListener('click', function () {
-      openLightbox(full, caption);
+      openLightbox(full, alt, caption);
     });
   });
 
