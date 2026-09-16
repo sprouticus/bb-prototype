@@ -130,39 +130,19 @@ a:focus-visible,button:focus-visible,input:focus-visible,textarea:focus-visible,
 .btn svg{width:16px;height:16px;flex:none;}
 
 /* ============================================================
-   HEADER — two tier: utility strip + nav bar
+   HEADER — single tier: nav bar only. The utility strip (location/
+   USA line, email, social icons) was removed site-wide 2026-09-16 —
+   Lesley didn't think the site needed it. The two-tier header's rules
+   lived here; if anything below still assumes a second tier, that's
+   a leftover, not intentional.
    ============================================================ */
-.util-bar{
-  background:var(--paper);
-  border-bottom:1px solid var(--line);
-  font-family:var(--font-mono);
-  font-size:15px;
-}
-.util-bar .wrap{
-  display:flex;justify-content:space-between;align-items:center;
-  padding:9px 28px;flex-wrap:wrap;gap:8px;
-}
-.util-left{color:var(--steel);letter-spacing:.04em;text-transform:uppercase;font-weight:600;}
-.util-right{display:flex;align-items:center;gap:18px;color:var(--ink);}
-.util-right a{display:flex;align-items:center;gap:6px;font-weight:600;}
-.util-right svg{width:14px;height:14px;color:var(--orange);}
-.util-social{display:flex;gap:10px;}
-.util-social a svg{width:16px;height:16px;color:var(--ink);}
-/* Utility strip (location/USA line, email, social icons) hidden on
-   mobile — it was eating a big chunk of the viewport above the actual
-   nav on phones, added 2026-07-18. Same breakpoint as the nav's
-   hamburger collapse, so "mobile" means the same thing everywhere. */
-@media (max-width:980px){
-  .util-bar{display:none;}
-}
 
-/* Height of the sticky header, kept next to the rules that produce it so
-   it stays honest: .util-bar .wrap is 9px x2 padding over a 15px/1.5 line
-   plus a 1px border (~42px); .nav-row is 14px x2 padding around the 66px
-   logo plus a 1px border (95px). Anything that needs to fit "one screenful
-   below the header" reads this instead of re-deriving it. The breakpoints
-   mirror the two rules above that hide the util-bar and shrink the logo. */
-:root{--header-h:137px;}
+/* Height of the sticky header, kept next to the rule that produces it
+   so it stays honest: .nav-row is 14px x2 padding around the 66px logo
+   plus a 1px border (95px). Anything that needs to fit "one screenful
+   below the header" reads this instead of re-deriving it. The
+   breakpoints mirror the rule below that shrinks the logo. */
+:root{--header-h:95px;}
 @media (max-width:980px){:root{--header-h:83px;}}
 @media (max-width:560px){:root{--header-h:67px;}}
 
@@ -348,24 +328,23 @@ nav.primary a.mobile-cta{display:none;}
    already lands on the rules above correctly. A "text only" resize -- a
    browser or assistive-tech feature that enlarges just the text and
    leaves the viewport alone -- does not, and on any window under roughly
-   1900px wide that lets the utility strip, or the Pre-Order / Schedule
-   Conversation buttons, run past the edge of the page before the
-   viewport itself is ever narrow enough to trigger a breakpoint.
+   1900px wide that lets the Pre-Order / Schedule Conversation buttons
+   run past the edge of the page before the viewport itself is ever
+   narrow enough to trigger a breakpoint.
 
-   nav.js measures the real rendered width of the utility strip and the
-   nav row (not the viewport) after load, after webfonts settle, and
-   whenever either one's content changes size, and sets one or more of
-   the three attributes below on <html> when the content genuinely does
-   not fit -- regardless of why. Each one reproduces exactly what a real
-   viewport breakpoint above already does, so a visitor who *is* narrow
-   enough to trigger it natively sees no difference at all; this only
-   changes what happens when the window is wide but the text is not.
+   nav.js measures the real rendered width of the nav row (not the
+   viewport) after load, after webfonts settle, and whenever its content
+   changes size, and sets one or more of the three attributes below on
+   <html> when the content genuinely does not fit -- regardless of why.
+   Each one reproduces exactly what a real viewport breakpoint above
+   already does, so a visitor who *is* narrow enough to trigger it
+   natively sees no difference at all; this only changes what happens
+   when the window is wide but the text is not.
 
-     data-hdr-compact  -- same as max-width:980px: hide the utility
-                          strip, collapse the nav links into the
-                          hamburger dropdown, drop the Schedule
-                          Conversation button (still reachable inside
-                          the dropdown as .mobile-cta).
+     data-hdr-compact  -- same as max-width:980px: collapse the nav
+                          links into the hamburger dropdown, drop the
+                          Schedule Conversation button (still reachable
+                          inside the dropdown as .mobile-cta).
      data-hdr-compact2 -- same as max-width:560px on top of that: also
                           drop the inline Pre-Order button (same
                           fallback).
@@ -375,7 +354,6 @@ nav.primary a.mobile-cta{display:none;}
                           is already gone, and it has nowhere to
                           collapse to, so this drops the word and keeps
                           the mark. */
-html[data-hdr-compact] .util-bar{display:none;}
 html[data-hdr-compact] .header-ctas .btn-sm-text{display:none;}
 html[data-hdr-compact] .nav-toggle{display:block;}
 html[data-hdr-compact] nav.primary{
