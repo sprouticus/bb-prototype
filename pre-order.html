@@ -95,19 +95,15 @@
     <p class="eyebrow">Reserve a Spot</p>
     <h1>Pre-Order the Enabler 2.1</h1>
     <div class="rule"></div>
-    <p>Built on the Enabler 2.0. No payment required, for individuals or organizations. The first 50 pre-orders get the base vehicle at $34,000.</p>
+    <p>No down payment required to reserve a vehicle. The first 50 pre-orders get the base vehicle at $34,000.</p>
   </div>
 </section>
 
 <section style="padding:56px 0 96px;">
   <div class="wrap">
 
-<div class="flow-progress" id="flow-progress">
-      <div class="flow-progress-step is-current" data-step="1"><span class="num">1</span><span class="label">Your Info</span></div>
-      <div class="flow-progress-step" data-step="2"><span class="num">2</span><span class="label">Accessories</span></div>
-      <div class="flow-progress-step" data-step="3"><span class="num">3</span><span class="label">Implements</span></div>
-      <div class="flow-progress-step" data-step="4"><span class="num">4</span><span class="label">Review</span></div>
-    </div>
+    <div class="preorder-layout">
+      <div class="preorder-form-col">
 
     <form data-prototype-form data-success-target="pre-order-success" id="preorder-flow-form" novalidate>
 
@@ -115,7 +111,7 @@
       <section class="flow-step" id="flow-step-1" data-step="1">
         <p class="flow-step-eyebrow">Step 1 of 4</p>
         <h2>Your information</h2>
-        <p class="flow-step-sub">No payment required. We just need to know who you are and how to reach you.</p>
+        <p class="flow-step-sub">Let us know who you are and how we can reach you.</p>
         <p class="field-req-legend">Fields marked <span class="req">*</span> are required.</p>
 
         <div class="field">
@@ -148,11 +144,71 @@
         </div>
 
         <div class="field">
-          <label for="p-location">City &amp; state <span class="req" aria-hidden="true">*</span></label>
-          <input type="text" id="p-location" name="location" placeholder="Albuquerque, NM" required
-                 aria-describedby="p-location-error"
-                 data-error-missing="Enter your city and state. Delivery range decides what we can quote.">
-          <p class="field-error" id="p-location-error" role="alert" hidden></p>
+          <label for="p-city">City <span class="req" aria-hidden="true">*</span></label>
+          <input type="text" id="p-city" name="city" placeholder="Albuquerque" required
+                 aria-describedby="p-city-error"
+                 data-error-missing="Enter your city. Delivery range decides what we can quote.">
+          <p class="field-error" id="p-city-error" role="alert" hidden></p>
+        </div>
+
+        <div class="field">
+          <label for="p-state">State <span class="req" aria-hidden="true">*</span></label>
+          <select id="p-state" name="state" required aria-describedby="p-state-error"
+                  data-error-missing="Select your state. Delivery range decides what we can quote.">
+            <option value="" disabled selected>Select a state</option>
+            <option>Alabama</option>
+            <option>Alaska</option>
+            <option>Arizona</option>
+            <option>Arkansas</option>
+            <option>California</option>
+            <option>Colorado</option>
+            <option>Connecticut</option>
+            <option>Delaware</option>
+            <option>District of Columbia</option>
+            <option>Florida</option>
+            <option>Georgia</option>
+            <option>Hawaii</option>
+            <option>Idaho</option>
+            <option>Illinois</option>
+            <option>Indiana</option>
+            <option>Iowa</option>
+            <option>Kansas</option>
+            <option>Kentucky</option>
+            <option>Louisiana</option>
+            <option>Maine</option>
+            <option>Maryland</option>
+            <option>Massachusetts</option>
+            <option>Michigan</option>
+            <option>Minnesota</option>
+            <option>Mississippi</option>
+            <option>Missouri</option>
+            <option>Montana</option>
+            <option>Nebraska</option>
+            <option>Nevada</option>
+            <option>New Hampshire</option>
+            <option>New Jersey</option>
+            <option>New Mexico</option>
+            <option>New York</option>
+            <option>North Carolina</option>
+            <option>North Dakota</option>
+            <option>Ohio</option>
+            <option>Oklahoma</option>
+            <option>Oregon</option>
+            <option>Pennsylvania</option>
+            <option>Rhode Island</option>
+            <option>South Carolina</option>
+            <option>South Dakota</option>
+            <option>Tennessee</option>
+            <option>Texas</option>
+            <option>Utah</option>
+            <option>Vermont</option>
+            <option>Virginia</option>
+            <option>Washington</option>
+            <option>West Virginia</option>
+            <option>Wisconsin</option>
+            <option>Wyoming</option>
+          </select>
+          <p class="field-error" id="p-state-error" role="alert" hidden></p>
         </div>
 
         <div id="org-fields" hidden>
@@ -192,12 +248,12 @@
             <label><input type="radio" name="financing" value="yes"> Yes</label>
             <label><input type="radio" name="financing" value="no"> No</label>
           </div>
-          <p class="field-note">Financing isn't available yet. This just tells us whether to pursue it.</p>
         </div>
 
         <div class="field">
           <label for="p-notes">Configuration &amp; accessibility notes <span class="field-opt">(optional)</span></label>
-          <textarea id="p-notes" name="notes" rows="4" placeholder="Specify hand control configuration, custom seating preferences, wheelchair tie-down dimensions, or specific jobsite requirements."></textarea>
+          <textarea id="p-notes" name="notes" rows="4" placeholder="Specify custom seating preferences, wheelchair tie-down dimensions, or specific jobsite requirements."></textarea>
+          <p class="field-note">The current hand controls are for a right handed individual. Other configurations can be ordered.</p>
         </div>
 
         <div class="flow-nav" style="justify-content:flex-end;">
@@ -325,39 +381,30 @@
       <section class="flow-step" id="flow-step-3" data-step="3" hidden>
         <p class="flow-step-eyebrow">Step 3 of 4</p>
         <h2>Add implements</h2>
-        <p class="flow-step-sub">Pick any towed implements you want included. Implement pricing is still being finalized with each partner brand, so we'll follow up with a figure before anything is confirmed.</p>
+        <p class="flow-step-sub">Pick any implements you want included with the vehicle. Implement pricing is being finalized and will be confirmed before the order is processed.</p>
 
       <div class="pick-brand-group">
         <div class="pick-brand-head">
-          <div class="pick-brand-logo is-image"><img src="images/bb-logo-mark.png" alt="B.B. Engineering" loading="lazy"></div>
-          <h3>B.B. Engineering</h3>
+          <h3>Towing Implements</h3>
         </div>
         <div class="pick-grid">
           <label class="pick-card">
-            <input type="checkbox" class="pick-input" name="implements" value="B.B. Engineering: Utility Trailer" data-price="TBD" data-price-label="Price TBD">
+            <input type="checkbox" class="pick-input" name="implements" value="Kunz Engineering: AcrEase Rough Cut Mower MR55BE" data-price="TBD" data-price-label="Price TBD">
             <span class="pick-card-visual">
-              <div class="pick-card-img"><img src="images/Implements/thumbs/bb-utility-trailer-thumb.png" width="700" height="700" alt="Utility Trailer" loading="lazy"></div>
+              <div class="pick-card-img"><img src="images/Implements/thumbs/kunz-acrease-mr55be-rough-cut-mower-thumb.png" width="700" height="700" alt="AcrEase Rough Cut Mower MR55BE" loading="lazy"></div>
               <span class="pick-card-body">
-                <span class="pick-card-name">Utility Trailer</span>
+                <span class="pick-card-name">Kunz AcrEase Rough Cut Mower MR55BE</span>
                 <span class="pick-card-price">Price TBD</span>
               </span>
               <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
             </span>
           </label>
-        </div>
-      </div>
-      <div class="pick-brand-group">
-        <div class="pick-brand-head">
-          <div class="pick-brand-logo is-image"><img src="images/Implements/demco-logo.png" alt="Demco" loading="lazy"></div>
-          <h3>Demco</h3>
-        </div>
-        <div class="pick-grid">
           <label class="pick-card">
             <input type="checkbox" class="pick-input" name="implements" value="Demco: Pro Series 40 Gallon Sprayer" data-price="TBD" data-price-label="Price TBD">
             <span class="pick-card-visual">
               <div class="pick-card-img"><img src="images/Implements/thumbs/demco-pro-series-40-gallon-sprayer-thumb.png" width="700" height="700" alt="Pro Series 40 Gallon Sprayer" loading="lazy"></div>
               <span class="pick-card-body">
-                <span class="pick-card-name">Pro Series 40 Gallon Sprayer</span>
+                <span class="pick-card-name">Demco Pro Series 40 Gallon Sprayer</span>
                 <span class="pick-card-price">Price TBD</span>
               </span>
               <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
@@ -368,7 +415,7 @@
             <span class="pick-card-visual">
               <div class="pick-card-img"><img src="images/Implements/thumbs/demco-pro-series-60-gallon-sprayer-thumb.png" width="700" height="700" alt="Pro Series 60 Gallon Sprayer" loading="lazy"></div>
               <span class="pick-card-body">
-                <span class="pick-card-name">Pro Series 60 Gallon Sprayer</span>
+                <span class="pick-card-name">Demco Pro Series 60 Gallon Sprayer</span>
                 <span class="pick-card-price">Price TBD</span>
               </span>
               <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
@@ -379,26 +426,18 @@
             <span class="pick-card-visual">
               <div class="pick-card-img"><img src="images/Implements/thumbs/demco-pro-series-80-gallon-sprayer-thumb.png" width="700" height="700" alt="Pro Series 80 Gallon Sprayer" loading="lazy"></div>
               <span class="pick-card-body">
-                <span class="pick-card-name">Pro Series 80 Gallon Sprayer</span>
+                <span class="pick-card-name">Demco Pro Series 80 Gallon Sprayer</span>
                 <span class="pick-card-price">Price TBD</span>
               </span>
               <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
             </span>
           </label>
-        </div>
-      </div>
-      <div class="pick-brand-group">
-        <div class="pick-brand-head">
-          <div class="pick-brand-logo is-image"><img src="images/Implements/kunz-logo.jpg" alt="Kunz Engineering" loading="lazy"></div>
-          <h3>Kunz Engineering</h3>
-        </div>
-        <div class="pick-grid">
           <label class="pick-card">
-            <input type="checkbox" class="pick-input" name="implements" value="Kunz Engineering: AcrEase Rough Cut Mower MR55BE" data-price="TBD" data-price-label="Price TBD">
+            <input type="checkbox" class="pick-input" name="implements" value="B.B. Engineering: Utility Trailer" data-price="TBD" data-price-label="Price TBD">
             <span class="pick-card-visual">
-              <div class="pick-card-img"><img src="images/Implements/thumbs/kunz-acrease-mr55be-rough-cut-mower-thumb.png" width="700" height="700" alt="AcrEase Rough Cut Mower MR55BE" loading="lazy"></div>
+              <div class="pick-card-img"><img src="images/Implements/thumbs/bb-utility-trailer-thumb.png" width="700" height="700" alt="Utility Trailer" loading="lazy"></div>
               <span class="pick-card-body">
-                <span class="pick-card-name">AcrEase Rough Cut Mower MR55BE</span>
+                <span class="pick-card-name">B.B. Utility Trailer</span>
                 <span class="pick-card-price">Price TBD</span>
               </span>
               <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
@@ -408,8 +447,7 @@
       </div>
       <div class="pick-brand-group">
         <div class="pick-brand-head">
-          <div class="pick-brand-logo is-image"><img src="images/Implements/rammy-logo.png" alt="Rammy" loading="lazy"></div>
-          <h3>Rammy</h3>
+          <h3>Front-Mounted Implements</h3>
         </div>
         <div class="pick-grid">
           <label class="pick-card">
@@ -417,7 +455,7 @@
             <span class="pick-card-visual">
               <div class="pick-card-img"><img src="images/Implements/thumbs/rammy-brush-cutter-120-atv-pro-thumb.png" width="700" height="700" alt="Brush Cutter 120 ATV PRO" loading="lazy"></div>
               <span class="pick-card-body">
-                <span class="pick-card-name">Brush Cutter 120 ATV PRO</span>
+                <span class="pick-card-name">Rammy Brush Cutter 120 ATV PRO</span>
                 <span class="pick-card-price">Price TBD</span>
               </span>
               <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
@@ -428,7 +466,7 @@
             <span class="pick-card-visual">
               <div class="pick-card-img"><img src="images/Implements/thumbs/rammy-flail-mower-120-atv-thumb.png" width="700" height="700" alt="Flail Mower 120 ATV" loading="lazy"></div>
               <span class="pick-card-body">
-                <span class="pick-card-name">Flail Mower 120 ATV</span>
+                <span class="pick-card-name">Rammy Flail Mower 120 ATV</span>
                 <span class="pick-card-price">Price TBD</span>
               </span>
               <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
@@ -439,7 +477,7 @@
             <span class="pick-card-visual">
               <div class="pick-card-img"><img src="images/Implements/thumbs/rammy-lawn-mower-120-atv-pro-thumb.png" width="700" height="700" alt="Lawn Mower 120 ATV PRO" loading="lazy"></div>
               <span class="pick-card-body">
-                <span class="pick-card-name">Lawn Mower 120 ATV PRO</span>
+                <span class="pick-card-name">Rammy Lawn Mower 120 ATV PRO</span>
                 <span class="pick-card-price">Price TBD</span>
               </span>
               <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
@@ -450,7 +488,7 @@
             <span class="pick-card-visual">
               <div class="pick-card-img"><img src="images/Implements/thumbs/rammy-plow-w165-atv-pro-thumb.png" width="700" height="700" alt="Plow W165 ATV PRO" loading="lazy"></div>
               <span class="pick-card-body">
-                <span class="pick-card-name">Plow W165 ATV PRO</span>
+                <span class="pick-card-name">Rammy Plow W165 ATV PRO</span>
                 <span class="pick-card-price">Price TBD</span>
               </span>
               <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
@@ -461,7 +499,7 @@
             <span class="pick-card-visual">
               <div class="pick-card-img"><img src="images/Implements/thumbs/rammy-snowblower-155-utv-pro-thumb.png" width="700" height="700" alt="Snowblower 155 UTV PRO" loading="lazy"></div>
               <span class="pick-card-body">
-                <span class="pick-card-name">Snowblower 155 UTV PRO</span>
+                <span class="pick-card-name">Rammy Snowblower 155 UTV PRO</span>
                 <span class="pick-card-price">Price TBD</span>
               </span>
               <span class="pick-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg></span>
@@ -520,10 +558,25 @@
 
     </form>
 
-    <div class="form-success" id="pre-order-success" style="max-width:760px;margin:0 auto;">
+    <div class="form-success" id="pre-order-success">
 
       <p style="margin:0 0 12px;">Your pre-order is in. No payment was collected. Someone from B.B. Engineering will follow up with next steps. Expected availability is early 2027.</p>
       <p id="pre-order-ref" style="margin:0;font-weight:700;"></p>
+    </div>
+
+      </div>
+
+      <aside class="preorder-side-col">
+        <div class="preorder-teaser">
+          <img src="images/enabler-2-1-teaser-sheet.jpg" alt="The Enabler 2.1 under a white cover, a beam of light from above picking out its silhouette" loading="lazy" class="preorder-teaser-img">
+        </div>
+        <div class="flow-progress" id="flow-progress">
+          <div class="flow-progress-step is-current" data-step="1"><span class="num">1</span><span class="label">Your Info</span></div>
+          <div class="flow-progress-step" data-step="2"><span class="num">2</span><span class="label">Accessories</span></div>
+          <div class="flow-progress-step" data-step="3"><span class="num">3</span><span class="label">Implements</span></div>
+          <div class="flow-progress-step" data-step="4"><span class="num">4</span><span class="label">Review</span></div>
+        </div>
+      </aside>
     </div>
 
   </div>
@@ -714,7 +767,7 @@
       ['Name', fieldVal('p-name') || 'N/A'],
       ['Email', fieldVal('p-email') || 'N/A'],
       ['Phone', fieldVal('p-phone') || 'Not provided'],
-      ['Location', fieldVal('p-location') || 'N/A'],
+      ['Location', [fieldVal('p-city'), fieldVal('p-state')].filter(Boolean).join(', ') || 'N/A'],
       ['Primary use', fieldVal('p-use') || 'N/A']
     ];
     if (!orgFields.hidden){

@@ -827,6 +827,58 @@ input:focus,select:focus,textarea:focus{border-color:var(--steel);}
   .flow-progress-step .label{display:none;}
 }
 
+/* ---- Pre-order two-column layout (2026-09-16) ----
+   Left column is the form, right column is the teaser image with the
+   same progress-tracker markup underneath it, restyled vertical. Below
+   901px it collapses to one column with the side content first (image,
+   then the tracker in its original horizontal form) and nothing sticky,
+   since a sticky sidebar only makes sense once there is a second column
+   to stick beside. Sticky (not a scroll-driven pin) because the browser
+   should own the stick/release with nothing to jitter -- same reasoning
+   as header.site and the History page's .snake-stage. */
+.preorder-layout{display:grid;grid-template-columns:1fr;gap:32px;}
+.preorder-side-col{order:1;}
+.preorder-form-col{order:2;min-width:0;}
+.preorder-form-col .flow-step{max-width:none;margin-left:0;margin-right:0;}
+@media (min-width:901px){
+  .preorder-layout{grid-template-columns:2fr 1fr;gap:40px;align-items:start;}
+  .preorder-form-col{order:1;}
+  .preorder-side-col{
+    order:2;position:sticky;
+    /* Sits just below the sticky site header rather than under it. */
+    top:calc(var(--header-h) + 24px);
+  }
+}
+
+.preorder-teaser{margin-bottom:24px;}
+.preorder-teaser-img{display:block;width:100%;height:auto;border-radius:2px;}
+
+/* Below the point where .flow-progress-step .label already hides
+   (see the sitewide rule above), the tracker is just four unlabeled
+   dots stacked over the form -- no step names, so no wayfinding value,
+   just wasted height above the thing people actually came to fill in.
+   Drop it entirely at that width rather than carry dead weight. */
+@media (max-width:640px){
+  .preorder-side-col .flow-progress{display:none;}
+}
+
+/* Vertical tracker: same markup and state classes as the horizontal
+   one above (.is-current/.is-done, set by the same script), restyled
+   left-to-right instead of top-to-bottom. Scoped to the >=901px tier
+   the two-column layout itself requires, so below that the tracker
+   falls back to the original horizontal rules untouched. */
+@media (min-width:901px){
+  .preorder-side-col .flow-progress{
+    max-width:none;margin:0;grid-template-columns:1fr;gap:10px;
+  }
+  .preorder-side-col .flow-progress-step{
+    flex-direction:row;justify-content:flex-start;text-align:left;gap:14px;
+    padding:12px 16px;border-top:none;border-left:4px solid var(--line);
+  }
+  .preorder-side-col .flow-progress-step.is-current{border-left-color:var(--orange);}
+  .preorder-side-col .flow-progress-step.is-done{border-left-color:var(--steel);}
+}
+
 .flow-step{
   max-width:760px;margin:0 auto 8px;background:var(--white);border:1px solid var(--line);border-radius:2px;
   padding:44px;scroll-margin-top:32px;
