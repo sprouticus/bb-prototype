@@ -96,7 +96,6 @@
       <button type="button" class="gallery-filter-btn" data-filter="towing" aria-pressed="false">Towing</button>
       <button type="button" class="gallery-filter-btn" data-filter="lift" aria-pressed="false">Lift &amp; Loading</button>
       <button type="button" class="gallery-filter-btn" data-filter="history" aria-pressed="false">History</button>
-      <span class="gallery-filter-count" aria-live="polite"></span>
     </div>
 
     <div class="video-gallery-grid">
@@ -373,7 +372,6 @@
 (function(){
   const buttons = document.querySelectorAll('.gallery-filter-btn');
   const items = document.querySelectorAll('.video-gallery-item[data-cat]');
-  const count = document.querySelector('.gallery-filter-count');
   const empty = document.querySelector('.gallery-empty');
   if(!buttons.length || !items.length) return;
 
@@ -384,7 +382,6 @@
       item.classList.toggle('is-hidden', !match);
       if(match) shown++;
     });
-    if(count) count.textContent = shown + (shown === 1 ? ' video' : ' videos');
     if(empty) empty.hidden = shown > 0;
   }
 

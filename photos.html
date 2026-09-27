@@ -90,7 +90,6 @@
       <button type="button" class="gallery-filter-btn" data-filter="vehicle" aria-pressed="false">Vehicle</button>
       <button type="button" class="gallery-filter-btn" data-filter="detail" aria-pressed="false">Details</button>
       <button type="button" class="gallery-filter-btn" data-filter="shop" aria-pressed="false">In the Shop</button>
-      <span class="gallery-filter-count" aria-live="polite"></span>
     </div>
 
     <div class="gallery-grid-full">
@@ -358,7 +357,6 @@
 (function(){
   const buttons = document.querySelectorAll('.gallery-filter-btn');
   const items = document.querySelectorAll('.gallery-item[data-cat]');
-  const count = document.querySelector('.gallery-filter-count');
   const empty = document.querySelector('.gallery-empty');
   if(!buttons.length || !items.length) return;
 
@@ -369,7 +367,6 @@
       item.classList.toggle('is-hidden', !match);
       if(match) shown++;
     });
-    if(count) count.textContent = shown + (shown === 1 ? ' photo' : ' photos');
     if(empty) empty.hidden = shown > 0;
   }
 

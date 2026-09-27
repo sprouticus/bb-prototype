@@ -53,12 +53,10 @@ for (const b of btns){
   ok('filter "' + f + '" sets aria-pressed', b.getAttribute('aria-pressed') === 'true');
   ok('filter "' + f + '" leaves exactly one button pressed',
      btns.filter(x => x.getAttribute('aria-pressed') === 'true').length === 1);
-  ok('filter "' + f + '" count readout says ' + expect,
-     doc.querySelector('.gallery-filter-count').textContent ===
-       expect + (expect === 1 ? ' photo' : ' photos'),
-     doc.querySelector('.gallery-filter-count').textContent);
 }
 click(btns[0]);
+// The "N photos" readout beside the buttons was removed as unneeded noise.
+ok('no count readout in the filter bar', !doc.querySelector('.gallery-filter-count'));
 ok('empty-state message stays hidden while every filter has photos',
    doc.querySelector('.gallery-empty').hidden);
 
