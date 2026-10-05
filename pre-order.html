@@ -238,7 +238,7 @@
 
         <div class="field">
           <label for="p-notes">Configuration &amp; accessibility notes <span class="field-opt">(optional)</span></label>
-          <textarea id="p-notes" name="notes" rows="4" placeholder="Specify custom seating preferences, wheelchair tie-down dimensions, or specific jobsite requirements."></textarea>
+          <textarea id="p-notes" name="notes" rows="4"></textarea>
           <p class="field-note">The current hand controls are for a right handed individual. Other configurations can be ordered.</p>
         </div>
 
@@ -531,6 +531,19 @@
           <p class="review-note">The base vehicle is the only confirmed price. Accessory and implement pricing is being finalized with each supplier and is confirmed when B.B. Engineering follows up. No payment is required to reserve.</p>
         </div>
 
+        <!-- Agreement checkbox. The links open in a new tab because following
+             them in this one would leave the form and lose everything entered
+             in steps 1-3, which lives only in the page. Validated on submit by
+             the same validateStep() as every other required control. It has
+             no error message on purpose: the red outline and label are enough
+             for a single checkbox sitting right above the button. -->
+        <div class="field field--check">
+          <label for="p-terms">
+            <input type="checkbox" id="p-terms" name="terms-agreed" value="yes" required>
+            <span>I agree to the <a href="privacy-policy.html" target="_blank" rel="noopener">Privacy Policy</a> and the <a href="terms-and-conditions.html" target="_blank" rel="noopener">Terms and Conditions</a>. <span class="req" aria-hidden="true">*</span></span>
+          </label>
+        </div>
+
         <div class="flow-nav">
           <button type="button" class="flow-back" data-flow-back="3">Go Back</button>
           <button type="submit" class="btn btn-orange">Submit Reservation</button>
@@ -591,6 +604,8 @@
         <a href="history.html">History</a>
         <a href="careers.html">Careers</a>
         <a href="contact.html">Contact</a>
+        <a href="privacy-policy.html">Privacy Policy</a>
+        <a href="terms-and-conditions.html">Terms and Conditions</a>
       </div>
       <div>
         <h5>Social Media</h5>
@@ -869,6 +884,14 @@
     if (step1){
       var firstBad = validateStep(step1);
       if (firstBad){ goToStep(1); firstBad.focus(); return; }
+    }
+
+    // The agreement checkbox lives on the Review step itself, so a failure
+    // here keeps the reader where they are rather than jumping back.
+    var step4 = document.getElementById('flow-step-4');
+    if (step4){
+      var firstBad4 = validateStep(step4);
+      if (firstBad4){ firstBad4.focus(); return; }
     }
 
     if (!ORDER_ENDPOINT) { showSuccess(''); return; }

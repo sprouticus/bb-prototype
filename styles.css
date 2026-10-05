@@ -3260,3 +3260,23 @@ a.cd-value:hover{text-decoration:underline;}
 .contact-social-link svg{width:20px;height:20px;flex-shrink:0;color:var(--steel);}
 .contact-social-link:hover{color:var(--orange-dark);}
 .contact-social-link:hover svg{color:var(--orange-dark);}
+
+/* ============ LEGAL PAGES (Privacy Policy, Terms and Conditions)
+   Plain white page with the document title as the H1 and the body text
+   underneath. Deliberately not .page-hero, which sits on --paper with an
+   eyebrow and rule; a legal document reads better as a plain page.
+   min-height keeps the footer from riding up under a short page. ============ */
+.legal-page{background:var(--white);color:var(--ink);padding:48px 0 72px;min-height:50vh;}
+.legal-page h1{font-size:clamp(28px,3.6vw,40px);}
+
+/* ============ Agreement checkbox on the pre-order Review step.
+   The box sits beside its sentence rather than above it like the other
+   field labels, so the label is a flex row. Weight and size step down from
+   the flow's bold 19px labels so it reads as a sentence, not a heading.
+   An invalid checkbox has no border to turn red, so it gets an outline. ============ */
+.flow-step .field--check{margin-top:32px;margin-bottom:0;}
+.flow-step .field--check label{display:flex;align-items:flex-start;gap:12px;font-weight:500;font-size:17.5px;line-height:1.45;cursor:pointer;}
+.field--check input[type="checkbox"]{flex:none;width:22px;height:22px;margin:1px 0 0;accent-color:var(--ink);cursor:pointer;}
+.field--check a{color:var(--ink);text-decoration:underline;text-underline-offset:3px;font-weight:600;}
+.field--check a:hover{color:var(--orange-dark);}
+.field.is-invalid input[type="checkbox"]{outline:2px solid var(--orange);outline-offset:2px;}

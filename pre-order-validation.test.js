@@ -1,7 +1,8 @@
 /* ------------------------------------------------------------------
    pre-order-validation.test.js  —  run: node pre-order-validation.test.js
 
-   Drives step 1 of the pre-order form in jsdom. The bug this covers was
+   Drives step 1 of the pre-order form in jsdom, and the agreement
+   checkbox on the Review step (section 8). The bug this covers was
    invisible in the markup: the Next handler called reportValidity() on a
    <section>, which has no such method, so the guard fell through and the
    button did nothing a user could perceive. The form carries novalidate,
@@ -33,8 +34,9 @@ const step2 = doc.getElementById('flow-step-2');
 const next  = [...doc.querySelectorAll('[data-flow-next]')].find(b => b.closest('.flow-step') === step1);
 const name  = doc.getElementById('p-name');
 const email = doc.getElementById('p-email');
-const loc   = doc.getElementById('p-location');
-const req   = [name, email, loc];
+const city  = doc.getElementById('p-city');
+const state = doc.getElementById('p-state');
+const req   = [name, email, city, state];
 
 const fieldOf = el => el.closest('.field');
 const errOf   = el => doc.getElementById(el.id + '-error');
@@ -81,7 +83,7 @@ fill(name, 'Dana Reyes');
 ok('fixing a field clears its outline', !fieldOf(name).classList.contains('is-invalid'));
 ok('fixing a field hides its message', errOf(name).hidden);
 ok('fixing a field drops aria-invalid', !name.hasAttribute('aria-invalid'));
-ok('the other failures stay flagged', marked(email) && marked(loc));
+ok('the other failures stay flagged', marked(email) && marked(city) && marked(state));
 
 // --- 5. a malformed email is a different message than a missing one -------
 fill(email, 'dana at example dot com');
@@ -94,7 +96,8 @@ ok('malformed email gets the format message, not the missing message',
 
 // --- 6. a complete step 1 advances ---------------------------------------
 fill(email, 'dana@example.com');
-fill(loc, 'Albuquerque, NM');
+fill(city, 'Albuquerque');
+fill(state, 'New Mexico');
 next.click();
 ok('a complete step 1 advances to step 2', step2.hidden === false);
 ok('no field is left flagged once the step passes', req.every(el => !marked(el)));
@@ -105,6 +108,46 @@ ok('the hidden organization block holds no required controls that would',
    org.hidden === true && !!org, 'org-fields is visible at rest');
 ok('org fields are not required, so hiding them cannot strand the user',
    org.querySelectorAll('[required]').length === 0);
+
+// --- 8. the Review step's agreement checkbox gates Submit ---------------
+const step3  = doc.getElementById('flow-step-3');
+const step4  = doc.getElementById('flow-step-4');
+const nextOf = st => [...doc.querySelectorAll('[data-flow-next]')].find(b => b.closest('.flow-step') === st);
+nextOf(step2).click();
+nextOf(step3).click();
+ok('steps 2 and 3 are optional and reach Review', step4.hidden === false);
+
+const terms   = doc.getElementById('p-terms');
+const success = doc.getElementById('pre-order-success');
+const submit  = step4.querySelector('button[type="submit"]');
+const links   = [...fieldOf(terms).querySelectorAll('a')];
+ok('agreement checkbox is on the Review step and required',
+   !!terms && terms.closest('.flow-step') === step4 && terms.required);
+ok('agreement label is marked required', !!fieldOf(terms).querySelector('.req'));
+ok('agreement links to the Privacy Policy',
+   links.some(a => a.getAttribute('href') === 'privacy-policy.html'));
+ok('agreement links to the Terms and Conditions',
+   links.some(a => a.getAttribute('href') === 'terms-and-conditions.html'));
+ok('agreement links open in a new tab so the form is not lost',
+   links.length === 2 && links.every(a => a.target === '_blank' && /noopener/.test(a.rel)));
+const flagged = el => fieldOf(el).classList.contains('is-invalid') && el.getAttribute('aria-invalid') === 'true';
+ok('agreement starts unchecked and unflagged', !terms.checked && !flagged(terms));
+ok('agreement has no error message, by design', !errOf(terms) && !terms.hasAttribute('data-error-missing'));
+
+submit.click();
+ok('Submit without agreeing does not submit', !success.classList.contains('show'));
+ok('Submit without agreeing stays on Review', step4.hidden === false);
+ok('the agreement checkbox is flagged', flagged(terms));
+ok('focus lands on the agreement checkbox', doc.activeElement === terms);
+
+terms.checked = true;
+terms.dispatchEvent(new window.Event('change', { bubbles: true }));
+ok('checking the box clears its error', !flagged(terms));
+
+submit.click();
+ok('Submit after agreeing goes through', success.classList.contains('show'));
+ok('the agreement is sent with the form',
+   new window.FormData(doc.getElementById('preorder-flow-form')).get('terms-agreed') === 'yes');
 
 console.log('\n' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);
