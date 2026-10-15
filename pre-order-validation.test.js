@@ -144,8 +144,15 @@ terms.checked = true;
 terms.dispatchEvent(new window.Event('change', { bubbles: true }));
 ok('checking the box clears its error', !flagged(terms));
 
+let sentForm = null;
+window.bbSubmitForm = function (form) {
+  sentForm = form;
+  return { then(cb) { cb({ ok: true, orderNumber: 'BBE-0001' }); return { catch() {} }; } };
+};
 submit.click();
 ok('Submit after agreeing goes through', success.classList.contains('show'));
+ok('submit hands the form to the shared sender', sentForm === doc.getElementById('preorder-flow-form'));
+ok('the order number is shown on success', doc.getElementById('pre-order-ref').textContent.includes('BBE-0001'));
 ok('the agreement is sent with the form',
    new window.FormData(doc.getElementById('preorder-flow-form')).get('terms-agreed') === 'yes');
 

@@ -1,0 +1,12 @@
+exclude:
+  - CLAUDE.md
+  - Claude outputs
+  - node_modules
+  - package.json
+  - package-lock.json
+  - catch-release-diagram.test.js
+  - history-scroll.test.js
+  - photos-gallery.test.js
+  - pre-order-review.test.js
+  - pre-order-validation.test.js
+  - Logo/BB Engineering Logo Teaser Placeholder.png
