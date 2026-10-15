@@ -65,15 +65,15 @@
     banner.innerHTML =
       '<div class="cookie-banner__inner">' +
         '<button type="button" class="cookie-banner__close" data-consent-close aria-label="Close"><svg viewBox="0 0 16 16" width="18" height="18" aria-hidden="true" focusable="false"><path d="M2 2l12 12M14 2L2 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></button>' +
-        '<p class="cookie-banner__text">This site uses cookies to measure how pages are used. Analytics and marketing cookies stay off unless allowed. Details are in the <a href="/privacy-policy.html">Privacy Policy</a>.</p>' +
+        '<p class="cookie-banner__text">We use cookies to measure site use. Analytics and marketing stay off unless allowed. See our <a href="/privacy-policy.html">Privacy Policy</a>.</p>' +
         '<div class="cookie-banner__prefs" hidden>' +
           '<label><input type="checkbox" checked disabled> Necessary <span>Required for the site to work. Always on.</span></label>' +
           '<label><input type="checkbox" data-consent="analytics"> Analytics <span>Helps us see which pages people visit and how the site is used.</span></label>' +
           '<label><input type="checkbox" data-consent="marketing"> Marketing <span>Helps us measure and improve our advertising.</span></label>' +
         '</div>' +
         '<div class="cookie-banner__actions">' +
-          '<button type="button" class="btn btn-orange" data-consent-all>Accept all</button>' +
-          '<button type="button" class="btn btn-outline" data-consent-none>Reject all</button>' +
+          '<button type="button" class="btn btn-orange" data-consent-all>Accept</button>' +
+          '<button type="button" class="btn btn-outline" data-consent-none>Reject</button>' +
           '<button type="button" class="btn btn-outline" data-consent-save hidden>Save choices</button>' +
           '<button type="button" class="cookie-banner__link" data-consent-choose>Cookie settings</button>' +
         '</div>' +
