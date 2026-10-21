@@ -9,4 +9,5 @@ exclude:
   - photos-gallery.test.js
   - pre-order-review.test.js
   - pre-order-validation.test.js
+  - structured-data.test.js
   - Logo/BB Engineering Logo Teaser Placeholder.png

@@ -140,7 +140,8 @@ for (const f of ['implements.html', 'accessories.html']){
 
 // --- sitewide: "The Enabler" only ever opens a string --------------------
 for (const f of fs.readdirSync(dir).filter(n => n.endsWith('.html'))){
-  const s = fs.readFileSync(path.join(dir, f), 'utf8');
+  const s = fs.readFileSync(path.join(dir, f), 'utf8')
+    .replace(/<script type="application\/ld\+json">[\s\S]*?<\/script>/g, m => m.replace(/[^\n]/g, ''));
   s.split('\n').forEach((line, i) => {
     let m;
     const re = /The Enabler/g;
