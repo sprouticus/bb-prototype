@@ -1880,3 +1880,7 @@ a.cd-value:hover{text-decoration:underline;}
 .cookie-banner__close{position:absolute;top:2px;right:2px;width:36px;height:36px;display:flex;align-items:center;justify-content:center;background:none;border:0;color:var(--ink);cursor:pointer;}
 .cookie-banner__close svg{width:14px;height:14px;}
 .cookie-banner__close:hover{color:var(--orange);}
+
+/* OFFLINE STATUS */
+.offline-status{position:fixed;left:50%;top:calc(var(--header-h) + 12px);transform:translate(-50%,-12px);z-index:1100;max-width:calc(100% - 32px);padding:10px 16px;background:var(--steel);color:var(--white);font-family:var(--font-body);font-size:14px;font-weight:600;line-height:1.35;box-shadow:0 4px 16px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;}
+.offline-status.show{opacity:1;transform:translate(-50%,0);}
