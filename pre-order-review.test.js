@@ -42,9 +42,9 @@ const PRICES = {
   'Superwinch LT2000 12-Volt Winch': ['131.99', '$131.99'], '48" High Lift Farm Jack': ['80.00', '$80.00'],
   '32" LED Light Bar': ['63.00', '$63.00'], 'LED Flood Light Pods (Set of 4)': ['30.00', '$30.00'],
   'Kunz AcrEase Rough Cut Mower MR55BE': ['5195', '$5,195'], 'Demco Pro Series 40 Gallon Sprayer': ['2162', '$2,162'],
-  'Demco Pro Series 60 Gallon Sprayer': ['2262', '$2,262'], 'Demco Pro Series 80 Gallon Sprayer': ['TBD', 'Price TBD'],
+  'Demco Pro Series 60 Gallon Sprayer': ['2262', '$2,262'], 'Demco Pro Series 80 Gallon Sprayer': ['TBD', 'Contact for Price'],
   'B.B. Utility Trailer': ['5600', '$5,600'], 'Rammy Brush Cutter 120 ATV PRO': ['5599', '$5,599'],
-  'Rammy Flail Mower 120 ATV': ['4399', '$4,399'], 'Rammy Lawn Mower 120 ATV PRO': ['TBD', 'Price TBD'],
+  'Rammy Flail Mower 120 ATV': ['4399', '$4,399'], 'Rammy Lawn Mower 120 ATV PRO': ['TBD', 'Contact for Price'],
   'Rammy Plow W165 ATV PRO': ['6600', '$6,600'], 'Rammy Snowblower 155 UTV PRO': ['6399', '$6,399']
 };
 const TBD_NAMES = Object.keys(PRICES).filter(n => PRICES[n][0] === 'TBD');
@@ -63,7 +63,7 @@ for (const c of cards.filter(c => PRICES[c.name])){
   ok(c.name + ': data-price-label is ' + label, c.input.getAttribute('data-price-label') === label,
      c.input.getAttribute('data-price-label'));
 }
-ok('exactly two items stay TBD', cards.filter(c => c.shown === 'Price TBD').length === 2);
+ok('exactly two items show Contact for Price', cards.filter(c => c.shown === 'Contact for Price').length === 2);
 
 ok('review total block exists', !!doc.getElementById('review-total-lines'));
 ok('review total value element exists', !!doc.querySelector('.review-total-value'));
