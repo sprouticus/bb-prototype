@@ -57,7 +57,7 @@ for (const [f, { d, byType }] of Object.entries(data)){
 
 // --- WebPage and breadcrumb: match this page's head ---
 for (const [f, { d, graph, byType }] of Object.entries(data)){
-  const wp = graph.find(n => /Page$/.test(n['@type']));
+  const wp = graph.find(n => /Page$/.test(n['@type']) && n['@type'] !== 'FAQPage');
   if (!wp) { ok(f + ': has a WebPage node', false); continue; }
   const canonical = d.querySelector('link[rel="canonical"]');
   const meta = d.querySelector('meta[name="description"]');
@@ -112,6 +112,42 @@ if (product){
      (product.offers && product.offers.price) + ' vs ' + (priceRow && priceRow[1]));
   ok('Product currency is USD', product.offers && product.offers.priceCurrency === 'USD');
   ok('Product offer is a pre-order', product.offers && product.offers.availability === 'https://schema.org/PreOrder');
+}
+
+// --- FAQPage: every question and answer matches the visible FAQ, word for word ---
+const flat = t => String(t).replace(/\s+/g, ' ').trim();
+const faqPages = Object.keys(data).filter(f =>
+  data[f].byType('FAQPage').length || data[f].d.querySelector('details.faq-item'));
+ok('enabler-2-0.html carries a FAQ', faqPages.includes('enabler-2-0.html'), faqPages.join(', '));
+for (const f of faqPages){
+  const { d, byType } = data[f];
+  const nodes = byType('FAQPage');
+  ok(f + ': exactly one FAQPage node', nodes.length === 1, String(nodes.length));
+  const items = [...d.querySelectorAll('details.faq-item')].map(el => ({
+    q: flat(el.querySelector('summary').textContent),
+    a: flat(el.querySelector('p').textContent),
+    open: el.hasAttribute('open'),
+  }));
+  ok(f + ': has visible FAQ items', items.length > 0);
+  if (!nodes.length) continue;
+  const faq = nodes[0];
+  const url = f === 'index.html' ? SITE : SITE + f;
+  ok(f + ': FAQPage url is this page', faq.url === url, faq.url);
+  const qs = faq.mainEntity || [];
+  ok(f + ': FAQPage has one Question per visible item', qs.length === items.length, qs.length + ' vs ' + items.length);
+  items.forEach((it, i) => {
+    const q = qs[i] || {};
+    ok(f + ': FAQ ' + (i + 1) + ' is a Question', q['@type'] === 'Question');
+    ok(f + ': FAQ ' + (i + 1) + ' question matches the page', q.name === it.q, q.name + ' | ' + it.q);
+    ok(f + ': FAQ ' + (i + 1) + ' answer matches the page',
+       q.acceptedAnswer && q.acceptedAnswer['@type'] === 'Answer' && q.acceptedAnswer.text === it.a,
+       (q.acceptedAnswer && q.acceptedAnswer.text || '').slice(0, 80));
+    ok(f + ': FAQ ' + (i + 1) + ' is closed by default', !it.open);
+  });
+}
+if (data['enabler-2-0.html']){
+  const n = data['enabler-2-0.html'].d.querySelectorAll('details.faq-item').length;
+  ok('enabler-2-0.html: FAQ has 12 questions', n === 12, String(n));
 }
 
 // --- visitor-facing strings in the data follow the copy rules ---

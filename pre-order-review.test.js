@@ -193,7 +193,7 @@ for (const f of fs.readdirSync(dir).filter(n => n.endsWith('.html'))){
     const re = /The Enabler/g;
     while ((m = re.exec(line)) !== null){
       const before = line.slice(0, m.index).replace(/\s+$/, '');
-      const opensString = before === '' || /(="|>|\|)$/.test(before);
+      const opensString = before === '' || /(="|>|\||[.!?(])$/.test(before);
       ok(f + ':' + (i + 1) + ' "The Enabler" opens a string or sentence',
          opensString, line.trim().slice(Math.max(0, m.index - 50), m.index + 20));
     }
