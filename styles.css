@@ -391,7 +391,8 @@ html[data-hdr-compact3] .logo .word{display:none;}
 
 /* FAQ */
 .faq{background:var(--white);padding:76px 0;}
-.faq-list{max-width:880px;border-top:2px solid var(--line);}
+.faq .section-head,.faq-list{max-width:880px;margin-left:auto;margin-right:auto;}
+.faq-list{border-top:2px solid var(--line);}
 .faq-item{border-bottom:1px solid var(--line);}
 .faq-item summary{
   list-style:none;cursor:pointer;display:flex;justify-content:space-between;align-items:flex-start;gap:20px;
