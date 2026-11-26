@@ -33,3 +33,7 @@ package-lock.json
 *.original
 *(original*
 **/_originals/
+
+# Claude Code personal settings (extra folder access). Local only.
+.claude/settings.local.json
+Claude outputs/
