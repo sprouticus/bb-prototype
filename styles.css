@@ -892,7 +892,7 @@ button.shop-tile-zoom:focus-visible .zoom-hint{opacity:1;}
   padding:56px 28px;z-index:200;
 }
 .lightbox[hidden]{display:none;}
-.lightbox-content{max-width:min(900px,90vw);display:flex;flex-direction:column;align-items:center;gap:16px;}
+.lightbox-content{margin:0;max-width:min(900px,90vw);display:flex;flex-direction:column;align-items:center;gap:16px;}
 .lightbox-content img{max-width:100%;max-height:72vh;object-fit:contain;background:var(--white);border-radius:2px;}
 .lightbox-content figcaption{
   color:var(--white);font-family:var(--font-mono);font-size:16.8px;

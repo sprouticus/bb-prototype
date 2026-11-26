@@ -1,21 +1,17 @@
 /* ------------------------------------------------------------------
    catch-release-diagram.test.js  —  run: node catch-release-diagram.test.js
 
-   The annotated catch-and-release frame has to be readable in place, with
-   no lightbox click. Three separate things can silently break that, and
-   none of them look broken in the markup:
+   The labelled catch-and-release illustration must never be cropped.
+   Two things can silently break that, and neither looks broken in the
+   markup:
 
      1. the shared `.story-img img` rule is width:100%/height:100%/cover,
         and this image's rightmost label runs flush to the edge, so any
         crop cuts "SPRING-LOADED HOOK" in half;
      2. the override that defeats it has IDENTICAL specificity (0,1,1),
-        so it only wins on source order — move it up and the crop is back;
-     3. the display cap has to keep the annotation text above body size
-        while still fitting one screenful under the sticky header.
+        so it only wins on source order — move it up and the crop is back.
 
-   So this asserts the cascade order and does the sizing arithmetic against
-   the real image dimensions and the real CSS values, rather than trusting
-   that 940px "looks about right".
+   So this asserts the markup and the cascade order.
    ------------------------------------------------------------------ */
 const fs = require('fs');
 const path = require('path');
@@ -30,40 +26,20 @@ const cssText = fs.readFileSync(path.join(dir, 'styles.css'), 'utf8');
 const html = fs.readFileSync(path.join(dir, 'catch-and-release.html'), 'utf8');
 const doc = new JSDOM(html).window.document;
 
-// --- intrinsic size, read from the JPEG itself --------------------------
-function jpegSize(file){
-  const b = fs.readFileSync(file);
-  let i = 2;
-  while (i < b.length){
-    if (b[i] !== 0xFF) { i++; continue; }
-    const marker = b[i + 1];
-    if (marker >= 0xC0 && marker <= 0xCF && ![0xC4, 0xC8, 0xCC].includes(marker)){
-      return { h: b.readUInt16BE(i + 5), w: b.readUInt16BE(i + 7) };
-    }
-    i += 2 + b.readUInt16BE(i + 2);
-  }
-  throw new Error('no SOF marker in ' + file);
-}
-
-const DIAGRAM = 'images/catch-release-annotated.jpg';
-ok('annotated diagram file exists', fs.existsSync(path.join(dir, DIAGRAM)));
-const nat = jpegSize(path.join(dir, DIAGRAM));
+const DIAGRAM = 'images/catch-release-illustration-crop.jpg';
+ok('diagram file exists', fs.existsSync(path.join(dir, DIAGRAM)));
 
 // --- markup -------------------------------------------------------------
 const fig = doc.querySelector('.story-img--diagram');
 ok('diagram figure exists', !!fig);
-ok('diagram uses the annotated file',
+ok('diagram uses the labelled illustration',
    fig && fig.querySelector('img').getAttribute('src') === DIAGRAM);
-ok('diagram is NOT inside a .story-grid cell', fig && !fig.closest('.story-grid'));
 ok('diagram img has alt text naming the labels',
    /camera/i.test(fig.querySelector('img').alt) &&
    /hook/i.test(fig.querySelector('img').alt) &&
    /V-shape/i.test(fig.querySelector('img').alt));
 ok('the un-annotated version is gone from this page',
    !html.includes('catch-release-full-detail.jpg'));
-const evenGrid = doc.querySelector('.story-grid--even');
-ok('remaining two photos sit in an even two-up', !!evenGrid &&
-   evenGrid.querySelectorAll('.story-img').length === 2);
 ok('no orphaned .story-stack left behind', !doc.querySelector('.story-stack'));
 
 // --- cascade order (the trap) -------------------------------------------
@@ -113,37 +89,24 @@ csstree.walk(csstree.parse(cssText), { visit: 'Rule', enter(node){
 }});
 ok('no media query re-crops the diagram', reCrop === null, reCrop);
 
-// --- sizing arithmetic --------------------------------------------------
-const px = v => parseFloat(String(v).replace('px', ''));
-const cap = px(decls('.story-img--diagram')['max-width']);
-const maxw = px((cssText.match(/--maxw:\s*([0-9.]+px)/) || [])[1]);
-const wrapPad = px((decls('.wrap').padding || '0 28px').split(/\s+/)[1]);
-const headerH = px((cssText.match(/--header-h:\s*([0-9.]+px)/) || [])[1]);
-const contentW = maxw - wrapPad * 2;
-
-ok('cap never upscales the source (' + cap + ' <= ' + nat.w + ')', cap <= nat.w);
-ok('cap fits the content column (' + cap + ' <= ' + contentW + ')', cap <= contentW);
-
-const shownH = Math.round(cap * nat.h / nat.w);
-ok('diagram fits one 900px screenful under the sticky header (' +
-   shownH + ' + ' + headerH + ' <= 900)', shownH + headerH <= 900,
-   shownH + headerH + 'px');
-
-// The annotation cap-height measures 32px in the 1195px-wide source, so
-// display width sets the label text size directly. The target is ~1.2x the
-// 16px body copy; 18px is the floor below which "readable without clicking"
-// stops being true. Shrinking the cap for layout reasons fails here first.
-const LABEL_CAP_PX_AT_SOURCE = 32;
-const SOURCE_W_WHEN_MEASURED = 1195;
-const shownLabel = LABEL_CAP_PX_AT_SOURCE / SOURCE_W_WHEN_MEASURED * cap;
-ok('annotation text renders at >= 18px cap height (' + shownLabel.toFixed(1) + 'px)',
-   shownLabel >= 18, shownLabel.toFixed(1) + 'px');
-// Upper bound as well as lower. Two-thirds of the content column is the
-// line between "a figure on the page" and "the page"; the rejected 940px
-// first pass was 81% and read as the latter.
-ok('diagram stays within two-thirds of the content column',
-   cap <= contentW * (2 / 3), cap + ' of ' + contentW +
-   ' (' + Math.round(100 * cap / contentW) + '%)');
+// --- lightbox: the diagram opens enlarged on click or tap --------------
+ok('page loads lightbox.js', !!doc.querySelector('script[src="lightbox.js"]'));
+{
+  const live = new JSDOM(html, { runScripts: 'outside-only' });
+  live.window.eval(fs.readFileSync(path.join(dir, 'lightbox.js'), 'utf8'));
+  const ld = live.window.document;
+  const img = ld.querySelector('.story-img--diagram img');
+  const trigger = img && img.closest('button.photo-zoom, [data-full]');
+  ok('diagram image is wrapped in a lightbox trigger', !!trigger);
+  ok('lightbox trigger has an accessible label', !!trigger && /^View larger photo/.test(trigger.getAttribute('aria-label') || ''),
+     trigger && trigger.getAttribute('aria-label'));
+  if (trigger) trigger.click();
+  const box = ld.getElementById('lightbox');
+  ok('clicking the diagram opens the lightbox', !!box && !box.hidden);
+  ok('lightbox shows the diagram', !!box && ld.getElementById('lightbox-img').getAttribute('src') === DIAGRAM,
+     box && ld.getElementById('lightbox-img').getAttribute('src'));
+  ok('lightbox carries the diagram alt text', !!box && ld.getElementById('lightbox-img').alt === img.alt);
+}
 
 console.log('\n  ' + pass + ' passed, ' + fail + ' failed');
 process.exit(fail ? 1 : 0);
